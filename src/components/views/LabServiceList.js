@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ExpenseDialog from "../views/ExpenseDialog";
+// import ExpenseDialog from "../views/ExpenseDialog";
 import { useEffect } from "react";
 import axios from "axios";
 import { ExcelExport } from "@progress/kendo-react-excel-export";
@@ -429,12 +429,12 @@ const excelExport = () => {
                 </div>
               </div>
 
-              <ExpenseDialog
+              {/* <ExpenseDialog
                 open={open}
                 close={() => setOpen(false)}
                 expenseLists={expenseLists}
                 setExpenseLists={setExpenseLists}
-              />
+              /> */}
             </div>{" "}
             {/*<!-- /.container-fluid --> */}
           </section>
