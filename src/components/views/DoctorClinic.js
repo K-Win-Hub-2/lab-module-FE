@@ -4,35 +4,33 @@ import { useEffect } from "react";
 import axios from "axios";
 import { ExcelExport } from "@progress/kendo-react-excel-export";
 import { ExcelExportColumn } from "@progress/kendo-react-excel-export";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { FaCashRegister } from "react-icons/fa";
 import SideBar from "./SideBar";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
   const [close, setClose] = useState(false);
-  const [labServiceLists, setLabServiceLists] = useState([]);
+  const [doctorLists, setDoctorLists] = useState([]);
 
   const showDialog = () => setOpen(true);
-const _export = React.useRef(null);
-const excelExport = () => {
-  if (_export.current !== null) {
-    console.log(_export.current.props.data);
-    _export.current.props.data.map(function (element, index) {
-      element.date = element.date.split("T")[0];
-    });
-    _export.current.save();
-  }
-};
+  const _export = React.useRef(null);
+  const excelExport = () => {
+    if (_export.current !== null) {
+      console.log(_export.current.props.data);
+      _export.current.props.data.map(function (element, index) {
+        element.date = element.date.split("T")[0];
+      });
+      _export.current.save();
+    }
+  };
   useEffect(() => {
-    const getLabServiceLists = async () => {
-     
-        const res = await axios.get("http://localhost:9000/api/services");
+    const getDoctorLists = async () => {
+      const res = await axios.get("http://localhost:9000/api/doctors");
 
-        setLabServiceLists(res.data.data);
-   
+      setDoctorLists(res.data.data);
     };
-    getLabServiceLists();
+    getDoctorLists();
   }, []);
   return (
     <div classNameName="App">
@@ -53,7 +51,7 @@ const excelExport = () => {
                     <li className="breadcrumb-item">
                       <a href="/">Home</a>
                     </li>
-                    <li className="breadcrumb-item active">Lab Service List</li>
+                    <li className="breadcrumb-item active">Doctor / Clinic List</li>
                   </ol>
                 </div>
               </div>
@@ -122,8 +120,8 @@ const excelExport = () => {
                       <div class="row justify-content-between">
                         <label class="">
                           <span class="float-right">
-                            <Link to="/lab-register" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Lab Register
+                            <Link to="/doctorClinicReg" class="btn btn-primary">
+                              <i class="fas fa-plus"></i> &nbsp;Doctor/Clinic Register
                             </Link>
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
@@ -198,34 +196,31 @@ const excelExport = () => {
                               <thead class="bg-info text-white">
                                 <tr>
                                   <th>#</th>
-                                  <th>Code</th>
+                                
                                   {/* <th>Bank / Cash Account</th>  */}
                                   <th>Name</th>
 
-                                  <th>Category</th>
+                                  <th>Selection</th>
 
-                                  <th>Refer Doctor</th>
-                                  <th>Charges</th>
+                                  <th>Phone</th>
+                                  <th>Value</th>
                                   <th className="text-center">Action</th>
                                 </tr>
                               </thead>
 
-                              {labServiceLists.map((labService, i) => (
+                              {doctorLists.map((doctor, i) => (
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
-                                    <td>{labService.code}</td>
+                                    
 
-                                    <td>{labService.name}</td>
+                                    <td>{doctor.name}</td>
 
-                                    <td>
-                                      {labService.relatedCategory
-                                        ? labService.relatedCategory
-                                        : "No"}
-                                    </td>
 
-                                    <td>{labService.referDoctor.name}</td>
-                                    <td>{labService.charges}</td>
+
+                                    <td>{doctor.selection}</td>
+                                    <td>{doctor.phone}</td>
+                                    <td>{doctor.value}</td>
 
                                     <td className="text-center">
                                       <a
