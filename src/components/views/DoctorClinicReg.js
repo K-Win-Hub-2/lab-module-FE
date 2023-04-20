@@ -7,62 +7,43 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function LabServiceRegister() {
-  const [category, setCategory] = useState([]);
-  const [referDoctor, setReferDoctor] = useState([]);
-  const [code, setCode] = useState("");
+
+
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [flag, setFlag] = useState("");
+  const [selection, setSelection] = useState("");
+  const [value, setValue] = useState("");
+  const [valueType, setValueType] = useState("");
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
-  const CategoryCreate = () => {
+  const DoctorCreate = (event) =>
+  {
+    
     const data = {
-      code: code,
       name: name,
-      description: description,
-      flag: flag,
+      selection: selection,
+      value:value,
+      valueType: valueType,
+      phone: phone,
+      email:email
     };
-
+    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/category", data, config)
+      .post("http://localhost:9000/api/doctor", data, config)
       .then(function (response) {
         alert("success");
-        setCategory([...category, response.data.data]);
+        // setCategory([...category, response.data.data]);
       })
       .catch(function (err) {
         alert(err.message);
       });
-    document.getElementById("desc").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("code").value = "";
-    document.getElementById("flag").value = "";
+
   };
 
-  useEffect(() => {
-    const getCategory = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:9000/api/categories?limit=30"
-        );
 
-        setCategory(res.data.data);
-      } catch (err) {}
-    };
-
-    const getReferDoctor = async () => {
-      try {
-        const res = await axios.get(
-          "http://localhost:9000/api/doctors?limit=30"
-        );
-
-        setReferDoctor(res.data.data);
-      } catch (err) {}
-    };
-    getReferDoctor();
-    getCategory();
-  }, []);
   return (
     <div classNameName="App">
       <div className="wrapper">
@@ -98,169 +79,117 @@ function LabServiceRegister() {
               <div class="card">
                 <div class="card-body p-b-0">
                   {/* @if($com == null) */}
-                  <form>
+                  <form onSubmit={DoctorCreate}>
                     {/* @csrf */}
-                    <div className="form-body">
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Selection</label>
-                            <input
-                              type="radio"
-                              className="form-control"
-                              name="company_name"
-                            />
-                          </div>
-                        </div>
 
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Name</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              name="company_address"
-                            />
-                          </div>
+                    <div className="form-group">
+                      <div className="row">
+                        <div className="col-md-4">
+                          <label>Doctor</label>&nbsp;
+                          <input
+                            type="radio"
+                            id="doccl"
+                            name="doccl"
+                            value="Doctor"
+                            onChange={(e) => setSelection(e.target.value)}
+                          />
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
+                        <div className="col-md-4">
+                          <label>Clinic</label>&nbsp;
+                          <input
+                            type="radio"
+                            id="doccl"
+                            name="doccl"
+                            value="Clinic"
+                            onChange={(e) => setSelection(e.target.value)}
+                          />
                         </div>
                       </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Description</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder=""
-                              name="company_contact"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Lead Time</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder=""
-                              name="company_email"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Category</label>
+                    </div>
 
-                            <select
-                              name="currency"
-                              id=""
-                              className="form-control mt-1"
-                              onchange="convert(this.value)">
-                              <option value="">Choose Category</option>
-                              {category.map((option) => (
-                                <option value={option._id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Charges</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder=""
-                              name="capital"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">Cost</label>
-                            <input
-                              type="text"
-                              className="form-control"
-                              placeholder=""
-                              name="md_name"
-                            />
-                          </div>
-                        </div>
-                        <div className="col-md-6">
-                          <div className="form-group">
-                            <label className="control-label">
-                              Refer Doctor
-                            </label>
+                    <div className="form-group">
+                      <label className="control-label">Name</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="company_address"
+                        onChange={(e) => setName(e.target.value)}
+                      />
+                    </div>
 
-                            <select
-                              name="currency"
-                              id=""
-                              className="form-control mt-1"
-                              onchange="convert(this.value)">
-                              <option value="">Choose Doctor</option>
-                              {referDoctor.map((option) => (
-                                <option value={option._id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
+                    <div className="form-group">
+                      <label className="control-label">Phone</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder=""
+                        name="company_contact"
+                        onChange={(e) => setPhone(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label className="control-label">Email</label>
+                      <input
+                        type="email"
+                        className="form-control"
+                        placeholder=""
+                        name="company_email"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <div className="row  mt-3">
+                        <div className="col-md-4">
+                          <label>Amount</label>&nbsp;
+                          <input
+                            type="radio"
+                            id="amoper"
+                            name="amoper"
+                            value="Amount"
+                            onChange={(e) => setValueType(e.target.value)}
+                          />
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
+                        <div className="col-md-4">
+                          <label>%</label>&nbsp;
+                          <input
+                            type="radio"
+                            id="amoper"
+                            name="amoper"
+                            value="Percent"
+                            onChange={(e) => setValueType(e.target.value)}
+                          />
                         </div>
                       </div>
-                      <div className="row">
-                        <div className="col-md-6">
-                          <label className="control-label">Add Reagent</label>
-                          <select
-                            name="currency"
-                            id=""
-                            className="form-control mt-1"
-                            onchange="convert(this.value)">
-                            <option value="">Choose Reagent</option>
-                            <option></option>
-                          </select>
-                        </div>
-                        <div className="col-md-6">
-                          <div class="form-group">
-                            <label for="name" className="text-secondary">
-                              Nominal Flag
-                            </label>
-                            <select
-                              class="custom-select border-info"
-                              name="account_type_id"
-                              id="flag"
-                              onChange={(e) => setFlag(e.target.value)}>
-                              <option></option>
-                              <option value="Above">Above</option>
-                              <option value="Below">Below</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-                      <br></br>
-                      <div className="form-actions">
+                    </div>
+                    <div className="form-group">
+                      <label className="control-label">Value</label>
+
+                      <input
+                        type="number"
+                        className="form-control"
+                        onChange={(e) => setValue(e.target.value)}
+                      />
+                    </div>
+                    <br />
+
+                    <div className="row">
+                      <div className="col-md-6">
                         <div className="row">
-                          <div className="col-md-6">
-                            <div className="row">
-                              <div className=" col-md-9">
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary">
-                                  Create
-                                </button>
-                                &nbsp;
-                                <button
-                                  type="button"
-                                  className="btn btn-danger"
-                                  data-dismiss="modal">
-                                  Cancel
-                                </button>
-                              </div>
-                            </div>
+                          <div className=" col-md-9">
+                            <button type="submit" className="btn btn-primary">
+                              Create
+                            </button>
+                            &nbsp;
+                            <button
+                              type="button"
+                              className="btn btn-danger"
+                              data-dismiss="modal">
+                              Cancel
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -270,7 +199,7 @@ function LabServiceRegister() {
               </div>
 
               {/* <!-- /.row (main row) --> */}
-            </div>{" "}
+            </div>
             {/*<!-- /.container-fluid --> */}
           </section>
           {/* <!-- /.content --> */}
@@ -292,7 +221,6 @@ function LabServiceRegister() {
         {/* <!-- /.control-sidebar --> */}
       </div>
       {/* <!-- ./wrapper --> */}
-
     </div>
   );
 }

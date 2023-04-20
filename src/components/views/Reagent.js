@@ -91,7 +91,7 @@ function CatRegister() {
 
                             <th>Name</th>
 
-                            <th>Stock Unit</th>
+                            {/* <th>Stock Unit</th> */}
 
                             <th>Supplier</th>
                             <th className="text-center">Action</th>
@@ -104,8 +104,8 @@ function CatRegister() {
                               <td>{++i}</td>
                               <td>{reag.code}</td>
                               <td>{reag.name}</td>
-
-                              <td>{reag.stockUnit[0].unitName}</td>
+{/* 
+                              <td>{reag.stockUnit[0].unitName}</td> */}
 
                               <td>{reag.supplier.name}</td>
 

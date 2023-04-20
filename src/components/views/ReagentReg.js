@@ -7,37 +7,37 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function LabServiceRegister() {
-  const [category, setCategory] = useState([]);
+  const [reagentLists, setReagentLists] = useState([]);
   const [supplierLists, setSupplierLists] = useState([]);
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [flag, setFlag] = useState("");
+  const [supplier, setSupplier] = useState("");
 
-  const CategoryCreate = () => {
+  const ReagentCreate = () => {
     const data = {
       code: code,
       name: name,
-      description: description,
-      flag: flag,
+      supplier:supplier,
+      
     };
 
+    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/category", data, config)
+      .post("http://localhost:9000/api/reagent", data, config)
       .then(function (response) {
         alert("success");
-        setCategory([...category, response.data.data]);
+        // setReagentLists([...reagentLists, response.data.data]);
       })
       .catch(function (err) {
         alert(err.message);
       });
-    document.getElementById("desc").value = "";
+    document.getElementById("supplier").value = "";
     document.getElementById("name").value = "";
     document.getElementById("code").value = "";
-    document.getElementById("flag").value = "";
+    // document.getElementById("flag").value = "";
   };
 
   useEffect(() => {
@@ -94,6 +94,7 @@ function LabServiceRegister() {
                       type="text"
                       className="form-control"
                       name="company_name"
+                      onChange={(e) => setCode(e.target.value)}
                     />
                   </div>
 
@@ -103,10 +104,11 @@ function LabServiceRegister() {
                       type="text"
                       className="form-control"
                       name="company_address"
+                      onChange={(e) => setName(e.target.value)}
                     />
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label className="control-label">Stock Unit</label>
                     <input
                       type="text"
@@ -114,15 +116,16 @@ function LabServiceRegister() {
                       placeholder=""
                       name="company_contact"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group">
                     <label className="control-label">Supplier</label>
                     <select
                       name="currency"
-                      id=""
+                      id="supplier"
                       className="form-control mt-1"
-                      onchange="convert(this.value)">
+                      onchange="convert(this.value)"
+                      onChange={(e) => setSupplier(e.target.value)}>
                       <option value="">Choose Supplier</option>
                       {supplierLists.map((option) => (
                         <option value={option._id}>{option.name}</option>
@@ -130,7 +133,7 @@ function LabServiceRegister() {
                     </select>
                   </div>
 
-                  <div className="form-group">
+                  {/* <div className="form-group">
                     <label className="control-label">Purchase Price</label>
                     <input
                       type="text"
@@ -138,13 +141,16 @@ function LabServiceRegister() {
                       placeholder=""
                       name="md_name"
                     />
-                  </div>
+                  </div> */}
 
                   <div className="row">
                     <div className="col-md-6">
                       <div className="row">
                         <div className=" col-md-9">
-                          <button type="submit" className="btn btn-primary">
+                          <button
+                            type="submit"
+                            onClick={ReagentCreate}
+                            className="btn btn-primary">
                             Create
                           </button>
                           &nbsp;
