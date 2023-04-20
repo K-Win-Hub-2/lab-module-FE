@@ -1,96 +1,68 @@
 import React from "react";
 import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { FaCashRegister, FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function LabServiceRegister()
-{
+function LabServiceRegister() {
   const [category, setCategory] = useState([]);
-    const [reagent, setReagent] = useState([]);
   const [referDoctor, setReferDoctor] = useState([]);
-    const [code, setCode] = useState("");
+  const [code, setCode] = useState("");
   const [name, setName] = useState("");
-  const [leadTime, setLeadTime] = useState('');
-  const [relatedCategory, setRelatedCategory] = useState('');
-  const [doctor, setDoctor] = useState('');
-  const [charges, setCharges] = useState('');
-  const [cost, setCost] = useState('');
-  const [reagentItems, setReagentItems] = useState([]);
-  const [nominalFlag, setNominalFlag] = useState('');
-  const [nominalValue, setNominalValue] = useState('');
-    const [description, setDescription] = useState("");
-    const [flag, setFlag] = useState("");
+  const [description, setDescription] = useState("");
+  const [flag, setFlag] = useState("");
 
-    const ServiceCreate = (props) => {
-      const data = {
-        code: code,
-        name: name,
-        leadTime: leadTime,
-        referDoctor:referDoctor,
-        relatedCategory: relatedCategory,
-        charges: charges,
-        cost: cost,
-        reagentItems: reagentItems,
-        nominalFlag: nominalFlag,
-        nominalValue:nominalValue,
-        description: description,
-      
-      };
-
-      alert(JSON.stringify(data));
-      const config = {
-        headers: { "Content-Type": "application/json" },
-      };
-      axios
-        .post("http://localhost:9000/api/service", data, config)
-        .then(function (response) {
-          alert("success");
-          // props.setReagent([...props.category, response.data.data]);
-        })
-        .catch(function (err) {
-          alert(err.message);
-        });
-
+  const CategoryCreate = () => {
+    const data = {
+      code: code,
+      name: name,
+      description: description,
+      flag: flag,
     };
 
-    useEffect(() => {
-      const getCategory = async () => {
-        try {
-          const res = await axios.get(
-            "http://localhost:9000/api/categories?limit=30"
-          );
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    axios
+      .post("http://localhost:9000/api/category", data, config)
+      .then(function (response) {
+        alert("success");
+        setCategory([...category, response.data.data]);
+      })
+      .catch(function (err) {
+        alert(err.message);
+      });
+    document.getElementById("desc").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("code").value = "";
+    document.getElementById("flag").value = "";
+  };
 
-          setCategory(res.data.data);
-        } catch (err) {}
-      };
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/categories?limit=30"
+        );
 
-      const getReferDoctor = async () => {
-        try {
-          const res = await axios.get(
-            "http://localhost:9000/api/doctors?limit=30"
-          );
+        setCategory(res.data.data);
+      } catch (err) {}
+    };
 
-          setReferDoctor(res.data.data);
-        } catch (err) {}
-      };
+    const getReferDoctor = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/doctors?limit=30"
+        );
 
-            const getReagent= async () => {
-              try {
-                const res = await axios.get(
-                  "http://localhost:9000/api/reagents?limit=30"
-                );
-
-                setReagent(res.data.data);
-              } catch (err) {}
-            };
-      
-      getReagent();
-      getReferDoctor();
-      getCategory();
-    }, []);
+        setReferDoctor(res.data.data);
+      } catch (err) {}
+    };
+    getReferDoctor();
+    getCategory();
+  }, []);
   return (
     <div classNameName="App">
       <div className="wrapper">
@@ -104,14 +76,14 @@ function LabServiceRegister()
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/">
+                      <Link to="/doctorClinic">
                         <i>
                           <FaArrowLeft />
                         </i>
                       </Link>
                     </li>
                     <li className="breadcrumb-item active mt-1">
-                      Lab Service Register
+                      Doctor / Clinic Register
                     </li>
                   </ol>
                 </div>
@@ -126,18 +98,17 @@ function LabServiceRegister()
               <div class="card">
                 <div class="card-body p-b-0">
                   {/* @if($com == null) */}
-                  <form onSubmit={ServiceCreate}>
+                  <form>
                     {/* @csrf */}
                     <div className="form-body">
                       <div className="row">
                         <div className="col-md-6">
                           <div className="form-group">
-                            <label className="control-label">Code</label>
+                            <label className="control-label">Selection</label>
                             <input
-                              type="text"
+                              type="radio"
                               className="form-control"
                               name="company_name"
-                              onChange={(e) => setCode(e.target.value)}
                             />
                           </div>
                         </div>
@@ -149,7 +120,6 @@ function LabServiceRegister()
                               type="text"
                               className="form-control"
                               name="company_address"
-                              onChange={(e) => setName(e.target.value)}
                             />
                           </div>
                         </div>
@@ -163,7 +133,6 @@ function LabServiceRegister()
                               className="form-control"
                               placeholder=""
                               name="company_contact"
-                              onChange={(e) => setDescription(e.target.value)}
                             />
                           </div>
                         </div>
@@ -171,11 +140,10 @@ function LabServiceRegister()
                           <div className="form-group">
                             <label className="control-label">Lead Time</label>
                             <input
-                              type="date"
+                              type="text"
                               className="form-control"
                               placeholder=""
                               name="company_email"
-                              onChange={(e) => setLeadTime(e.target.value)}
                             />
                           </div>
                         </div>
@@ -189,10 +157,7 @@ function LabServiceRegister()
                               name="currency"
                               id=""
                               className="form-control mt-1"
-                              onchange="convert(this.value)"
-                              onChange={(e) =>
-                                setRelatedCategory(e.target.value)
-                              }>
+                              onchange="convert(this.value)">
                               <option value="">Choose Category</option>
                               {category.map((option) => (
                                 <option value={option._id}>
@@ -210,7 +175,6 @@ function LabServiceRegister()
                               className="form-control"
                               placeholder=""
                               name="capital"
-                              onChange={(e) => setCharges(e.target.value)}
                             />
                           </div>
                         </div>
@@ -224,7 +188,6 @@ function LabServiceRegister()
                               className="form-control"
                               placeholder=""
                               name="md_name"
-                              onChange={(e) => setCost(e.target.value)}
                             />
                           </div>
                         </div>
@@ -238,8 +201,7 @@ function LabServiceRegister()
                               name="currency"
                               id=""
                               className="form-control mt-1"
-                              onchange="convert(this.value)"
-                              onChange={(e) => setDoctor(e.target.value)}>
+                              onchange="convert(this.value)">
                               <option value="">Choose Doctor</option>
                               {referDoctor.map((option) => (
                                 <option value={option._id}>
@@ -257,36 +219,26 @@ function LabServiceRegister()
                             name="currency"
                             id=""
                             className="form-control mt-1"
-                            onchange="convert(this.value)"
-                            onChange={(e) => setReagentItems(e.target.value)}>
+                            onchange="convert(this.value)">
                             <option value="">Choose Reagent</option>
-
-                            {reagent.map((option) => (
-                              <option value={option._id}>{option.name}</option>
-                            ))}
+                            <option></option>
                           </select>
                         </div>
                         <div className="col-md-6">
                           <div class="form-group">
-                            <label for="name" className="">
+                            <label for="name" className="text-secondary">
                               Nominal Flag
                             </label>
                             <select
                               class="custom-select border-info"
                               name="account_type_id"
                               id="flag"
-                              onChange={(e) => setNominalFlag(e.target.value)}>
+                              onChange={(e) => setFlag(e.target.value)}>
                               <option></option>
                               <option value="Above">Above</option>
                               <option value="Below">Below</option>
                             </select>
                           </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="name" className="">
-                            Nominal Value
-                          </label>
-<input type='text' className="form-control" onChange={(e)=>setNominalValue(e.target.value)}/>
                         </div>
                       </div>
                       <br></br>
@@ -297,7 +249,6 @@ function LabServiceRegister()
                               <div className=" col-md-9">
                                 <button
                                   type="submit"
-                                  
                                   className="btn btn-primary">
                                   Create
                                 </button>
@@ -319,7 +270,7 @@ function LabServiceRegister()
               </div>
 
               {/* <!-- /.row (main row) --> */}
-            </div>
+            </div>{" "}
             {/*<!-- /.container-fluid --> */}
           </section>
           {/* <!-- /.content --> */}

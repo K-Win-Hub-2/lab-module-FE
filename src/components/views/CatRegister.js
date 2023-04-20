@@ -1,0 +1,235 @@
+import SideBar from "./SideBar";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
+function CatRegister()
+{
+  const [category, setCategory] = useState([]);
+  const [code, setCode] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [flag, setFlag] = useState('');
+
+  
+
+   const CategoryCreate = () => {
+     const data = {
+       code: code,
+       name: name,
+       description: description,
+       flag:flag
+     };
+
+     
+     const config = {
+       headers: { "Content-Type": "application/json" },
+     };
+     axios
+       .post("http://localhost:9000/api/category", data, config)
+       .then(function (response) {
+         alert("success");
+         setCategory([...category, response.data.data]);
+       })
+       .catch(function (err) {
+         alert(err.message);
+       });
+     document.getElementById("desc").value = "";
+     document.getElementById("name").value = "";
+     document.getElementById("code").value = "";
+     document.getElementById("flag").value = "";
+
+   };
+  
+   useEffect(() => {
+     const getCategory = async () => {
+       try {
+         const res = await axios.get(
+           "http://localhost:9000/api/categories?limit=30"
+         );
+
+         setCategory(res.data.data);
+       } catch (err) {}
+     };
+     getCategory();
+   }, []);
+  return (
+    <div classNameName="App">
+      {/* <!-- end preloader --> */}
+      {/* @include('sweet::alert') */}
+
+      <div className="wrapper">
+        <SideBar />
+        {/* <!-- Content Wrapper. Contains page content --> */}
+
+        <div className="content-wrapper">
+          {/* <!-- Content Header (Page header) --> */}
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row mb-2">
+                <div className="col-sm-12">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <a href="/">Home</a>
+                    </li>
+                    <li className="breadcrumb-item active">
+                      Lab Service Category
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <!-- Main content --> */}
+
+          <section className="content">
+            <div className="container-fluid">
+              <div className="row">
+                <div class="row">
+                  <div class="col-md-9 py-3 card">
+                    <div class="table-responsive text-black" id="slimtest2">
+                      <table class="table table-hover" id="filter_date">
+                        <thead class="bg-info text-white">
+                          <tr>
+                            <th>No.</th>
+                            <th>Code</th>
+
+                            <th>Name</th>
+
+                            <th>Description</th>
+
+                            <th>Flag</th>
+                            <th className="text-center">Action</th>
+                          </tr>
+                        </thead>
+
+                        {category.map((cat, i) => (
+                          <tbody className="">
+                            <tr>
+                              <td>{++i}</td>
+                              <td>{cat.code}</td>
+                              <td>{cat.name}</td>
+
+                              <td>{cat.description}</td>
+
+                              <td>{cat.flag }</td>
+
+                              <td className="text-center">
+                                <a href="" className="btn btn-sm btn-warning">
+                                  Update
+                                </a>
+                                &nbsp;
+                                <a href="" className="btn btn-sm btn-danger">
+                                  Delete
+                                </a>
+                              </td>
+                            </tr>
+                          </tbody>
+                        ))}
+                      </table>
+                    </div>
+                  </div>
+                  <div className="col-md-3">
+                    <div className="card px-3 py-3">
+                      <h5 className="card-header mb-4 fw-5 text-secondary">
+                        Create Category
+                      </h5>
+
+                      <div class="form-group">
+                        <label for="code" className="text-secondary">
+                          Code
+                        </label>
+                        <input
+                          type="text"
+                          id="code"
+                          class="form-control border-info"
+                          name="code"
+                          //   ref={(el) => (this.name = el)}
+                          onChange={(e) => setCode(e.target.value)}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="name" className="text-secondary">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control border-info"
+                          name="name"
+                          id="name"
+                          //   ref={(el) => (this.name = el)}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="name" className="text-secondary">
+                          Description
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="desc"
+                          //   ref={(el) => (this.description = el)}
+                          onChange={(e) =>
+                            setDescription(e.target.value)
+                          }></textarea>
+                      </div>
+                      <div class="form-group">
+                        <label for="name" className="text-secondary">
+                          Flag
+                        </label>
+                        <select
+                          class="custom-select border-info"
+                          name="account_type_id"
+                          id="flag"
+                          onChange={(e) => setFlag(e.target.value)}
+                        >
+                          <option></option>
+                          <option value="Service">Service</option>
+                          <option value="Reagent">Reagent</option>
+                        
+                        </select>
+                        
+                      </div>
+                      <button
+                        className="btn btn-primary form-control text-center fw-5"
+                        type="submit"
+                        onClick={CategoryCreate}>
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* <ExpenseDialog
+                open={open}
+                close={() => setOpen(false)}
+                expenseLists={expenseLists}
+                setExpenseLists={setExpenseLists}
+              /> */}
+            </div>
+            {/*<!-- /.container-fluid --> */}
+          </section>
+        </div>
+      </div>
+
+      {/* <!-- /.content-wrapper --> */}
+      <footer className="main-footer">
+        <strong>
+          Copyright &copy; 2017-2020{" "}
+          <a href="http://www.kwintechnologies.com">K-win Technology</a>.
+        </strong>
+        All rights reserved.
+      </footer>
+
+      {/* <!-- Control Sidebar --> */}
+      <aside classNameName="control-sidebar control-sidebar-dark">
+        {/* <!-- Control sidebar content goes here --> */}
+      </aside>
+      {/* <!-- /.control-sidebar --> */}
+
+      {/* <!-- ./wrapper --> */}
+    </div>
+  );
+}
+export default CatRegister;
