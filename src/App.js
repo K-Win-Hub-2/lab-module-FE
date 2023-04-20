@@ -6,6 +6,7 @@ import Reagent from './components/views/Reagent';
 import ReagentReg from './components/views/ReagentReg';
 import DoctorClinic from './components/views/DoctorClinic';
 import DoctorClinicReg from './components/views/DoctorClinicReg';
+import Test from './components/views/Test';
 
 
 import './App.css';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/reagent-reg" element={<ReagentReg />}></Route>
         <Route path="/doctorClinic" element={<DoctorClinic />}></Route>
         <Route path="/doctorClinicReg" element={<DoctorClinicReg />}></Route>
+        <Route path='/test' element={<Test/>}></Route>
       </Routes>
     </Router>
   );
