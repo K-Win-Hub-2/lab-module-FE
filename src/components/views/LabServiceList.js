@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { ExcelExport } from "@progress/kendo-react-excel-export";
 import { ExcelExportColumn } from "@progress/kendo-react-excel-export";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { FaCashRegister } from "react-icons/fa";
 import SideBar from "./SideBar";
 
@@ -14,23 +14,21 @@ const LabServiceList = () => {
   const [labServiceLists, setLabServiceLists] = useState([]);
 
   const showDialog = () => setOpen(true);
-const _export = React.useRef(null);
-const excelExport = () => {
-  if (_export.current !== null) {
-    console.log(_export.current.props.data);
-    _export.current.props.data.map(function (element, index) {
-      element.date = element.date.split("T")[0];
-    });
-    _export.current.save();
-  }
-};
+  const _export = React.useRef(null);
+  const excelExport = () => {
+    if (_export.current !== null) {
+      console.log(_export.current.props.data);
+      _export.current.props.data.map(function (element, index) {
+        element.date = element.date.split("T")[0];
+      });
+      _export.current.save();
+    }
+  };
   useEffect(() => {
     const getLabServiceLists = async () => {
-     
-        const res = await axios.get("http://localhost:9000/api/services");
+      const res = await axios.get("http://localhost:9000/api/services");
 
-        setLabServiceLists(res.data.data);
-   
+      setLabServiceLists(res.data.data);
     };
     getLabServiceLists();
   }, []);
@@ -218,11 +216,7 @@ const excelExport = () => {
 
                                     <td>{labService.name}</td>
 
-                                    <td>
-                                      {labService.relatedCategory
-                                        ? labService.relatedCategory
-                                        : "No"}
-                                    </td>
+                                    <td>{labService.relatedCategory.name}</td>
 
                                     <td>{labService.referDoctor.name}</td>
                                     <td>{labService.charges}</td>

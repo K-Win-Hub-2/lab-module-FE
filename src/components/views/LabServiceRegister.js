@@ -1,96 +1,99 @@
 import React from "react";
 import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
-import { Link } from 'react-router-dom';
-import { FaCashRegister, FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function LabServiceRegister()
-{
+function LabServiceRegister() {
   const [category, setCategory] = useState([]);
-    const [reagent, setReagent] = useState([]);
+  const [reagentArray, setReagentArray] = useState([]);
   const [referDoctor, setReferDoctor] = useState([]);
-    const [code, setCode] = useState("");
+  const [code, setCode] = useState("");
   const [name, setName] = useState("");
-  const [leadTime, setLeadTime] = useState('');
-  const [relatedCategory, setRelatedCategory] = useState('');
-  const [doctor, setDoctor] = useState('');
-  const [charges, setCharges] = useState('');
-  const [cost, setCost] = useState('');
+  const [leadTime, setLeadTime] = useState("");
+  const [relatedCategory, setRelatedCategory] = useState("");
+  const [doctor, setDoctor] = useState("");
+  const [charges, setCharges] = useState("");
+  const [cost, setCost] = useState("");
   const [reagentItems, setReagentItems] = useState([]);
-  const [nominalFlag, setNominalFlag] = useState('');
-  const [nominalValue, setNominalValue] = useState('');
-    const [description, setDescription] = useState("");
-    const [flag, setFlag] = useState("");
-
-    const ServiceCreate = (props) => {
-      const data = {
-        code: code,
-        name: name,
-        leadTime: leadTime,
-        referDoctor:referDoctor,
-        relatedCategory: relatedCategory,
-        charges: charges,
-        cost: cost,
-        reagentItems: reagentItems,
-        nominalFlag: nominalFlag,
-        nominalValue:nominalValue,
-        description: description,
-      
-      };
-
-      alert(JSON.stringify(data));
-      const config = {
-        headers: { "Content-Type": "application/json" },
-      };
-      axios
-        .post("http://localhost:9000/api/service", data, config)
-        .then(function (response) {
-          alert("success");
-          // props.setReagent([...props.category, response.data.data]);
-        })
-        .catch(function (err) {
-          alert(err.message);
-        });
-
+  const [nominalFlag, setNominalFlag] = useState("");
+  const [nominalValue, setNominalValue] = useState("");
+  const [description, setDescription] = useState("");
+  const [tempReagent, setTempReagent] = useState("");
+  const handleBox = (event) => {
+    let newReagent = { name: tempReagent, amount: 0 };
+    setReagentArray([...reagentArray, newReagent]);
+    console.log(reagentArray, "reagentArray");
+  };
+  const ServiceCreate = (event) => {
+    event.preventDefault();
+    const data = {
+      code: code,
+      name: name,
+      leadTime: leadTime,
+      referDoctor: doctor,
+      relatedCategory: relatedCategory,
+      charges: charges,
+      cost: cost,
+      reagentItems: reagentItems,
+      nominalFlag: nominalFlag,
+      nominalValue: nominalValue,
+      description: description,
     };
 
-    useEffect(() => {
-      const getCategory = async () => {
-        try {
-          const res = await axios.get(
-            "http://localhost:9000/api/categories?limit=30"
-          );
+    alert(JSON.stringify(data));
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    axios
+      .post("http://localhost:9000/api/service", data, config)
+      .then(function (response) {
+        alert("success");
+        // props.setReagent([...props.category, response.data.data]);
+      })
+      .catch(function (err) {
+        alert(err.message);
+      });
+  };
 
-          setCategory(res.data.data);
-        } catch (err) {}
-      };
+  useEffect(() => {
+    const getCategory = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/categories?limit=30"
+        );
 
-      const getReferDoctor = async () => {
-        try {
-          const res = await axios.get(
-            "http://localhost:9000/api/doctors?limit=30"
-          );
+        setCategory(res.data.data);
+      } catch (err) {}
+    };
 
-          setReferDoctor(res.data.data);
-        } catch (err) {}
-      };
+    const getReferDoctor = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/doctors?limit=30"
+        );
 
-            const getReagent= async () => {
-              try {
-                const res = await axios.get(
-                  "http://localhost:9000/api/reagents?limit=30"
-                );
+        setReferDoctor(res.data.data);
+        console.log(res.data.data[0]._id);
+      } catch (err) {}
+    };
 
-                setReagent(res.data.data);
-              } catch (err) {}
-            };
-      
-      getReagent();
-      getReferDoctor();
-      getCategory();
-    }, []);
+    const getReagent = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/reagents?limit=30"
+        );
+        console.log(res.data.data);
+        setReagentItems(res.data.data);
+      } catch (err) {}
+    };
+
+    getReagent();
+    getReferDoctor();
+    getCategory();
+  }, []);
   return (
     <div classNameName="App">
       <div className="wrapper">
@@ -251,22 +254,65 @@ function LabServiceRegister()
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <label className="control-label">Add Reagent</label>
-                          <select
-                            name="currency"
-                            id=""
-                            className="form-control mt-1"
-                            onchange="convert(this.value)"
-                            onChange={(e) => setReagentItems(e.target.value)}>
-                            <option value="">Choose Reagent</option>
-
-                            {reagent.map((option) => (
-                              <option value={option._id}>{option.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div className="col-md-6">
+                          <div className="row">
+                            <div className="col-md-8">
+                              <select
+                                class="custom-select border-info"
+                                name="account_type_id"
+                                id="flag"
+                                onChange={(e) =>
+                                  setTempReagent(e.target.value)
+                                }>
+                                <option value="">Choose Reagent</option>
+                                {reagentItems.map((option) => (
+                                  <option value={option.name}>
+                                    {option.name}
+                                  </option>
+                                ))}
+                              </select>
+                            </div>
+                            <div className="col-md-4">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={(e) => handleBox(e.target.value)}>
+                                <i class="fa fa-plus"></i>
+                              </button>
+                            </div>
+                          </div>
+                          {reagentArray ? (
+                            <div>
+                              {reagentArray.map((regArr) => (
+                                <div className="row mt-3">
+                                  <div className="col-md-5">
+                                    <input
+                                      type="text"
+                                      value={regArr.name}
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="col-md-5">
+                                    <input
+                                      type="text"
+                                      defaultValue={0}
+                                      className="form-control"
+                                    />
+                                  </div>
+                                  <div className="col-md-2">
+                                    <button className="btn btn-sm btn-danger rounded-circle opacity-75">
+                                      <FaMinus />
+                                    </button>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                        </div> */}
+                        <div className="col-md-12">
                           <div class="form-group">
                             <label for="name" className="">
                               Nominal Flag
@@ -282,14 +328,18 @@ function LabServiceRegister()
                             </select>
                           </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mt-2">
                           <label for="name" className="">
                             Nominal Value
                           </label>
-<input type='text' className="form-control" onChange={(e)=>setNominalValue(e.target.value)}/>
+                          <input
+                            type="text"
+                            className="form-control"
+                            onChange={(e) => setNominalValue(e.target.value)}
+                          />
                         </div>
                       </div>
-                      <br></br>
+
                       <div className="form-actions">
                         <div className="row">
                           <div className="col-md-6">
@@ -297,7 +347,6 @@ function LabServiceRegister()
                               <div className=" col-md-9">
                                 <button
                                   type="submit"
-                                  
                                   className="btn btn-primary">
                                   Create
                                 </button>
@@ -315,12 +364,11 @@ function LabServiceRegister()
                       </div>
                     </div>
                   </form>
+                  {/* <!-- /.row (main row) --> */}
                 </div>
+                {/*<!-- /.container-fluid --> */}
               </div>
-
-              {/* <!-- /.row (main row) --> */}
             </div>
-            {/*<!-- /.container-fluid --> */}
           </section>
           {/* <!-- /.content --> */}
         </div>
@@ -341,7 +389,6 @@ function LabServiceRegister()
         {/* <!-- /.control-sidebar --> */}
       </div>
       {/* <!-- ./wrapper --> */}
-
     </div>
   );
 }
