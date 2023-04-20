@@ -78,6 +78,43 @@ function Sidebar()
                 </li>
               </li>
 
+              {/* Patient */}
+              <li className="nav-item has-treeview">
+                <a href="#" className="nav-link" id="admin_data">
+                  <i className="nav-icon fas fa-user-injured"></i>
+                  <p>
+                    Patient
+                    {/* <i className="right fas fa-angle-left"></i> */}
+                  </p>
+                </a>
+              </li>
+              <li className="ml-3">
+                <li className="nav-item">
+                  <Link to="/patient/register" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>
+                    <p>Patient Register</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/patient/list" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>
+                    <p>Patient List</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/patient/credit_list" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>
+                    <p>Patient Credit</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/patient/member" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>
+                    <p>Member List </p>
+                  </Link>
+                </li>
+              </li>
+
               <li className="nav-item">
                 <Link to="/account_list" className="nav-link">
                   <i className="nav-icon far fa-address-card"></i>
