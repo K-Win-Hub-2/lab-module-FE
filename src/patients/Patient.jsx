@@ -175,7 +175,8 @@ const Patient = () => {
               <Td>{patient.dateOfBirth}</Td>
               <Td>{patient.gender}</Td>
               <Td>{patient.address}</Td>
-              <Td><Link to={'/test_sale/'+patient._id} class="btn btn-primary">Test Voucher</Link></Td>
+              {/* <Td><Link to={'/test_sale/'+patient._id} class="btn btn-primary">Test Voucher</Link></Td> */}
+              <Td><Link to={'/test_voucher/'+patient._id} class="btn btn-sm btn-primary">Test Voucher</Link></Td>
             </Tr>
             ))
             }
@@ -220,7 +221,7 @@ const Patient = () => {
               <Td>{patient.dateOfBirth}</Td>
               <Td>{patient.gender}</Td>
               <Td>{patient.address}</Td>
-              <Td><Btn className='btn btn-sm btn-primary'>Test Voucher</Btn></Td>
+              <Td><Link to={'/test_voucher/'+patient._id} class="btn btn-sm btn-primary">Test Voucher</Link></Td>
             </Tr>
             ))
             }

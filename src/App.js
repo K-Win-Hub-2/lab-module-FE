@@ -11,6 +11,7 @@ import PatientRegister from './patients/Register';
 import Member from './patients/Member';
 import PatientCredit from './patients/PatientCredit';
 import TestSale from './patients/TestSale';
+import TestVoucher from './patients/TestVoucher';
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
@@ -43,6 +44,7 @@ function App() {
         <Route path='/patient/member' element={<Member />} />
         <Route path='/patient/credit_list' element={<PatientCredit />} />
         <Route path='/test_sale/:id' element={<TestSale />} />
+        <Route path='/test_voucher/:id' element={<TestVoucher />} />
       </Routes>
     </Router>
   );

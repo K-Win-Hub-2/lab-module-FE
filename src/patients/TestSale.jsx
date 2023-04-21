@@ -59,8 +59,20 @@ const Option = styled.option``
 const TestSale = () => {
   const [pname,setPname] = useState('');
   const [pcode,setPcode] = useState('');
+  const [code,setCode] = useState('');
+  const [date,setDate] = useState('');
+  const [email,setEmail] = useState('');
+  const [total,setTotal] = useState(0);
+  const [discount,setDiscount] = useState(0);
+  const [net,setNet] = useState(0);
+  const [pay,setPay] = useState(0);
+  const [change,setChange] = useState(0);
+  const [option,setOption] = useState('Collect');
   const [servs,setServs] = useState([]);
+  const [doctors,setDoctors] = useState([]);
+  const [did,setDid] = useState('');
   const [arr,setArr] = useState([]);
+  const [array,setArray] = useState([]);
   const [serId,setSerId] = useState('');
   const [isDoctor,setIsDoctor] = useState(false);
   const [isEmail,setIsEmail] = useState(false);
@@ -81,20 +93,57 @@ const TestSale = () => {
         setServs(res.data.data);
       }catch(err){}
     }
+    const getDoctors = async () => {
+      try{
+        const res = await axios.get('http://localhost:9000/api/doctors');
+        setDoctors(res.data.data);
+      }catch(err){}
+    }
     getPatient();
     getServs();
+    getDoctors();
     addService();
   },[]);
   
   const addService = async () => {
     const res = await axios.get('http://localhost:9000/api/service/'+serId);
     setArr( arr => [...arr, res.data.data]);
+    setTotal(total + res.data.data.charges);
+    setNet(total + res.data.data.charges);
+    const obj = {
+      "name":res.data.data._id,
+      "qty":1,
+      "unitCharge":res.data.data.charges,
+      "subCharge":res.data.data.charges
+    }
+    setArray( array => [...array, obj]);
   }
   const delSer = (id) =>  {
+    const charges = arr.filter((el)=>el._id == id);
+    setTotal(total - charges[0].charges);
+    setNet(total - charges[0].charges);
     setArr(arr.filter((el)=>el._id != id));
+    setArray(array.filter((el)=>el.name != id));
   }
   const saveTest = () => {
-    
+    const data = {
+    "code": code,
+    "date": date,
+    "relatedPatient": patient_id,
+    "referDoctor": did,
+    "options": option,
+    "email" : email,
+    "testSelection": array,
+    "totalCharge":total,
+    "discount":discount,
+    "netDiscount":net,
+    "pay":pay,
+    "change":change,
+    }
+    const res = axios.post('http://localhost:9000/api/voucher',data)
+     .then(function (response) {
+      alert('success')
+     })
   }
   return (
     <div className="wrapper">
@@ -114,11 +163,11 @@ const TestSale = () => {
             <Div className='row'>
               <div className='col-6'>
               <label htmlFor="">Voucher Date</label>
-              <input type="date" className='form-control'/>
+              <input type="date" className='form-control' onChange={(e)=>setDate(e.target.value)}/>
               </div>
               <div className='col-6'>
               <label htmlFor="">Voucher Code</label>
-              <input type="text" className='form-control'/>
+              <input type="text" className='form-control' onChange={(e)=>setCode(e.target.value)}/>
               </div>
               <div className='col-6 mt-2'>
               <label htmlFor="">Patient Name</label>
@@ -131,22 +180,27 @@ const TestSale = () => {
               <div className='col-6 mt-4'>
               <label htmlFor="">Refer Doctor</label>
               <input className='ml-4'  type="radio" name="doctordata" id='male' onClick={()=>setIsDoctor(true)}/> Yes
-              <input className='ml-4' type="radio" name="doctordata" id='male' onClick={()=>setIsDoctor(false)} checked/> No
+              <input className='ml-4' type="radio" name="doctordata" id='male' onClick={()=>setIsDoctor(false)} active/> No
               </div>
               {isDoctor && <div className='col-6 mt-2'>
               <label htmlFor="">Select Doctor</label>
-              <select className='form-control'>
+              <select className='form-control' onChange={(e)=>setDid(e.target.value)}>
                 <option>Choose Doctor</option>
+                {
+                  doctors.map((doc,index)=>(
+                    <option value={doc._id}>{doc.name}</option>
+                  ))
+                }
               </select>
               </div>}
               <div className='col-6 mt-4'>
               <label htmlFor="">Collect Or Email</label>
-              <input className='ml-4'  type="radio" name="data" id='male' onClick={()=>setIsEmail(false)} checked/> Collect
-              <input className='ml-4' type="radio" name="data" id='male' onClick={()=>setIsEmail(true)}/> Email
+              <input className='ml-4'  type="radio" name="data" id='male' onClick={()=>{setIsEmail(false);setOption('Collect')}} active/> Collect
+              <input className='ml-4' type="radio" name="data" id='male' onClick={()=>{setIsEmail(true);setOption('Email')}}/> Email
               </div>
               {isEmail && <div className='col-6 mt-2'>
               <label htmlFor="">Email</label>
-              <input type="email" className='form-control'/>
+              <input type="email" className='form-control' onChange={(e)=>setEmail(e.target.value)}/>
               </div>}
               <Div className='col-10 mt-5'>
                 <Select onChange={(e)=>setSerId(e.target.value)} id='changes'>
@@ -187,23 +241,23 @@ const TestSale = () => {
               <tfoot>
                 <Tr>
                   <Td colSpan='5' className='text-right'>Total Charge</Td>
-                  <Td>300000</Td>
+                  <Td>{total}</Td>
                 </Tr>
                 <Tr>
                   <Td colSpan='5' className='text-right'>Discount</Td>
-                  <Td>54000</Td>
+                  <Td>0</Td>
                 </Tr>
                 <Tr>
                   <Td colSpan='5' className='text-right'>Net Charge</Td>
-                  <Td>340000</Td>
+                  <Td>{total}</Td>
                 </Tr>
                 <Tr>
                   <Td colSpan='5' className='text-right'>Pay</Td>
-                  <Td>230000</Td>
+                  <Td><input type="number" onChange={(e)=>{setPay(e.target.value);setChange(e.target.value-total)}}/></Td>
                 </Tr>
                 <Tr>
                   <Td colSpan='5' className='text-right'>Change</Td>
-                  <Td>120000</Td>
+                  <Td>{change}</Td>
                 </Tr>
               </tfoot>
             </Table>
