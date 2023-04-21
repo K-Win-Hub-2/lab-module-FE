@@ -216,7 +216,7 @@ const LabServiceList = () => {
 
                                     <td>{labService.name}</td>
 
-                                    {/* <td>{labService.relatedCategory.name}</td> */}
+                                    <td>Test Cat</td>
 
                                     <td>{labService.referDoctor.name}</td> 
                                     <td>{labService.charges}</td>

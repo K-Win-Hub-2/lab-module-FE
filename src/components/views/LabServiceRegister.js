@@ -27,6 +27,7 @@ function LabServiceRegister() {
   const [from, setFrom] = useState('');
   const [to, setTo] = useState('');
   const [gender, setGender] = useState('');
+  const [unit, setUnit] = useState('');
   const [genderMale, setGenderMale] = useState(false);
   const [tempRef, setTempRef] = useState('');
   const [refArray,setRefArray]=useState([]);
@@ -44,18 +45,18 @@ function LabServiceRegister() {
     console.log(reagentArray, "reagentArray", newReagent);
   };
 
-    // const handleRefRange = (event) => {
-    //   let newRef = {
+    const handleRefRange = (event) => {
+      let newRef = {
         
-    //     from:from,
-    //     to: to,
-    //     gender:gender,
-    //     unit:unit,
-    //   };
-    //   console.log(newRef);
-    //   setRefArray([...refArray, newRef]);
-    //   console.log(refArray, "refArray", newRef);
-    // };
+        from:from,
+        to: to,
+        gender:gender,
+        unit:unit,
+      };
+      console.log(newRef);
+      setRefArray([...refArray, newRef]);
+      console.log(refArray, "refArray", newRef);
+    };
   
   const ServiceCreate = (event) => {
     event.preventDefault();
@@ -391,7 +392,7 @@ function LabServiceRegister() {
                             onChange={(e) => setNominalValue(e.target.value)}
                           />
                         </div>
-                        <h5 className="mr-5">Refference Range</h5>
+
                         {/* <button
                           type="button"
                           className="btn btn-primary"
@@ -399,24 +400,24 @@ function LabServiceRegister() {
                           <i class="fa fa-plus"></i>
                         </button> */}
                         <div className="row">
-                          <div className="col-md-3">
-                            <label>From</label>
+                          <label>Refference Range</label>
+                          <div className="col-md-2">
                             <input
                               type="number"
+                              placeholder="From"
                               className="form-control"
                               onChange={(e) => setFrom(e.target.value)}
                             />
                           </div>
-                          <div className="col-md-3">
-                            <label>To</label>
+                          <div className="col-md-2">
                             <input
                               type="number"
+                              placeholder="To"
                               className="form-control"
                               onChange={(e) => setTo(e.target.value)}
                             />
                           </div>
                           <div className="col-md-3">
-                            <label>Gender</label>
                             <select
                               class="custom-select border-info"
                               name="account_type_id"
@@ -425,63 +426,82 @@ function LabServiceRegister() {
                                 setGender(e.target.value);
                                 setGenderMale(true);
                               }}>
-                              <option></option>
+                              <option>Gender</option>
                               <option value="Male">Male</option>
                               <option value="Female">Female</option>
                               <option value="Null">Nutral</option>
                             </select>
                           </div>
 
-                          <div className="col-md-3">
-                            <label>Unit</label>
+                          <div className="col-md-2">
                             <input
                               type="text"
+                              placeholder="Unit"
                               className="form-control"
-                              onChange={(e) => setTo(e.target.value)}
+                              onChange={(e) => setUnit(e.target.value)}
                             />
+                          </div>
+                          <div className="col-md-2">
+                            <button
+                              type="button"
+                              className="btn btn-primary"
+                              onClick={(e) => handleRefRange(e.target.value)}>
+                              <i class="fa fa-plus"></i>
+                            </button>
                           </div>
                         </div>
                       </div>
                       {genderMale ? (
                         <div>
-                          <div className="row">
-                            <div className="col-md-3">
-                              <label>From</label>
+                          <div className="row mt-3">
+                        
+                            <div className="col-md-2">
                               <input
                                 type="number"
+                                placeholder="From"
                                 className="form-control"
                                 onChange={(e) => setFrom(e.target.value)}
                               />
                             </div>
-                            <div className="col-md-3">
-                              <label>To</label>
+                            <div className="col-md-2">
+                             
                               <input
                                 type="number"
+                                placeholder="To"
                                 className="form-control"
                                 onChange={(e) => setTo(e.target.value)}
                               />
                             </div>
                             <div className="col-md-3">
-                              <label>Gender</label>
+                          
                               <select
                                 class="custom-select border-info"
                                 name="account_type_id"
                                 id="flag"
                                 onChange={(e) => setGender(e.target.value)}>
-                                <option></option>
+                                <option>Gender</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Null">Nutral</option>
                               </select>
                             </div>
 
-                            <div className="col-md-3">
-                              <label>Unit</label>
+                            <div className="col-md-2">
+                          
                               <input
                                 type="text"
+                                placeholder="Unit"
                                 className="form-control"
                                 onChange={(e) => setTo(e.target.value)}
                               />
+                            </div>
+                            <div className="col-md-2">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={(e) => handleRefRange(e.target.value)}>
+                                <i class="fa fa-plus"></i>
+                              </button>
                             </div>
                           </div>
                         </div>
