@@ -7,25 +7,26 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function LabServiceRegister() {
-
-
   const [name, setName] = useState("");
   const [selection, setSelection] = useState("");
   const [value, setValue] = useState("");
   const [valueType, setValueType] = useState("");
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [education, setEducation] = useState('');
+  const [position, setPosition] = useState('');
+  const [showRelatedDoc, setShowRelatedDoc] = useState(false);
 
-  const DoctorCreate = (event) =>
-  {
-    
+  const DoctorCreate = (event) => {
     const data = {
       name: name,
       selection: selection,
-      value:value,
+      value: value,
+      education: education,
+      position:position,
       valueType: valueType,
       phone: phone,
-      email:email
+      email: email,
     };
     alert(JSON.stringify(data));
     const config = {
@@ -40,9 +41,7 @@ function LabServiceRegister() {
       .catch(function (err) {
         alert(err.message);
       });
-
   };
-
 
   return (
     <div classNameName="App">
@@ -91,7 +90,10 @@ function LabServiceRegister() {
                             id="doccl"
                             name="doccl"
                             value="Doctor"
-                            onChange={(e) => setSelection(e.target.value)}
+                            onChange={(e) => {
+                              setSelection(e.target.value);
+                              setShowRelatedDoc(true);
+                            }}
                           />
                         </div>
                         &nbsp;&nbsp;&nbsp;
@@ -102,12 +104,14 @@ function LabServiceRegister() {
                             id="doccl"
                             name="doccl"
                             value="Clinic"
-                            onChange={(e) => setSelection(e.target.value)}
+                            onChange={(e) => {
+                              setSelection(e.target.value);
+                              setShowRelatedDoc(false);
+                            }}
                           />
                         </div>
                       </div>
                     </div>
-
                     <div className="form-group">
                       <label className="control-label">Name</label>
                       <input
@@ -174,6 +178,30 @@ function LabServiceRegister() {
                         onChange={(e) => setValue(e.target.value)}
                       />
                     </div>
+                    {showRelatedDoc ? (
+                      <div>
+                        <div className="form-group">
+                          <label className="control-label">Education</label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            onChange={(e) => setEducation(e.target.value)}
+                          />
+                        </div>
+                        <div className="form-group">
+                          <label className="control-label">Position</label>
+
+                          <input
+                            type="text"
+                            className="form-control"
+                            onChange={(e) => setPosition(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                     <br />
 
                     <div className="row">

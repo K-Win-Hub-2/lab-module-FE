@@ -24,6 +24,14 @@ function LabServiceRegister() {
   const [itemName, setItemName] = useState("");
   const [amount, setAmount] = useState("");
   const [tempReagent, setTempReagent] = useState("");
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
+  const [gender, setGender] = useState('');
+  const [genderMale, setGenderMale] = useState(false);
+  const [tempRef, setTempRef] = useState('');
+  const [refArray,setRefArray]=useState([]);
+
+
 
   const handleBox = (event) => {
     let newReagent = {
@@ -31,9 +39,24 @@ function LabServiceRegister() {
       name: tempReagent.split(".")[1],
       amount: 0,
     };
+    console.log(newReagent);
     setReagentArray([...reagentArray, newReagent]);
     console.log(reagentArray, "reagentArray", newReagent);
   };
+
+    // const handleRefRange = (event) => {
+    //   let newRef = {
+        
+    //     from:from,
+    //     to: to,
+    //     gender:gender,
+    //     unit:unit,
+    //   };
+    //   console.log(newRef);
+    //   setRefArray([...refArray, newRef]);
+    //   console.log(refArray, "refArray", newRef);
+    // };
+  
   const ServiceCreate = (event) => {
     event.preventDefault();
     const data = {
@@ -45,6 +68,7 @@ function LabServiceRegister() {
       charges: charges,
       cost: cost,
       reagentItems: reagentArray,
+      referenceRange:refArray,
       nominalFlag: nominalFlag,
       nominalValue: nominalValue,
       description: description,
@@ -93,7 +117,10 @@ function LabServiceRegister() {
           "http://localhost:9000/api/doctors?limit=30"
         );
 
-        setReferDoctor(res.data.data);
+       setReferDoctor(
+         res.data.data.filter((e) => e.selection == "Doctor")
+       );
+        
         console.log(res.data.data[0]._id);
       } catch (err) {}
     };
@@ -364,9 +391,104 @@ function LabServiceRegister() {
                             onChange={(e) => setNominalValue(e.target.value)}
                           />
                         </div>
-                      </div>
+                        <h5 className="mr-5">Refference Range</h5>
+                        {/* <button
+                          type="button"
+                          className="btn btn-primary"
+                          onClick={(e) => handleRefRange(e.target.value)}>
+                          <i class="fa fa-plus"></i>
+                        </button> */}
+                        <div className="row">
+                          <div className="col-md-3">
+                            <label>From</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              onChange={(e) => setFrom(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <label>To</label>
+                            <input
+                              type="number"
+                              className="form-control"
+                              onChange={(e) => setTo(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-md-3">
+                            <label>Gender</label>
+                            <select
+                              class="custom-select border-info"
+                              name="account_type_id"
+                              id="flag"
+                              onChange={(e) => {
+                                setGender(e.target.value);
+                                setGenderMale(true);
+                              }}>
+                              <option></option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
+                              <option value="Null">Nutral</option>
+                            </select>
+                          </div>
 
-                      <div className="form-actions">
+                          <div className="col-md-3">
+                            <label>Unit</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              onChange={(e) => setTo(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      {genderMale ? (
+                        <div>
+                          <div className="row">
+                            <div className="col-md-3">
+                              <label>From</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                onChange={(e) => setFrom(e.target.value)}
+                              />
+                            </div>
+                            <div className="col-md-3">
+                              <label>To</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                onChange={(e) => setTo(e.target.value)}
+                              />
+                            </div>
+                            <div className="col-md-3">
+                              <label>Gender</label>
+                              <select
+                                class="custom-select border-info"
+                                name="account_type_id"
+                                id="flag"
+                                onChange={(e) => setGender(e.target.value)}>
+                                <option></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Null">Nutral</option>
+                              </select>
+                            </div>
+
+                            <div className="col-md-3">
+                              <label>Unit</label>
+                              <input
+                                type="text"
+                                className="form-control"
+                                onChange={(e) => setTo(e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <div className="form-actions mt-3">
                         <div className="row">
                           <div className="col-md-6">
                             <div className="row">

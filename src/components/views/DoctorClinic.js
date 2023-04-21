@@ -202,8 +202,8 @@ const LabServiceList = () => {
 
                                   <th>Selection</th>
 
-                                  <th>Phone</th>
-                                  <th>Value</th>
+                                  <th>Education</th>
+                                  <th>Position</th>
                                   <th className="text-center">Action</th>
                                 </tr>
                               </thead>
@@ -219,8 +219,8 @@ const LabServiceList = () => {
 
 
                                     <td>{doctor.selection}</td>
-                                    <td>{doctor.phone}</td>
-                                    <td>{doctor.value}</td>
+                                    <td>{doctor.education}</td>
+                                    <td>{doctor.position}</td>
 
                                     <td className="text-center">
                                       <a

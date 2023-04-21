@@ -6,11 +6,7 @@ import Reagent from './components/views/Reagent';
 import ReagentReg from './components/views/ReagentReg';
 import DoctorClinic from './components/views/DoctorClinic';
 import DoctorClinicReg from './components/views/DoctorClinicReg';
-<<<<<<< HEAD
 import Test from './components/views/Test';
-
-
-=======
 import Patient from './patients/Patient';
 import PatientRegister from './patients/Register';
 import Member from './patients/Member';

@@ -111,55 +111,76 @@ const TestVoucher = () => {
 
   return (
     <div className="wrapper">
-        <SideBar />
-        {/* <!-- Content Wrapper. Contains page content --> */}
+      <SideBar />
+      {/* <!-- Content Wrapper. Contains page content --> */}
 
-        <div className="content-wrapper">
-          {/* <!-- Content Header (Page header) --> */}
-          <div className="content-header">
-            <div className="container-fluid">
-        <Top>
-          <Left><Title>Tab Voucher List</Title></Left>
-          <Right><Link to={'/test_sale/'+patient_id}><Button><AiOutlinePlus style={{marginRight:'7px'}}/>Create Test</Button></Link></Right>
-        </Top>
-         <Div className='card'>
-          <Div className='card-body'>
-          <Table className='table table-hover mt-4'>
-            <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>Code</Th>
-              <Th>Date</Th>
-              <Th>Discount</Th>
-              <Th>Total Charges</Th>
-              <Th>Action</Th>
-            </Tr>
-            </Thead>
-            <Tbody>
-            {vouchers.map((vou,i) => (
-              <Tr>
-              <Td>{++i}</Td>
-              <Td>{vou.code}</Td>
-              <Td>{vou.date}</Td>
-              <Td>{vou.discount}</Td>
-              <Td>{vou.totalCharge}</Td>
-              <Td>
-                <button className='btn btn-sm btn-success'  onClick={()=>show(vou._id)}>Print</button>
-                <Link className="btn btn-sm btn-primary ml-3">Test Result</Link>
-              </Td>
-            </Tr>
-            ))
-            }
-            </Tbody>
-          </Table>
-          </Div>
-         </Div>
-         </div>
-         </div>
-         </div>
-         <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/>
+      <div className="content-wrapper">
+        {/* <!-- Content Header (Page header) --> */}
+        <div className="content-header">
+          <div className="container-fluid">
+            <Top>
+              <Left>
+                <Title>Tab Voucher List</Title>
+              </Left>
+              <Right>
+                <Link to={"/test_sale/" + patient_id}>
+                  <Button>
+                    <AiOutlinePlus style={{ marginRight: "7px" }} />
+                    Create Test
+                  </Button>
+                </Link>
+              </Right>
+            </Top>
+            <Div className="card">
+              <Div className="card-body">
+                <Table className="table table-hover mt-4">
+                  <Thead>
+                    <Tr>
+                      <Th>#</Th>
+                      <Th>Code</Th>
+                      <Th>Date</Th>
+                      <Th>Discount</Th>
+                      <Th>Total Charges</Th>
+                      <Th>Action</Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {vouchers.map((vou, i) => (
+                      <Tr>
+                        <Td>{++i}</Td>
+                        <Td>{vou.code}</Td>
+                        <Td>{vou.date.split("T")[0]}</Td>
+                        <Td>{vou.discount}</Td>
+                        <Td>{vou.totalCharge}</Td>
+                        <Td>
+                          <button
+                            className="btn btn-sm btn-success"
+                            onClick={() => show(vou._id)}>
+                            Print
+                          </button>
+                          <Link className="btn btn-sm btn-primary ml-3">
+                            Test Result
+                          </Link>
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </Div>
+            </Div>
+          </div>
+        </div>
+      </div>
+      <ResultDialog
+        open={isOpen}
+        close={() => setIsOpen(false)}
+        name={pname}
+        age={page}
+        gender={pgender}
+        voucher={vouId}
+      />
     </div>
-  )
+  );
 }
 
 export default TestVoucher
