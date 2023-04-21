@@ -21,11 +21,18 @@ function LabServiceRegister() {
   const [nominalFlag, setNominalFlag] = useState("");
   const [nominalValue, setNominalValue] = useState("");
   const [description, setDescription] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [amount, setAmount] = useState("");
   const [tempReagent, setTempReagent] = useState("");
+
   const handleBox = (event) => {
-    let newReagent = { name: tempReagent, amount: 0 };
+    let newReagent = {
+      id: tempReagent.split(".")[0],
+      name: tempReagent.split(".")[1],
+      amount: 0,
+    };
     setReagentArray([...reagentArray, newReagent]);
-    console.log(reagentArray, "reagentArray");
+    console.log(reagentArray, "reagentArray", newReagent);
   };
   const ServiceCreate = (event) => {
     event.preventDefault();
@@ -37,7 +44,7 @@ function LabServiceRegister() {
       relatedCategory: relatedCategory,
       charges: charges,
       cost: cost,
-      reagentItems: reagentItems,
+      reagentItems: reagentArray,
       nominalFlag: nominalFlag,
       nominalValue: nominalValue,
       description: description,
@@ -56,6 +63,17 @@ function LabServiceRegister() {
       .catch(function (err) {
         alert(err.message);
       });
+
+    document.getElementById("code").value = "";
+    document.getElementById("name").value = "";
+    document.getElementById("desc").value = "";
+    document.getElementById("lead").value = "";
+    document.getElementById("noVal").value = "";
+    document.getElementById("flag").value = "";
+    document.getElementById("charge").value = "";
+    document.getElementById("cost").value = "";
+    document.getElementById("referdoc").value = "";
+    document.getElementById("cat").value = "";
   };
 
   useEffect(() => {
@@ -140,6 +158,7 @@ function LabServiceRegister() {
                               type="text"
                               className="form-control"
                               name="company_name"
+                              id="code"
                               onChange={(e) => setCode(e.target.value)}
                             />
                           </div>
@@ -152,6 +171,7 @@ function LabServiceRegister() {
                               type="text"
                               className="form-control"
                               name="company_address"
+                              id="name"
                               onChange={(e) => setName(e.target.value)}
                             />
                           </div>
@@ -165,6 +185,7 @@ function LabServiceRegister() {
                               type="text"
                               className="form-control"
                               placeholder=""
+                              id="desc"
                               name="company_contact"
                               onChange={(e) => setDescription(e.target.value)}
                             />
@@ -177,6 +198,7 @@ function LabServiceRegister() {
                               type="date"
                               className="form-control"
                               placeholder=""
+                              id="lead"
                               name="company_email"
                               onChange={(e) => setLeadTime(e.target.value)}
                             />
@@ -190,7 +212,7 @@ function LabServiceRegister() {
 
                             <select
                               name="currency"
-                              id=""
+                              id="cat"
                               className="form-control mt-1"
                               onchange="convert(this.value)"
                               onChange={(e) =>
@@ -213,6 +235,7 @@ function LabServiceRegister() {
                               className="form-control"
                               placeholder=""
                               name="capital"
+                              id="charge"
                               onChange={(e) => setCharges(e.target.value)}
                             />
                           </div>
@@ -226,6 +249,7 @@ function LabServiceRegister() {
                               type="text"
                               className="form-control"
                               placeholder=""
+                              id="cost"
                               name="md_name"
                               onChange={(e) => setCost(e.target.value)}
                             />
@@ -239,7 +263,7 @@ function LabServiceRegister() {
 
                             <select
                               name="currency"
-                              id=""
+                              id="referdoc"
                               className="form-control mt-1"
                               onchange="convert(this.value)"
                               onChange={(e) => setDoctor(e.target.value)}>
@@ -254,26 +278,27 @@ function LabServiceRegister() {
                         </div>
                       </div>
                       <div className="row">
-                        {/* <div className="col-md-6">
+                        <div className="col-md-12">
                           <label className="control-label">Add Reagent</label>
                           <div className="row">
-                            <div className="col-md-8">
+                            <div className="col-md-10">
                               <select
                                 class="custom-select border-info"
                                 name="account_type_id"
                                 id="flag"
-                                onChange={(e) =>
-                                  setTempReagent(e.target.value)
-                                }>
+                                onChange={(e) => {
+                                  setTempReagent(e.target.value);
+                                }}>
                                 <option value="">Choose Reagent</option>
                                 {reagentItems.map((option) => (
-                                  <option value={option.name}>
+                                  <option
+                                    value={option._id + "." + option.name}>
                                     {option.name}
                                   </option>
                                 ))}
                               </select>
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-2">
                               <button
                                 type="button"
                                 className="btn btn-primary"
@@ -311,8 +336,8 @@ function LabServiceRegister() {
                           ) : (
                             ""
                           )}
-                        </div> */}
-                        <div className="col-md-12">
+                        </div>
+                        <div className="col-md-12 mt-3">
                           <div class="form-group">
                             <label for="name" className="">
                               Nominal Flag
@@ -335,6 +360,7 @@ function LabServiceRegister() {
                           <input
                             type="text"
                             className="form-control"
+                            id="noVal"
                             onChange={(e) => setNominalValue(e.target.value)}
                           />
                         </div>

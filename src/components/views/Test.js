@@ -7,7 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function LabServiceRegister() {
-  const [stockUnitTemp, setStockUnitTemp] = useState('');
+  const [stockUnitTemp, setStockUnitTemp] = useState("");
   const [stockUnit, setStockUnit] = useState([]);
   const [stockLists, setStockLists] = useState([]);
   const [supplierLists, setSupplierLists] = useState([]);
@@ -29,9 +29,8 @@ function LabServiceRegister() {
     const data = {
       code: code,
       name: name,
-      stockUnit:stockLists,
-      supplier:supplier,
-      
+      stockUnit: stockLists,
+      supplier: supplier,
     };
 
     alert(JSON.stringify(data));
@@ -54,7 +53,6 @@ function LabServiceRegister() {
   };
 
   useEffect(() => {
-
     const getSupplier = async () => {
       try {
         const res = await axios.get(
@@ -65,7 +63,6 @@ function LabServiceRegister() {
       } catch (err) {}
     };
     getSupplier();
-  
   }, []);
   return (
     <div classNameName="App">
@@ -86,9 +83,7 @@ function LabServiceRegister() {
                         </i>
                       </Link>
                     </li>
-                    <li className="breadcrumb-item active mt-1">
-                      Reagent Register
-                    </li>
+                    <li className="breadcrumb-item active mt-1">Test</li>
                   </ol>
                 </div>
               </div>
@@ -100,47 +95,74 @@ function LabServiceRegister() {
             <div className="container-fluid">
               {/* <!-- Small boxes (Stat box) --> */}
               <div class="card">
+                <h4 className="text-center mt-3">Test Result</h4>
                 <div class="card-body p-b-0">
-                  <div className="form-group">
-                    <label className="control-label">Code</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="company_name"
-                      onChange={(e) => setCode(e.target.value)}
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label className="control-label">Name</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      name="company_address"
-                      onChange={(e) => setName(e.target.value)}
-                    />
-                  </div>
-
-                  {/* <div className="col-md-12">
-                    <label className="control-label">Stock Unit</label>
-                    <div className="row">
-                      <div className="col-md-10">
-                        <select
-                          class="custom-select border-info"
-                          name="account_type_id"
-                          id="flag"
-                          onChange={(e) => {
-                            setStockUnitTemp(e.target.value);
-                          }}>
-                          <option value="">Choose Stock</option>
-                          {stockLists.map((option) => (
-                            <option value={option._id + "." + option.name}>
-                              {option.name}
-                            </option>
-                          ))}
-                        </select>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label">Voucher Date</label>
+                        <input
+                          type="date"
+                          className="form-control"
+                          name="company_name"
+                          onChange={(e) => setCode(e.target.value)}
+                        />
                       </div>
-                      <div className="col-md-2">
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label">Voucher Code</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="company_name"
+                          onChange={(e) => setCode(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label">Patient Name</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="company_name"
+                          onChange={(e) => setCode(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label">Refer Doctor</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          name="company_name"
+                          onChange={(e) => setCode(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <label className="control-label">Patient Code</label>
+                        <input type="text" className="form-control"></input>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="col-md-12">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <label className="control-label">
+                          Test Result List
+                        </label>{" "}
+                        &nbsp; &nbsp;
                         <button
                           type="button"
                           className="btn btn-primary"
@@ -153,67 +175,58 @@ function LabServiceRegister() {
                       <div>
                         {stockLists.map((regArr) => (
                           <div className="row mt-3">
-                            <div className="col-md-5">
+                            <div className="col-md-3">
+                              <label>Name</label>
                               <input
                                 type="text"
                                 value={regArr.name}
                                 className="form-control"
                               />
                             </div>
-                            <div className="col-md-5">
+                            <div className="col-md-3">
+                              <label>Result</label>
                               <input
                                 type="text"
                                 defaultValue={0}
                                 className="form-control"
                               />
                             </div>
-                            <div className="col-md-2">
+                            <div className="col-md-3">
+                              <label>Nominal Value</label>
+                              <input
+                                type="text"
+                                defaultValue={0}
+                                className="form-control"
+                              />
+                            </div>
+                            <div className="col-md-3">
+                              <label>Unit</label>
+                              <input
+                                type="text"
+                                defaultValue={0}
+                                className="form-control"
+                              />
+                            </div>
+                            {/* <div className="col-md-2">
                               <button className="btn btn-sm btn-danger rounded-circle opacity-75">
                                 <FaMinus />
                               </button>
-                            </div>
+                            </div> */}
                           </div>
                         ))}
                       </div>
                     ) : (
                       ""
                     )}
-                  </div> */}
-
-                  <div className="form-group mt-3">
-                    <label className="control-label">Supplier</label>
-                    <select
-                      name="currency"
-                      id="supplier"
-                      className="form-control mt-1"
-                      onchange="convert(this.value)"
-                      onChange={(e) => setSupplier(e.target.value)}>
-                      <option value="">Choose Supplier</option>
-                      {supplierLists.map((option) => (
-                        <option value={option._id}>{option.name}</option>
-                      ))}
-                    </select>
                   </div>
-
-                  {/* <div className="form-group">
-                    <label className="control-label">Purchase Price</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder=""
-                      name="md_name"
-                    />
-                  </div> */}
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="row">
-                        <div className=" col-md-9">
+                  <div className="row mt-5">
+                    <div className="col-md-9">
+            
                           <button
                             type="submit"
                             onClick={ReagentCreate}
                             className="btn btn-primary">
-                            Create
+                            Finish
                           </button>
                           &nbsp;
                           <button
@@ -222,8 +235,17 @@ function LabServiceRegister() {
                             data-dismiss="modal">
                             Cancel
                           </button>
-                        </div>
-                      </div>
+                        
+                    </div>
+                    <div className="col-md-3">
+                      <button type="submit" className="btn btn-warning">
+                        Save Draft
+                      </button>
+                      &nbsp;
+                      <button type="submit" className="btn btn-secondary">
+                        Print
+                      </button>
+                      &nbsp;
                     </div>
                   </div>
                 </div>

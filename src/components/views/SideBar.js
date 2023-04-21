@@ -135,6 +135,13 @@ function Sidebar()
                   </Link>
                 </li>
 
+                <li className="nav-item">
+                  <Link to="/test" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>
+                    <p>Test Result </p>
+                  </Link>
+                </li>
+
                 {/* <li className="nav-item">
                     <a href="/subHead" className="nav-link">
                       <i className="nav-icon fas fa-circle"></i>
