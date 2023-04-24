@@ -121,7 +121,7 @@ const LabServiceList = () => {
                         <label class="">
                           <span class="float-right">
                             <Link to="/lab-register" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Lab Register
+                              <i class="fas fa-plus"></i> &nbsp;Lab Test Register
                             </Link>
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
@@ -216,9 +216,9 @@ const LabServiceList = () => {
 
                                     <td>{labService.name}</td>
 
-                                    <td>{labService.relatedCategory.name}</td>
+                                    <td>Test Cat</td>
 
-                                    <td>{labService.referDoctor.name}</td>
+                                    <td>{labService.referDoctor.name}</td> 
                                     <td>{labService.charges}</td>
 
                                     <td className="text-center">

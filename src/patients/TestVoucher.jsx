@@ -111,8 +111,8 @@ const TestVoucher = () => {
 
   return (
     <div className="wrapper">
-        <SideBar />
-        {/* <!-- Content Wrapper. Contains page content --> */}
+      <SideBar />
+      {/* <!-- Content Wrapper. Contains page content --> */}
 
         <div className="content-wrapper">
           {/* <!-- Content Header (Page header) --> */}
@@ -159,7 +159,7 @@ const TestVoucher = () => {
          </div>
          {/* <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/> */}
     </div>
-  )
+  );
 }
 
 export default TestVoucher
