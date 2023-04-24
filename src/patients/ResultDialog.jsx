@@ -81,7 +81,7 @@ const ResultDialog = (props) => {
               <td>nmol /L</td>
               <td>See Below</td>
               </tr>
-            {vouchers.map((voucher,index)=>(<tr>
+            {vouchers.testResultList.map((voucher,index)=>(<tr>
               <td>{voucher.name}</td>
               <td>{voucher.result}</td>
               <td>{voucher.unit}</td>

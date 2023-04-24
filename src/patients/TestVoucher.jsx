@@ -120,7 +120,7 @@ const TestVoucher = () => {
             <div className="container-fluid">
         <Top>
           <Left><Title>Tab Voucher List</Title></Left>
-          <Right><Link to={'/test_sale/'+patient_id}><Button><AiOutlinePlus style={{marginRight:'7px'}}/>Create Test</Button></Link></Right>
+          <Right><Link to={'/test_sale/'+patient_id} ><Button><AiOutlinePlus style={{marginRight:'7px'}}/>Create Test</Button></Link></Right>
         </Top>
          <Div className='card'>
           <Div className='card-body'>
@@ -144,7 +144,7 @@ const TestVoucher = () => {
               <Td>{vou.discount}</Td>
               <Td>{vou.totalCharge}</Td>
               <Td>
-                <button className='btn btn-sm btn-success'  onClick={()=>show(vou._id)}>Print</button>
+                <Link to={'/test_voucher/'+patient_id+'/'+vou._id} name={pname} age={page} gender={pgender}><button className='btn btn-sm btn-success'>Print</button></Link>
                 <Link className="btn btn-sm btn-primary ml-3">Test Result</Link>
               </Td>
             </Tr>
@@ -157,7 +157,7 @@ const TestVoucher = () => {
          </div>
          </div>
          </div>
-         <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/>
+         {/* <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/> */}
     </div>
   )
 }

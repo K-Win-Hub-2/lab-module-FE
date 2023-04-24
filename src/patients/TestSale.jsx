@@ -4,8 +4,7 @@ import styled from 'styled-components'
 import axios from 'axios';
 import {RxCross2} from 'react-icons/rx'
 import {MdDiscount} from 'react-icons/md'
-import { useLocation } from 'react-router-dom';
-
+import { useNavigate,useLocation } from 'react-router-dom';
 
 const Top = styled.div`
 display : flex;
@@ -77,6 +76,7 @@ const TestSale = () => {
   const [isDoctor,setIsDoctor] = useState(false);
   const [isEmail,setIsEmail] = useState(false);
   const patient_id = useLocation().pathname.split('/')[2];  
+  const navigate = useNavigate();
   
   useEffect(()=> {
     const getPatient = async () =>{
@@ -143,14 +143,25 @@ const TestSale = () => {
     const res = axios.post('http://localhost:9000/api/voucher',data)
      .then(function (response) {
       alert('success')
+      navigate(-1);
      })
+  }
+  const print = () =>{
+    var print_div = document.getElementById("print");
+    var print_area = window.open();
+    print_area.document.write(print_div.innerHTML);
+    print_area.document.close();
+    print_area.focus();
+    print_area.print();
+    print_area.close();
+    // saveTest();
   }
   return (
     <div className="wrapper">
     <SideBar />
     {/* <!-- Content Wrapper. Contains page content --> */}
 
-    <div className="content-wrapper">
+    <div className="content-wrapper" id='ifmcontentstoprint'>
       {/* <!-- Content Header (Page header) --> */}
       <div className="content-header">
         <div className="container-fluid">
@@ -261,10 +272,66 @@ const TestSale = () => {
                 </Tr>
               </tfoot>
             </Table>
+            <div id='print' width='100%' hidden>
+            <h3 style={{textAlign:'center'}}>Lab Test Voucher</h3>
+              <div className='row'>
+                  <div className='col-8'>
+                  <span>Voucher Date : {date}</span>
+                  </div>
+                  <div className='offset-1 col-3'>
+                  <span>Voucher Code : {code}</span>
+                  </div>
+              </div>
+            <Table className='table table-hover mt-4'>
+              <Thead>
+                <Tr>
+                  <Th>No.</Th>
+                  <Th>Name</Th>
+                  <Th>&nbsp;&nbsp;Qty</Th>
+                  <Th>&nbsp;&nbsp;Unit Charge</Th>
+                  <Th>&nbsp;&nbsp;Sub Charge</Th>
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                { arr.map((ar,i)=>(
+                  <Tr key={ar._id}>
+                  <Td>{++i}</Td>
+                  <Td>{ar.name}</Td>
+                  <Td>&nbsp;&nbsp;1</Td>
+                  <Td>&nbsp;&nbsp;{ar.charges}</Td>
+                  <Td>&nbsp;&nbsp;{ar.charges}</Td>
+                </Tr> ))}
+              </Tbody>
+              <tfoot>
+                <br></br>
+                <Tr>
+                  <Td colSpan='5' style={{textAlign:'right'}}>Total Charge-</Td>
+                  <Td>{total}</Td>
+                </Tr>
+                <Tr>
+                  <Td colSpan='5' className='text-right' style={{textAlign:'right'}}>Discount-</Td>
+                  <Td style={{textAlign:'right'}}>0</Td>
+                </Tr>
+                <Tr>
+                  <Td colSpan='5' className='text-right' style={{textAlign:'right'}}>Net Charge-</Td>
+                  <Td style={{textAlign:'right'}}>{total}</Td>
+                </Tr>
+                <Tr>
+                  <Td colSpan='5' className='text-right' style={{textAlign:'right'}}>Pay-</Td>
+                  <Td style={{textAlign:'right'}}>{pay}</Td>
+                </Tr>
+                <Tr>
+                  <Td colSpan='5' className='text-right' style={{textAlign:'right'}}>Change-</Td>
+                  <Td style={{textAlign:'right'}}>{change}</Td>
+                </Tr>
+              </tfoot>
+            </Table>
+            </div>
             <div className='row mt-5'>
                 <div className='offset-5 col-4'>
                 <button className='btn btn-sm btn-success' onClick={saveTest}>Save</button>&nbsp;&nbsp;&nbsp;
-                <button className='btn btn-sm btn-primary'>Print</button>
+                <button className='btn btn-sm btn-primary' onClick={print}>Print</button>
                 </div>
             </div>
         </Div>
