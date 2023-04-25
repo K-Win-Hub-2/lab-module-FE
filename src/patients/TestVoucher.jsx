@@ -88,8 +88,12 @@ const TestVoucher = () => {
   useEffect(()=> {
     const getVouchers = async () =>{
       try{
-        const res = await axios.get('http://localhost:9000/api/vouchers');
-        setVouchers(res.data.data.filter((el)=>el.relatedPatient._id == patient_id));
+        const res = await axios.get(
+          "http://localhost:9000/api/vouchers?limit=30"
+        );
+         console.log(res.data.data);
+        setVouchers(res.data.data.filter((el) => el.relatedPatient._id == patient_id));
+       
       }catch(err){}
     };
     const getPatient = async () =>{
@@ -114,50 +118,70 @@ const TestVoucher = () => {
       <SideBar />
       {/* <!-- Content Wrapper. Contains page content --> */}
 
-        <div className="content-wrapper">
-          {/* <!-- Content Header (Page header) --> */}
-          <div className="content-header">
-            <div className="container-fluid">
-        <Top>
-          <Left><Title>Tab Voucher List</Title></Left>
-          <Right><Link to={'/test_sale/'+patient_id} ><Button><AiOutlinePlus style={{marginRight:'7px'}}/>Create Test</Button></Link></Right>
-        </Top>
-         <Div className='card'>
-          <Div className='card-body'>
-          <Table className='table table-hover mt-4'>
-            <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>Code</Th>
-              <Th>Date</Th>
-              <Th>Discount</Th>
-              <Th>Total Charges</Th>
-              <Th>Action</Th>
-            </Tr>
-            </Thead>
-            <Tbody>
-            {vouchers.map((vou,i) => (
-              <Tr>
-              <Td>{++i}</Td>
-              <Td>{vou.code}</Td>
-              <Td>{vou.date}</Td>
-              <Td>{vou.discount}</Td>
-              <Td>{vou.totalCharge}</Td>
-              <Td>
-                <Link to={'/test_voucher/'+patient_id+'/'+vou._id} name={pname} age={page} gender={pgender}><button className='btn btn-sm btn-success'>Print</button></Link>
-                <Link className="btn btn-sm btn-primary ml-3">Test Result</Link>
-              </Td>
-            </Tr>
-            ))
-            }
-            </Tbody>
-          </Table>
-          </Div>
-         </Div>
-         </div>
-         </div>
-         </div>
-         {/* <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/> */}
+      <div className="content-wrapper">
+        {/* <!-- Content Header (Page header) --> */}
+        <div className="content-header">
+          <div className="container-fluid">
+            <Top>
+              <Left>
+                <Title>Tab Voucher List</Title>
+              </Left>
+              <Right>
+                <Link to={"/test_sale/" + patient_id}>
+                  <Button>
+                    <AiOutlinePlus style={{ marginRight: "7px" }} />
+                    Create Voucher
+                  </Button>
+                </Link>
+              </Right>
+            </Top>
+            <Div className="card">
+              <Div className="card-body">
+                <Table className="table table-hover mt-4">
+                  <Thead>
+                    <Tr>
+                      <Th>#</Th>
+                      <Th>Code</Th>
+                      <Th>Date</Th>
+                      <Th>Discount</Th>
+                      <Th>Total Charges</Th>
+                      <Th>Action</Th>
+                    </Tr>
+                  </Thead>
+                  {vouchers.map((vou, i) => (
+                    <Tbody>
+                      <Tr>
+                        <Td>{++i}</Td>
+                        <Td>{vou.code}</Td>
+                        <Td>{vou.date}</Td>
+                        <Td>{vou.discount}</Td>
+                        <Td>{vou.totalCharge}</Td>
+                        <Td>
+                          <Link
+                            to={"/test_voucher/" + patient_id + "/" + vou._id}
+                            name={pname}
+                            age={page}
+                            gender={pgender}>
+                            <button className="btn btn-sm btn-success">
+                              Print
+                            </button>
+                          </Link>
+                          <Link
+                            to={"/test/" + vou._id}
+                            className="btn btn-sm btn-primary ml-3">
+                            Test Result
+                          </Link>
+                        </Td>
+                      </Tr>
+                    </Tbody>
+                  ))}
+                </Table>
+              </Div>
+            </Div>
+          </div>
+        </div>
+      </div>
+      
     </div>
   );
 }

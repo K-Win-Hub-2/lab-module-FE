@@ -40,3 +40,15 @@
     transform: rotate(360deg);
   }
 }
+
+.result {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  background-color:dark;
+}
+
+.no-outline:focus {
+  outline: none;
+}

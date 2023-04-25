@@ -5,6 +5,10 @@ import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { decode as base64_decode, encode as base64_encode } from "base-64";
+// window.Buffer = window.Buffer || require("buffer").Buffer;
+import Buffer from "buffer";
+import { Base64 } from "js-base64";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -24,13 +28,14 @@ function LabServiceRegister() {
   const [itemName, setItemName] = useState("");
   const [amount, setAmount] = useState("");
   const [tempReagent, setTempReagent] = useState("");
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [gender, setGender] = useState('');
-  const [unit, setUnit] = useState('');
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+  const [gender, setGender] = useState("");
+  const [unit, setUnit] = useState("");
+  const [specialComment, setSpecialComment] = useState("");
   const [genderMale, setGenderMale] = useState(false);
-  const [tempRef, setTempRef] = useState('');
-  const [refArray,setRefArray]=useState([]);
+  const [tempRef, setTempRef] = useState("");
+  const [refArray, setRefArray] = useState([]);
 
 
 
@@ -45,21 +50,26 @@ function LabServiceRegister() {
     console.log(reagentArray, "reagentArray", newReagent);
   };
 
-    const handleRefRange = (event) => {
-      let newRef = {
-        
-        from:from,
-        to: to,
-        gender:gender,
-        unit:unit,
-      };
-      console.log(newRef);
-      setRefArray([...refArray, newRef]);
-      console.log(refArray, "refArray", newRef);
+  const handleRefRange = (event) => {
+    let newRef = {
+      from: from,
+      to: to,
+      gender: gender,
+      unit: unit,
     };
-  
+    console.log(newRef);
+    setRefArray([...refArray, newRef]);
+    console.log(refArray, "refArray", newRef);
+  };
+
   const ServiceCreate = (event) => {
     event.preventDefault();
+    const specialCommentEncode=specialComment.replace(/\n/g, "<br />");
+
+    const myString = specialCommentEncode;
+    const encodedString = Base64.encode(myString);
+    console.log(encodedString); // "SGVsbG8sIHdvcmxkIQ=="
+
     const data = {
       code: code,
       name: name,
@@ -69,11 +79,17 @@ function LabServiceRegister() {
       charges: charges,
       cost: cost,
       reagentItems: reagentArray,
-      referenceRange:refArray,
+      referenceRange: refArray,
       nominalFlag: nominalFlag,
       nominalValue: nominalValue,
       description: description,
+      specialComment: encodedString,
     };
+
+    //  setSpecialComment= function replaceWithBr(specialComment) {
+    //     return specialComment.replace(/\n/g, "<br />");
+    //  };
+    //   console.log(setSpecialComment);
 
     alert(JSON.stringify(data));
     const config = {
@@ -118,10 +134,8 @@ function LabServiceRegister() {
           "http://localhost:9000/api/doctors?limit=30"
         );
 
-       setReferDoctor(
-         res.data.data.filter((e) => e.selection == "Doctor")
-       );
-        
+        setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
+
         console.log(res.data.data[0]._id);
       } catch (err) {}
     };
@@ -393,12 +407,6 @@ function LabServiceRegister() {
                           />
                         </div>
 
-                        {/* <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={(e) => handleRefRange(e.target.value)}>
-                          <i class="fa fa-plus"></i>
-                        </button> */}
                         <div className="row">
                           <label>Refference Range</label>
                           <div className="col-md-2">
@@ -441,6 +449,7 @@ function LabServiceRegister() {
                               onChange={(e) => setUnit(e.target.value)}
                             />
                           </div>
+                          {/* Action button for add data to refArr */}
                           <div className="col-md-2">
                             <button
                               type="button"
@@ -449,12 +458,13 @@ function LabServiceRegister() {
                               <i class="fa fa-plus"></i>
                             </button>
                           </div>
+                          {/* End */}
                         </div>
                       </div>
+                      {/* Action to add data in text box  */}
                       {genderMale ? (
                         <div>
                           <div className="row mt-3">
-                        
                             <div className="col-md-2">
                               <input
                                 type="number"
@@ -464,7 +474,6 @@ function LabServiceRegister() {
                               />
                             </div>
                             <div className="col-md-2">
-                             
                               <input
                                 type="number"
                                 placeholder="To"
@@ -473,7 +482,6 @@ function LabServiceRegister() {
                               />
                             </div>
                             <div className="col-md-3">
-                          
                               <select
                                 class="custom-select border-info"
                                 name="account_type_id"
@@ -487,12 +495,11 @@ function LabServiceRegister() {
                             </div>
 
                             <div className="col-md-2">
-                          
                               <input
                                 type="text"
                                 placeholder="Unit"
                                 className="form-control"
-                                onChange={(e) => setTo(e.target.value)}
+                                onChange={(e) => setUnit(e.target.value)}
                               />
                             </div>
                             <div className="col-md-2">
@@ -508,6 +515,20 @@ function LabServiceRegister() {
                       ) : (
                         ""
                       )}
+                      {/* End */}
+                      <div className="row mt-3">
+                        <div className="col-md-12">
+                          <label>Special Comment</label>
+                          <textarea
+                            rows="10"
+                            cols="40"
+                            className="form-control"
+                            onChange={(e) =>
+                              setSpecialComment(e.target.value)
+                            }></textarea>
+                        </div>
+                      </div>
+
                       <div className="form-actions mt-3">
                         <div className="row">
                           <div className="col-md-6">

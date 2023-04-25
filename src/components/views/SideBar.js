@@ -64,12 +64,12 @@ function Sidebar()
                     <p>Lab Test List</p>
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>
                     <p>Voucher Register</p>
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link to="/reagent" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>
@@ -135,12 +135,12 @@ function Sidebar()
                   </Link>
                 </li>
 
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/test" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>
-                    <p>Test Result </p>
+                    <p>Test Result List</p>
                   </Link>
-                </li>
+                </li> */}
 
                 {/* <li className="nav-item">
                     <a href="/subHead" className="nav-link">
@@ -180,14 +180,14 @@ function Sidebar()
                 </li>
               </li>
 
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="http://clinicdenovopos.kwintechnologies.com/"
                   className="nav-link">
                   <FaCashRegister />
                   <span className="ml-2">POS</span>
                 </Link>
-              </li>
+              </li> */}
 
               <li className="nav-item">
                 <a href="" className="nav-link">

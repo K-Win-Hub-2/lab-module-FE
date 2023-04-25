@@ -145,6 +145,18 @@ const TestSale = () => {
       alert('success')
       navigate(-1);
      })
+
+
+    alert(JSON.stringify(data));
+      const config = {
+        headers: { "Content-Type": "application/json" },
+      };
+      axios
+        .post("http://localhost:9000/api/voucher", data, config)
+        .then(function (response) {
+          alert("success");
+        });
+
   }
   const print = () =>{
     var print_div = document.getElementById("print");

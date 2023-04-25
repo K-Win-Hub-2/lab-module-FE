@@ -1,36 +1,65 @@
 import React from "react";
 import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
-import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import { useLocation, Link } from "react-router-dom";
+import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { decode as base64_decode, encode as base64_encode } from "base-64";
+import Buffer from "buffer";
+import { Base64 } from "js-base64";
+import ReactHtmlParser from "react-html-parser";
+import ResultDialog from "../../patients/ResultDialog";
 
 function LabServiceRegister() {
-  const [stockUnitTemp, setStockUnitTemp] = useState("");
-  const [stockUnit, setStockUnit] = useState([]);
-  const [stockLists, setStockLists] = useState([]);
-  const [supplierLists, setSupplierLists] = useState([]);
-  const [code, setCode] = useState("");
-  const [name, setName] = useState("");
-  const [supplier, setSupplier] = useState("");
+  const [vouDate, setVouDate] = useState("");
+  const [referRange, setReferRange] = useState([]);
+  const [referDoctorLists, setReferDoctorLists] = useState([]);
+  const [voucherLists, setVoucherLists] = useState([]);
+  const [patientLists, setPatientLists] = useState([]);
+  const [serviceLists, setServiceLists] = useState([]);
+  const [testArray, setTestArray] = useState([]);
+  const [testID, setTestID] = useState([]);
+  const [testSelectionId, setTestSelectionId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [result, setResult] = useState("");
+  const [remark, setRemark] = useState("");
+  const [specialComment, setSpecialComment] = useState("");
+  const patient_id = useLocation().pathname.split("/")[2]; 
+   const [pname, setPname] = useState("");
+   const [vouId, setVouId] = useState("");
+   const [page, setPage] = useState("");
+   const [pgender, setPgender] = useState("");
 
-  const handleBox = (event) => {
-    let newStock = {
-      id: stockUnitTemp.split(".")[0],
-      name: stockUnitTemp.split(".")[1],
-      amount: 0,
-    };
-    setStockLists([...stockLists, newStock]);
-    console.log(stockLists, "stockLists", newStock);
-  };
+   const show = (id) => {
+     setVouId(id);
+     setIsOpen(!isOpen);
+   };
+  
+  function decodeBase64(data) {
+    const decode = Base64.decode(data);
 
-  const ReagentCreate = () => {
+    return decode;
+  }
+  // end
+
+  // change /br to line brake format
+  function formatString(data) {
+    const base64String = decodeBase64(data);
+    const reactElements = ReactHtmlParser(base64String);
+
+    return reactElements;
+  }
+  // end
+  const TestVou_id = useLocation().pathname.split("/")[2];
+
+  const handleTestSelection = (event) => {
+    console.log(event._id, "event");
     const data = {
-      code: code,
-      name: name,
-      stockUnit: stockLists,
-      supplier: supplier,
+      testSelectionID: event._id,
+      voucherID: TestVou_id,
+      result: result,
+      remark: remark,
     };
 
     alert(JSON.stringify(data));
@@ -38,31 +67,57 @@ function LabServiceRegister() {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/reagent", data, config)
+      .put("http://localhost:9000/api/vouchers/document", data, config)
       .then(function (response) {
         alert("success");
-        // setReagentLists([...reagentLists, response.data.data]);
+        //  setTestID([testID, response.data.data]);
       })
       .catch(function (err) {
         alert(err.message);
       });
-    document.getElementById("supplier").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("code").value = "";
-    // document.getElementById("flag").value = "";
   };
 
   useEffect(() => {
-    const getSupplier = async () => {
+    const getVoucherList = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/suppliers?limit=30"
+          "http://localhost:9000/api/voucher/" + TestVou_id
         );
 
-        setSupplierLists(res.data.data);
+        // console.log(vouDate);
+        setVoucherLists(res.data.data.testSelection);
+
+        setTestID(res.data.data.testSelection[0]);
+        // console.log(res.data.data.testSelection[0].name.specialComment);
+
+        setVouDate(res.data.data.date.split("T")[0]);
+        // console.log(res.data.data.testSelection[0].result);
       } catch (err) {}
     };
-    getSupplier();
+
+    const getPatientList = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/voucher/" + TestVou_id
+        );
+
+        setPatientLists(res.data.data.relatedPatient);
+      } catch (err) {}
+    };
+
+    const getReferDoctorList = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:9000/api/voucher/" + TestVou_id
+        );
+
+        setReferDoctorLists(res.data.data.referDoctor);
+      } catch (err) {}
+    };
+
+    getReferDoctorList();
+    getPatientList();
+    getVoucherList();
   }, []);
   return (
     <div classNameName="App">
@@ -77,7 +132,7 @@ function LabServiceRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/reagent">
+                      <Link to="/test_voucher/">
                         <i>
                           <FaArrowLeft />
                         </i>
@@ -95,161 +150,137 @@ function LabServiceRegister() {
             <div className="container-fluid">
               {/* <!-- Small boxes (Stat box) --> */}
               <div class="card">
-                <h4 className="text-center mt-3">Test Result</h4>
-                <div class="card-body p-b-0">
+                <h4 className="text-center mt-3">Test Result List</h4>
+                <div className="card-body">
                   <div className="row">
                     <div className="col-md-6">
-                      <div className="form-group">
-                        <label className="control-label">Voucher Date</label>
-                        <input
-                          type="date"
-                          className="form-control"
-                          name="company_name"
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label className="control-label">Voucher Code</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="company_name"
-                          onChange={(e) => setCode(e.target.value)}
-                        />
+                      <div className="row">
+                        <div className="col-md-6">
+                          <label>Date</label>
+                          <input type="date" className="form-control" />
+                        </div>
+                        <div className="col-md-6">
+                          <label>States</label>
+                          <input type="date" className="form-control" />
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label className="control-label">Patient Name</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="company_name"
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                      </div>
-                    </div>
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label className="control-label">Refer Doctor</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="company_name"
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                      </div>
-                    </div>
+                  <div className="row mt-3 card px-3 py-3">
+                    <table className="table table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>Name:</th>
+                          <td>{patientLists.name}</td>
+                          <th>Age:</th>
+                          <td>{patientLists.age}</td>
+                          <th>Sex:</th>
+                          <td>{patientLists.gender}</td>
+                        </tr>
+                        <tr>
+                          <th>Referred From:</th>
+                          <td>{referDoctorLists.name}</td>
+                          <th>Lab Reg No:</th>
+                          <td>123</td>
+                          <th>Date of Report:</th>
+                          <td>{vouDate}</td>
+                        </tr>
+                      </thead>
+                    </table>
                   </div>
+                  <div className="row mt-3 card px-3 py-3">
+                    <table className="table table-bordered ">
+                      <thead>
+                        <tr>
+                          <th>Test</th>
+                          <th>Result</th>
+                          <th>Refference Range</th>
+                          <th>Unit</th>
+                          <th>Remark</th>
+                          {/* <th>States</th> */}
+                          <th>Action</th>
+                        </tr>
+                      </thead>
 
-                  <div className="row">
-                    <div className="col-md-6">
-                      <div className="form-group">
-                        <label className="control-label">Patient Code</label>
-                        <input type="text" className="form-control"></input>
-                      </div>
-                    </div>
-                  </div>
+                      {voucherLists.map((testSelect) => (
+                        <tbody>
+                          <tr>
+                            <td>{testSelect.name.name}</td>
+                            <td>
+                              <div className="col-md-12 border-0">
+                                <input
+                                  type="text"
+                                  id="result"
+                                  onChange={(e) => setResult(e.target.value)}
+                                  class="form-control"
+                                  placeholder="Enter Result"
+                                />
+                              </div>
+                            </td>
 
-                  <div className="col-md-12">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <label className="control-label">
-                          Test Result List
-                        </label>{" "}
-                        &nbsp; &nbsp;
-                        <button
-                          type="button"
-                          className="btn btn-primary"
-                          onClick={(e) => handleBox(e.target.value)}>
-                          <i class="fa fa-plus"></i>
-                        </button>
-                      </div>
-                    </div>
-                    {stockLists ? (
-                      <div>
-                        {stockLists.map((regArr) => (
-                          <div className="row mt-3">
-                            <div className="col-md-3">
-                              <label>Name</label>
-                              <input
-                                type="text"
-                                value={regArr.name}
-                                className="form-control"
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <label>Result</label>
-                              <input
-                                type="text"
-                                defaultValue={0}
-                                className="form-control"
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <label>Nominal Value</label>
-                              <input
-                                type="text"
-                                defaultValue={0}
-                                className="form-control"
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <label>Unit</label>
-                              <input
-                                type="text"
-                                defaultValue={0}
-                                className="form-control"
-                              />
-                            </div>
-                            {/* <div className="col-md-2">
-                              <button className="btn btn-sm btn-danger rounded-circle opacity-75">
-                                <FaMinus />
+                            <td>
+                              {testSelect.name.referenceRange.map((refer) => (
+                                <p>
+                                  {refer.gender}: &nbsp;
+                                  {refer.from}-{refer.to} &nbsp;
+                                </p>
+                              ))}
+                            </td>
+
+                            <td>
+                              {testSelect.name.referenceRange.map((refer) => (
+                                <p>{refer.unit}</p>
+                              ))}
+                            </td>
+
+                            <td>
+                              <div className="col-md-12 border-0">
+                                <input
+                                  type="text"
+                                  id="remark"
+                                  onChange={(e) => setRemark(e.target.value)}
+                                  class="form-control"
+                                  placeholder="Enter Remark"
+                                />
+                              </div>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                onClick={(e) => handleTestSelection(testSelect)}
+                                className="btn btn-sm btn-info ml-2">
+                                <FaSave />
                               </button>
-                            </div> */}
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      ))}
+                    </table>
                   </div>
-                  <div className="row mt-5">
-                    <div className="col-md-9">
-            
-                          <button
-                            type="submit"
-                            onClick={ReagentCreate}
-                            className="btn btn-primary">
-                            Finish
-                          </button>
-                          &nbsp;
-                          <button
-                            type="button"
-                            className="btn btn-danger"
-                            data-dismiss="modal">
-                            Cancel
-                          </button>
-                        
-                    </div>
-                    <div className="col-md-3">
-                      <button type="submit" className="btn btn-warning">
-                        Save Draft
-                      </button>
-                      &nbsp;
-                      <button type="submit" className="btn btn-secondary">
-                        Print
-                      </button>
-                      &nbsp;
-                    </div>
+                  <div className="card px-3 py-2">
+                    <h4>Reference Ranges</h4>
+                    {voucherLists.map((specDecode) => (
+                      <div>
+                        <h6 className="text-bold">
+                          {specDecode.name.name} Reference Range
+                        </h6>
+                        <p>{formatString(specDecode.name.specialComment)}</p>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="">
+                    <Link
+                      to={"/test_voucher/" + patient_id + "/" + TestVou_id}
+                      name={pname}
+                      age={page}
+                      gender={pgender}>
+                      <button className="btn btn-sm btn-success">Print</button>
+                    </Link>
                   </div>
                 </div>
               </div>
+              {/* 
+              <ResultDialog open={isOpen} close={() => setIsOpen(false)} /> */}
             </div>
 
             {/* <!-- /.row (main row) --> */}
