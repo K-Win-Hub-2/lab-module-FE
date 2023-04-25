@@ -89,12 +89,12 @@ function Sidebar()
                 </a>
               </li>
               <li className="ml-3">
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/patient/register" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>
                     <p>Patient Register</p>
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link to="/patient/list" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>

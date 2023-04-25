@@ -10,13 +10,11 @@ function CatRegister() {
   const [description, setDescription] = useState("");
   const [flag, setFlag] = useState("");
 
-
-
   useEffect(() => {
     const getReagent = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/reagents?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
         );
 
         setReagent(res.data.data);
@@ -43,9 +41,7 @@ function CatRegister() {
                     <li className="breadcrumb-item">
                       <a href="/">Home</a>
                     </li>
-                    <li className="breadcrumb-item active">
-                    Reagent List
-                    </li>
+                    <li className="breadcrumb-item active">Reagent List</li>
                   </ol>
                 </div>
               </div>
@@ -104,7 +100,7 @@ function CatRegister() {
                               <td>{++i}</td>
                               <td>{reag.code}</td>
                               <td>{reag.name}</td>
-{/* 
+                              {/* 
                               <td>{reag.stockUnit[0].unitName}</td> */}
 
                               <td>{reag.supplier.name}</td>

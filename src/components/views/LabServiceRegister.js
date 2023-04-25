@@ -36,8 +36,8 @@ function LabServiceRegister() {
   const [genderMale, setGenderMale] = useState(false);
   const [tempRef, setTempRef] = useState("");
   const [refArray, setRefArray] = useState([]);
-
-
+  const [specialFlag, setSpecialFlag] = useState('');
+  const [showSpecialCmt, setShowSpecialCmt] = useState(false);
 
   const handleBox = (event) => {
     let newReagent = {
@@ -64,7 +64,7 @@ function LabServiceRegister() {
 
   const ServiceCreate = (event) => {
     event.preventDefault();
-    const specialCommentEncode=specialComment.replace(/\n/g, "<br />");
+    const specialCommentEncode = specialComment.replace(/\n/g, "<br />");
 
     const myString = specialCommentEncode;
     const encodedString = Base64.encode(myString);
@@ -83,20 +83,21 @@ function LabServiceRegister() {
       nominalFlag: nominalFlag,
       nominalValue: nominalValue,
       description: description,
+      specialFlag:specialFlag,
       specialComment: encodedString,
     };
-
-    //  setSpecialComment= function replaceWithBr(specialComment) {
-    //     return specialComment.replace(/\n/g, "<br />");
-    //  };
-    //   console.log(setSpecialComment);
+ 
 
     alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/service", data, config)
+      .post(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+        data,
+        config
+      )
       .then(function (response) {
         alert("success");
         // props.setReagent([...props.category, response.data.data]);
@@ -121,7 +122,7 @@ function LabServiceRegister() {
     const getCategory = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/categories?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
         );
 
         setCategory(res.data.data);
@@ -131,7 +132,7 @@ function LabServiceRegister() {
     const getReferDoctor = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/doctors?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
         );
 
         setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
@@ -143,7 +144,7 @@ function LabServiceRegister() {
     const getReagent = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/reagents?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
         );
         console.log(res.data.data);
         setReagentItems(res.data.data);
@@ -516,18 +517,37 @@ function LabServiceRegister() {
                         ""
                       )}
                       {/* End */}
-                      <div className="row mt-3">
-                        <div className="col-md-12">
+                      <div className="row mt-5">
+                        <div className="col-md-2">
                           <label>Special Comment</label>
-                          <textarea
-                            rows="10"
-                            cols="40"
-                            className="form-control"
-                            onChange={(e) =>
-                              setSpecialComment(e.target.value)
-                            }></textarea>
+                        </div>
+                        <div className="col-md-1">
+                          <input
+                            type="radio"
+                            id="amoper"
+                            name="amoper"
+                            value="true"
+                            onChange={(e) => {
+                              setSpecialFlag(e.target.value);
+                              setShowSpecialCmt(true);
+                            }}
+                          />
                         </div>
                       </div>
+                      {showSpecialCmt && (
+                        <div className="row mt-5">
+                          <div className="col-md-12">
+                            <label>Write Comment</label>
+                            <textarea
+                              rows="10"
+                              cols="40"
+                              className="form-control"
+                              onChange={(e) =>
+                                setSpecialComment(e.target.value)
+                              }></textarea>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="form-actions mt-3">
                         <div className="row">

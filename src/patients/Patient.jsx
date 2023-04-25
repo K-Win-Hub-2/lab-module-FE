@@ -87,7 +87,7 @@ const Patient = () => {
   useEffect(()=> {
     const getPatients = async () =>{
       try{
-        const res = await axios.get('http://localhost:9000/api/patients');
+        const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/patients');
         setPatients(res.data.list.filter((el)=>el.patientStatus == 'Old'));
         setAllPatients(res.data.list.filter((el)=>el.patientStatus == 'Old'));
         setPatientsNew(res.data.list.filter((el)=>el.patientStatus == 'New'));
@@ -118,124 +118,161 @@ const Patient = () => {
 
   return (
     <div className="wrapper">
-        <SideBar />
-        {/* <!-- Content Wrapper. Contains page content --> */}
+      <SideBar />
+      {/* <!-- Content Wrapper. Contains page content --> */}
 
-        <div className="content-wrapper">
-          {/* <!-- Content Header (Page header) --> */}
-          <div className="content-header">
-            <div className="container-fluid">
-        <Top>
-          <Left><Title>Patient List</Title></Left>
-          <Right><Button><AiOutlinePlus style={{marginRight:'7px'}}/>Patient Register</Button></Right>
-        </Top>
-         <Div className='card'>
-          <Div className='card-body'>
-          <Tabs>
-          <TabList>
-            <Tab>Old</Tab>
-            <Tab>New</Tab>
-          </TabList>
+      <div className="content-wrapper">
+        {/* <!-- Content Header (Page header) --> */}
+        <div className="content-header">
+          <div className="container-fluid">
+            <Top>
+              <Left>
+                <Title>Patient List</Title>
+              </Left>
+              <Right>
+                <Link to="/patient/register">
+                  <Button>
+                    <AiOutlinePlus style={{ marginRight: "7px" }} />
+                    Patient Register
+                  </Button>
+                </Link>
+              </Right>
+            </Top>
+            <Div className="card">
+              <Div className="card-body">
+                <Tabs>
+                  <TabList>
+                    <Tab>Old</Tab>
+                    <Tab>New</Tab>
+                  </TabList>
 
-          <TabPanel>
-          <Top className='mt-4'>
-          <Left><Input type="text" placeholder="Search..."/></Left>
-          <Right>
-            {isOpen && <Select onChange={(e)=>genderfilter(e.target.value)}>
-              <Option>Gender</Option>
-              <Option value="1">Male</Option>
-              <Option value="2">Female</Option>
-            </Select>}
-            <Btn className='btn btn-outline-primary'><AiTwotoneFilter onClick={show}/></Btn>
-            <Btn className='btn btn-outline-success'><FaFileExport/></Btn>
-          </Right>
-         </Top>
-          <Table className='table table-hover mt-4'>
-            <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>Patient Id</Th>
-              <Th>Name</Th>
-              <Th>Age</Th>
-              <Th>Phone</Th>
-              <Th>Date of Birth</Th>
-              <Th>Gender</Th>
-              <Th>Address</Th>
-              <Th>Action</Th>
-            </Tr>
-            </Thead>
-            <Tbody>
-            {patientsOld.map((patient,i) => (
-              <Tr>
-              <Td>{++i}</Td>
-              <Td>{patient.patientID}</Td>
-              <Td>{patient.name}</Td>
-              <Td>{patient.age}</Td>
-              <Td>{patient.phone}</Td>
-              <Td>{patient.dateOfBirth.split('T')[0]}</Td>
-              <Td>{patient.gender}</Td>
-              <Td>{patient.address}</Td>
-              {/* <Td><Link to={'/test_sale/'+patient._id} class="btn btn-primary">Test Voucher</Link></Td> */}
-              <Td><Link to={'/test_voucher/'+patient._id} class="btn btn-sm btn-primary">Test Voucher</Link></Td>
-            </Tr>
-            ))
-            }
-            </Tbody>
-          </Table>
-          </TabPanel>
-          <TabPanel>
-          <Top className='mt-4'>
-          <Left><Input type="text" placeholder="Search..."/></Left>
-          <Right>
-            {isOpen && <Select onChange={(e)=>genderfilterNew(e.target.value)}>
-              <Option>Gender</Option>
-              <Option value="1">Male</Option>
-              <Option value="2">Female</Option>
-            </Select>}
-            <Btn className='btn btn-outline-primary'><AiTwotoneFilter onClick={show}/></Btn>
-            <Btn className='btn btn-outline-success'><FaFileExport/></Btn>
-          </Right>
-         </Top>
-          <Table className='table table-hover mt-4'>
-            <Thead>
-            <Tr>
-              <Th>#</Th>
-              <Th>Patient Id</Th>
-              <Th>Name</Th>
-              <Th>Age</Th>
-              <Th>Phone</Th>
-              <Th>Date of Birth</Th>
-              <Th>Gender</Th>
-              <Th>Address</Th>
-              <Th>Action</Th>
-            </Tr>
-            </Thead>
-            <Tbody>
-            {patientsNew.map((patient,i) => (
-              <Tr>
-              <Td>{++i}</Td>
-              <Td>{patient.patientID}</Td>
-              <Td>{patient.name}</Td>
-              <Td>{patient.age}</Td>
-              <Td>{patient.phone}</Td>
-              <Td>{patient.dateOfBirth}</Td>
-              <Td>{patient.gender}</Td>
-              <Td>{patient.address}</Td>
-              <Td><Link to={'/test_voucher/'+patient._id} class="btn btn-sm btn-primary">Test Voucher</Link></Td>
-            </Tr>
-            ))
-            }
-            </Tbody>
-          </Table>
-          </TabPanel>
-        </Tabs>
-          </Div>
-         </Div>
-         </div>
-         </div>
-         </div>
+                  <TabPanel>
+                    <Top className="mt-4">
+                      <Left>
+                        <Input type="text" placeholder="Search..." />
+                      </Left>
+                      <Right>
+                        {isOpen && (
+                          <Select
+                            onChange={(e) => genderfilter(e.target.value)}>
+                            <Option>Gender</Option>
+                            <Option value="1">Male</Option>
+                            <Option value="2">Female</Option>
+                          </Select>
+                        )}
+                        <Btn className="btn btn-outline-primary">
+                          <AiTwotoneFilter onClick={show} />
+                        </Btn>
+                        <Btn className="btn btn-outline-success">
+                          <FaFileExport />
+                        </Btn>
+                      </Right>
+                    </Top>
+                    <Table className="table table-hover mt-4">
+                      <Thead>
+                        <Tr>
+                          <Th>#</Th>
+                          <Th>Patient Id</Th>
+                          <Th>Name</Th>
+                          <Th>Age</Th>
+                          <Th>Phone</Th>
+                          <Th>Date of Birth</Th>
+                          <Th>Gender</Th>
+                          <Th>Address</Th>
+                          <Th>Action</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {patientsOld.map((patient, i) => (
+                          <Tr>
+                            <Td>{++i}</Td>
+                            <Td>{patient.patientID}</Td>
+                            <Td>{patient.name}</Td>
+                            <Td>{patient.age}</Td>
+                            <Td>{patient.phone}</Td>
+                            <Td>{patient.dateOfBirth.split("T")[0]}</Td>
+                            <Td>{patient.gender}</Td>
+                            <Td>{patient.address}</Td>
+                            {/* <Td><Link to={'/test_sale/'+patient._id} class="btn btn-primary">Test Voucher</Link></Td> */}
+                            <Td>
+                              <Link
+                                to={"/test_voucher/" + patient._id}
+                                class="btn btn-sm btn-primary">
+                                Test Voucher
+                              </Link>
+                            </Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TabPanel>
+                  <TabPanel>
+                    <Top className="mt-4">
+                      <Left>
+                        <Input type="text" placeholder="Search..." />
+                      </Left>
+                      <Right>
+                        {isOpen && (
+                          <Select
+                            onChange={(e) => genderfilterNew(e.target.value)}>
+                            <Option>Gender</Option>
+                            <Option value="1">Male</Option>
+                            <Option value="2">Female</Option>
+                          </Select>
+                        )}
+                        <Btn className="btn btn-outline-primary">
+                          <AiTwotoneFilter onClick={show} />
+                        </Btn>
+                        <Btn className="btn btn-outline-success">
+                          <FaFileExport />
+                        </Btn>
+                      </Right>
+                    </Top>
+                    <Table className="table table-hover mt-4">
+                      <Thead>
+                        <Tr>
+                          <Th>#</Th>
+                          <Th>Patient Id</Th>
+                          <Th>Name</Th>
+                          <Th>Age</Th>
+                          <Th>Phone</Th>
+                          <Th>Date of Birth</Th>
+                          <Th>Gender</Th>
+                          <Th>Address</Th>
+                          <Th>Action</Th>
+                        </Tr>
+                      </Thead>
+                      <Tbody>
+                        {patientsNew.map((patient, i) => (
+                          <Tr>
+                            <Td>{++i}</Td>
+                            <Td>{patient.patientID}</Td>
+                            <Td>{patient.name}</Td>
+                            <Td>{patient.age}</Td>
+                            <Td>{patient.phone}</Td>
+                            <Td>{patient.dateOfBirth}</Td>
+                            <Td>{patient.gender}</Td>
+                            <Td>{patient.address}</Td>
+                            <Td>
+                              <Link
+                                to={"/test_voucher/" + patient._id}
+                                class="btn btn-sm btn-primary">
+                                Test Voucher
+                              </Link>
+                            </Td>
+                          </Tr>
+                        ))}
+                      </Tbody>
+                    </Table>
+                  </TabPanel>
+                </Tabs>
+              </Div>
+            </Div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default Patient

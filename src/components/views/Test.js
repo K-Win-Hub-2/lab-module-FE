@@ -25,17 +25,18 @@ function LabServiceRegister() {
   const [result, setResult] = useState("");
   const [remark, setRemark] = useState("");
   const [specialComment, setSpecialComment] = useState("");
-  const patient_id = useLocation().pathname.split("/")[2]; 
-   const [pname, setPname] = useState("");
-   const [vouId, setVouId] = useState("");
-   const [page, setPage] = useState("");
-   const [pgender, setPgender] = useState("");
+  const patient_id = useLocation().pathname.split("/")[2];
+  const [pname, setPname] = useState("");
+  const [vouId, setVouId] = useState("");
+  const [page, setPage] = useState("");
+  const [pgender, setPgender] = useState("");
+  const [patientID, setPatientID] = useState([]);
 
-   const show = (id) => {
-     setVouId(id);
-     setIsOpen(!isOpen);
-   };
-  
+  const show = (id) => {
+    setVouId(id);
+    setIsOpen(!isOpen);
+  };
+
   function decodeBase64(data) {
     const decode = Base64.decode(data);
 
@@ -67,7 +68,11 @@ function LabServiceRegister() {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .put("http://localhost:9000/api/vouchers/document", data, config)
+      .put(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/document",
+        data,
+        config
+      )
       .then(function (response) {
         alert("success");
         //  setTestID([testID, response.data.data]);
@@ -81,7 +86,8 @@ function LabServiceRegister() {
     const getVoucherList = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/voucher/" + TestVou_id
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+            TestVou_id
         );
 
         // console.log(vouDate);
@@ -91,24 +97,29 @@ function LabServiceRegister() {
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
         setVouDate(res.data.data.date.split("T")[0]);
-        // console.log(res.data.data.testSelection[0].result);
+
+        
       } catch (err) {}
     };
 
     const getPatientList = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/voucher/" + TestVou_id
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+            TestVou_id
         );
 
         setPatientLists(res.data.data.relatedPatient);
+      setPatientID(res.data.data.relatedPatient);
+      console.log(res.data.data._id);
       } catch (err) {}
     };
 
     const getReferDoctorList = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/voucher/" + TestVou_id
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+            TestVou_id
         );
 
         setReferDoctorLists(res.data.data.referDoctor);
@@ -132,7 +143,7 @@ function LabServiceRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/test_voucher/">
+                      <Link to={"/test_voucher/" + patientID._id}>
                         <i>
                           <FaArrowLeft />
                         </i>
@@ -167,7 +178,7 @@ function LabServiceRegister() {
                     </div>
                   </div>
                   <div className="row mt-3 card px-3 py-3">
-                    <table className="table table-bordered ">
+                    <table className="table">
                       <thead>
                         <tr>
                           <th>Name:</th>
@@ -257,24 +268,25 @@ function LabServiceRegister() {
                       ))}
                     </table>
                   </div>
-                  <div className="card px-3 py-2">
-                    <h4>Reference Ranges</h4>
-                    {voucherLists.map((specDecode) => (
-                      <div>
-                        <h6 className="text-bold">
-                          {specDecode.name.name} Reference Range
-                        </h6>
-                        <p>{formatString(specDecode.name.specialComment)}</p>
-                      </div>
-                    ))}
+                  <div className="px-3 py-3 card">
+                    <div className="row">
+                      {voucherLists.map((specDecode) => (
+                        <div className="col-md-6 px-3 py-3">
+                          <h6 className="text-bold text-decoration-underline">
+                            {specDecode.name.name} Reference Range
+                          </h6>
+                          <p>{formatString(specDecode.name.specialComment)}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                  <div className="">
+                  <div className="d-flex justify-content-center">
                     <Link
                       to={"/test_voucher/" + patient_id + "/" + TestVou_id}
                       name={pname}
                       age={page}
                       gender={pgender}>
-                      <button className="btn btn-sm btn-success">Print</button>
+                      <button className="btn btn-success">Print</button>
                     </Link>
                   </div>
                 </div>

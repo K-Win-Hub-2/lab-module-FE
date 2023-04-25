@@ -26,7 +26,9 @@ const LabServiceList = () => {
   };
   useEffect(() => {
     const getDoctorLists = async () => {
-      const res = await axios.get("http://localhost:9000/api/doctors");
+      const res = await axios.get(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
+      );
 
       setDoctorLists(res.data.data);
     };
@@ -51,7 +53,9 @@ const LabServiceList = () => {
                     <li className="breadcrumb-item">
                       <a href="/">Home</a>
                     </li>
-                    <li className="breadcrumb-item active">Doctor / Clinic List</li>
+                    <li className="breadcrumb-item active">
+                      Doctor / Clinic List
+                    </li>
                   </ol>
                 </div>
               </div>
@@ -121,7 +125,8 @@ const LabServiceList = () => {
                         <label class="">
                           <span class="float-right">
                             <Link to="/doctorClinicReg" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Doctor/Clinic Register
+                              <i class="fas fa-plus"></i> &nbsp;Doctor/Clinic
+                              Register
                             </Link>
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
@@ -196,7 +201,7 @@ const LabServiceList = () => {
                               <thead class="bg-info text-white">
                                 <tr>
                                   <th>#</th>
-                                
+
                                   {/* <th>Bank / Cash Account</th>  */}
                                   <th>Name</th>
 
@@ -212,11 +217,8 @@ const LabServiceList = () => {
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
-                                    
 
                                     <td>{doctor.name}</td>
-
-
 
                                     <td>{doctor.selection}</td>
                                     <td>{doctor.education}</td>

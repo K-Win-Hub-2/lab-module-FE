@@ -26,7 +26,9 @@ const LabServiceList = () => {
   };
   useEffect(() => {
     const getLabServiceLists = async () => {
-      const res = await axios.get("http://localhost:9000/api/services");
+      const res = await axios.get(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
+      );
 
       setLabServiceLists(res.data.data);
     };
@@ -121,7 +123,8 @@ const LabServiceList = () => {
                         <label class="">
                           <span class="float-right">
                             <Link to="/lab-register" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Lab Test Register
+                              <i class="fas fa-plus"></i> &nbsp;Lab Test
+                              Register
                             </Link>
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
@@ -218,7 +221,7 @@ const LabServiceList = () => {
 
                                     <td>Test Cat</td>
 
-                                    <td>{labService.referDoctor.name}</td> 
+                                    <td>{labService.referDoctor.name}</td>
                                     <td>{labService.charges}</td>
 
                                     <td className="text-center">

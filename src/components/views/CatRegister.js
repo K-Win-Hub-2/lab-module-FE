@@ -25,7 +25,11 @@ function CatRegister()
        headers: { "Content-Type": "application/json" },
      };
      axios
-       .post("http://localhost:9000/api/category", data, config)
+       .post(
+         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/category",
+         data,
+         config
+       )
        .then(function (response) {
          alert("success");
          setCategory([...category, response.data.data]);
@@ -44,7 +48,7 @@ function CatRegister()
      const getCategory = async () => {
        try {
          const res = await axios.get(
-           "http://localhost:9000/api/categories?limit=30"
+           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
          );
 
          setCategory(res.data.data);

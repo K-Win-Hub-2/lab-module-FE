@@ -13,8 +13,8 @@ function LabServiceRegister() {
   const [valueType, setValueType] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [education, setEducation] = useState('');
-  const [position, setPosition] = useState('');
+  const [education, setEducation] = useState("");
+  const [position, setPosition] = useState("");
   const [showRelatedDoc, setShowRelatedDoc] = useState(false);
 
   const DoctorCreate = (event) => {
@@ -23,7 +23,7 @@ function LabServiceRegister() {
       selection: selection,
       value: value,
       education: education,
-      position:position,
+      position: position,
       valueType: valueType,
       phone: phone,
       email: email,
@@ -33,7 +33,11 @@ function LabServiceRegister() {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/doctor", data, config)
+      .post(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor",
+        data,
+        config
+      )
       .then(function (response) {
         alert("success");
         // setCategory([...category, response.data.data]);

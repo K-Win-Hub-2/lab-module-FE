@@ -7,7 +7,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function LabServiceRegister() {
-  const [stockUnitTemp, setStockUnitTemp] = useState('');
+  const [stockUnitTemp, setStockUnitTemp] = useState("");
   const [stockUnit, setStockUnit] = useState([]);
   const [stockLists, setStockLists] = useState([]);
   const [supplierLists, setSupplierLists] = useState([]);
@@ -29,9 +29,8 @@ function LabServiceRegister() {
     const data = {
       code: code,
       name: name,
-      stockUnit:stockLists,
-      supplier:supplier,
-      
+      stockUnit: stockLists,
+      supplier: supplier,
     };
 
     alert(JSON.stringify(data));
@@ -39,7 +38,11 @@ function LabServiceRegister() {
       headers: { "Content-Type": "application/json" },
     };
     axios
-      .post("http://localhost:9000/api/reagent", data, config)
+      .post(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent",
+        data,
+        config
+      )
       .then(function (response) {
         alert("success");
         // setReagentLists([...reagentLists, response.data.data]);
@@ -54,18 +57,16 @@ function LabServiceRegister() {
   };
 
   useEffect(() => {
-
     const getSupplier = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/suppliers?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/suppliers?limit=30"
         );
 
         setSupplierLists(res.data.data);
       } catch (err) {}
     };
     getSupplier();
-  
   }, []);
   return (
     <div classNameName="App">
