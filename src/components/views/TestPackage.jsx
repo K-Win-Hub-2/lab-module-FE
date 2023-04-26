@@ -88,7 +88,7 @@ function CatRegister() {
                               <td>Test</td>
                               <td>{pack.description}</td>
 
-                              <td>{pack.charges}</td>
+                              <td>{pack.totalCharges}</td>
 
                               <td className="text-center">
                                 <div className="badge badge-sm badge-success">
