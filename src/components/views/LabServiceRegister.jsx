@@ -1,13 +1,9 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import {  FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { decode as base64_decode, encode as base64_encode } from "base-64";
-// window.Buffer = window.Buffer || require("buffer").Buffer;
-import Buffer from "buffer";
 import { Base64 } from "js-base64";
 
 function LabServiceRegister() {
@@ -22,11 +18,7 @@ function LabServiceRegister() {
   const [charges, setCharges] = useState("");
   const [cost, setCost] = useState("");
   const [reagentItems, setReagentItems] = useState([]);
-  const [nominalFlag, setNominalFlag] = useState("");
-  const [nominalValue, setNominalValue] = useState("");
   const [description, setDescription] = useState("");
-  const [itemName, setItemName] = useState("");
-  const [amount, setAmount] = useState("");
   const [tempReagent, setTempReagent] = useState("");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
@@ -34,7 +26,6 @@ function LabServiceRegister() {
   const [unit, setUnit] = useState("");
   const [specialComment, setSpecialComment] = useState("");
   const [genderMale, setGenderMale] = useState(false);
-  const [tempRef, setTempRef] = useState("");
   const [refArray, setRefArray] = useState([]);
   const [specialFlag, setSpecialFlag] = useState('');
   const [showSpecialCmt, setShowSpecialCmt] = useState(false);
@@ -80,14 +71,12 @@ function LabServiceRegister() {
       cost: cost,
       reagentItems: reagentArray,
       referenceRange: refArray,
-      nominalFlag: nominalFlag,
-      nominalValue: nominalValue,
       description: description,
-      specialFlag:specialFlag,
+      specialFlag: specialFlag,
       specialComment: encodedString,
     };
- 
-// if(specialFlag)
+
+    // if(specialFlag)
     alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -126,7 +115,7 @@ function LabServiceRegister() {
         );
 
         setCategory(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getReferDoctor = async () => {
@@ -138,7 +127,7 @@ function LabServiceRegister() {
         setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
 
         console.log(res.data.data[0]._id);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getReagent = async () => {
@@ -148,7 +137,7 @@ function LabServiceRegister() {
         );
         console.log(res.data.data);
         setReagentItems(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getReagent();
@@ -380,7 +369,7 @@ function LabServiceRegister() {
                             ""
                           )}
                         </div>
-                        <div className="col-md-12 mt-3">
+                        {/* <div className="col-md-12 mt-3">
                           <div class="form-group">
                             <label for="name" className="">
                               Nominal Flag
@@ -389,14 +378,14 @@ function LabServiceRegister() {
                               class="custom-select border-info"
                               name="account_type_id"
                               id="flag"
-                              onChange={(e) => setNominalFlag(e.target.value)}>
+                              >
                               <option></option>
                               <option value="Above">Above</option>
                               <option value="Below">Below</option>
                             </select>
                           </div>
                         </div>
-                        <div class="form-group mt-2">
+                        <div class="form-group">
                           <label for="name" className="">
                             Nominal Value
                           </label>
@@ -404,11 +393,11 @@ function LabServiceRegister() {
                             type="text"
                             className="form-control"
                             id="noVal"
-                            onChange={(e) => setNominalValue(e.target.value)}
+                            
                           />
-                        </div>
+                        </div> */}
 
-                        <div className="row">
+                        <div className="row pt-3">
                           <label>Refference Range</label>
                           <div className="col-md-2">
                             <input
@@ -519,7 +508,7 @@ function LabServiceRegister() {
                       {/* End */}
                       <div className="row mt-5">
                         <div className="col-md-2">
-                          <label>Reference Range</label>
+                          <label>Reference Range Flag</label>
                         </div>
                         <div className="col-md-1">
                           <input
