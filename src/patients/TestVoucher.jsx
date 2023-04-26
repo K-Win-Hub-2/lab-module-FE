@@ -159,7 +159,7 @@ const TestVoucher = () => {
                         <Td>{vou.discount}</Td>
                         <Td>{vou.totalCharge}</Td>
                         <Td>
-                          <Link
+                          {/* <Link
                             to={"/test_voucher/" + patient_id + "/" + vou._id}
                             name={pname}
                             age={page}
@@ -167,7 +167,7 @@ const TestVoucher = () => {
                             <button className="btn btn-sm btn-success">
                               Print
                             </button>
-                          </Link>
+                          </Link> */}
                           <Link
                             to={"/test/" + vou._id}
                             className="btn btn-sm btn-primary ml-3">

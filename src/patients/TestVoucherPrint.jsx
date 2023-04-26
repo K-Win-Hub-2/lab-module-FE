@@ -71,7 +71,6 @@ const Select = styled.select`
 const Option = styled.option``;
 
 const TestVoucherPrint = (props) => {
- 
   const [vouDate, setVouDate] = useState("");
   const [referRange, setReferRange] = useState([]);
   const [referDoctorLists, setReferDoctorLists] = useState([]);
@@ -80,7 +79,6 @@ const TestVoucherPrint = (props) => {
   const [serviceLists, setServiceLists] = useState([]);
   const [testArray, setTestArray] = useState([]);
   const [labID_VouCode, setLabID_VouCode] = useState([]);
- 
 
   function decodeBase64(data) {
     const decode = Base64.decode(data);
@@ -99,26 +97,13 @@ const TestVoucherPrint = (props) => {
   // end
   const TestVou_id = useLocation().pathname.split("/")[2];
 
-  //  useEffect(()=>{
-  //     const getVoucher = async () =>{
-  //         try{
-  //           const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/'+voucher_id);
-  //           console.log(res.data.data);
-  //           setVouchers(res.data.data.testResultList);
-  //         }catch(err){}
-  //         }
-  //         const getPatient = async () =>{
-  //             try{
-  //               const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/'+patient_id);
-  //               setPname(res.data.data.name);
-  //               setPage(res.data.data.age);
-  //               setPgender(res.data.data.gender)
-  //             }catch(err){}
-  //           }
-  //           getVoucher();
-  //           getPatient();
-  //  },[])
- const Regdate = labID_VouCode.date;
+
+// var og_date = labID_VouCode.date;
+// console.log(og_date.split("T"));
+  // const sampleStr = 'Hello world';
+  // console.log(sampleStr.split(' '));
+  // const Regdate = labID_VouCode.date;
+
   useEffect(() => {
     const getVoucherList = async () => {
       try {
@@ -132,8 +117,6 @@ const TestVoucherPrint = (props) => {
 
         setLabID_VouCode(res.data.data);
 
-       
-         
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
         setVouDate(res.data.data.date.split("T")[0]);
@@ -160,7 +143,6 @@ const TestVoucherPrint = (props) => {
         );
 
         setReferDoctorLists(res.data.data.referDoctor);
-   
       } catch (err) {}
     };
 
@@ -224,7 +206,7 @@ const TestVoucherPrint = (props) => {
                         {patientLists.age}yrs&nbsp;/ &nbsp;{patientLists.gender}
                       </td>
                       <th>Registration Date:</th>
-                      <td colSpan="2">{Regdate}</td>
+                      <td colSpan="2">{labID_VouCode.date ? labID_VouCode.date.split('T')[0]:''}</td>
                     </tr>
                     <tr>
                       <th>Referring Doctor:</th>
@@ -263,7 +245,7 @@ const TestVoucherPrint = (props) => {
 
                         <td>
                           {testSelect.name.referenceRange.map((refer) => (
-                            <p>
+                            <p className="text-center">
                               {refer.from}-{refer.to} &nbsp;
                             </p>
                           ))}
@@ -345,8 +327,8 @@ const TestVoucherPrint = (props) => {
           </div>
         </div>
         <button
-          className="btn btn-sm btn-success mt-4"
-          style={{ marginLeft: "500px"}}
+          className="btn btn-success mt-4 mb-4"
+          style={{ marginLeft: "500px" }}
           onClick={print}>
           Print
         </button>

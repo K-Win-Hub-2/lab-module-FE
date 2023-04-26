@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaCashRegister } from "react-icons/fa";
+import { FaCashRegister, FaClipboardCheck } from "react-icons/fa";
 
 function Sidebar()
 {
@@ -50,7 +50,11 @@ function Sidebar()
               data-accordion="false">
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i className="nav-icon fas fa-user-alt"></i>
+                  <i
+                    style={{ fontSize: "21px" }}
+                    className="nav-icon fas">
+                    &#xf2bd;
+                  </i>
                   <p>
                     Admin
                     {/* <i className="right fas fa-angle-left"></i> */}
@@ -60,20 +64,20 @@ function Sidebar()
               <li className="ml-3">
                 <li className="nav-item">
                   <Link to="/" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Lab Test List</p>
                   </Link>
                 </li>
                 {/* <li className="nav-item">
                   <Link to="/" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher Register</p>
                   </Link>
                 </li> */}
                 <li className="nav-item">
                   <Link to="/reagent" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
-                    <p>Reagent List & Register </p>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Reagent List </p>
                   </Link>
                 </li>
               </li>
@@ -91,25 +95,25 @@ function Sidebar()
               <li className="ml-3">
                 {/* <li className="nav-item">
                   <Link to="/patient/register" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Patient Register</p>
                   </Link>
                 </li> */}
                 <li className="nav-item">
                   <Link to="/patient/list" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Patient List</p>
                   </Link>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <Link to="/patient/credit_list" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Patient Credit</p>
                   </Link>
-                </li>
+                </li> */}
                 <li className="nav-item">
                   <Link to="/patient/member" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Member List </p>
                   </Link>
                 </li>
@@ -124,27 +128,27 @@ function Sidebar()
               <li className="ml-3">
                 <li className="nav-item">
                   <Link to="/doctorClinic" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Doctor/Clinic Register</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/lab-cat" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Category Register </p>
                   </Link>
                 </li>
 
                 {/* <li className="nav-item">
                   <Link to="/test" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Test Result List</p>
                   </Link>
                 </li> */}
 
                 {/* <li className="nav-item">
                     <a href="/subHead" className="nav-link">
-                      <i className="nav-icon fas fa-circle"></i>
+                      <i className="nav-icon fas fa-circle"></i>&nbsp;
                       <p>Sub Heading Type</p>
                     </a>
                   </li> */}
@@ -152,7 +156,10 @@ function Sidebar()
 
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="master_data">
-                  <i className="nav-icon fas fa-tachometer-alt"></i>
+                  <i style={{ fontSize: "21px" }} className="nav-icon far">
+                    &#xf15c;
+                  </i>
+                  &nbsp;
                   <p>
                     Report
                     {/* <i className="right fas fa-angle-left"></i> */}
@@ -162,19 +169,19 @@ function Sidebar()
               <li className="ml-3">
                 <li className="nav-item">
                   <Link to="/profit_loss" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Profit & Loss</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/balance_sheet" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Balance Sheet</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/trail_bal" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Trail Balance</p>
                   </Link>
                 </li>
