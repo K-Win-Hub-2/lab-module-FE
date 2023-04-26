@@ -13,24 +13,23 @@ import { Base64 } from "js-base64";
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
   const [packageArray, setPackageArray] = useState([]);
-  const [referDoctor, setReferDoctor] = useState([]);
+  const [serviceLists, setServiceLists] = useState([]);
   const [name, setName] = useState("");
   const [relatedCategory, setRelatedCategory] = useState("");
   const [cost, setCost] = useState("");
-  const [charges, setCharges] = useState('');
-  const [status, setStatus] = useState('');
+  const [charges, setCharges] = useState("");
+  const [status, setStatus] = useState("");
   const [packageLists, setPackageLists] = useState([]);
   const [description, setDescription] = useState("");
   const [tempPackage, setTempPackage] = useState("");
-  const [amount, setAmount] = useState('');
-
-
+  const [amount, setAmount] = useState("");
 
   const handleBox = (event) => {
+    console.log(event, "event");
     let newPackage = {
       id: tempPackage.split(".")[0],
-      name: tempPackage.split(".")[1],
-      amount: amount,
+      amount: tempPackage.split(".")[1],
+      name: tempPackage.split(".")[2],
     };
     console.log(newPackage);
     setPackageArray([...packageArray, newPackage]);
@@ -43,9 +42,10 @@ function LabServiceRegister() {
 
     const data = {
       name: name,
-      charges: charges,
-      cost: cost,
-      reagentItems: setPackageArray,
+      totalCharges: charges,
+      totalCost: cost,
+      package: packageArray,
+      status: status,
       description: description,
     };
 
@@ -55,7 +55,7 @@ function LabServiceRegister() {
     };
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/package",
         data,
         config
       )
@@ -67,16 +67,12 @@ function LabServiceRegister() {
         alert(err.message);
       });
 
-    document.getElementById("code").value = "";
     document.getElementById("name").value = "";
     document.getElementById("desc").value = "";
-    document.getElementById("lead").value = "";
-    document.getElementById("noVal").value = "";
+    document.getElementById("status").value = "";
     document.getElementById("flag").value = "";
     document.getElementById("charge").value = "";
     document.getElementById("cost").value = "";
-    document.getElementById("referdoc").value = "";
-    document.getElementById("cat").value = "";
   };
 
   useEffect(() => {
@@ -90,22 +86,22 @@ function LabServiceRegister() {
       } catch (err) {}
     };
 
-    const getReferDoctor = async () => {
+    const getServiceLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
         );
 
-        setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
+        setServiceLists(res.data.data);
 
-        console.log(res.data.data[0]._id);
+        console.log(res.data.data);
       } catch (err) {}
     };
 
     const getPackage = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/packages?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
         );
         console.log(res.data.list);
         setPackageLists(res.data.list);
@@ -113,7 +109,7 @@ function LabServiceRegister() {
     };
 
     getPackage();
-    getReferDoctor();
+    getServiceLists();
     getCategory();
   }, []);
   return (
@@ -159,6 +155,7 @@ function LabServiceRegister() {
                         <label>Package Name</label>
                         <input
                           type="text"
+                          id="name"
                           className="form-control"
                           onChange={(e) => setName(e.target.value)}
                         />
@@ -176,9 +173,15 @@ function LabServiceRegister() {
                                   setTempPackage(e.target.value);
                                 }}>
                                 <option value="">Choose Tests</option>
-                                {packageLists.map((option) => (
+                                {serviceLists.map((option) => (
                                   <option
-                                    value={option._id + "." + option.name}>
+                                    value={
+                                      option._id +
+                                      "." +
+                                      option.charges +
+                                      "." +
+                                      option.name
+                                    }>
                                     {option.name}
                                   </option>
                                 ))}
@@ -196,8 +199,11 @@ function LabServiceRegister() {
                           {packageArray ? (
                             <div>
                               {packageArray.map((regArr) => (
+                               
                                 <div className="row mt-3">
+                                   {regArr.amount.reduce((sum, amount) => sum += packageArray.amount, 0)}
                                   <div className="col-md-5">
+                                    <label>Name</label>
                                     <input
                                       type="text"
                                       value={regArr.name}
@@ -205,17 +211,17 @@ function LabServiceRegister() {
                                     />
                                   </div>
                                   <div className="col-md-5">
+                                    <label>Charges</label>
                                     <input
                                       type="text"
-                                      defaultValue={0}
-                                      onChange={(e) =>
-                                        setAmount(e.target.value)
-                                      }
+                                      value={regArr.amount}
                                       className="form-control"
                                     />
                                   </div>
                                   <div className="col-md-2">
-                                    <button className="btn btn-sm btn-danger rounded-circle opacity-75">
+                                    <button
+                                      className="btn btn-sm btn-danger rounded-circle opacity-75"
+                                      style={{ marginTop: "2.5em" }}>
                                       <FaMinus />
                                     </button>
                                   </div>
@@ -231,8 +237,9 @@ function LabServiceRegister() {
                         <label>Total Charges</label>
                         <input
                           type="number"
+                          id="charge"
                           className="form-control"
-                          onChange={(e) => setCharges(e.target.value)}
+                          
                         />
                       </div>
 
@@ -240,6 +247,7 @@ function LabServiceRegister() {
                         <label>Total Cost</label>
                         <input
                           type="number"
+                          id="cost"
                           className="form-control"
                           onChange={(e) => setCost(e.target.value)}
                         />
@@ -250,7 +258,7 @@ function LabServiceRegister() {
                         <select
                           class="custom-select border-info"
                           name="account_type_id"
-                          id="flag"
+                          id="status"
                           onChange={(e) => setStatus(e.target.value)}>
                           <option>Select Status</option>
                           <option value="Active">Active</option>
@@ -263,6 +271,7 @@ function LabServiceRegister() {
                         <textarea
                           rows="8"
                           cols="40"
+                          id="desc"
                           className="form-control"
                           onChange={(e) =>
                             setDescription(e.target.value)
