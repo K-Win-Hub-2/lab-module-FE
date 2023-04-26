@@ -31,6 +31,8 @@ import "./plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
 import "./plugins/daterangepicker/daterangepicker.css";
 import "./assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css"
 import "./assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
+import TestVoucherList from './components/views/TestVoucherList';
+import TestResultList from './components/views/TestResultList';
 
 function App() {
   return (
@@ -56,6 +58,8 @@ function App() {
         <Route path="/test_voucher/:id" element={<TestVoucher />} />
         <Route path="/package" element={<TestPackage />}></Route>
         <Route path="/packageReg" element={<TestPackageReg />}></Route>
+        <Route path="/tvoucherList" element={<TestVoucherList />}></Route>
+        <Route path="/tresultList" element={<TestResultList />}></Route>
       </Routes>
     </Router>
   );

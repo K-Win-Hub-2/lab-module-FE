@@ -6,7 +6,7 @@ import { useLocation, Link } from "react-router-dom";
 import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
-import Printer from "@eyelly/react-printer";
+// import Printer from "@eyelly/react-printer";
 
 const Top = styled.div`
   display: flex;
