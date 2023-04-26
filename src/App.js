@@ -14,6 +14,8 @@ import PatientCredit from './patients/PatientCredit';
 import TestSale from './patients/TestSale';
 import TestVoucherPrint from './patients/TestVoucherPrint';
 import TestVoucher from './patients/TestVoucher';
+import TestPackage from './components/views/TestPackage';
+import TestPackageReg from './components/views/TestPackageReg';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -45,14 +47,15 @@ function App() {
 
         <Route path="/test/:testVoucher_id" element={<Test />}></Route>
 
-        <Route path='/patient/list' element={<Patient />} />
-        <Route path='/patient/register' element={<PatientRegister />} />
-        <Route path='/patient/member' element={<Member />} />
-        <Route path='/patient/credit_list' element={<PatientCredit />} />
-        <Route path='/test_sale/:id' element={<TestSale />} />
-        <Route path='/test_voucher/:pid/:vid' element={<TestVoucherPrint />} />
-        <Route path='/test_voucher/:id' element={<TestVoucher />} />
-       
+        <Route path="/patient/list" element={<Patient />} />
+        <Route path="/patient/register" element={<PatientRegister />} />
+        <Route path="/patient/member" element={<Member />} />
+        <Route path="/patient/credit_list" element={<PatientCredit />} />
+        <Route path="/test_sale/:id" element={<TestSale />} />
+        <Route path="/test_voucher/:pid/:vid" element={<TestVoucherPrint />} />
+        <Route path="/test_voucher/:id" element={<TestVoucher />} />
+        <Route path="/package" element={<TestPackage />}></Route>
+        <Route path="/packageReg" element={<TestPackageReg />}></Route>
       </Routes>
     </Router>
   );

@@ -6,6 +6,7 @@ import { useLocation, Link } from "react-router-dom";
 import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
+import Printer from "@eyelly/react-printer";
 
 const Top = styled.div`
   display: flex;
@@ -79,6 +80,7 @@ const TestVoucherPrint = (props) => {
   const [serviceLists, setServiceLists] = useState([]);
   const [testArray, setTestArray] = useState([]);
   const [labID_VouCode, setLabID_VouCode] = useState([]);
+
 
   function decodeBase64(data) {
     const decode = Base64.decode(data);

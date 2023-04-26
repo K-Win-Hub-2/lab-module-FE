@@ -87,7 +87,7 @@ function LabServiceRegister() {
       specialComment: encodedString,
     };
  
-
+// if(specialFlag)
     alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -519,7 +519,7 @@ function LabServiceRegister() {
                       {/* End */}
                       <div className="row mt-5">
                         <div className="col-md-2">
-                          <label>Special Comment</label>
+                          <label>Reference Range</label>
                         </div>
                         <div className="col-md-1">
                           <input

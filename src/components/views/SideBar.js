@@ -68,12 +68,12 @@ function Sidebar()
                     <p>Lab Test List</p>
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                  <Link to="/" className="nav-link">
+                <li className="nav-item">
+                  <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Voucher Register</p>
+                    <p>Test Package</p>
                   </Link>
-                </li> */}
+                </li>
                 <li className="nav-item">
                   <Link to="/reagent" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -139,19 +139,7 @@ function Sidebar()
                   </Link>
                 </li>
 
-                {/* <li className="nav-item">
-                  <Link to="/test" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Result List</p>
-                  </Link>
-                </li> */}
-
-                {/* <li className="nav-item">
-                    <a href="/subHead" className="nav-link">
-                      <i className="nav-icon fas fa-circle"></i>&nbsp;
-                      <p>Sub Heading Type</p>
-                    </a>
-                  </li> */}
+             
               </li>
 
               <li className="nav-item has-treeview">
@@ -162,7 +150,7 @@ function Sidebar()
                   &nbsp;
                   <p>
                     Report
-                    {/* <i className="right fas fa-angle-left"></i> */}
+           
                   </p>
                 </a>
               </li>
@@ -186,15 +174,6 @@ function Sidebar()
                   </Link>
                 </li>
               </li>
-
-              {/* <li className="nav-item">
-                <Link
-                  to="http://clinicdenovopos.kwintechnologies.com/"
-                  className="nav-link">
-                  <FaCashRegister />
-                  <span className="ml-2">POS</span>
-                </Link>
-              </li> */}
 
               <li className="nav-item">
                 <a href="" className="nav-link">

@@ -156,18 +156,7 @@ const TestSale = () => {
       });
 
     alert(JSON.stringify(data));
-    const config = {
-      headers: { "Content-Type": "application/json" },
-    };
-    axios
-      .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher",
-        data,
-        config
-      )
-      .then(function (response) {
-        alert("success");
-      });
+    
   };
   const print = () => {
     var print_div = document.getElementById("print");
