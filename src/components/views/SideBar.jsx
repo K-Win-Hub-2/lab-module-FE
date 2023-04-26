@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaCashRegister, FaClipboardCheck } from "react-icons/fa";
 
-function Sidebar()
-{
+function Sidebar() {
   return (
     <div>
       {/* <!-- Navbar --> */}
@@ -63,21 +62,33 @@ function Sidebar()
               </li>
               <li className="ml-3">
                 <li className="nav-item">
+                  <Link to="/lab-cat" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Category</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <Link to="/" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Lab Test List</p>
+                    <p>Lab Test</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Package</p>
+                    <p>Package</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/reagent" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Reagent List </p>
+                    <p>Reagent</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/doctorClinic" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Doctor/Clinic</p>
                   </Link>
                 </li>
               </li>
@@ -139,7 +150,7 @@ function Sidebar()
                   </Link>
                 </li>
 
-             
+
               </li>
 
               <li className="nav-item has-treeview">
@@ -150,7 +161,7 @@ function Sidebar()
                   &nbsp;
                   <p>
                     Report
-           
+
                   </p>
                 </a>
               </li>
