@@ -96,9 +96,9 @@ function Sidebar() {
               {/* Patient */}
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i className="nav-icon fas fa-user-injured"></i>
+                  <i className="nav-icon fas fa-poll" style={{fontSize:'22px'}}></i>
                   <p>
-                    Patient
+                    Sales
                     {/* <i className="right fas fa-angle-left"></i> */}
                   </p>
                 </a>
@@ -116,41 +116,45 @@ function Sidebar() {
                     <p>Patient List</p>
                   </Link>
                 </li>
-                {/* <li className="nav-item">
-                  <Link to="/patient/credit_list" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Patient Credit</p>
-                  </Link>
-                </li> */}
                 <li className="nav-item">
-                  <Link to="/patient/member" className="nav-link">
+                  <Link to="/lab-cat" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Member List </p>
+                    <p>Category</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Lab Test</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/package" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Package</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/voucher" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Voucher</p>
                   </Link>
                 </li>
               </li>
 
               <li className="nav-item">
                 <Link to="/account_list" className="nav-link">
-                  <i className="nav-icon far fa-address-card"></i>
-                  <p>Master Data</p>
+                  <i className="nav-icon fas fa-flask"  style={{fontSize:'20px'}}></i>
+                  <p>Laboratory</p>
                 </Link>
               </li>
               <li className="ml-3">
                 <li className="nav-item">
-                  <Link to="/doctorClinic" className="nav-link">
+                  <Link to="/results" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Doctor/Clinic Register</p>
+                    <p>Results</p>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/lab-cat" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Category Register </p>
-                  </Link>
-                </li>
-
-
               </li>
 
               <li className="nav-item has-treeview">
@@ -160,12 +164,18 @@ function Sidebar() {
                   </i>
                   &nbsp;
                   <p>
-                    Report
+                    Finance
 
                   </p>
                 </a>
               </li>
               <li className="ml-3">
+                <li className="nav-item">
+                  <Link to="/voucher" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Voucher</p>
+                  </Link>
+                </li>
                 <li className="nav-item">
                   <Link to="/profit_loss" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -175,13 +185,13 @@ function Sidebar() {
                 <li className="nav-item">
                   <Link to="/balance_sheet" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Balance Sheet</p>
+                    <p>Income</p>
                   </Link>
                 </li>
                 <li className="nav-item">
                   <Link to="/trail_bal" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Trail Balance</p>
+                    <p>Expense</p>
                   </Link>
                 </li>
               </li>
