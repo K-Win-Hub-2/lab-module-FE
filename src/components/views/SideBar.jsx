@@ -148,7 +148,7 @@ function Sidebar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/voucher" className="nav-link">
+                  <Link to="/tvoucherList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher</p>
                   </Link>
@@ -163,7 +163,7 @@ function Sidebar() {
               </li>
               <li className="ml-3">
                 <li className="nav-item">
-                  <Link to="/results" className="nav-link">
+                  <Link to="/tresultList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Results</p>
                   </Link>
@@ -184,7 +184,7 @@ function Sidebar() {
               </li>
               <li className="ml-3">
                 <li className="nav-item">
-                  <Link to="/voucher" className="nav-link">
+                  <Link to="/tvoucherList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher</p>
                   </Link>
