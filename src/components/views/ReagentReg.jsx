@@ -22,7 +22,7 @@ function LabServiceRegister() {
       amount: 0,
     };
     setStockLists([...stockLists, newStock]);
-    console.log(stockLists, "stockLists", newStock);
+   
   };
 
   const ReagentCreate = () => {
@@ -33,7 +33,7 @@ function LabServiceRegister() {
       supplier: supplier,
     };
 
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -44,7 +44,7 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
+        // alert("success");
         // setReagentLists([...reagentLists, response.data.data]);
       })
       .catch(function (err) {

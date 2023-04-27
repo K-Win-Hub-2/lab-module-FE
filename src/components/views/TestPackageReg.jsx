@@ -31,20 +31,20 @@ function LabServiceRegister() {
       amount: tempPackage.split(".")[1],
       name: tempPackage.split(".")[2],
     };
-    console.log(newPackage);
+    // console.log(newPackage);
     setPackageArray([...packageArray, newPackage]);
-    console.log(packageArray, "packageArray", newPackage);
+    // console.log(packageArray, "packageArray", newPackage);
   };
 
   const handleCalculation = (event) =>
   {
-    console.log(event);
+    // console.log(event);
       if (packageArray) {
         let sum = packageArray.reduce((a, b) => {
     return a + b["amount"];
   }, 0);
        
-        console.log(sum);
+        // console.log(sum);
         setCharges(sum.toFixed(2));
       }
 
@@ -64,7 +64,7 @@ function LabServiceRegister() {
       description: description,
     };
 
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -75,7 +75,7 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
+        // alert("success");
         // props.setReagent([...props.category, response.data.data]);
       })
       .catch(function (err) {
@@ -109,7 +109,7 @@ function LabServiceRegister() {
 
         setServiceLists(res.data.data);
 
-        console.log(res.data.data);
+        // console.log(res.data.data);
       } catch (err) {}
     };
 
@@ -118,7 +118,7 @@ function LabServiceRegister() {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
         );
-        console.log(res.data.list);
+        // console.log(res.data.list);
         setPackageLists(res.data.list);
       } catch (err) {}
     };

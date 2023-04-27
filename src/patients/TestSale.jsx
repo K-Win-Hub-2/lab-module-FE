@@ -89,7 +89,7 @@ const TestSale = () => {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
         );
-        console.log("good");
+        // console.log("good");
         setServs(res.data.data);
       } catch (err) {}
     };
@@ -155,7 +155,7 @@ const TestSale = () => {
         navigate(-1);
       });
 
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     
   };
   const print = () => {

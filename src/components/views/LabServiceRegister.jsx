@@ -30,7 +30,8 @@ function LabServiceRegister() {
   const [specialFlag, setSpecialFlag] = useState('');
   const [showSpecialCmt, setShowSpecialCmt] = useState(false);
   const [showRefForm, setShowRefForm] = useState(false);
-<<<<<<< HEAD
+  const [genderMale, setGenderMale] = useState(false);
+
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
 
@@ -47,20 +48,17 @@ function LabServiceRegister() {
     setShowSpecialCmt(false);
     setShowRefForm(true);
   };
-=======
->>>>>>> 528f070 (lab_module)
 
-  const handleYesChange = () =>
+  const handleMulYes = () =>
   {
-    setShowSpecialCmt(true);
-    setShowRefForm(false);
+    setShowMultiTest(true);
+    setShowSpecialRange(false);
   }
-
-   const handleNoChange = () => {
-     setShowSpecialCmt(false);
-     setShowRefForm(true);
-   };
   
+   const handleMulNo = () => {
+     setShowMultiTest(true);
+     setShowSpecialRange(false);
+   };
   
   const handleBox = (event) => {
     let newReagent = {
@@ -125,7 +123,8 @@ function LabServiceRegister() {
     };
 
     // if(specialFlag)
-    alert(JSON.stringify(data));
+    
+
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -136,7 +135,7 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
+        // alert("success");
         clearForm()
         // props.setReagent([...props.category, response.data.data]);
       })
@@ -211,10 +210,8 @@ function LabServiceRegister() {
           {/* <!-- Main content --> */}
           <section className="content">
             <div className="container-fluid">
-              {/* <!-- Small boxes (Stat box) --> */}
               <div class="card">
                 <div class="card-body p-b-0">
-                  {/* @if($com == null) */}
                   <form onSubmit={ServiceCreate}>
                     {/* @csrf */}
                     <div className="form-body">
@@ -405,14 +402,40 @@ function LabServiceRegister() {
                             ""
                           )}
                         </div>
-<<<<<<< HEAD
                       </div>
                       <div className="row">
                         <div className="row pt-3">
                           <div className="col-md-4">
                             <label>Multiple Tests</label>
-=======
-                        {/* <div className="col-md-12 mt-3">
+                          </div>
+
+                          <div className="col-md-4">
+                            <label>Yes</label>&nbsp;
+                            <input
+                              type="radio"
+                              id="yes"
+                              name="amoper"
+                              value="true"
+                              onChange={(e) => {
+                                setShowMultiTest(true);
+                                setShowSpecialRange(false);
+                              }}
+                            />
+                          </div>
+                          <div className="col-md-4">
+                            <label>No</label>&nbsp;
+                            <input
+                              type="radio"
+                              id="no"
+                              name="amoper"
+                              value="false"
+                              onChange={(e) => {
+                                setShowSpecialRange(true);
+                                setShowMultiTest(false);
+                              }}
+                            />
+                          </div>
+                          {/* <div className="col-md-12 mt-3">
                           <div class="form-group">
                             <label for="name" className="">
                               Nominal Flag
@@ -440,382 +463,337 @@ function LabServiceRegister() {
                           />
                         </div> */}
 
-                        <div className="row mt-5">
-                          <div className="col-md-4">
-                            <label>Special Reference Range</label>
->>>>>>> 528f070 (lab_module)
-                          </div>
-
-                          <div className="col-md-4">
-                            <label>Yes</label>&nbsp;
-                            <input
-                              type="radio"
-                              id="yes"
-                              name="amoper"
-                              value="true"
-                              onChange={(e) => {
-<<<<<<< HEAD
-                                setShowMultiTest(true)
-                                setShowSpecialRange(false)
-=======
-                                setSpecialFlag(e.target.value);
-                                handleYesChange();
->>>>>>> 528f070 (lab_module)
-                              }}
-                            />
-                          </div>
-                          <div className="col-md-4">
-                            <label>No</label>&nbsp;
-                            <input
-                              type="radio"
-                              id="no"
-                              name="amoper"
-                              value="false"
-                              onChange={(e) => {
-<<<<<<< HEAD
-                                setShowSpecialRange(true)
-                                setShowMultiTest(false)
-=======
-                                setSpecialFlag(e.target.value);
-                                handleNoChange();
->>>>>>> 528f070 (lab_module)
-                              }}
-                            />
-                          </div>
-                        </div>
-                        {showSpecialCmt && (
-                          <div className="row mt-5">
-                            <div className="col-md-12">
-                              <label>Write Comment</label>
-                              <textarea
-                                rows="10"
-                                cols="40"
-                                className="form-control"
-                                onChange={(e) =>
-                                  setSpecialComment(e.target.value)
-                                }></textarea>
-                            </div>
-                          </div>
-                        )}
-
-                        {showRefForm && (
-                          <div className="row mt-3">
-                            <label>Refference Range</label>
-                            <div className="col-md-2">
-                              <input
-                                type="number"
-                                placeholder="From"
-                                className="form-control"
-                                onChange={(e) => setFrom(e.target.value)}
-                              />
-                            </div>
-                            <div className="col-md-2">
-                              <input
-                                type="number"
-                                placeholder="To"
-                                className="form-control"
-                                onChange={(e) => setTo(e.target.value)}
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <select
-                                class="custom-select border-info"
-                                name="account_type_id"
-                                id="flag"
-                                onChange={(e) => {
-                                  setGender(e.target.value);
-                                  setGenderMale(true);
-                                }}>
-                                <option>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Null">Nutral</option>
-                              </select>
-                            </div>
-
-                            <div className="col-md-2">
-                              <input
-                                type="text"
-                                placeholder="Unit"
-                                className="form-control"
-                                onChange={(e) => setUnit(e.target.value)}
-                              />
-                            </div>
-                            {/* Action button for add data to refArr */}
-                            <div className="col-md-2">
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={(e) => handleRefRange(e.target.value)}>
-                                <i class="fa fa-plus"></i>
-                              </button>
-                            </div>
-                            {/* End */}
-                          </div>
-                        )}
-                      </div>
-                      {showMultiTest ? (<div className="row pt-3">
-                        <div className="col-md-12">
-                          <label className="control-label">Add Multiple Tests</label>
-                          <div className="row">
-                            <div className="col-md-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Name"
-                                id="subTestName"
-                                name="subTestName"
-
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Reference Range"
-                                id="subTestRR"
-                                name="subTestRR"
-
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Unit"
-                                id="subTestUnit"
-                                name="subTestUnit"
-
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={(e) => handleMultipleTests(e.target.value)}>
-                                <i class="fa fa-plus"></i>
-                              </button>
-                            </div>
-                          </div>
-                          {reagentArray ? (
-                            <div>
-                              {reagentArray.map((regArr) => (
-                                <div className="row mt-3">
-                                  <div className="col-md-5">
+                          {showMultiTest ? (
+                            <div className="row pt-3">
+                              <div className="col-md-12">
+                                <label className="control-label">
+                                  Add Multiple Tests
+                                </label>
+                                <div className="row">
+                                  <div className="col-md-3">
                                     <input
                                       type="text"
-                                      value={regArr.name}
                                       className="form-control"
+                                      placeholder="Name"
+                                      id="subTestName"
+                                      name="subTestName"
                                     />
                                   </div>
-                                  <div className="col-md-5">
+                                  <div className="col-md-3">
                                     <input
                                       type="text"
-                                      defaultValue={0}
                                       className="form-control"
+                                      placeholder="Reference Range"
+                                      id="subTestRR"
+                                      name="subTestRR"
                                     />
                                   </div>
-                                  <div className="col-md-2">
-                                    <button className="btn btn-sm btn-danger rounded-circle opacity-75">
-                                      <FaMinus />
+                                  <div className="col-md-3">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      placeholder="Unit"
+                                      id="subTestUnit"
+                                      name="subTestUnit"
+                                    />
+                                  </div>
+                                  <div className="col-md-3">
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary"
+                                      onClick={(e) =>
+                                        handleMultipleTests(e.target.value)
+                                      }>
+                                      <i class="fa fa-plus"></i>
                                     </button>
                                   </div>
                                 </div>
-                              ))}
+                                {reagentArray ? (
+                                  <div>
+                                    {reagentArray.map((regArr) => (
+                                      <div className="row mt-3">
+                                        <div className="col-md-5">
+                                          <input
+                                            type="text"
+                                            value={regArr.name}
+                                            className="form-control"
+                                          />
+                                        </div>
+                                        <div className="col-md-5">
+                                          <input
+                                            type="text"
+                                            defaultValue={0}
+                                            className="form-control"
+                                          />
+                                        </div>
+                                        <div className="col-md-2">
+                                          <button className="btn btn-sm btn-danger rounded-circle opacity-75">
+                                            <FaMinus />
+                                          </button>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </div>
                           ) : (
                             ""
                           )}
-                        </div>
-                      </div>) : ""}
-                      { showSpecialRange ? (<div className="row">
-                        <div className="row mt-5">
-                          <div className="col-md-4">
-                            <label>Special Reference Range</label>
-                          </div>
 
-                          <div className="col-md-4">
-                            <label>Yes</label>&nbsp;
-                            <input
-                              type="radio"
-                              id="yes"
-                              name="amoper"
-                              value="true"
-                              onChange={(e) => {
-                                setSpecialFlag(e.target.value);
-                                handleYesChange();
-                              }}
-                            />
-                          </div>
-                          <div className="col-md-4">
-                            <label>No</label>&nbsp;
-                            <input
-                              type="radio"
-                              id="no"
-                              name="amoper"
-                              value="false"
-                              onChange={(e) => {
-                                setSpecialFlag(e.target.value);
-                                handleNoChange();
-                              }}
-                            />
-                          </div>
-                        </div>
-                        {showSpecialCmt && (
-                          <div className="row mt-5">
-                            <div className="col-md-12">
-                              <label>Write Comment</label>
-                              <textarea
-                                rows="10"
-                                cols="40"
-                                className="form-control"
-                                id='textArea'
-                                onChange={(e) =>
-                                  setSpecialComment(e.target.value)
-                                }></textarea>
-                            </div>
-                          </div>
-                        )}
 
-                        {showRefForm && (
-                          <div className="row mt-3">
-                            <label>Reference Range</label>
-                            <div className="col-md-2">
-                              <input
-                                type="number"
-                                placeholder="From"
-                                className="form-control"
-                                onChange={(e) => setFrom(e.target.value)}
-                              />
+                          {/* <div className="row mt-5">
+                            <div className="col-md-4">
+                              <label>Special Reference Range</label>
                             </div>
-                            <div className="col-md-2">
+
+                            <div className="col-md-4">
+                              <label>Yes</label>&nbsp;
                               <input
-                                type="number"
-                                placeholder="To"
-                                className="form-control"
-                                onChange={(e) => setTo(e.target.value)}
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <select
-                                class="custom-select border-info"
-                                name="account_type_id"
-                                id="flag"
+                                type="radio"
+                                id="yes"
+                                name="amoper"
+                                value="true"
                                 onChange={(e) => {
-                                  if (e.target.value === 'Male' || 'Female') setShowNextRef(true)
-                                  if (e.target.value === 'Null') setShowNextRef(false)
-
-                                }}>
-                                <option>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Null">Neutral</option>
-                              </select>
-                            </div>
-
-                            <div className="col-md-2">
-                              <input
-                                type="text"
-                                placeholder="Unit"
-                                className="form-control"
-                                onChange={(e) => setUnit(e.target.value)}
+                                  setSpecialFlag(e.target.value);
+                                  handleYesChange();
+                                }}
                               />
                             </div>
-                            {/* Action button for add data to refArr */}
-                            <div className="col-md-2">
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={(e) => handleRefRange(e.target.value)}>
-                                <i class="fa fa-save"></i>
-                              </button>
-                            </div>
-                            {/* End */}
-                          </div>
-                        )}
-                      </div>) : "" }
-                      {/* Action to add data in text box  */}
-                      {showNextRef ? (
-                        <div>
-                          <div className="row mt-3">
-                            <div className="col-md-2">
+                            <div className="col-md-4">
+                              <label>No</label>&nbsp;
                               <input
-                                type="number"
-                                placeholder="From"
-                                className="form-control"
-                                onChange={(e) => setFrom(e.target.value)}
+                                type="radio"
+                                id="no"
+                                name="amoper"
+                                value="false"
+                                onChange={(e) => {
+                                  setSpecialFlag(e.target.value);
+                                  handleNoChange();
+                                }}
                               />
-                            </div>
-                            <div className="col-md-2">
-                              <input
-                                type="number"
-                                placeholder="To"
-                                className="form-control"
-                                onChange={(e) => setTo(e.target.value)}
-                              />
-                            </div>
-                            <div className="col-md-3">
-                              <select
-                                class="custom-select border-info"
-                                name="account_type_id"
-                                id="flag"
-                                onChange={(e) => setGender(e.target.value)}>
-                                <option>Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                              </select>
                             </div>
 
-                            <div className="col-md-2">
-                              <input
-                                type="text"
-                                placeholder="Unit"
-                                className="form-control"
-                                onChange={(e) => setUnit(e.target.value)}
-                              />
-                            </div>
-                            <div className="col-md-2">
-                              <button
-                                type="button"
-                                className="btn btn-primary"
-                                onClick={(e) => handleRefRange(e.target.value)}>
-                                <i class="fa fa-plus"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        ""
-                      )}
-                      {/* End */}
+                            {showSpecialCmt && (
+                              <div className="row mt-5">
+                                <div className="col-md-12">
+                                  <label>Write Comment</label>
+                                  <textarea
+                                    rows="10"
+                                    cols="40"
+                                    className="form-control"
+                                    onChange={(e) =>
+                                      setSpecialComment(e.target.value)
+                                    }></textarea>
+                                </div>
+                              </div>
+                            )}
+                          </div> */}
 
-                      <div className="form-actions mt-3">
-                        <div className="row">
-                          <div className="col-md-6">
+                          {showSpecialRange ? (
                             <div className="row">
-                              <div className=" col-md-9">
-                                <button
-                                  type="submit"
-                                  className="btn btn-primary">
-                                  Create
-                                </button>
-                                &nbsp;
-                                <button
-                                  type="button"
-                                  className="btn btn-danger"
-                                  data-dismiss="modal">
-                                  Cancel
-                                </button>
+                              <div className="row mt-5">
+                                <div className="col-md-4">
+                                  <label>Special Reference Range</label>
+                                </div>
+
+                                <div className="col-md-4">
+                                  <label>Yes</label>&nbsp;
+                                  <input
+                                    type="radio"
+                                    id="yes"
+                                    name="amoper"
+                                    value="true"
+                                    onChange={(e) => {
+                                      setSpecialFlag(e.target.value);
+                                      handleYesChange();
+                                    }}
+                                  />
+                                </div>
+                                <div className="col-md-4">
+                                  <label>No</label>&nbsp;
+                                  <input
+                                    type="radio"
+                                    id="no"
+                                    name="amoper"
+                                    value="false"
+                                    onChange={(e) => {
+                                      setSpecialFlag(e.target.value);
+                                      handleNoChange();
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                              {showSpecialCmt && (
+                                <div className="row mt-5">
+                                  <div className="col-md-12">
+                                    <label>Write Comment</label>
+                                    <textarea
+                                      rows="10"
+                                      cols="40"
+                                      className="form-control"
+                                      id="textArea"
+                                      onChange={(e) =>
+                                        setSpecialComment(e.target.value)
+                                      }></textarea>
+                                  </div>
+                                </div>
+                              )}
+
+                              {showRefForm && (
+                                <div className="row mt-3">
+                                  <label>Reference Range</label>
+                                  <div className="col-md-2">
+                                    <input
+                                      type="number"
+                                      placeholder="From"
+                                      className="form-control"
+                                      onChange={(e) => setFrom(e.target.value)}
+                                    />
+                                  </div>
+                                  <div className="col-md-2">
+                                    <input
+                                      type="number"
+                                      placeholder="To"
+                                      className="form-control"
+                                      onChange={(e) => setTo(e.target.value)}
+                                    />
+                                  </div>
+                                  <div className="col-md-3">
+                                    <select
+                                      class="custom-select border-info"
+                                      name="account_type_id"
+                                      id="flag"
+                                      onChange={(e) => {
+                                        if (
+                                          e.target.value === "Male" ||
+                                          "Female"
+                                        )
+                                          setShowNextRef(true);
+                                        if (e.target.value === "Null")
+                                          setShowNextRef(false);
+                                      }}>
+                                      <option>Gender</option>
+                                      <option value="Male">Male</option>
+                                      <option value="Female">Female</option>
+                                      <option value="Null">Neutral</option>
+                                    </select>
+                                  </div>
+
+                                  <div className="col-md-2">
+                                    <input
+                                      type="text"
+                                      placeholder="Unit"
+                                      className="form-control"
+                                      onChange={(e) => setUnit(e.target.value)}
+                                    />
+                                  </div>
+                                  {/* Action button for add data to refArr */}
+                                  <div className="col-md-2">
+                                    <button
+                                      type="button"
+                                      className="btn btn-primary"
+                                      onClick={(e) =>
+                                        handleRefRange(e.target.value)
+                                      }>
+                                      <i class="fa fa-save"></i>
+                                    </button>
+                                  </div>
+                                  {/* End */}
+                                </div>
+                              )}
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {/* Action to add data in text box  */}
+                          {showNextRef ? (
+                            <div>
+                              <div className="row mt-3">
+                                <div className="col-md-2">
+                                  <input
+                                    type="number"
+                                    placeholder="From"
+                                    className="form-control"
+                                    onChange={(e) => setFrom(e.target.value)}
+                                  />
+                                </div>
+                                <div className="col-md-2">
+                                  <input
+                                    type="number"
+                                    placeholder="To"
+                                    className="form-control"
+                                    onChange={(e) => setTo(e.target.value)}
+                                  />
+                                </div>
+                                <div className="col-md-3">
+                                  <select
+                                    class="custom-select border-info"
+                                    name="account_type_id"
+                                    id="flag"
+                                    onChange={(e) => setGender(e.target.value)}>
+                                    <option>Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                  </select>
+                                </div>
+
+                                <div className="col-md-2">
+                                  <input
+                                    type="text"
+                                    placeholder="Unit"
+                                    className="form-control"
+                                    onChange={(e) => setUnit(e.target.value)}
+                                  />
+                                </div>
+                                <div className="col-md-2">
+                                  <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                    onClick={(e) =>
+                                      handleRefRange(e.target.value)
+                                    }>
+                                    <i class="fa fa-plus"></i>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          ) : (
+                            ""
+                          )}
+                          {/* End */}
+
+                          <div className="form-actions mt-3">
+                            <div className="row">
+                              <div className="col-md-6">
+                                <div className="row">
+                                  <div className=" col-md-9">
+                                    <button
+                                      type="submit"
+                                      className="btn btn-primary">
+                                      Create
+                                    </button>
+                                    &nbsp;
+                                    <button
+                                      type="button"
+                                      className="btn btn-danger"
+                                      data-dismiss="modal">
+                                      Cancel
+                                    </button>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
+                      {/* <!-- /.row (main row) --> */}
                     </div>
                   </form>
-                  {/* <!-- /.row (main row) --> */}
+                  {/*<!-- /.container-fluid --> */}
                 </div>
-                {/*<!-- /.container-fluid --> */}
               </div>
             </div>
           </section>

@@ -27,7 +27,7 @@ const LabServiceList = () => {
   useEffect(() => {
     const getLabServiceLists = async () => {
       const res = await axios.get(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
       );
 
       setLabServiceLists(res.data.data);

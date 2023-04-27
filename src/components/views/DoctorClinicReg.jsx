@@ -28,7 +28,7 @@ function LabServiceRegister() {
       phone: phone,
       email: email,
     };
-    alert(JSON.stringify(data));
+ 
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -39,7 +39,7 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
+        // alert("success");
         // setCategory([...category, response.data.data]);
       })
       .catch(function (err) {

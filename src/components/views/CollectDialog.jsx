@@ -10,6 +10,7 @@ const ResultDialog = (props) => {
   const [referDate, setReferDate] = useState("");
   const [referAmount, setReferAmount] = useState("");
   const [remark, setRemark] = useState("");
+  const [isShow, setIsShow] = useState(false);
   const [vouchers, setVouchers] = useState([]);
   
 

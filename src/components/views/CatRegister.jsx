@@ -31,7 +31,7 @@ function CatRegister()
          config
        )
        .then(function (response) {
-         alert("success");
+        //  alert("success");
          setCategory([...category, response.data.data]);
        })
        .catch(function (err) {

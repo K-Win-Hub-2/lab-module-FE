@@ -79,7 +79,7 @@ const Register = () => {
       gender: gender,
       patientStatus: "Old",
     };
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
     };
