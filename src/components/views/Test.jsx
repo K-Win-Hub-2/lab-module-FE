@@ -1,15 +1,11 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
 import { useLocation, Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
+import {  FaArrowLeft, FaSave } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { decode as base64_decode, encode as base64_encode } from "base-64";
-import Buffer from "buffer";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
-import ResultDialog from "../../patients/ResultDialog";
 
 function LabServiceRegister() {
   const [vouDate, setVouDate] = useState("");
