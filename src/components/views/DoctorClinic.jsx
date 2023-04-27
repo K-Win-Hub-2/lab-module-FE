@@ -224,15 +224,9 @@ const LabServiceList = () => {
                                     <td>{doctor.position}</td>
 
                                     <td className="text-center">
-                                      <a
-                                        className="btn btn-primary btn-sm "
-                                        data-toggle="collapse"
-                                        href="#related{{$trans->id}}"
-                                        role="button"
-                                        aria-expanded="false"
-                                        aria-controls="multiCollapseExample1">
-                                        Related
-                                      </a>
+                                      <Link to={'/refDoctor/'+doctor._id} className="btn btn-sm btn-info">
+                                        Refer Doctor Charge
+                                      </Link>
                                     </td>
                                   </tr>
                                 </tbody>

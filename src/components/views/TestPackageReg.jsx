@@ -36,6 +36,21 @@ function LabServiceRegister() {
     console.log(packageArray, "packageArray", newPackage);
   };
 
+  const handleCalculation = (event) =>
+  {
+    console.log(event);
+      if (packageArray) {
+        let sum = packageArray.reduce((a, b) => {
+    return a + b["amount"];
+  }, 0);
+       
+        console.log(sum);
+        setCharges(sum.toFixed(2));
+      }
+
+      setTempPackage(event);
+    };
+
 
   const TestPackageCreate = (event) => {
     event.preventDefault();
@@ -201,7 +216,7 @@ function LabServiceRegister() {
                               {packageArray.map((regArr) => (
                                
                                 <div className="row mt-3">
-                                   {regArr.amount.reduce((sum, amount) => sum += packageArray.amount, 0)}
+                                   
                                   <div className="col-md-5">
                                     <label>Name</label>
                                     <input

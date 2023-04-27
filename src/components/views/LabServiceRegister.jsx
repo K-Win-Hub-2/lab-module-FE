@@ -30,6 +30,7 @@ function LabServiceRegister() {
   const [specialFlag, setSpecialFlag] = useState('');
   const [showSpecialCmt, setShowSpecialCmt] = useState(false);
   const [showRefForm, setShowRefForm] = useState(false);
+<<<<<<< HEAD
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
 
@@ -46,7 +47,21 @@ function LabServiceRegister() {
     setShowSpecialCmt(false);
     setShowRefForm(true);
   };
+=======
+>>>>>>> 528f070 (lab_module)
 
+  const handleYesChange = () =>
+  {
+    setShowSpecialCmt(true);
+    setShowRefForm(false);
+  }
+
+   const handleNoChange = () => {
+     setShowSpecialCmt(false);
+     setShowRefForm(true);
+   };
+  
+  
   const handleBox = (event) => {
     let newReagent = {
       id: tempReagent.split(".")[0],
@@ -390,11 +405,45 @@ function LabServiceRegister() {
                             ""
                           )}
                         </div>
+<<<<<<< HEAD
                       </div>
                       <div className="row">
                         <div className="row pt-3">
                           <div className="col-md-4">
                             <label>Multiple Tests</label>
+=======
+                        {/* <div className="col-md-12 mt-3">
+                          <div class="form-group">
+                            <label for="name" className="">
+                              Nominal Flag
+                            </label>
+                            <select
+                              class="custom-select border-info"
+                              name="account_type_id"
+                              id="flag"
+                              >
+                              <option></option>
+                              <option value="Above">Above</option>
+                              <option value="Below">Below</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="name" className="">
+                            Nominal Value
+                          </label>
+                          <input
+                            type="text"
+                            className="form-control"
+                            id="noVal"
+                            
+                          />
+                        </div> */}
+
+                        <div className="row mt-5">
+                          <div className="col-md-4">
+                            <label>Special Reference Range</label>
+>>>>>>> 528f070 (lab_module)
                           </div>
 
                           <div className="col-md-4">
@@ -405,8 +454,13 @@ function LabServiceRegister() {
                               name="amoper"
                               value="true"
                               onChange={(e) => {
+<<<<<<< HEAD
                                 setShowMultiTest(true)
                                 setShowSpecialRange(false)
+=======
+                                setSpecialFlag(e.target.value);
+                                handleYesChange();
+>>>>>>> 528f070 (lab_module)
                               }}
                             />
                           </div>
@@ -418,12 +472,87 @@ function LabServiceRegister() {
                               name="amoper"
                               value="false"
                               onChange={(e) => {
+<<<<<<< HEAD
                                 setShowSpecialRange(true)
                                 setShowMultiTest(false)
+=======
+                                setSpecialFlag(e.target.value);
+                                handleNoChange();
+>>>>>>> 528f070 (lab_module)
                               }}
                             />
                           </div>
                         </div>
+                        {showSpecialCmt && (
+                          <div className="row mt-5">
+                            <div className="col-md-12">
+                              <label>Write Comment</label>
+                              <textarea
+                                rows="10"
+                                cols="40"
+                                className="form-control"
+                                onChange={(e) =>
+                                  setSpecialComment(e.target.value)
+                                }></textarea>
+                            </div>
+                          </div>
+                        )}
+
+                        {showRefForm && (
+                          <div className="row mt-3">
+                            <label>Refference Range</label>
+                            <div className="col-md-2">
+                              <input
+                                type="number"
+                                placeholder="From"
+                                className="form-control"
+                                onChange={(e) => setFrom(e.target.value)}
+                              />
+                            </div>
+                            <div className="col-md-2">
+                              <input
+                                type="number"
+                                placeholder="To"
+                                className="form-control"
+                                onChange={(e) => setTo(e.target.value)}
+                              />
+                            </div>
+                            <div className="col-md-3">
+                              <select
+                                class="custom-select border-info"
+                                name="account_type_id"
+                                id="flag"
+                                onChange={(e) => {
+                                  setGender(e.target.value);
+                                  setGenderMale(true);
+                                }}>
+                                <option>Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Null">Nutral</option>
+                              </select>
+                            </div>
+
+                            <div className="col-md-2">
+                              <input
+                                type="text"
+                                placeholder="Unit"
+                                className="form-control"
+                                onChange={(e) => setUnit(e.target.value)}
+                              />
+                            </div>
+                            {/* Action button for add data to refArr */}
+                            <div className="col-md-2">
+                              <button
+                                type="button"
+                                className="btn btn-primary"
+                                onClick={(e) => handleRefRange(e.target.value)}>
+                                <i class="fa fa-plus"></i>
+                              </button>
+                            </div>
+                            {/* End */}
+                          </div>
+                        )}
                       </div>
                       {showMultiTest ? (<div className="row pt-3">
                         <div className="col-md-12">

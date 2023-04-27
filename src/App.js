@@ -16,6 +16,7 @@ import TestVoucherPrint from './patients/TestVoucherPrint';
 import TestVoucher from './patients/TestVoucher';
 import TestPackage from './components/views/TestPackage';
 import TestPackageReg from './components/views/TestPackageReg';
+import ReferDoctorCharge from './components/views/ReferDoctorCharge';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -58,8 +59,12 @@ function App() {
         <Route path="/test_voucher/:id" element={<TestVoucher />} />
         <Route path="/package" element={<TestPackage />}></Route>
         <Route path="/packageReg" element={<TestPackageReg />}></Route>
+
         <Route path="/tvoucherList" element={<TestVoucherList />}></Route>
         <Route path="/tresultList" element={<TestResultList />}></Route>
+
+        <Route path="/refDoctor/:id" element={<ReferDoctorCharge/>}></Route>
+
       </Routes>
     </Router>
   );
