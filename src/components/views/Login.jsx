@@ -37,19 +37,13 @@ function Login() {
       {/* @include('sweet::alert') */}
 
       <div className="wrapper">
-        {/* <!-- Content Wrapper. Contains page content --> */}
-
-        {/* <!-- Content Header (Page header) --> */}
-
-        {/* <!-- Main content --> */}
+     
 
         <section className="content">
           <div className="container" style={{ marginTop: "8em" }}>
             <div className="row">
               <div className="offset-3 col-md-6">
-                {/* <div className="text-center">
-                  <img src={require("../views/logo.png")} alt="" />
-                </div> */}
+          
                 <div className="card" style={styles.card}>
                   <div
                     className="card-header head text-center py-3"
