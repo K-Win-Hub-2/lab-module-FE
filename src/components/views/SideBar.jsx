@@ -49,9 +49,7 @@ function Sidebar() {
               data-accordion="false">
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i
-                    style={{ fontSize: "21px" }}
-                    className="nav-icon fas">
+                  <i style={{ fontSize: "21px" }} className="nav-icon fas">
                     &#xf2bd;
                   </i>
                   <p>
@@ -108,7 +106,9 @@ function Sidebar() {
               {/* Patient */}
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i className="nav-icon fas fa-poll" style={{fontSize:'22px'}}></i>
+                  <i
+                    className="nav-icon fas fa-poll"
+                    style={{ fontSize: "22px" }}></i>
                   <p>
                     Sales
                     {/* <i className="right fas fa-angle-left"></i> */}
@@ -140,7 +140,7 @@ function Sidebar() {
                     <p>Lab Test</p>
                   </Link>
                 </li>
-                
+
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -157,7 +157,9 @@ function Sidebar() {
 
               <li className="nav-item">
                 <Link to="/account_list" className="nav-link">
-                  <i className="nav-icon fas fa-flask"  style={{fontSize:'20px'}}></i>
+                  <i
+                    className="nav-icon fas fa-flask"
+                    style={{ fontSize: "20px" }}></i>
                   <p>Laboratory</p>
                 </Link>
               </li>
@@ -176,10 +178,7 @@ function Sidebar() {
                     &#xf15c;
                   </i>
                   &nbsp;
-                  <p>
-                    Finance
-
-                  </p>
+                  <p>Finance</p>
                 </a>
               </li>
               <li className="ml-3">
@@ -214,6 +213,12 @@ function Sidebar() {
                   <i className="nav-icon fas fa-power-off"></i>
                   <span className="ml-2">Logout</span>
                 </a>
+              </li>
+              <li className="nav-item">
+                <Link to='/login' className="nav-link">
+                  <i className="nav-icon fas fa-power-off"></i>
+                  <span className="ml-2">LogIn</span>
+                </Link>
               </li>
             </ul>
           </nav>
