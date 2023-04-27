@@ -33,6 +33,10 @@ function LabServiceRegister() {
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
 
+  const handleMultipleTests = (event) => {
+    
+  }
+
   const handleYesChange = () => {
     setShowSpecialCmt(true);
     setShowRefForm(false);
@@ -459,7 +463,7 @@ function LabServiceRegister() {
                               <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={(e) => handleBox(e.target.value)}>
+                                onClick={(e) => handleMultipleTests(e.target.value)}>
                                 <i class="fa fa-plus"></i>
                               </button>
                             </div>
