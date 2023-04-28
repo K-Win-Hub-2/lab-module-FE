@@ -48,7 +48,7 @@ function Login() {
                   <div
                     className="card-header head text-center py-3"
                     style={styles.head}>
-                    <img src={require("../views/logo.png")} alt="" />
+                    <img src={require("../../logo.png")} alt="" />
                   </div>
                   <div className="card-body body py-5" style={styles.body}>
                     <div className="row">
