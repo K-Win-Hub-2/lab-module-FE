@@ -215,14 +215,14 @@ const LabServiceList = () => {
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
-                                    <td>{labService.code}</td>
+                                    <td>{labService.code? labService.code: ""}</td>
 
-                                    <td>{labService.name}</td>
+                                    <td>{labService.name ? labService.name : ""}</td>
 
                                     <td>Test Cat</td>
 
-                                    <td>{labService.referDoctor.name}</td>
-                                    <td>{labService.charges}</td>
+                                    <td>{labService.referDoctor ? labService.referDoctor.name: ""}</td>
+                                    <td>{labService.charges ? labService.charges : ""}</td>
 
                                     <td className="text-center">
                                       <a
