@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Base64 } from "js-base64";
 
 function LabServiceRegister() {
@@ -30,14 +30,36 @@ function LabServiceRegister() {
   const [specialFlag, setSpecialFlag] = useState('');
   const [showSpecialCmt, setShowSpecialCmt] = useState(false);
   const [showRefForm, setShowRefForm] = useState(false);
-  const [genderMale, setGenderMale] = useState(false);
-
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+  const [tableData, setTableData] = useState([]);
+  const textBoxRefs = useRef([]);
 
-  const handleMultipleTests = (event) => {
-    
-  }
+
+  const handleAddRow = () => {
+    setTableData([...tableData, { id: tableData.length + 1, name: "", range: "", unit: "" }]);
+    setShowSaveButton(true)
+  };
+
+  const handleDeleteRow = (id) => {
+    const filteredData = tableData.filter((data) => data.id !== id);
+    setTableData(filteredData);
+  };
+
+  const handleInputChange = (event, id, field) => {
+    const newData = tableData.map((data) => {
+      if (data.id === id) {
+        return { ...data, [field]: event.target.value };
+      }
+      return data;
+    });
+    setTableData(newData);
+  };
+  const handleSave = () => {
+    const jsonData = JSON.stringify(tableData);
+    console.log(jsonData);
+  };
 
   const handleYesChange = () => {
     setShowSpecialCmt(true);
@@ -49,17 +71,7 @@ function LabServiceRegister() {
     setShowRefForm(true);
   };
 
-  const handleMulYes = () =>
-  {
-    setShowMultiTest(true);
-    setShowSpecialRange(false);
-  }
-  
-   const handleMulNo = () => {
-     setShowMultiTest(true);
-     setShowSpecialRange(false);
-   };
-  
+
   const handleBox = (event) => {
     let newReagent = {
       id: tempReagent.split(".")[0],
@@ -98,6 +110,9 @@ function LabServiceRegister() {
     clearTextBox("referdoc")
     clearTextBox("cat")
     clearTextBox("textArea")
+    clearTextBox("subTestName")
+    clearTextBox("subTestRR")
+    clearTextBox("subTestUnit")
   }
 
   const ServiceCreate = (event) => {
@@ -106,6 +121,8 @@ function LabServiceRegister() {
 
     const myString = specialCommentEncode;
     const encodedString = Base64.encode(myString);
+    const subTestData = JSON.stringify(tableData);
+    console.log(subTestData);
 
     const data = {
       code: code,
@@ -118,13 +135,9 @@ function LabServiceRegister() {
       reagentItems: reagentArray,
       referenceRange: refArray,
       description: description,
-      specialFlag: specialFlag,
       specialComment: encodedString,
+      subTest: tableData
     };
-
-    // if(specialFlag)
-    
-
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -135,7 +148,7 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        // alert("success");
+         alert("success");
         clearForm()
         // props.setReagent([...props.category, response.data.data]);
       })
@@ -179,6 +192,7 @@ function LabServiceRegister() {
     getReferDoctor();
     getCategory();
   }, []);
+
   return (
     <div classNameName="App">
       <div className="wrapper">
@@ -419,6 +433,7 @@ function LabServiceRegister() {
                               onChange={(e) => {
                                 setShowMultiTest(true);
                                 setShowSpecialRange(false);
+                                setShowNextRef(false)
                               }}
                             />
                           </div>
@@ -435,162 +450,66 @@ function LabServiceRegister() {
                               }}
                             />
                           </div>
-                          {/* <div className="col-md-12 mt-3">
-                          <div class="form-group">
-                            <label for="name" className="">
-                              Nominal Flag
-                            </label>
-                            <select
-                              class="custom-select border-info"
-                              name="account_type_id"
-                              id="flag"
-                              >
-                              <option></option>
-                              <option value="Above">Above</option>
-                              <option value="Below">Below</option>
-                            </select>
-                          </div>
-                        </div>
-                        <div class="form-group">
-                          <label for="name" className="">
-                            Nominal Value
-                          </label>
-                          <input
-                            type="text"
-                            className="form-control"
-                            id="noVal"
-                            
-                          />
-                        </div> */}
 
                           {showMultiTest ? (
                             <div className="row pt-3">
-                              <div className="col-md-12">
+                              <div className="col-md-8">
                                 <label className="control-label">
                                   Add Multiple Tests
                                 </label>
-                                <div className="row">
-                                  <div className="col-md-3">
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Name"
-                                      id="subTestName"
-                                      name="subTestName"
-                                    />
+                                <button className="btn btn-primary ml-3" type="button" onClick={handleAddRow}>Add</button>
+                                {tableData.map((data) => (
+                                  <div className="row mt-3">
+                                    <div className="col-md-3">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Name"
+                                        id="subTestName"
+                                        name="subTestName"
+                                        value={data.name}
+                                        onChange={(event) => handleInputChange(event, data.id, "name")}
+                                      />
+                                    </div>
+                                    <div className="col-md-3">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Reference Range"
+                                        id="subTestRR"
+                                        name="subTestRR"
+                                        value={data.range}
+                                        onChange={(event) => handleInputChange(event, data.id, "range")}
+                                      />
+                                    </div>
+                                    <div className="col-md-3">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Unit"
+                                        id="subTestUnit"
+                                        name="subTestUnit"
+                                        value={data.unit}
+                                        onChange={(event) => handleInputChange(event, data.id, "unit")}
+                                      />
+                                    </div>
+                                    <div className="col-md-3">
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-danger rounded-circle"
+                                        id="removeRowFromMultiTests"
+                                        onClick={() => handleDeleteRow(data.id)}>
+                                        <FaMinus />
+                                      </button>
+                                    </div>
                                   </div>
-                                  <div className="col-md-3">
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Reference Range"
-                                      id="subTestRR"
-                                      name="subTestRR"
-                                    />
-                                  </div>
-                                  <div className="col-md-3">
-                                    <input
-                                      type="text"
-                                      className="form-control"
-                                      placeholder="Unit"
-                                      id="subTestUnit"
-                                      name="subTestUnit"
-                                    />
-                                  </div>
-                                  <div className="col-md-3">
-                                    <button
-                                      type="button"
-                                      className="btn btn-primary"
-                                      onClick={(e) =>
-                                        handleMultipleTests(e.target.value)
-                                      }>
-                                      <i class="fa fa-plus"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                                {reagentArray ? (
-                                  <div>
-                                    {reagentArray.map((regArr) => (
-                                      <div className="row mt-3">
-                                        <div className="col-md-5">
-                                          <input
-                                            type="text"
-                                            value={regArr.name}
-                                            className="form-control"
-                                          />
-                                        </div>
-                                        <div className="col-md-5">
-                                          <input
-                                            type="text"
-                                            defaultValue={0}
-                                            className="form-control"
-                                          />
-                                        </div>
-                                        <div className="col-md-2">
-                                          <button className="btn btn-sm btn-danger rounded-circle opacity-75">
-                                            <FaMinus />
-                                          </button>
-                                        </div>
-                                      </div>
-                                    ))}
-                                  </div>
-                                ) : (
-                                  ""
-                                )}
+                                ))}
+                                {showSaveButton ? (<button className="btn btn-primary mt-3 col-md-1" type="button" onClick={handleSave}>Save</button>) : ""}
                               </div>
                             </div>
                           ) : (
                             ""
                           )}
-
-
-                          {/* <div className="row mt-5">
-                            <div className="col-md-4">
-                              <label>Special Reference Range</label>
-                            </div>
-
-                            <div className="col-md-4">
-                              <label>Yes</label>&nbsp;
-                              <input
-                                type="radio"
-                                id="yes"
-                                name="amoper"
-                                value="true"
-                                onChange={(e) => {
-                                  setSpecialFlag(e.target.value);
-                                  handleYesChange();
-                                }}
-                              />
-                            </div>
-                            <div className="col-md-4">
-                              <label>No</label>&nbsp;
-                              <input
-                                type="radio"
-                                id="no"
-                                name="amoper"
-                                value="false"
-                                onChange={(e) => {
-                                  setSpecialFlag(e.target.value);
-                                  handleNoChange();
-                                }}
-                              />
-                            </div>
-
-                            {showSpecialCmt && (
-                              <div className="row mt-5">
-                                <div className="col-md-12">
-                                  <label>Write Comment</label>
-                                  <textarea
-                                    rows="10"
-                                    cols="40"
-                                    className="form-control"
-                                    onChange={(e) =>
-                                      setSpecialComment(e.target.value)
-                                    }></textarea>
-                                </div>
-                              </div>
-                            )}
-                          </div> */}
 
                           {showSpecialRange ? (
                             <div className="row">
