@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
+import { FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { Base64 } from "js-base64";
 import Swal from "sweetalert2";
 
@@ -132,7 +132,7 @@ function LabServiceRegister() {
 
     if (doctor) data= {...data, referDoctor:doctor}
     if (relatedCategory) data= {...data, relatedCategory:relatedCategory}
-    
+
     const config = {
       headers: { "Content-Type": "application/json" },
     };
