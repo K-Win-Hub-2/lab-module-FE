@@ -1,6 +1,7 @@
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function CatRegister()
 {
@@ -33,9 +34,20 @@ function CatRegister()
        .then(function (response) {
         //  alert("success");
          setCategory([...category, response.data.data]);
+         Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
        })
        .catch(function (err) {
-         alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
        });
      document.getElementById("desc").value = "";
      document.getElementById("name").value = "";

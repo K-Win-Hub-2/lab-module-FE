@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from "./SideBar";
 import styled from 'styled-components'
-import { AiOutlinePlus, AiTwotoneFilter, AiFillInfoCircle } from 'react-icons/ai'
-import { FaFileExport } from "react-icons/fa"
+import { AiFillInfoCircle } from 'react-icons/ai'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
 

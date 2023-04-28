@@ -5,6 +5,7 @@ import { FaCashRegister, FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [name, setName] = useState("");
@@ -39,11 +40,20 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        // alert("success");
-        // setCategory([...category, response.data.data]);
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
   };
 

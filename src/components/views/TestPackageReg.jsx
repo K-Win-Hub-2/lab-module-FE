@@ -1,28 +1,24 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
+
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import {  FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { decode as base64_decode, encode as base64_encode } from "base-64";
-// window.Buffer = window.Buffer || require("buffer").Buffer;
-import Buffer from "buffer";
-import { Base64 } from "js-base64";
+
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
   const [packageArray, setPackageArray] = useState([]);
   const [serviceLists, setServiceLists] = useState([]);
   const [name, setName] = useState("");
-  const [relatedCategory, setRelatedCategory] = useState("");
   const [cost, setCost] = useState("");
   const [charges, setCharges] = useState("");
   const [status, setStatus] = useState("");
   const [packageLists, setPackageLists] = useState([]);
   const [description, setDescription] = useState("");
   const [tempPackage, setTempPackage] = useState("");
-  const [amount, setAmount] = useState("");
 
   const handleBox = (event) => {
     console.log(event, "event");
@@ -75,11 +71,20 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        // alert("success");
-        // props.setReagent([...props.category, response.data.data]);
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
 
     document.getElementById("name").value = "";

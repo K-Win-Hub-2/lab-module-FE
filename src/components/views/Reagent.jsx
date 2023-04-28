@@ -5,10 +5,6 @@ import { Link } from "react-router-dom";
 
 function CatRegister() {
   const [reagent, setReagent] = useState([]);
-  const [code, setCode] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [flag, setFlag] = useState("");
 
   useEffect(() => {
     const getReagent = async () => {

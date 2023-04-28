@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from "./SideBar";
 import styled from 'styled-components'
-import { AiOutlinePlus, AiTwotoneFilter, AiFillInfoCircle } from 'react-icons/ai'
-import { FaFileExport } from "react-icons/fa"
+import {  AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
 import ExportVoucher from './ExportVoucher'
 

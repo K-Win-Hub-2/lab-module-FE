@@ -1,14 +1,14 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
+
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [stockUnitTemp, setStockUnitTemp] = useState("");
-  const [stockUnit, setStockUnit] = useState([]);
   const [stockLists, setStockLists] = useState([]);
   const [supplierLists, setSupplierLists] = useState([]);
   const [code, setCode] = useState("");
@@ -44,11 +44,20 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        // alert("success");
-        // setReagentLists([...reagentLists, response.data.data]);
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
     document.getElementById("supplier").value = "";
     document.getElementById("name").value = "";

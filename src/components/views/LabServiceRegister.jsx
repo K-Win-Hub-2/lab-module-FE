@@ -5,6 +5,7 @@ import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState, useRef } from "react";
 import { Base64 } from "js-base64";
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -32,14 +33,12 @@ function LabServiceRegister() {
   const [showRefForm, setShowRefForm] = useState(false);
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
-  const [showSaveButton, setShowSaveButton] = useState(false);
   const [tableData, setTableData] = useState([]);
-  const textBoxRefs = useRef([]);
+  
 
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, name: "", range: "", unit: "" }]);
-    setShowSaveButton(true)
   };
 
   const handleDeleteRow = (id) => {
@@ -55,10 +54,6 @@ function LabServiceRegister() {
       return data;
     });
     setTableData(newData);
-  };
-  const handleSave = () => {
-    const jsonData = JSON.stringify(tableData);
-    console.log(jsonData);
   };
 
   const handleYesChange = () => {
@@ -121,15 +116,11 @@ function LabServiceRegister() {
 
     const myString = specialCommentEncode;
     const encodedString = Base64.encode(myString);
-    const subTestData = JSON.stringify(tableData);
-    console.log(subTestData);
 
-    const data = {
+    let data = {
       code: code,
       name: name,
       leadTime: leadTime,
-      referDoctor: doctor,
-      relatedCategory: relatedCategory,
       charges: charges,
       cost: cost,
       reagentItems: reagentArray,
@@ -138,6 +129,10 @@ function LabServiceRegister() {
       specialComment: encodedString,
       subTest: tableData
     };
+
+    if (doctor) data= {...data, referDoctor:doctor}
+    if (relatedCategory) data= {...data, relatedCategory:relatedCategory}
+    
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -148,12 +143,22 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-         alert("success");
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
         clearForm()
         // props.setReagent([...props.category, response.data.data]);
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
   };
 
@@ -297,7 +302,7 @@ function LabServiceRegister() {
                               onChange={(e) =>
                                 setRelatedCategory(e.target.value)
                               }>
-                              <option value="">Choose Category</option>
+                              <option >Choose Category</option>
                               {category.map((option) => (
                                 <option value={option._id}>
                                   {option.name}
@@ -346,7 +351,7 @@ function LabServiceRegister() {
                               className="form-control mt-1"
                               onchange="convert(this.value)"
                               onChange={(e) => setDoctor(e.target.value)}>
-                              <option value="">Choose Doctor</option>
+                              <option >Choose Doctor</option>
                               {referDoctor.map((option) => (
                                 <option value={option._id}>
                                   {option.name}
@@ -504,7 +509,7 @@ function LabServiceRegister() {
                                     </div>
                                   </div>
                                 ))}
-                                {showSaveButton ? (<button className="btn btn-primary mt-3 col-md-1" type="button" onClick={handleSave}>Save</button>) : ""}
+                                
                               </div>
                             </div>
                           ) : (
@@ -674,7 +679,7 @@ function LabServiceRegister() {
                                     onClick={(e) =>
                                       handleRefRange(e.target.value)
                                     }>
-                                    <i class="fa fa-plus"></i>
+                                    <i class="fa fa-save"></i>
                                   </button>
                                 </div>
                               </div>

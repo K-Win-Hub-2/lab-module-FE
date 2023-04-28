@@ -2,7 +2,6 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-import CollectDialog from '../views/CollectDialog';
 
 function CatRegister() {
   const [referDoctor, setReferDoctor] = useState([]);
