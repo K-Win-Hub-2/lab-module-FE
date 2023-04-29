@@ -2,7 +2,7 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-
+import CategoryUpdate from '../views/CategoryUpdate';
 function CatRegister()
 {
   const [category, setCategory] = useState([]);
@@ -10,8 +10,13 @@ function CatRegister()
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [flag, setFlag] = useState('');
+  const [updateDialog, setUpdateDialog] = useState(false);
 
-  
+    const [id, setId] = useState("");
+    const showUpdate = (val) => {
+      setId(val);
+      setUpdateDialog(true);
+    };
 
    const CategoryCreate = () => {
      const data = {
@@ -128,12 +133,15 @@ function CatRegister()
 
                               <td>{cat.description}</td>
 
-                              <td>{cat.flag }</td>
+                              <td>{cat.flag}</td>
 
                               <td className="text-center">
-                                <a href="" className="btn btn-sm btn-warning">
+                                <button
+                                  type="button"
+                                  onClick={() => showUpdate(cat._id)}
+                                  class="btn btn-warning btn-sm ml-2">
                                   Update
-                                </a>
+                                </button>
                                 &nbsp;
                                 <a href="" className="btn btn-sm btn-danger">
                                   Delete
@@ -197,14 +205,11 @@ function CatRegister()
                           class="custom-select border-info"
                           name="account_type_id"
                           id="flag"
-                          onChange={(e) => setFlag(e.target.value)}
-                        >
+                          onChange={(e) => setFlag(e.target.value)}>
                           <option></option>
                           <option value="Service">Service</option>
                           <option value="Reagent">Reagent</option>
-                        
                         </select>
-                        
                       </div>
                       <button
                         className="btn btn-primary form-control text-center fw-5"
@@ -216,13 +221,14 @@ function CatRegister()
                   </div>
                 </div>
               </div>
-
-              {/* <ExpenseDialog
-                open={open}
-                close={() => setOpen(false)}
-                expenseLists={expenseLists}
-                setExpenseLists={setExpenseLists}
-              /> */}
+              <CategoryUpdate
+                updateDialog={updateDialog}
+                close={() => setUpdateDialog(false)}
+                setUpdateDialog={setUpdateDialog}
+                id={id}
+                setCategory={setCategory}
+                category={category}
+              />
             </div>
             {/*<!-- /.container-fluid --> */}
           </section>

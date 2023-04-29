@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import { AiFillInfoCircle } from 'react-icons/ai'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
+import Swal from "sweetalert2";
+
 
 const Top = styled.div`
 display : flex;
@@ -93,7 +95,12 @@ const TestResultList = () => {
         const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today');
         setVouchers(res.data.data);
       } catch (error) {
-        alert(error.response.data.message)
+        Swal.fire({
+          title: "Data not found for this day",
+          text: error.response.data.message,
+          icon: "warning",
+          confirmButtonText: "CANCEL",
+        });
       }
     }
     getVouchers();

@@ -176,7 +176,7 @@ const Patient = () => {
                           <Th>Name</Th>
                           <Th>Age</Th>
                           <Th>Phone</Th>
-                          <Th>Date of Birth</Th>
+                  
                           <Th>Gender</Th>
                           <Th>Address</Th>
                           <Th>Action</Th>
@@ -190,7 +190,6 @@ const Patient = () => {
                             <Td>{patient.name}</Td>
                             <Td>{patient.age}</Td>
                             <Td>{patient.phone}</Td>
-                            <Td>{patient.dateOfBirth.split("T")[0]}</Td>
                             <Td>{patient.gender}</Td>
                             <Td>{patient.address}</Td>
                             {/* <Td><Link to={'/test_sale/'+patient._id} class="btn btn-primary">Test Voucher</Link></Td> */}

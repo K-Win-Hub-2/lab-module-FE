@@ -76,12 +76,7 @@ function Sidebar() {
                     <p>Test Voucher List</p>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/tresultList" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Result List</p>
-                  </Link>
-                </li>
+
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -169,6 +164,12 @@ function Sidebar() {
                     <p>Results</p>
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link to="/tresultList" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Test Result List</p>
+                  </Link>
+                </li>
               </li>
 
               <li className="nav-item has-treeview">
@@ -214,7 +215,7 @@ function Sidebar() {
                 </a>
               </li>
               <li className="nav-item">
-                <Link to='/login' className="nav-link">
+                <Link to="/login" className="nav-link">
                   <i className="nav-icon fas fa-power-off"></i>
                   <span className="ml-2">LogIn</span>
                 </Link>

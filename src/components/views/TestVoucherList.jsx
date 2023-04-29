@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import {  AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
 import ExportVoucher from './ExportVoucher'
+import Swal from "sweetalert2";
 
 const Top = styled.div`
 display : flex;
@@ -105,7 +106,12 @@ const TestVoucherList = () => {
           setArray((array) => [...array, obj]);
         })
       } catch (error) {
-        alert(error.response.data.message)
+          Swal.fire({
+            title: "Data not found for this day",
+            text: error.response.data.message,
+            icon: "warning",
+            confirmButtonText: "CANCEL",
+          });
       }
         }
     getVouchers();
@@ -183,6 +189,7 @@ const TestVoucherList = () => {
                       <Th>#</Th>
                       <Th>Voucher Date</Th>
                       <Th>Voucher Code</Th>
+                      <Th>Refer Doctor</Th>
                       <Th>Patient Name</Th>
                       <Th>Test Qty</Th>
                       <Th>Amount</Th>
@@ -195,6 +202,7 @@ const TestVoucherList = () => {
                         <Td>{++index}</Td>
                         <Td>{vou.date.split('T')[0]}</Td>
                         <Td>{vou.code}</Td>
+                        <Td></Td>
                         <Td>{vou.relatedPatient.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
