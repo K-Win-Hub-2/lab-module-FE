@@ -88,10 +88,10 @@ const Patient = () => {
     const getPatients = async () =>{
       try{
         const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/patients');
-        setPatients(res.data.list.filter((el)=>el.patientStatus == 'Old'));
-        setAllPatients(res.data.list.filter((el)=>el.patientStatus == 'Old'));
-        setPatientsNew(res.data.list.filter((el)=>el.patientStatus == 'New'));
-        setAllPatientsNew(res.data.list.filter((el)=>el.patientStatus == 'New'));
+        setPatients(res.data.data.filter((el)=>el.patientStatus == 'Old'));
+        setAllPatients(res.data.data.filter((el)=>el.patientStatus == 'Old'));
+        setPatientsNew(res.data.data.filter((el)=>el.patientStatus == 'New'));
+        setAllPatientsNew(res.data.data.filter((el)=>el.patientStatus == 'New'));
       }catch(err){}
     };
     getPatients();

@@ -263,7 +263,7 @@ const LabServiceList = () => {
 
                                   <th>Category</th>
 
-                                  <th>Refer Doctor</th>
+                                  {/* <th>Refer Doctor</th> */}
                                   <th>Charges</th>
                                   {/* <th className="text-center">Multi Test</th> */}
                                   <th className="text-center">Action</th>
@@ -284,11 +284,11 @@ const LabServiceList = () => {
 
                                     <td>Test Cat</td>
 
-                                    <td>
+                                    {/* <td>
                                       {labService.referDoctor
                                         ? labService.referDoctor.name
                                         : ""}
-                                    </td>
+                                    </td> */}
                                     <td>
                                       {labService.charges
                                         ? labService.charges

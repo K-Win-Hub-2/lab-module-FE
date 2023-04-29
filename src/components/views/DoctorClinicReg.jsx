@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {  FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
-import {  useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 function LabServiceRegister() {
@@ -16,7 +16,7 @@ function LabServiceRegister() {
   const [education, setEducation] = useState("");
   const [position, setPosition] = useState("");
   const [showRelatedDoc, setShowRelatedDoc] = useState(false);
-    const [doctorLists, setDoctorLists] = useState([]);
+  const [doctorLists, setDoctorLists] = useState([]);
 
   const DoctorCreate = (event) => {
     const data = {
@@ -39,15 +39,14 @@ function LabServiceRegister() {
         data,
         config
       )
-      .then(function (response)
-      {
+      .then(function (response) {
         setDoctorLists([...doctorLists, response.data.data]);
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
           icon: "success",
           confirmButtonText: "OK",
-        })
+        });
       })
       .catch(function (err) {
         Swal.fire({
@@ -55,7 +54,7 @@ function LabServiceRegister() {
           text: err.response.data.message,
           icon: "error",
           confirmButtonText: "CANCEL",
-        })
+        });
       });
   };
 

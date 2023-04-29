@@ -4,6 +4,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import Swal from "sweetalert2";
+import {
+  FaCashRegister,
+  FaFileMedical,
+  FaPenSquare,
+  FaRegEdit,
+ 
+  FaRegTrashAlt,
+} from "react-icons/fa";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
@@ -238,23 +246,35 @@ const LabServiceList = () => {
 
                                     <td>{doctor.name ? doctor.name : ""}</td>
 
-                                    <td>{doctor.selection ? doctor.selection : ""}</td>
-                                    <td>{doctor.education ? doctor.education : ""}</td>
-                                    <td>{doctor.position ? doctor.position : ""}</td>
+                                    <td>
+                                      {doctor.selection ? doctor.selection : ""}
+                                    </td>
+                                    <td>
+                                      {doctor.education ? doctor.education : ""}
+                                    </td>
+                                    <td>
+                                      {doctor.position ? doctor.position : ""}
+                                    </td>
 
-                                    <td className="text-center">
+                                    <td className="text-center d-flex justify-content-between">
                                       <button className="btn btn-sm btn-info">
-                                        <Link to={'/refDoctor/' + doctor._id} className="btn btn-sm btn-info">
+                                        <Link
+                                          to={"/refDoctor/" + doctor._id}
+                                          className="btn btn-sm btn-info">
                                           Commission
                                         </Link>
                                       </button>
                                       &nbsp;
-                                      <button className="btn bt-sm btn-warning text-white">
-                                        Update
+                                      <button className="btn bt-sm btn-warning text-light">
+                                        <FaRegEdit />
                                       </button>
                                       &nbsp;
-                                      <button className="btn bt-sm btn-danger" onClick={(e)=> handleDelete(doctor._id)}>
-                                        Delete
+                                      <button
+                                        className="btn bt-sm btn-danger"
+                                        onClick={(e) =>
+                                          handleDelete(doctor._id)
+                                        }>
+                                        <FaRegTrashAlt />
                                       </button>
                                     </td>
                                   </tr>
