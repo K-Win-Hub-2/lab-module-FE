@@ -34,7 +34,7 @@ function LabServiceRegister() {
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
   const [tableData, setTableData] = useState([]);
-  
+
 
 
   const handleAddRow = () => {
@@ -131,7 +131,7 @@ function LabServiceRegister() {
     };
 
     // if (doctor) data= {...data, referDoctor:doctor}
-    if (relatedCategory) data= {...data, relatedCategory:relatedCategory}
+    if (relatedCategory) data = { ...data, relatedCategory: relatedCategory }
 
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -509,7 +509,7 @@ function LabServiceRegister() {
                                     </div>
                                   </div>
                                 ))}
-                                
+
                               </div>
                             </div>
                           ) : (
@@ -591,14 +591,14 @@ function LabServiceRegister() {
                                       name="account_type_id"
                                       id="flag"
                                       onChange={(e) => {
-                                        if (
-                                          e.target.value === "Male" ||
-                                          "Female"
-                                        )
+                                        if (e.target.value === "Male" ||
+                                          "Female")
                                           setShowNextRef(true);
                                         if (e.target.value === "Null")
                                           setShowNextRef(false);
-                                      }}>
+                                        setGender(e.target.value)
+                                      }
+                                      }>
                                       <option>Gender</option>
                                       <option value="Male">Male</option>
                                       <option value="Female">Female</option>
