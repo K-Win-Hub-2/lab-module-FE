@@ -5,6 +5,7 @@ import { AiFillInfoCircle } from 'react-icons/ai'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 
 const Top = styled.div`
@@ -128,45 +129,67 @@ const TestResultList = () => {
         <div className="content-header">
           <div className="container-fluid">
             <Top>
-              <Left><Title>Test Result List</Title></Left>
+              <Left>
+                <Title>Test Result List</Title>
+              </Left>
             </Top>
-            <Div className='card'>
-              <Div className='card-body'>
+            <Div className="card">
+              <Div className="card-body">
                 <Top>
                   <Left>
-                    <div className='row'>
-                      <div className='col-2'>
+                    <div className="row">
+                      <div className="col-2">
                         <label htmlFor="">From:</label>
-                        <input type="date" placeholder="Search..." className='form-control' onChange={(e) => setFrom(e.target.value)} />
+                        <input
+                          type="date"
+                          placeholder="Search..."
+                          className="form-control"
+                          onChange={(e) => setFrom(e.target.value)}
+                        />
                       </div>
-                      <div className='col-2'>
+                      <div className="col-2">
                         <label htmlFor="">To:</label>
-                        <input type="date" placeholder="Search..." className='form-control' onChange={(e) => setTo(e.target.value)} />
+                        <input
+                          type="date"
+                          placeholder="Search..."
+                          className="form-control"
+                          onChange={(e) => setTo(e.target.value)}
+                        />
                       </div>
-                      <div className='col-2'>
+                      <div className="col-2">
                         <label htmlFor="">Status:</label>
-                        <select className='form-control'>
+                        <select className="form-control">
                           <option value="">Choose Status</option>
-                          <option value='pending'>Pending</option>
+                          <option value="pending">Pending</option>
                           <option value="inprogress">In Progress</option>
                           <option value="finished">Finished</option>
                         </select>
                       </div>
-                      <div className='col-6'>
-                        <div className='row'>
-                          <div className='col-6'>
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-6">
                             <label htmlFor="">Patient Name:</label>
-                            <input type="text" placeholder="Search..." className='form-control' onChange={(e) => setName(e.target.value)} />
+                            <input
+                              type="text"
+                              placeholder="Search..."
+                              className="form-control"
+                              onChange={(e) => setName(e.target.value)}
+                            />
                           </div>
-                          <div className='col-6' style={{ marginTop: '35px' }}>
-                            <button className='btn btn-sm btn-primary' onClick={search}>Search</button>
-                            <button className='btn btn-sm btn-primary ml-3'>Export</button>
+                          <div className="col-6" style={{ marginTop: "35px" }}>
+                            <button
+                              className="btn btn-sm btn-primary"
+                              onClick={search}>
+                              Search
+                            </button>
+                            <button className="btn btn-sm btn-primary ml-3">
+                              Export
+                            </button>
                           </div>
                         </div>
                       </div>
-
                     </div>
-                    <div className='mt-3'>
+                    <div className="mt-3">
                       <Tabs>
                         <TabList>
                           <Tab>Pending</Tab>
@@ -174,21 +197,14 @@ const TestResultList = () => {
                           <Tab>Finished</Tab>
                         </TabList>
 
-                        <TabPanel>
-
-                        </TabPanel>
-                        <TabPanel>
-
-                        </TabPanel>
-                        <TabPanel>
-
-                        </TabPanel>
+                        <TabPanel></TabPanel>
+                        <TabPanel></TabPanel>
+                        <TabPanel></TabPanel>
                       </Tabs>
                     </div>
-
                   </Left>
                 </Top>
-                <Table className='table table-hover'>
+                <Table className="table table-hover">
                   <Thead>
                     <Tr>
                       <Th>#</Th>
@@ -203,24 +219,30 @@ const TestResultList = () => {
                   </Thead>
                   <Tbody>
                     {vouchers.map((vou, index) => (
-
                       <Tr>
                         <Td>{++index}</Td>
-                        <Td>{vou.date.split('T')[0]}</Td>
+                        <Td>{vou.date.split("T")[0]}</Td>
                         <Td>{vou.code}</Td>
                         <Td>{vou.relatedPatient.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>
-                          {
-                            vou.testSelection.map((test, i) => (
-                              test.result != null ?
-                                ++i : i
-                            ))
-                          }
+                          {vou.testSelection.map((test, i) =>
+                            test.result != null ? ++i : i
+                          )}
                         </Td>
-                        <Td><Badge>Pending</Badge></Td>
-                        <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Btn></Td>
-                      </Tr>))}
+                        <Td>
+                          <Badge>Pending</Badge>
+                        </Td>
+                        <Td>
+                          <Link
+                            to={"/test/" + vou._id}
+                            className="btn btn-sm btn-primary">
+                            Detail
+                            <AiFillInfoCircle style={{ marginLeft: "7px" }} />
+                          </Link>
+                        </Td>
+                      </Tr>
+                    ))}
                   </Tbody>
                 </Table>
               </Div>
@@ -229,7 +251,7 @@ const TestResultList = () => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default TestResultList

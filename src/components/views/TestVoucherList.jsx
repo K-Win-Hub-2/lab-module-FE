@@ -5,6 +5,7 @@ import {  AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
 import ExportVoucher from './ExportVoucher'
 import Swal from "sweetalert2";
+import { Link } from 'react-router-dom';
 
 const Top = styled.div`
 display : flex;
@@ -206,7 +207,7 @@ const TestVoucherList = () => {
                         <Td>{vou.relatedPatient.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
-                        <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Btn></Td>
+                        <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td>
                       </Tr>))}
                   </Tbody>
                 </Table>

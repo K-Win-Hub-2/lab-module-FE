@@ -92,6 +92,8 @@ function LabServiceRegister() {
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection);
+        console.log(res.data.data.testSelection);
+        console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
         setTestID(res.data.data.testSelection[0]);
         // console.log(res.data.data.testSelection[0].name.specialComment);

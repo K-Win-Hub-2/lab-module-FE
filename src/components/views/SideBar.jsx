@@ -70,12 +70,6 @@ function Sidebar() {
                     <p>Lab Test</p>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/tvoucherList" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Voucher List</p>
-                  </Link>
-                </li>
 
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
@@ -145,6 +139,12 @@ function Sidebar() {
                   <Link to="/tvoucherList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/tvoucherList" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Test Voucher List</p>
                   </Link>
                 </li>
               </li>
