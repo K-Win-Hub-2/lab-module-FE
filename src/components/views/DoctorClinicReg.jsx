@@ -1,10 +1,9 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft } from "react-icons/fa";
+import {  FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Swal from "sweetalert2";
 
 function LabServiceRegister() {
@@ -98,19 +97,18 @@ function LabServiceRegister() {
                     <div className="form-group">
                       <div className="row">
                         <div className="col-md-4">
-                          <label>Doctor</label>&nbsp;
+                          <label>ReferDoctor</label>&nbsp;
                           <input
                             type="radio"
                             id="doccl"
                             name="doccl"
-                            value="Doctor"
+                            value="ReferDoctor"
                             onChange={(e) => {
                               setSelection(e.target.value);
                               setShowRelatedDoc(true);
                             }}
                           />
                         </div>
-                        &nbsp;&nbsp;&nbsp;
                         <div className="col-md-4">
                           <label>Clinic</label>&nbsp;
                           <input
@@ -118,6 +116,19 @@ function LabServiceRegister() {
                             id="doccl"
                             name="doccl"
                             value="Clinic"
+                            onChange={(e) => {
+                              setSelection(e.target.value);
+                              setShowRelatedDoc(false);
+                            }}
+                          />
+                        </div>
+                        <div className="col-md-4">
+                          <label>Pathologist</label>&nbsp;
+                          <input
+                            type="radio"
+                            id="doccl"
+                            name="doccl"
+                            value="Pathologist"
                             onChange={(e) => {
                               setSelection(e.target.value);
                               setShowRelatedDoc(false);

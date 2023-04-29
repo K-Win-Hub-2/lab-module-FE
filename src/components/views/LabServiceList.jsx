@@ -2,16 +2,55 @@ import React, { useState } from "react";
 // import ExpenseDialog from "../views/ExpenseDialog";
 import { useEffect } from "react";
 import axios from "axios";
-import { ExcelExport } from "@progress/kendo-react-excel-export";
-import { ExcelExportColumn } from "@progress/kendo-react-excel-export";
 import { Link } from "react-router-dom";
-import { FaCashRegister } from "react-icons/fa";
 import SideBar from "./SideBar";
+import Swal from 'sweetalert2'
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
-  const [close, setClose] = useState(false);
   const [labServiceLists, setLabServiceLists] = useState([]);
+
+  const handleDelete = (event) => {
+    console.log(event, "event")
+    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' + event).then(response => {
+      Swal.fire({
+        title: "Success",
+        text: "Successfully Deleted!",
+        icon: "success",
+        confirmButtonText: "OK"
+      })
+      const result = labServiceLists.filter(item => item._id !== event)
+      setLabServiceLists(result);
+    }).catch(error => {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    })
+  }
+
+  const handleUpdate = (event) => {
+    console.log(event, "event")
+    axios.put('http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' + event).then(response => {
+      Swal.fire({
+        title: "Success",
+        text: "Successfully Deleted!",
+        icon: "success",
+        confirmButtonText: "OK"
+      })
+      const result = labServiceLists.filter(item => item._id !== event)
+      setLabServiceLists(result);
+    }).catch(error => {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    })
+  }
 
   const showDialog = () => setOpen(true);
   const _export = React.useRef(null);
@@ -215,24 +254,25 @@ const LabServiceList = () => {
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
-                                    <td>{labService.code? labService.code: ""}</td>
+                                    <td>{labService.code ? labService.code : ""}</td>
 
                                     <td>{labService.name ? labService.name : ""}</td>
 
                                     <td>Test Cat</td>
 
-                                    <td>{labService.referDoctor ? labService.referDoctor.name: ""}</td>
+                                    <td>{labService.referDoctor ? labService.referDoctor.name : ""}</td>
                                     <td>{labService.charges ? labService.charges : ""}</td>
 
                                     <td className="text-center">
                                       <a
-                                        className="btn btn-primary btn-sm "
-                                        data-toggle="collapse"
-                                        href="#related{{$trans->id}}"
+                                        className="btn btn-sm btn-warning text-white"
                                         role="button"
-                                        aria-expanded="false"
-                                        aria-controls="multiCollapseExample1">
-                                        Related
+                                        onClick={(e) => handleUpdate(labService._id)}>
+                                        Update
+                                      </a>
+                                      &nbsp;
+                                      <a className="btn btn-sm btn-danger text-white" role="button" onClick={(e) => handleDelete(labService._id)}>
+                                        Delete
                                       </a>
                                     </td>
                                   </tr>

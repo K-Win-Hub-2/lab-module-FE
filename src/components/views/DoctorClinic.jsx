@@ -1,16 +1,35 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { ExcelExport } from "@progress/kendo-react-excel-export";
-import { ExcelExportColumn } from "@progress/kendo-react-excel-export";
 import { Link } from "react-router-dom";
-import { FaCashRegister } from "react-icons/fa";
 import SideBar from "./SideBar";
+import Swal from "sweetalert2";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
   const [close, setClose] = useState(false);
   const [doctorLists, setDoctorLists] = useState([]);
+
+  const handleDelete = (event) => {
+    console.log(event, "event")
+    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/' + event).then(response => {
+      Swal.fire({
+        title: "Success",
+        text: "Successfully Deleted!",
+        icon: "success",
+        confirmButtonText: "OK"
+      })
+      const result = doctorLists.filter(item => item._id !== event)
+      setDoctorLists(result);
+    }).catch(error => {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    })
+  }
 
   const showDialog = () => setOpen(true);
   const _export = React.useRef(null);
@@ -217,16 +236,26 @@ const LabServiceList = () => {
                                   <tr>
                                     <td>{++i}</td>
 
-                                    <td>{doctor.name}</td>
+                                    <td>{doctor.name ? doctor.name : ""}</td>
 
-                                    <td>{doctor.selection}</td>
-                                    <td>{doctor.education}</td>
-                                    <td>{doctor.position}</td>
+                                    <td>{doctor.selection ? doctor.selection : ""}</td>
+                                    <td>{doctor.education ? doctor.education : ""}</td>
+                                    <td>{doctor.position ? doctor.position : ""}</td>
 
                                     <td className="text-center">
-                                      <Link to={'/refDoctor/'+doctor._id} className="btn btn-sm btn-info">
-                                        Refer Doctor Charge
-                                      </Link>
+                                      <button className="btn btn-sm btn-info">
+                                        <Link to={'/refDoctor/' + doctor._id} className="btn btn-sm btn-info">
+                                          Commission
+                                        </Link>
+                                      </button>
+                                      &nbsp;
+                                      <button className="btn bt-sm btn-warning text-white">
+                                        Update
+                                      </button>
+                                      &nbsp;
+                                      <button className="btn bt-sm btn-danger" onClick={(e)=> handleDelete(doctor._id)}>
+                                        Delete
+                                      </button>
                                     </td>
                                   </tr>
                                 </tbody>

@@ -5,12 +5,33 @@ import Swal from "sweetalert2";
 
 function CatRegister()
 {
-  const [category, setCategory] = useState([]);
+  const [categoryLists, setCategoryLists] = useState([]);
   const [code, setCode] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [flag, setFlag] = useState('');
 
+
+  const handleDelete = (event) => {
+    console.log(event, "event")
+    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/category/' + event).then(response => {
+      Swal.fire({
+        title: "Success",
+        text: "Successfully Deleted!",
+        icon: "success",
+        confirmButtonText: "OK"
+      })
+      const result = categoryLists.filter(item => item._id !== event)
+      setCategoryLists(result);
+    }).catch(error => {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    })
+  }
   
 
    const CategoryCreate = () => {
@@ -33,7 +54,7 @@ function CatRegister()
        )
        .then(function (response) {
         //  alert("success");
-         setCategory([...category, response.data.data]);
+         setCategoryLists([...categoryLists, response.data.data]);
          Swal.fire({
           title: "Success",
           text: "successfully Registered!",
@@ -63,7 +84,7 @@ function CatRegister()
            "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
          );
 
-         setCategory(res.data.data);
+         setCategoryLists(res.data.data);
        } catch (err) {}
      };
      getCategory();
@@ -119,7 +140,7 @@ function CatRegister()
                           </tr>
                         </thead>
 
-                        {category.map((cat, i) => (
+                        {categoryLists.map((cat, i) => (
                           <tbody className="">
                             <tr>
                               <td>{++i}</td>
@@ -131,13 +152,13 @@ function CatRegister()
                               <td>{cat.flag }</td>
 
                               <td className="text-center">
-                                <a href="" className="btn btn-sm btn-warning">
+                                <button className="btn btn-sm btn-warning text-white">
                                   Update
-                                </a>
+                                </button>
                                 &nbsp;
-                                <a href="" className="btn btn-sm btn-danger">
+                                <button className="btn btn-sm btn-danger" role="" onClick={(e)=> handleDelete(cat._id)}>
                                   Delete
-                                </a>
+                                </button>
                               </td>
                             </tr>
                           </tbody>
