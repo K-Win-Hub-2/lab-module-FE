@@ -2,9 +2,31 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function CatRegister() {
   const [reagent, setReagent] = useState([]);
+
+  const handleDelete = (event) => {
+    console.log(event, "event")
+    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent/' + event).then(response => {
+      Swal.fire({
+        title: "Success",
+        text: "Successfully Deleted!",
+        icon: "success",
+        confirmButtonText: "OK"
+      })
+      const result = reagent.filter(item => item._id !== event)
+      setReagent(result);
+    }).catch(error => {
+      Swal.fire({
+        title: "Error",
+        text: error.response.data.message,
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    })
+  }
 
   useEffect(() => {
     const getReagent = async () => {
@@ -14,7 +36,7 @@ function CatRegister() {
         );
 
         setReagent(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getReagent();
   }, []);
@@ -65,7 +87,7 @@ function CatRegister() {
                             <button
                               type="button"
                               className="btn btn-primary"
-                              // onClick={excelExport}
+                            // onClick={excelExport}
                             >
                               Export Excel
                             </button>
@@ -102,8 +124,8 @@ function CatRegister() {
                               <td>{reag.supplier.name}</td>
 
                               <td className="text-center">
-                                <a href="" className="btn btn-sm btn-primary">
-                                  Related
+                                <a className="btn btn-sm btn-danger text-white" role="button" onClick={ ()=> handleDelete(reag._id)}>
+                                  Delete
                                 </a>
                                 {/* &nbsp;
                                 <a href="" className="btn btn-sm btn-danger">

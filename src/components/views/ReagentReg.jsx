@@ -25,14 +25,26 @@ function LabServiceRegister() {
    
   };
 
+  const clearTextBox = (textboxId) => {
+    const textbox = document.getElementById(textboxId);
+    if (textbox && textbox.value) {
+      textbox.value = "";
+    }
+  };
+
+  const clearForm = () => {
+    clearTextBox("code")
+    clearTextBox("name")
+    clearTextBox("supplier")
+  }
+
   const ReagentCreate = () => {
     const data = {
       code: code,
       name: name,
-      stockUnit: stockLists,
+      // stockUnit: stockLists,
       supplier: supplier,
     };
-
     // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -43,13 +55,14 @@ function LabServiceRegister() {
         data,
         config
       )
-      .then(function (response) {
+      .then(function (response) { 
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
           icon: "success",
           confirmButtonText: "OK",
         })
+        clearForm()
       })
       .catch(function (err) {
         Swal.fire({
@@ -59,9 +72,9 @@ function LabServiceRegister() {
           confirmButtonText: "CANCEL",
         })
       });
-    document.getElementById("supplier").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("code").value = "";
+    // document.getElementById("supplier").value = "";
+    // document.getElementById("name").value = "";
+    // document.getElementById("code").value = "";
     // document.getElementById("flag").value = "";
   };
 
@@ -115,6 +128,7 @@ function LabServiceRegister() {
                     <label className="control-label">Code</label>
                     <input
                       type="text"
+                      id="code"
                       className="form-control"
                       name="company_name"
                       onChange={(e) => setCode(e.target.value)}
@@ -125,6 +139,7 @@ function LabServiceRegister() {
                     <label className="control-label">Name</label>
                     <input
                       type="text"
+                      id="name"
                       className="form-control"
                       name="company_address"
                       onChange={(e) => setName(e.target.value)}

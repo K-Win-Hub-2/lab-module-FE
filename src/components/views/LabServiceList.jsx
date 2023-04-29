@@ -5,10 +5,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import Swal from 'sweetalert2'
+import LabServiceUpdate from '../views/LabServiceUpdate'
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
   const [labServiceLists, setLabServiceLists] = useState([]);
+  const [updateDialog, setUpdateDialog] = useState(false);
+  const [id, setId] = useState([]);
+  
 
   const handleDelete = (event) => {
     console.log(event, "event")
@@ -32,24 +36,8 @@ const LabServiceList = () => {
   }
 
   const handleUpdate = (event) => {
-    console.log(event, "event")
-    axios.put('http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' + event).then(response => {
-      Swal.fire({
-        title: "Success",
-        text: "Successfully Deleted!",
-        icon: "success",
-        confirmButtonText: "OK"
-      })
-      const result = labServiceLists.filter(item => item._id !== event)
-      setLabServiceLists(result);
-    }).catch(error => {
-      Swal.fire({
-        title: "Error",
-        text: error.response.data.message,
-        icon: "error",
-        confirmButtonText: "CANCEL",
-      })
-    })
+    setId(event);
+    setUpdateDialog(true);
   }
 
   const showDialog = () => setOpen(true);
@@ -267,7 +255,7 @@ const LabServiceList = () => {
                                       <a
                                         className="btn btn-sm btn-warning text-white"
                                         role="button"
-                                        onClick={(e) => handleUpdate(labService._id)}>
+                                        onClick={(e) => handleUpdate(labService)}>
                                         Update
                                       </a>
                                       &nbsp;
@@ -293,6 +281,14 @@ const LabServiceList = () => {
                 expenseLists={expenseLists}
                 setExpenseLists={setExpenseLists}
               /> */}
+              <LabServiceUpdate
+                updateDialog={updateDialog}
+                close={() => setUpdateDialog(false)}
+                setUpdateDialog={setUpdateDialog}
+                id={id}
+                setLabServiceLists={setLabServiceLists}
+                labServiceLists={labServiceLists}
+              />
             </div>
             {/*<!-- /.container-fluid --> */}
           </section>
