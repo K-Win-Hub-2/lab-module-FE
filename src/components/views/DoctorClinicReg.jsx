@@ -16,6 +16,7 @@ function LabServiceRegister() {
   const [education, setEducation] = useState("");
   const [position, setPosition] = useState("");
   const [showRelatedDoc, setShowRelatedDoc] = useState(false);
+    const [doctorLists, setDoctorLists] = useState([]);
 
   const DoctorCreate = (event) => {
     const data = {
@@ -28,7 +29,7 @@ function LabServiceRegister() {
       phone: phone,
       email: email,
     };
- 
+    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -38,7 +39,9 @@ function LabServiceRegister() {
         data,
         config
       )
-      .then(function (response) {
+      .then(function (response)
+      {
+        setDoctorLists([...doctorLists, response.data.data]);
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",

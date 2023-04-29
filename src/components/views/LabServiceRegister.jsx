@@ -10,12 +10,12 @@ import Swal from "sweetalert2";
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
   const [reagentArray, setReagentArray] = useState([]);
-  const [referDoctor, setReferDoctor] = useState([]);
+  // const [referDoctor, setReferDoctor] = useState([]);
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
   const [leadTime, setLeadTime] = useState("");
   const [relatedCategory, setRelatedCategory] = useState("");
-  const [doctor, setDoctor] = useState("");
+  // const [doctor, setDoctor] = useState("");
   const [charges, setCharges] = useState("");
   const [cost, setCost] = useState("");
   const [reagentItems, setReagentItems] = useState([]);
@@ -130,7 +130,7 @@ function LabServiceRegister() {
       subTest: tableData
     };
 
-    if (doctor) data= {...data, referDoctor:doctor}
+    // if (doctor) data= {...data, referDoctor:doctor}
     if (relatedCategory) data= {...data, relatedCategory:relatedCategory}
 
     const config = {
@@ -173,16 +173,16 @@ function LabServiceRegister() {
       } catch (err) { }
     };
 
-    const getReferDoctor = async () => {
-      try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
-        );
+    // const getReferDoctor = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
+    //     );
 
-        setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
+    //     setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
 
-      } catch (err) { }
-    };
+    //   } catch (err) { }
+    // };
 
     const getReagent = async () => {
       try {
@@ -194,7 +194,7 @@ function LabServiceRegister() {
     };
 
     getReagent();
-    getReferDoctor();
+    // getReferDoctor();
     getCategory();
   }, []);
 
@@ -297,7 +297,7 @@ function LabServiceRegister() {
                             <select
                               name="currency"
                               id="cat"
-                              className="form-control mt-1"
+                              className="form-control"
                               onchange="convert(this.value)"
                               onChange={(e) =>
                                 setRelatedCategory(e.target.value)
@@ -326,7 +326,7 @@ function LabServiceRegister() {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                           <div className="form-group">
                             <label className="control-label">Cost</label>
                             <input
@@ -339,7 +339,7 @@ function LabServiceRegister() {
                             />
                           </div>
                         </div>
-                        <div className="col-md-6">
+                        {/* <div className="col-md-6">
                           <div className="form-group">
                             <label className="control-label">
                               Refer Doctor
@@ -359,7 +359,7 @@ function LabServiceRegister() {
                               ))}
                             </select>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                       <div className="row">
                         <div className="col-md-12">
