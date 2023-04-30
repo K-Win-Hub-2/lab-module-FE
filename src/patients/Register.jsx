@@ -63,24 +63,33 @@ const Register = () => {
   const [address, setAddress] = useState(null);
   const [occupation, setOccupation] = useState(null);
   const [img, setImg] = useState(null);
-  const navigate = useNavigate();
+  const navigate = useNavigate('');
 
+  //  const handleImageUpload = (e) => {
+  //    setImg(e.target.files[0]);
+  //  };
+  
   const patientCreate = () => {
     const data = {
       name: name,
       email: email,
       age: age,
       phone: phone,
-
+      img:img,
       address: address,
       occupation: occupation,
-      img: img,
+
       gender: gender,
       patientStatus: "Old",
     };
 
-    // if (doctor) data= {...data, referDoctor:doctor}
-    // alert(JSON.stringify(data));
+    // if (img) data.img = img;
+
+//  if (email) data = { ...data, email: email };
+//  if (phone) data = { ...data, phone: phone };
+//  if (address) data = { ...data, address: address };
+//  if (occupation) data = { ...data, occupation: occupation };
+    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
     };
@@ -167,7 +176,6 @@ const Register = () => {
                   </Div>
                 </Div>
                 <Div className="row mt-3">
-                 
                   <Div className="offset-2 col-4 form-group">
                     <Label>
                       Gender<Span>*</Span>
@@ -222,6 +230,7 @@ const Register = () => {
                       type="file"
                       className="form-control"
                       onChange={(e) => setImg(e.target.files[0])}
+                      // onChange={handleImageUpload}
                     />
                   </Div>
                 </Div>
