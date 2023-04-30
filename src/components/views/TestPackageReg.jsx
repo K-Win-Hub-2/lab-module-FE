@@ -1,28 +1,24 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
+
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import {  FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { decode as base64_decode, encode as base64_encode } from "base-64";
-// window.Buffer = window.Buffer || require("buffer").Buffer;
-import Buffer from "buffer";
-import { Base64 } from "js-base64";
+
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
   const [packageArray, setPackageArray] = useState([]);
   const [serviceLists, setServiceLists] = useState([]);
   const [name, setName] = useState("");
-  const [relatedCategory, setRelatedCategory] = useState("");
   const [cost, setCost] = useState("");
   const [charges, setCharges] = useState("");
   const [status, setStatus] = useState("");
   const [packageLists, setPackageLists] = useState([]);
   const [description, setDescription] = useState("");
   const [tempPackage, setTempPackage] = useState("");
-  const [amount, setAmount] = useState("");
 
   const handleBox = (event) => {
     console.log(event, "event");
@@ -31,10 +27,25 @@ function LabServiceRegister() {
       amount: tempPackage.split(".")[1],
       name: tempPackage.split(".")[2],
     };
-    console.log(newPackage);
+    // console.log(newPackage);
     setPackageArray([...packageArray, newPackage]);
-    console.log(packageArray, "packageArray", newPackage);
+    // console.log(packageArray, "packageArray", newPackage);
   };
+
+  const handleCalculation = (event) =>
+  {
+    // console.log(event);
+      if (packageArray) {
+        let sum = packageArray.reduce((a, b) => {
+    return a + b["amount"];
+  }, 0);
+       
+        // console.log(sum);
+        setCharges(sum.toFixed(2));
+      }
+
+      setTempPackage(event);
+    };
 
 
   const TestPackageCreate = (event) => {
@@ -49,7 +60,7 @@ function LabServiceRegister() {
       description: description,
     };
 
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -60,11 +71,20 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
-        // props.setReagent([...props.category, response.data.data]);
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
 
     document.getElementById("name").value = "";
@@ -94,7 +114,7 @@ function LabServiceRegister() {
 
         setServiceLists(res.data.data);
 
-        console.log(res.data.data);
+        // console.log(res.data.data);
       } catch (err) {}
     };
 
@@ -103,7 +123,7 @@ function LabServiceRegister() {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
         );
-        console.log(res.data.list);
+        // console.log(res.data.list);
         setPackageLists(res.data.list);
       } catch (err) {}
     };
@@ -201,7 +221,7 @@ function LabServiceRegister() {
                               {packageArray.map((regArr) => (
                                
                                 <div className="row mt-3">
-                                   {regArr.amount.reduce((sum, amount) => sum += packageArray.amount, 0)}
+                                   
                                   <div className="col-md-5">
                                     <label>Name</label>
                                     <input

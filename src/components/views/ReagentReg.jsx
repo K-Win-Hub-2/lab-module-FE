@@ -1,14 +1,14 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
+
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [stockUnitTemp, setStockUnitTemp] = useState("");
-  const [stockUnit, setStockUnit] = useState([]);
   const [stockLists, setStockLists] = useState([]);
   const [supplierLists, setSupplierLists] = useState([]);
   const [code, setCode] = useState("");
@@ -22,18 +22,30 @@ function LabServiceRegister() {
       amount: 0,
     };
     setStockLists([...stockLists, newStock]);
-    console.log(stockLists, "stockLists", newStock);
+   
   };
+
+  const clearTextBox = (textboxId) => {
+    const textbox = document.getElementById(textboxId);
+    if (textbox && textbox.value) {
+      textbox.value = "";
+    }
+  };
+
+  const clearForm = () => {
+    clearTextBox("code")
+    clearTextBox("name")
+    clearTextBox("supplier")
+  }
 
   const ReagentCreate = () => {
     const data = {
       code: code,
       name: name,
-      stockUnit: stockLists,
+      // stockUnit: stockLists,
       supplier: supplier,
     };
-
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -43,16 +55,26 @@ function LabServiceRegister() {
         data,
         config
       )
-      .then(function (response) {
-        alert("success");
-        // setReagentLists([...reagentLists, response.data.data]);
+      .then(function (response) { 
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
+        clearForm()
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
-    document.getElementById("supplier").value = "";
-    document.getElementById("name").value = "";
-    document.getElementById("code").value = "";
+    // document.getElementById("supplier").value = "";
+    // document.getElementById("name").value = "";
+    // document.getElementById("code").value = "";
     // document.getElementById("flag").value = "";
   };
 
@@ -106,6 +128,7 @@ function LabServiceRegister() {
                     <label className="control-label">Code</label>
                     <input
                       type="text"
+                      id="code"
                       className="form-control"
                       name="company_name"
                       onChange={(e) => setCode(e.target.value)}
@@ -116,6 +139,7 @@ function LabServiceRegister() {
                     <label className="control-label">Name</label>
                     <input
                       type="text"
+                      id="name"
                       className="form-control"
                       name="company_address"
                       onChange={(e) => setName(e.target.value)}

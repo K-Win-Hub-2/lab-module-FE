@@ -16,12 +16,12 @@ import TestVoucherPrint from './patients/TestVoucherPrint';
 import TestVoucher from './patients/TestVoucher';
 import TestPackage from './components/views/TestPackage';
 import TestPackageReg from './components/views/TestPackageReg';
+import ReferDoctorCharge from './components/views/ReferDoctorCharge';
+import Login from './components/views/Login';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
-
-
 import "./assets/dist/css/adminlte.min.css"
 import "./plugins/fontawesome-free/css/all.min.css"
 import "./plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css"
@@ -39,16 +39,13 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LabServiceList />}></Route>
-        {/* <Route path='/dashboard' element={<Dashboard/>}></Route> */}
         <Route path="/lab-register" element={<LabServiceRegister />}></Route>
         <Route path="/lab-cat" element={<CatRegister />}></Route>
         <Route path="/reagent" element={<Reagent />}></Route>
         <Route path="/reagent-reg" element={<ReagentReg />}></Route>
         <Route path="/doctorClinic" element={<DoctorClinic />}></Route>
         <Route path="/doctorClinicReg" element={<DoctorClinicReg />}></Route>
-
         <Route path="/test/:testVoucher_id" element={<Test />}></Route>
-
         <Route path="/patient/list" element={<Patient />} />
         <Route path="/patient/register" element={<PatientRegister />} />
         <Route path="/patient/member" element={<Member />} />
@@ -60,6 +57,8 @@ function App() {
         <Route path="/packageReg" element={<TestPackageReg />}></Route>
         <Route path="/tvoucherList" element={<TestVoucherList />}></Route>
         <Route path="/tresultList" element={<TestResultList />}></Route>
+        <Route path="/refDoctor/:id" element={<ReferDoctorCharge />}></Route>
+        <Route path='/login' element={<Login/>}></Route>
       </Routes>
     </Router>
   );

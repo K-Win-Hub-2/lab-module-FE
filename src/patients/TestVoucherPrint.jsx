@@ -155,12 +155,14 @@ const TestVoucherPrint = (props) => {
 
   const print = () => {
     var print_div = document.getElementById("print");
-    var print_area = window.open("", "PRINT", "height=400,width=600");
+    var print_area = window.open();
     print_area.document.write(print_div.innerHTML);
     print_area.document.close();
     print_area.focus();
     print_area.print();
     print_area.close();
+
+ 
   };
 
   return (
@@ -168,68 +170,88 @@ const TestVoucherPrint = (props) => {
       <SideBar />
       {/* <!-- Content Wrapper. Contains page content --> */}
 
-      <div className="content-wrapper">
-        {/* <!-- Content Header (Page header) --> */}
-        <div className="content-header">
-          <div className="container-fluid">
-            <div
-              calssName="card"
-              style={{ maxWidth: "700px", marginLeft: "170px" }}
-              id="print">
+        <div className="content-wrapper">
+          {/* <!-- Content Header (Page header) --> */}
+          <div className="content-header">
+            <div className="container-fluid">
               <div
-                calssName="card-body"
-                style={{ border: "1px solid black", padding: "14px 14px" }}>
-                <div className="row">
-                  <div className="col-12">
-                    <img src={require("../logo.png")} alt="" />
-                    {/* </div>
-                <div className='col-2'> */}
-                    <img
-                      src={require("../logo1.png")}
-                      alt=""
-                      style={{ marginLeft: "300px" }}
-                    />
+                calssName="card content"
+                // style={{ maxWidth: "700px", marginLeft: "170px" }}
+                id="print">
+                <div
+                  calssName="card-body"
+                  style={{ border: "1px solid black", padding: "14px 14px" }}>
+                  <div className="row">
+                    <div className="col-3">
+                      <img src={require("../logo.png")} alt="" />
+                    </div>
+                    <div className="offset-1 col-md-5">
+                      Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
+                      <br />
+                      Yangon, Myanmar.
+                      <br />
+                      Tel : 09 400 662 (Clinic), 09 400 400 650 (Lab)
+                      <br />
+                      Clinic 2 - 435, May Dawi Road, North Okkalapa Township,
+                      <br />
+                      Yangon, Myanamr.
+                      <br />
+                      Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
+                    </div>
+                    <div className="col-md-3">
+                      <img
+                        src={require("../logo1.png")}
+                        alt=""
+                        style={{ marginLeft: "120px" }}
+                      />
+                    </div>
                   </div>
-                </div>
-                <h5 style={{ textAlign: "center" }}>
-                  <u>LABORATORY REPORT</u>
-                </h5>
-                <table className="table table-hover mt-4">
-                  <thead>
-                    <tr>
-                      <th>Patient Name:</th>
-                      <td colSpan="2">{patientLists.name}</td>
-                      <th>Laboratory Id:</th>
-                      <td colSpan="2">{labID_VouCode.code}</td>
-                    </tr>
-                    <tr>
-                      <th>Age & Gender:</th>
-                      <td colSpan="2">
-                        {patientLists.age}yrs&nbsp;/ &nbsp;{patientLists.gender}
-                      </td>
-                      <th>Registration Date:</th>
-                      <td colSpan="2">{labID_VouCode.date ? labID_VouCode.date.split('T')[0]:''}</td>
-                    </tr>
-                    <tr>
-                      <th>Referring Doctor:</th>
-                      <td colSpan="2">{referDoctorLists.name}</td>
-                      <th>Clinic:</th>
-                      <td colSpan="2">Central Clinic</td>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-                <table className="table table-hover mt-5">
-                  <thead className="bg-secondary">
-                    <tr>
-                      <th>Test</th>
-                      <th>Result</th>
-                      <th>Reference Range</th>
-                      <th>Unit</th>
-                      <th>Remark</th>
-                    </tr>
-                  </thead>
-                  {/* <tbody>
+                  <p style={{ textAlign: "center" }} className="mt-5">
+                    <b>
+                      <u>LABORATORY REPORT</u>
+                    </b>
+                  </p>
+                  <table className="table table-hover mt-4">
+                    <thead>
+                      <tr>
+                        <th>Patient Name:</th>
+                        <td colSpan="2">{patientLists.name}</td>
+                        <th>Laboratory Id:</th>
+                        <td colSpan="2">{labID_VouCode.code}</td>
+                      </tr>
+                      <tr>
+                        <th>Age & Gender:</th>
+                        <td colSpan="2">
+                          {patientLists.age}yrs&nbsp;/ &nbsp;
+                          {patientLists.gender}
+                        </td>
+                        <th>Registration Date:</th>
+                        <td colSpan="2">
+                          {labID_VouCode.date
+                            ? labID_VouCode.date.split("T")[0]
+                            : ""}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Referring Doctor:</th>
+                        <td colSpan="2">{referDoctorLists.name}</td>
+                        <th>Clinic:</th>
+                        <td colSpan="2">Central Clinic</td>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
+                  <table className="table table-hover mt-5">
+                    <thead className="bg-secondary">
+                      <tr>
+                        <th>Test</th>
+                        <th>Result</th>
+                        <th>Reference Range</th>
+                        <th>Unit</th>
+                        <th>Remark</th>
+                      </tr>
+                    </thead>
+                    {/* <tbody>
                     <tr>
                       <td>Vitamin D (25 – OH)</td>
                       <td></td>
@@ -239,102 +261,71 @@ const TestVoucherPrint = (props) => {
                   
                   </tbody> */}
 
-                  {voucherLists.map((testSelect) => (
-                    <tbody>
-                      <tr>
-                        <td>{testSelect.name.name}</td>
-                        <td>{testSelect.result}</td>
+                    {voucherLists.map((testSelect) => (
+                      <tbody>
+                        <tr>
+                          <td>{testSelect.name.name}</td>
+                          <td>{testSelect.result}</td>
 
-                        <td>
-                          {testSelect.name.referenceRange.map((refer) => (
-                            <p className="text-center">
-                              {refer.from}-{refer.to} &nbsp;
-                            </p>
-                          ))}
-                        </td>
+                          <td>
+                            {testSelect.name.referenceRange.map((refer) => (
+                              <p className="">
+                                {refer.from}-{refer.to} &nbsp;
+                              </p>
+                            ))}
+                          </td>
 
-                        <td>
-                          {testSelect.name.referenceRange.map((refer) => (
-                            <p>{refer.unit}</p>
-                          ))}
-                        </td>
+                          <td>
+                            {testSelect.name.referenceRange.map((refer) => (
+                              <p>{refer.unit}</p>
+                            ))}
+                          </td>
 
-                        <td>{testSelect.remark}</td>
-                      </tr>
-                    </tbody>
-                  ))}
-                </table>
-                {/* <h5 className="mt-4">
-                  <u>Reference Ranges For 25-OH Vitamin D</u>
-                </h5>
-                <table className="table table-hover mt-2">
-                  <tbody>
-                    <tr>
-                      <td>Level</td>
-                      <td>Clinical</td>
-                    </tr>
-                    <tr>
-                      <td>30 nmol/L</td>
-                      <td>
-                        Severe Vitamin D deficiency. Suggest high dose
-                        supplementation.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>30 – 50 nmol/L</td>
-                      <td>
-                        Vitamin D insufficiency, if bone health an issue,
-                        suggest standard-dose supplementation. No repeat vitamin
-                        D measurement required.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>50 – 125 nmol/L</td>
-                      <td>Adequate. No action required</td>
-                    </tr>
-                    <tr>
-                      <td>350 nmol/L</td>
-                      <td>Toxicity. Very rare</td>
-                    </tr>
-                  </tbody>
-                </table> */}
-                <div className="px-3 py-2">
-                  <div className="row">
-                    {voucherLists.map((specDecode) => (
-                      <div className="col-md-6">
-                        <h6 className="text-bold text-decoration-underline">
-                          {specDecode.name.name} Reference Range
-                        </h6>
-                        <p>{formatString(specDecode.name.specialComment)}</p>
-                      </div>
+                          <td>{testSelect.remark}</td>
+                        </tr>
+                      </tbody>
                     ))}
+                  </table>
+          
+                  <div className="px-3 py-2">
+                    <div className="row">
+                      {voucherLists.map((specDecode) => (
+                        <div className="col-md-6">
+                          <h6 className="text-bold text-decoration-underline">
+                            {specDecode.name.name} Reference Range
+                          </h6>
+                          <p>{formatString(specDecode.name.specialComment)}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="row" style={{ marginTop: "50px" }}>
-                  <div className="col-6">
-                    <span>Laboratory Technician</span>
-                  </div>
-                  <div className="col-6" style={{ textAlign: "right" }}>
-                    <span>{referDoctorLists.name}</span>
-                    <br></br>
-                    <span>{referDoctorLists.position}</span>
-                    <br></br>
-                    <span>{referDoctorLists.education}</span>
-                    <br></br>
-                    <span>Central Lab, Ahlone, Yangon</span>
+                  <div className="row" style={{ marginTop: "50px" }}>
+                    <div className="col-6">
+                      <span>Laboratory Technician</span>
+                    </div>
+                    <div className="col-6" style={{ textAlign: "right" }}>
+                      <span>{referDoctorLists.name}</span>
+                      <br></br>
+                      <span>{referDoctorLists.position}</span>
+                      <br></br>
+                      <span>{referDoctorLists.education}</span>
+                      <br></br>
+                      <span>Central Lab, Ahlone, Yangon</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <button
+            className="btn btn-success mt-4 mb-4"
+            style={{ marginLeft: "500px" }}
+            onClick={print}>
+            Print
+          </button>
         </div>
-        <button
-          className="btn btn-success mt-4 mb-4"
-          style={{ marginLeft: "500px" }}
-          onClick={print}>
-          Print
-        </button>
-      </div>
+
+
       {/* <ResultDialog open={isOpen} close={()=>setIsOpen(false)} name={pname} age={page} gender={pgender} voucher={vouId}/> */}
     </div>
   );

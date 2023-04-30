@@ -87,11 +87,11 @@ const TestVoucher = () => {
     const getVouchers = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers?limit=50"
         );
         console.log(res.data.data);
         setVouchers(
-          res.data.data.filter((el) => el.relatedPatient._id == patient_id)
+          res.data.data.filter((el) => el.relatedPatient == patient_id)
         );
       } catch (err) {}
     };

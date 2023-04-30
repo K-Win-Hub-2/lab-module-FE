@@ -60,7 +60,6 @@ const Register = () => {
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [dob, setDob] = useState("");
   const [address, setAddress] = useState("");
   const [occupation, setOccupation] = useState("");
   const [img, setImg] = useState("");
@@ -72,14 +71,14 @@ const Register = () => {
       email: email,
       age: age,
       phone: phone,
-      dateOfBirth: dob,
+     
       address: address,
       occupation: occupation,
       img: img,
       gender: gender,
       patientStatus: "Old",
     };
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
     };
@@ -96,7 +95,7 @@ const Register = () => {
           icon: "success",
           confirmButtonText: "OK",
         }).then(function () {
-          alert("success");
+          // alert("success");
           navigate("/patient/list");
         });
       })
@@ -156,18 +155,6 @@ const Register = () => {
                   </Div>
                   <Div className="col-4 form-group">
                     <Label>
-                      Date of Birth<Span>*</Span>
-                    </Label>
-                    <Input
-                      type="date"
-                      className="form-control"
-                      onChange={(e) => setDob(e.target.value)}
-                    />
-                  </Div>
-                </Div>
-                <Div className="row mt-3">
-                  <Div className="offset-2 col-4 form-group">
-                    <Label>
                       Age<Span>*</Span>
                     </Label>
                     <Input
@@ -176,7 +163,10 @@ const Register = () => {
                       onChange={(e) => setAge(e.target.value)}
                     />
                   </Div>
-                  <Div className="col-4 form-group">
+                </Div>
+                <Div className="row mt-3">
+                 
+                  <Div className="offset-2 col-4 form-group">
                     <Label>
                       Gender<Span>*</Span>
                     </Label>

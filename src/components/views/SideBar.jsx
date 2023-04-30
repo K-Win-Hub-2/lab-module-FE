@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaCashRegister, FaClipboardCheck } from "react-icons/fa";
 
 function Sidebar() {
   return (
@@ -49,9 +48,7 @@ function Sidebar() {
               data-accordion="false">
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i
-                    style={{ fontSize: "21px" }}
-                    className="nav-icon fas">
+                  <i style={{ fontSize: "21px" }} className="nav-icon fas">
                     &#xf2bd;
                   </i>
                   <p>
@@ -73,18 +70,7 @@ function Sidebar() {
                     <p>Lab Test</p>
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link to="/tvoucherList" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Voucher List</p>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/tresultList" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Test Result List</p>
-                  </Link>
-                </li>
+
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -108,7 +94,9 @@ function Sidebar() {
               {/* Patient */}
               <li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
-                  <i className="nav-icon fas fa-poll" style={{fontSize:'22px'}}></i>
+                  <i
+                    className="nav-icon fas fa-poll"
+                    style={{ fontSize: "22px" }}></i>
                   <p>
                     Sales
                     {/* <i className="right fas fa-angle-left"></i> */}
@@ -140,7 +128,7 @@ function Sidebar() {
                     <p>Lab Test</p>
                   </Link>
                 </li>
-                
+
                 <li className="nav-item">
                   <Link to="/package" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -148,24 +136,38 @@ function Sidebar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/voucher" className="nav-link">
+                  <Link to="/tvoucherList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/tvoucherList" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Test Voucher List</p>
                   </Link>
                 </li>
               </li>
 
               <li className="nav-item">
                 <Link to="/account_list" className="nav-link">
-                  <i className="nav-icon fas fa-flask"  style={{fontSize:'20px'}}></i>
+                  <i
+                    className="nav-icon fas fa-flask"
+                    style={{ fontSize: "20px" }}></i>
                   <p>Laboratory</p>
                 </Link>
               </li>
               <li className="ml-3">
                 <li className="nav-item">
-                  <Link to="/results" className="nav-link">
+                  <Link to="/tresultList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Results</p>
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/tresultList" className="nav-link">
+                    <i className="nav-icon fas fa-circle"></i>&nbsp;
+                    <p>Test Result List</p>
                   </Link>
                 </li>
               </li>
@@ -176,15 +178,12 @@ function Sidebar() {
                     &#xf15c;
                   </i>
                   &nbsp;
-                  <p>
-                    Finance
-
-                  </p>
+                  <p>Finance</p>
                 </a>
               </li>
               <li className="ml-3">
                 <li className="nav-item">
-                  <Link to="/voucher" className="nav-link">
+                  <Link to="/tvoucherList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Voucher</p>
                   </Link>
@@ -214,6 +213,12 @@ function Sidebar() {
                   <i className="nav-icon fas fa-power-off"></i>
                   <span className="ml-2">Logout</span>
                 </a>
+              </li>
+              <li className="nav-item">
+                <Link to="/login" className="nav-link">
+                  <i className="nav-icon fas fa-power-off"></i>
+                  <span className="ml-2">LogIn</span>
+                </Link>
               </li>
             </ul>
           </nav>

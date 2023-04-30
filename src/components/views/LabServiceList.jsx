@@ -2,16 +2,74 @@ import React, { useState } from "react";
 // import ExpenseDialog from "../views/ExpenseDialog";
 import { useEffect } from "react";
 import axios from "axios";
-import { ExcelExport } from "@progress/kendo-react-excel-export";
-import { ExcelExportColumn } from "@progress/kendo-react-excel-export";
 import { Link } from "react-router-dom";
-import { FaCashRegister } from "react-icons/fa";
 import SideBar from "./SideBar";
+import Swal from "sweetalert2";
+import LabServiceUpdate from "../views/LabServiceUpdate";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
-  const [close, setClose] = useState(false);
   const [labServiceLists, setLabServiceLists] = useState([]);
+  const [updateDialog, setUpdateDialog] = useState(false);
+  const [isShow, setIsShow] = useState(false);
+  const [multiTestLists, setMultiTestLists] = useState([]);
+  const [id, setId] = useState([]);
+
+  const handleDelete = (event) => {
+    console.log(event, "event");
+    axios
+      .delete(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
+          event
+      )
+      .then((response) => {
+        Swal.fire({
+          title: "Success",
+          text: "Successfully Deleted!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        const result = labServiceLists.filter((item) => item._id !== event);
+        setLabServiceLists(result);
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        });
+      });
+  };
+
+  const handleUpdate = (event) => {
+    setId(event);
+    setUpdateDialog(true);
+  };
+
+  const handleCheckChange = (val) => {
+    const getMultiTestList = async () => {
+      try {
+        console.log(val);
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
+            val
+        );
+
+        console.log(res.data.data);
+        setMultiTestLists(res.data.data);
+      } catch (err) {}
+    };
+
+    getMultiTestList();
+
+    if (isShow) {
+      document.getElementById("toggle" + val).removeAttribute("hidden");
+    } else {
+      document.getElementById("toggle" + val).setAttribute("hidden", "hidden");
+    }
+    setIsShow(!isShow);
+  };
 
   const showDialog = () => setOpen(true);
   const _export = React.useRef(null);
@@ -27,7 +85,7 @@ const LabServiceList = () => {
   useEffect(() => {
     const getLabServiceLists = async () => {
       const res = await axios.get(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
       );
 
       setLabServiceLists(res.data.data);
@@ -205,8 +263,9 @@ const LabServiceList = () => {
 
                                   <th>Category</th>
 
-                                  <th>Refer Doctor</th>
+                                  {/* <th>Refer Doctor</th> */}
                                   <th>Charges</th>
+                                  {/* <th className="text-center">Multi Test</th> */}
                                   <th className="text-center">Action</th>
                                 </tr>
                               </thead>
@@ -215,25 +274,115 @@ const LabServiceList = () => {
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
-                                    <td>{labService.code}</td>
+                                    <td>
+                                      {labService.code ? labService.code : ""}
+                                    </td>
 
-                                    <td>{labService.name}</td>
+                                    <td>
+                                      {labService.name ? labService.name : ""}
+                                    </td>
 
                                     <td>Test Cat</td>
 
-                                    <td>{labService.referDoctor.name}</td>
-                                    <td>{labService.charges}</td>
-
+                                    {/* <td>
+                                      {labService.referDoctor
+                                        ? labService.referDoctor.name
+                                        : ""}
+                                    </td> */}
+                                    <td>
+                                      {labService.charges
+                                        ? labService.charges
+                                        : ""}
+                                    </td>
+                                    {/* <td className="text-center">
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-primary ml-2"
+                                        onClick={() =>
+                                          handleCheckChange(
+                                            labService.subTest._id
+                                          )
+                                        }>
+                                        Check
+                                      </button>
+                                    </td> */}
                                     <td className="text-center">
                                       <a
-                                        className="btn btn-primary btn-sm "
-                                        data-toggle="collapse"
-                                        href="#related{{$trans->id}}"
+                                        className="btn btn-sm btn-warning text-white"
                                         role="button"
-                                        aria-expanded="false"
-                                        aria-controls="multiCollapseExample1">
-                                        Related
+                                        onClick={(e) =>
+                                          handleUpdate(labService)
+                                        }>
+                                        Update
                                       </a>
+                                      &nbsp;
+                                      <a
+                                        className="btn btn-sm btn-danger text-white"
+                                        role="button"
+                                        onClick={(e) =>
+                                          handleDelete(labService._id)
+                                        }>
+                                        Delete
+                                      </a>
+                                    </td>
+                                  </tr>
+
+                                  <tr
+                                    className="bg-light"
+                                    id={"toggle" + labService.subTest._id}
+                                    hidden>
+                                    <td colspan="12">
+                                      <div>
+                                        <div class="row">
+                                          <div class="col-md-2">
+                                            <label
+                                              style={{ fontSize: "15px" }}
+                                              class="text-dark">
+                                              No
+                                            </label>
+                                          </div>
+                                          <div class="col-md-3">
+                                            <label
+                                              style={{ fontSize: "15px" }}
+                                              class="text-dark">
+                                              Name
+                                            </label>
+                                          </div>
+                                          <div class="col-md-2">
+                                            <label
+                                              style={{ fontSize: "15px" }}
+                                              class="text-dark">
+                                              Unit
+                                            </label>
+                                          </div>
+                                        </div>
+
+                                        {multiTestLists
+                                          ? multiTestLists.map((multi, i) => (
+                                              <div class="row">
+                                                <div class="col-md-2">
+                                                  <div
+                                                    style={{
+                                                      fontSize: "15px",
+                                                    }}>
+                                                    {++i}
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                  <div
+                                                    style={{
+                                                      fontSize: "15px",
+                                                    }}>
+                                                    {multi.name}
+                                                  </div>
+                                                </div>
+                                                <div class="col-md-2">
+                                                  {multi.unit}
+                                                </div>
+                                              </div>
+                                            ))
+                                          : ""}
+                                      </div>
                                     </td>
                                   </tr>
                                 </tbody>
@@ -253,6 +402,14 @@ const LabServiceList = () => {
                 expenseLists={expenseLists}
                 setExpenseLists={setExpenseLists}
               /> */}
+              <LabServiceUpdate
+                updateDialog={updateDialog}
+                close={() => setUpdateDialog(false)}
+                setUpdateDialog={setUpdateDialog}
+                id={id}
+                setLabServiceLists={setLabServiceLists}
+                labServiceLists={labServiceLists}
+              />
             </div>
             {/*<!-- /.container-fluid --> */}
           </section>

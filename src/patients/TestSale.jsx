@@ -4,6 +4,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { RxCross2 } from "react-icons/rx";
 import { MdDiscount } from "react-icons/md";
+import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Top = styled.div`
@@ -89,7 +90,7 @@ const TestSale = () => {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
         );
-        console.log("good");
+        // console.log("good");
         setServs(res.data.data);
       } catch (err) {}
     };
@@ -151,11 +152,25 @@ const TestSale = () => {
         data
       )
       .then(function (response) {
-        alert("success");
+        
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+     
         navigate(-1);
-      });
+      })
 
-    alert(JSON.stringify(data));
+   .catch(function (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      });
     
   };
   const print = () => {

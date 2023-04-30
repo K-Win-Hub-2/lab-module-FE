@@ -1,30 +1,22 @@
 import React from "react";
-import { createDate } from "../../assets/plugins/moment/src/lib/create/date-from-array";
 import { useLocation, Link } from "react-router-dom";
-import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from "react-icons/fa";
+import {  FaArrowLeft, FaSave } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { decode as base64_decode, encode as base64_encode } from "base-64";
-import Buffer from "buffer";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
-import ResultDialog from "../../patients/ResultDialog";
+import Swal from "sweetalert2";
 
 function LabServiceRegister() {
   const [vouDate, setVouDate] = useState("");
-  const [referRange, setReferRange] = useState([]);
   const [referDoctorLists, setReferDoctorLists] = useState([]);
   const [voucherLists, setVoucherLists] = useState([]);
   const [patientLists, setPatientLists] = useState([]);
-  const [serviceLists, setServiceLists] = useState([]);
-  const [testArray, setTestArray] = useState([]);
   const [testID, setTestID] = useState([]);
-  const [testSelectionId, setTestSelectionId] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [result, setResult] = useState("");
   const [remark, setRemark] = useState("");
-  const [specialComment, setSpecialComment] = useState("");
   const patient_id = useLocation().pathname.split("/")[2];
   const [pname, setPname] = useState("");
   const [vouId, setVouId] = useState("");
@@ -62,8 +54,6 @@ function LabServiceRegister() {
       result: result,
       remark: remark,
     };
-
-    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -74,11 +64,21 @@ function LabServiceRegister() {
         config
       )
       .then(function (response) {
-        alert("success");
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
         //  setTestID([testID, response.data.data]);
       })
       .catch(function (err) {
-        alert(err.message);
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       });
   };
 
@@ -92,6 +92,8 @@ function LabServiceRegister() {
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection);
+        console.log(res.data.data.testSelection);
+        console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
         setTestID(res.data.data.testSelection[0]);
         // console.log(res.data.data.testSelection[0].name.specialComment);
