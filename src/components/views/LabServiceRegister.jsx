@@ -36,6 +36,9 @@ function LabServiceRegister() {
   const [tableData, setTableData] = useState([]);
 
 
+    
+     
+  
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, name: "", range: "", unit: "" }]);
@@ -302,7 +305,7 @@ function LabServiceRegister() {
                               onChange={(e) =>
                                 setRelatedCategory(e.target.value)
                               }>
-                              <option >Choose Category</option>
+                              <option>Choose Category</option>
                               {category.map((option) => (
                                 <option value={option._id}>
                                   {option.name}
@@ -438,7 +441,7 @@ function LabServiceRegister() {
                               onChange={(e) => {
                                 setShowMultiTest(true);
                                 setShowSpecialRange(false);
-                                setShowNextRef(false)
+                                setShowNextRef(false);
                               }}
                             />
                           </div>
@@ -462,7 +465,12 @@ function LabServiceRegister() {
                                 <label className="control-label">
                                   Add Multiple Tests
                                 </label>
-                                <button className="btn btn-primary ml-3" type="button" onClick={handleAddRow}>Add</button>
+                                <button
+                                  className="btn btn-primary ml-3"
+                                  type="button"
+                                  onClick={handleAddRow}>
+                                  Add
+                                </button>
                                 {tableData.map((data) => (
                                   <div className="row mt-3">
                                     <div className="col-md-3">
@@ -473,7 +481,13 @@ function LabServiceRegister() {
                                         id="subTestName"
                                         name="subTestName"
                                         value={data.name}
-                                        onChange={(event) => handleInputChange(event, data.id, "name")}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "name"
+                                          )
+                                        }
                                       />
                                     </div>
                                     <div className="col-md-3">
@@ -484,7 +498,13 @@ function LabServiceRegister() {
                                         id="subTestRR"
                                         name="subTestRR"
                                         value={data.range}
-                                        onChange={(event) => handleInputChange(event, data.id, "range")}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "range"
+                                          )
+                                        }
                                       />
                                     </div>
                                     <div className="col-md-3">
@@ -495,7 +515,13 @@ function LabServiceRegister() {
                                         id="subTestUnit"
                                         name="subTestUnit"
                                         value={data.unit}
-                                        onChange={(event) => handleInputChange(event, data.id, "unit")}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "unit"
+                                          )
+                                        }
                                       />
                                     </div>
                                     <div className="col-md-3">
@@ -503,13 +529,14 @@ function LabServiceRegister() {
                                         type="button"
                                         className="btn btn-sm btn-danger rounded-circle"
                                         id="removeRowFromMultiTests"
-                                        onClick={() => handleDeleteRow(data.id)}>
+                                        onClick={() =>
+                                          handleDeleteRow(data.id)
+                                        }>
                                         <FaMinus />
                                       </button>
                                     </div>
                                   </div>
                                 ))}
-
                               </div>
                             </div>
                           ) : (
@@ -574,6 +601,7 @@ function LabServiceRegister() {
                                       type="number"
                                       placeholder="From"
                                       className="form-control"
+                                      step={0.01}
                                       onChange={(e) => setFrom(e.target.value)}
                                     />
                                   </div>
@@ -581,6 +609,7 @@ function LabServiceRegister() {
                                     <input
                                       type="number"
                                       placeholder="To"
+                                      step={0.01}
                                       className="form-control"
                                       onChange={(e) => setTo(e.target.value)}
                                     />
@@ -591,14 +620,15 @@ function LabServiceRegister() {
                                       name="account_type_id"
                                       id="flag"
                                       onChange={(e) => {
-                                        if (e.target.value === "Male" ||
-                                          "Female")
+                                        if (
+                                          e.target.value === "Male" ||
+                                          "Female"
+                                        )
                                           setShowNextRef(true);
                                         if (e.target.value === "Null")
                                           setShowNextRef(false);
-                                        setGender(e.target.value)
-                                      }
-                                      }>
+                                        setGender(e.target.value);
+                                      }}>
                                       <option>Gender</option>
                                       <option value="Male">Male</option>
                                       <option value="Female">Female</option>
@@ -641,6 +671,7 @@ function LabServiceRegister() {
                                     type="number"
                                     placeholder="From"
                                     className="form-control"
+                                    step={0.01}
                                     onChange={(e) => setFrom(e.target.value)}
                                   />
                                 </div>
@@ -648,6 +679,7 @@ function LabServiceRegister() {
                                   <input
                                     type="number"
                                     placeholder="To"
+                                    step={0.01}
                                     className="form-control"
                                     onChange={(e) => setTo(e.target.value)}
                                   />

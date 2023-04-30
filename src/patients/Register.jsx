@@ -56,13 +56,13 @@ const DivF = styled.div`
 
 const Register = () => {
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(null);
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [occupation, setOccupation] = useState("");
-  const [img, setImg] = useState("");
+  const [phone, setPhone] = useState(null);
+  const [address, setAddress] = useState(null);
+  const [occupation, setOccupation] = useState(null);
+  const [img, setImg] = useState(null);
   const navigate = useNavigate();
 
   const patientCreate = () => {
@@ -71,13 +71,15 @@ const Register = () => {
       email: email,
       age: age,
       phone: phone,
-     
+
       address: address,
       occupation: occupation,
       img: img,
       gender: gender,
       patientStatus: "Old",
     };
+
+    // if (doctor) data= {...data, referDoctor:doctor}
     // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
