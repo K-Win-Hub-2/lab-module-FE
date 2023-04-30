@@ -214,7 +214,7 @@ function LabServiceRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <Link to="/">
+                      <Link to="/lab-test">
                         <i>
                           <FaArrowLeft />
                         </i>

@@ -89,7 +89,7 @@ const Register = () => {
 //  if (phone) data = { ...data, phone: phone };
 //  if (address) data = { ...data, address: address };
 //  if (occupation) data = { ...data, occupation: occupation };
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
     };

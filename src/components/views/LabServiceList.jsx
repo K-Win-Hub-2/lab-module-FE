@@ -109,7 +109,7 @@ const LabServiceList = () => {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <a href="/lab-test">Home</a>
                     </li>
                     <li className="breadcrumb-item active">Lab Service List</li>
                   </ol>
@@ -307,13 +307,12 @@ const LabServiceList = () => {
                                       </button>
                                     </td> */}
                                     <td className="text-center">
-                                      <Link to={'/lab-test/'+labService._id}>
-                                      <a
-                                        className="btn btn-sm btn-warning text-white"
-                                        role="button"
-                                       >
-                                        Update
-                                      </a>
+                                      <Link to={"/lab-test/" + labService._id}>
+                                        <a
+                                          className="btn btn-sm btn-warning text-white"
+                                          role="button">
+                                          Update
+                                        </a>
                                       </Link>
                                       &nbsp;
                                       <a

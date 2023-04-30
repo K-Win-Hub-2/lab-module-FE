@@ -57,7 +57,7 @@ function CatRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <a href="/lab-test">Home</a>
                     </li>
                     <li className="breadcrumb-item active">Reagent List</li>
                   </ol>
@@ -87,7 +87,7 @@ function CatRegister() {
                             <button
                               type="button"
                               className="btn btn-primary"
-                            // onClick={excelExport}
+                              // onClick={excelExport}
                             >
                               Export Excel
                             </button>
@@ -124,7 +124,10 @@ function CatRegister() {
                               <td>{reag.supplier.name}</td>
 
                               <td className="text-center">
-                                <a className="btn btn-sm btn-danger text-white" role="button" onClick={ ()=> handleDelete(reag._id)}>
+                                <a
+                                  className="btn btn-sm btn-danger text-white"
+                                  role="button"
+                                  onClick={() => handleDelete(reag._id)}>
                                   Delete
                                 </a>
                                 {/* &nbsp;

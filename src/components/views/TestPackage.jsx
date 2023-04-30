@@ -35,7 +35,7 @@ function CatRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <a href="/lab-test">Home</a>
                     </li>
                     <li className="breadcrumb-item active">
                       Test Package List
@@ -54,9 +54,7 @@ function CatRegister() {
                 <div class="row">
                   <div class="row">
                     <div className="offset-10 col-md-6 mb-3">
-                      <Link
-                        to="/packageReg"
-                        className="btn btn-primary">
+                      <Link to="/packageReg" className="btn btn-primary">
                         <i class="fas fa-plus"></i> &nbsp;Package Register
                       </Link>
                     </div>

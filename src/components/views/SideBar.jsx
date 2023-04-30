@@ -174,7 +174,7 @@ function Sidebar() {
                 <li className="nav-item">
                   <Link to="/tresultList" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Results</p>
+                    <p>Lab Test List</p>
                   </Link>
                 </li>
                 <li className="nav-item">

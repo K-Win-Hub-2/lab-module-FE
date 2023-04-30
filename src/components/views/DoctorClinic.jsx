@@ -77,7 +77,7 @@ const LabServiceList = () => {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <a href="/lab-test">Home</a>
                     </li>
                     <li className="breadcrumb-item active">
                       Doctor / Clinic List
