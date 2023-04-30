@@ -171,6 +171,11 @@ const TestVoucher = () => {
                           <Link
                             to={"/test/" + vou._id}
                             className="btn btn-sm btn-primary ml-3">
+                            Refer Doctor
+                          </Link>
+                          <Link
+                            to={"/test/" + vou._id}
+                            className="btn btn-sm btn-primary ml-3">
                             Test Result
                           </Link>
                         </Td>

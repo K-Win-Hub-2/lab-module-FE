@@ -87,6 +87,7 @@ const TestResultList = () => {
     const [from,setFrom] = useState('');
     const [to,setTo] = useState('');
     const [name,setName] = useState('');
+    const [status,setStatus] = useState('');
 
     useEffect(()=>{
         const getVouchers = async () => {
@@ -98,13 +99,17 @@ const TestResultList = () => {
 
     const search = async () =>{
         const result = await axios.get('http://localhost:9000/api/vouchers');
-        if(name == ''){
+        if(name == '' && status == ''){
             setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
             el.date.split('T')[0]<= to))
         }
-        else{
-            setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
-            el.date.split('T')[0]<= to && el.relatedPatient.name == name))
+        else if(status == ''){
+          setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
+          el.date.split('T')[0]<= to && el.relatedPatient.name == name))
+        }
+        else if(name == ''){
+          setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
+          el.date.split('T')[0]<= to && el.status == status))
         }
     }
 
@@ -135,11 +140,11 @@ const TestResultList = () => {
                 </div>
                 <div className='col-2'>
                     <label htmlFor="">Status:</label>
-                    <select className='form-control'>
+                    <select className='form-control' onChange={(e)=>setStatus(e.target.value)}>
                         <option value="">Choose Status</option>
-                        <option value='pending'>Pending</option>
-                        <option value="inprogress">In Progress</option>
-                        <option value="finished">Finished</option>
+                        <option value='Pending'>Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Finished">Finished</option>
                     </select>
                 </div>
                 <div className='col-6'>
@@ -165,20 +170,7 @@ const TestResultList = () => {
                   </TabList>
 
                   <TabPanel>
-                    
-                  </TabPanel>
-                  <TabPanel>
-                    
-                  </TabPanel>
-                  <TabPanel>
-                    
-                  </TabPanel>
-            </Tabs>
-            </div>
-            
-          </Left>
-         </Top>
-          <Table className='table table-hover'>
+          <Table className='table table-hover mt-3'>
             <Thead>
             <Tr>
               <Th>#</Th>
@@ -193,7 +185,7 @@ const TestResultList = () => {
             </Thead>
             <Tbody>
             {vouchers.map((vou,index)=>(
-
+            vou.status == 'Pending' &&
             <Tr>
               <Td>{++index}</Td>
               <Td>{vou.date.split('T')[0]}</Td>
@@ -208,11 +200,92 @@ const TestResultList = () => {
                 ))
               }   
              </Td>
-              <Td><Badge>Pending</Badge></Td>
+              <Td><Badge>{vou.status}</Badge></Td>
               <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Td>
             </Tr>))}
             </Tbody>
           </Table>
+                  </TabPanel>
+                  <TabPanel>
+                  <Table className='table table-hover mt-3'>
+            <Thead>
+            <Tr>
+              <Th>#</Th>
+              <Th>Date</Th>
+              <Th>Code</Th>
+              <Th>Patient Name</Th>
+              <Th>Total Test</Th>
+              <Th>Finished Test</Th>
+              <Th>Status</Th>
+              <Th>Action</Th>
+            </Tr>
+            </Thead>
+            <Tbody>
+            {vouchers.map((vou,index)=>(
+              vou.status == 'In Progress' &&
+            <Tr>
+              <Td>{++index}</Td>
+              <Td>{vou.date.split('T')[0]}</Td>
+              <Td>{vou.code}</Td>
+              <Td>{vou.relatedPatient.name}</Td>
+              <Td>{vou.testSelection.length}</Td>
+              <Td>
+              {
+                vou.testSelection.map((test,i)=>(
+                    test.result != null ?
+                    ++i : i
+                ))
+              }   
+             </Td>
+              <Td><Badge>{vou.status}</Badge></Td>
+              <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Td>
+            </Tr>))}
+            </Tbody>
+          </Table>
+                  </TabPanel>
+                  <TabPanel>
+                  <Table className='table table-hover mt-3'>
+            <Thead>
+            <Tr>
+              <Th>#</Th>
+              <Th>Date</Th>
+              <Th>Code</Th>
+              <Th>Patient Name</Th>
+              <Th>Total Test</Th>
+              <Th>Finished Test</Th>
+              <Th>Status</Th>
+              <Th>Action</Th>
+            </Tr>
+            </Thead>
+            <Tbody>
+            {vouchers.map((vou,index)=>(
+              vou.status == 'Finished' &&
+            <Tr>
+              <Td>{++index}</Td>
+              <Td>{vou.date.split('T')[0]}</Td>
+              <Td>{vou.code}</Td>
+              <Td>{vou.relatedPatient.name}</Td>
+              <Td>{vou.testSelection.length}</Td>
+              <Td>
+              {
+                vou.testSelection.map((test,i)=>(
+                    test.result != null ?
+                    ++i : i
+                ))
+              }   
+             </Td>
+              <Td><Badge>{vou.status}</Badge></Td>
+              <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Td>
+            </Tr>))}
+            </Tbody>
+          </Table>
+                  </TabPanel>
+            </Tabs>
+            </div>
+            
+          </Left>
+         </Top>
+         
           </Div>
          </Div>
     </div>
