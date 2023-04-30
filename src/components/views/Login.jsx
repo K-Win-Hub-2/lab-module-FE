@@ -1,104 +1,138 @@
+import React,{useState} from 'react'
+import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import EmailIcon from '@mui/icons-material/Email';
+import Button from '@mui/material/Button';
+import { useSelector,useDispatch} from 'react-redux';
+import axios from 'axios';
+import { loginSuccess,addUser } from '../../redux/authRedux';
+import Doctors from '../../../src/doctors.svg'
+import Swal from "sweetalert2";
 
-import { lightBlue } from "@mui/material/colors";
-import React from "react";
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+  const url =  useSelector(state=>state.auth.url);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-
-function Login() {
-
-  const styles = {
-    card: {
-      borderRadius: '15px',
-    },
-    head: {
-      backgroundColor: "white",
-      boxShadow: "3px 1px 8px gray",
-    },
-    body: {
-      backgroundColor: "white",
-      boxShadow: "3px 1px 8px gray",
-    },
-    input: {
-      backgroundColor: "white",
-      boxShadow: "3px 2px 8px gray",
-        border:'none',
-      borderBottom: '1px solid blue',
-      
-    
-    },
-    btn: {
-      
-      boxShadow: "3px 3px 12px gray",
-    },
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
   };
+  const handleClickShowEmail = () => setShowEmail((show) => !show);
 
+  const handleMouseDownEmail = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+  const setlogin = () => {
+    const data = {
+      email:email,
+      password:password
+    }
+    axios.post(url+'api/auth/login',data)
+    .then(function (response){
+      Swal.fire({
+        title: "Success",
+        text: "successfully Login!",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(function () {
+        console.log(response.data.user.role)
+        dispatch(loginSuccess());
+        dispatch(addUser(response.data));
+        if(response.data.user.role == 'Sales'){
+          navigate('/lab-test');
+        }
+        if(response.data.user.role == 'Finance'){
+          navigate('/tvoucherList');
+        }
+        if(response.data.user.role == 'Admin'){
+          navigate('/lab-test');
+        }
+        if(response.data.user.role == 'Laboratory'){
+          navigate('/tresultList');
+        }
+        
+        })
+    }).catch(error =>{
+      Swal.fire({
+        title: "Error",
+        text: "Something Wrong Email or Password!",
+        icon: "error",
+        confirmButtonText: "CANCEL",
+      })
+    }) 
+  }
   return (
-    <div classNameName="App">
-      {/* <!-- end preloader --> */}
-      {/* @include('sweet::alert') */}
-
-      <div className="wrapper">
-     
-
-        <section className="content">
-          <div className="container" style={{ marginTop: "8em" }}>
-            <div className="row">
-              <div className="offset-3 col-md-6">
-          
-                <div className="card" style={styles.card}>
-                  <div
-                    className="card-header head text-center py-3"
-                    style={styles.head}>
-                    <img src={require("../../logo.png")} alt="" />
-                  </div>
-                  <div className="card-body body py-5" style={styles.body}>
-                    <div className="row">
-                      <div className="offset-3 col-md-6">
-                        <div className="form-group">
-                          <label>Email</label>
-                          <input
-                            type="email"
-                            className="form-control"
-                            placeholder="eg: 123@gmail.com"
-                            style={styles.input}></input>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="offset-3 col-md-6">
-                        <div className="form-group">
-                          <label>Password</label>
-                          <input
-                            style={styles.input}
-                            type="password"
-                            autoFocus
-                            className="form-control"
-                            placeholder="*****"></input>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="offset-3 col-md-6">
-                        <input
-                          type="submit"
-                          value="Login"
-                          className="btn btn-primary mt-3"
-                          style={styles.btn}></input>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/*<!-- /.container-fluid --> */}
-        </section>
-      </div>
-
-      {/* <!-- /.content-wrapper --> */}
-
-      {/* <!-- ./wrapper --> */}
+    <div className='row'>
+    <div className='col-9'>
+    <img src={Doctors} alt="" width='950px' height='600px'/>
     </div>
-  );
+    <div className='col-3'>
+        <div style={{marginTop:'160px'}}>
+        <h4 className='text-center'>WELCOME</h4>
+        <span style={{fontSize:'14px'}}>Hello, Greeting! Please Sign In to Your Account!</span>
+        <div className='mt-3' style={{marginLeft:'30px'}}>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-email">Email</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-email"
+            type={showEmail ? 'text' : 'email'}
+            endAdornment={
+              <InputAdornment position="end" >
+                <IconButton
+                  aria-label="toggle email visibility"
+                  onClick={handleClickShowEmail}
+                  onMouseDown={handleMouseDownEmail}
+                  edge="end"
+                >
+                  {showEmail ? <EmailIcon /> : <EmailIcon />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Email"
+            onChange={(e)=>setEmail(e.target.value)}
+          />
+        </FormControl>
+        </div>
+        <div className='mt-2' style={{marginLeft:'30px'}}>
+          <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+          <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+          <OutlinedInput
+            id="outlined-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+            onChange={(e)=>setPassword(e.target.value)}
+          />
+        </FormControl>
+        </div>
+        <Button variant="contained" sx={{ m: 1, width: '25ch',marginLeft:'50px',marginTop:'20px' }} onClick={setlogin}>Login</Button>
+        </div>
+        
+    </div>
+    </div>
+  )
 }
-export default Login;
+
+export default Login

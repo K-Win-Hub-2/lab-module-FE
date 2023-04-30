@@ -13,7 +13,7 @@ const LabServiceList = () => {
   const [updateDialog, setUpdateDialog] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [multiTestLists, setMultiTestLists] = useState([]);
-  const [id, setId] = useState([]);
+  const [id, setId] = useState('');
 
   const handleDelete = (event) => {
     console.log(event, "event");
@@ -42,10 +42,10 @@ const LabServiceList = () => {
       });
   };
 
-  const handleUpdate = (event) => {
-    setId(event);
-    setUpdateDialog(true);
-  };
+  // const handleUpdate = (val) => {
+  //   setId(val);
+  //   setUpdateDialog(true);
+  // };
 
   const handleCheckChange = (val) => {
     const getMultiTestList = async () => {
@@ -307,14 +307,14 @@ const LabServiceList = () => {
                                       </button>
                                     </td> */}
                                     <td className="text-center">
+                                      <Link to={'/lab-test/'+labService._id}>
                                       <a
                                         className="btn btn-sm btn-warning text-white"
                                         role="button"
-                                        onClick={(e) =>
-                                          handleUpdate(labService)
-                                        }>
+                                       >
                                         Update
                                       </a>
+                                      </Link>
                                       &nbsp;
                                       <a
                                         className="btn btn-sm btn-danger text-white"
@@ -402,14 +402,15 @@ const LabServiceList = () => {
                 expenseLists={expenseLists}
                 setExpenseLists={setExpenseLists}
               /> */}
-              <LabServiceUpdate
-                updateDialog={updateDialog}
+              {/* <LabServiceUpdate
+                open={updateDialog}
                 close={() => setUpdateDialog(false)}
+                labid={id}
                 setUpdateDialog={setUpdateDialog}
-                id={id}
+               
                 setLabServiceLists={setLabServiceLists}
                 labServiceLists={labServiceLists}
-              />
+              /> */}
             </div>
             {/*<!-- /.container-fluid --> */}
           </section>

@@ -1,8 +1,26 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector,useDispatch} from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { logoutSuccess } from '../../redux/authRedux';
+import Swal from "sweetalert2";
 
 function Sidebar() {
-  return (
+  const user =  useSelector(state=>state.auth.user);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logout = () =>{
+    Swal.fire({
+      title: "Success",
+      text: "successfully Logout!",
+      icon: "success",
+      confirmButtonText: "OK",
+    }).then(function () {
+    dispatch(logoutSuccess())
+    navigate('/');
+    })
+  }
+   return (
     <div>
       {/* <!-- Navbar --> */}
       <nav className="main-header navbar navbar-expand navbar-white navbar-light">
@@ -46,7 +64,7 @@ function Sidebar() {
               data-widget="treeview"
               role="menu"
               data-accordion="false">
-              <li className="nav-item has-treeview">
+              {user.user.role == 'Admin' && <><li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
                   <i style={{ fontSize: "21px" }} className="nav-icon fas">
                     &#xf2bd;
@@ -65,7 +83,7 @@ function Sidebar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">
+                  <Link to="/lab-test" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Lab Test</p>
                   </Link>
@@ -89,10 +107,10 @@ function Sidebar() {
                     <p>Doctor/Clinic</p>
                   </Link>
                 </li>
-              </li>
+              </li></>}
 
               {/* Patient */}
-              <li className="nav-item has-treeview">
+              {user.user.role == 'Sales' && <><li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="admin_data">
                   <i
                     className="nav-icon fas fa-poll"
@@ -104,12 +122,7 @@ function Sidebar() {
                 </a>
               </li>
               <li className="ml-3">
-                {/* <li className="nav-item">
-                  <Link to="/patient/register" className="nav-link">
-                    <i className="nav-icon fas fa-circle"></i>&nbsp;
-                    <p>Patient Register</p>
-                  </Link>
-                </li> */}
+                
                 <li className="nav-item">
                   <Link to="/patient/list" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
@@ -123,7 +136,7 @@ function Sidebar() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">
+                  <Link to="/lab-test" className="nav-link">
                     <i className="nav-icon fas fa-circle"></i>&nbsp;
                     <p>Lab Test</p>
                   </Link>
@@ -147,9 +160,9 @@ function Sidebar() {
                     <p>Test Voucher List</p>
                   </Link>
                 </li>
-              </li>
+              </li></>}
 
-              <li className="nav-item">
+              {user.user.role == 'Laboratory' && <><li className="nav-item">
                 <Link to="/account_list" className="nav-link">
                   <i
                     className="nav-icon fas fa-flask"
@@ -170,9 +183,9 @@ function Sidebar() {
                     <p>Test Result List</p>
                   </Link>
                 </li>
-              </li>
+              </li></>}
 
-              <li className="nav-item has-treeview">
+              {user.user.role == 'Finance' && <><li className="nav-item has-treeview">
                 <a href="#" className="nav-link" id="master_data">
                   <i style={{ fontSize: "21px" }} className="nav-icon far">
                     &#xf15c;
@@ -206,20 +219,20 @@ function Sidebar() {
                     <p>Expense</p>
                   </Link>
                 </li>
-              </li>
+              </li></>}
 
               <li className="nav-item">
-                <a href="" className="nav-link">
+                <a  className="nav-link" onClick={logout}>
                   <i className="nav-icon fas fa-power-off"></i>
                   <span className="ml-2">Logout</span>
                 </a>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to="/login" className="nav-link">
                   <i className="nav-icon fas fa-power-off"></i>
                   <span className="ml-2">LogIn</span>
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </nav>
           {/* <!-- /.sidebar-menu --> */}

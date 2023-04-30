@@ -140,13 +140,13 @@ const Patient = () => {
             </Top>
             <Div className="card">
               <Div className="card-body">
-                <Tabs>
-                  <TabList>
+                {/* <Tabs> */}
+                  {/* <TabList>
                     <Tab>Old</Tab>
                     <Tab>New</Tab>
-                  </TabList>
+                  </TabList> */}
 
-                  <TabPanel>
+                  {/* <TabPanel> */}
                     <Top className="mt-4">
                       <Left>
                         <Input type="text" placeholder="Search..." />
@@ -204,8 +204,8 @@ const Patient = () => {
                         ))}
                       </Tbody>
                     </Table>
-                  </TabPanel>
-                  <TabPanel>
+                  {/* </TabPanel> */}
+                  {/* <TabPanel>
                     <Top className="mt-4">
                       <Left>
                         <Input type="text" placeholder="Search..." />
@@ -263,8 +263,8 @@ const Patient = () => {
                         ))}
                       </Tbody>
                     </Table>
-                  </TabPanel>
-                </Tabs>
+                  </TabPanel> */}
+                {/* </Tabs> */}
               </Div>
             </Div>
           </div>

@@ -33,12 +33,14 @@ import "./assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css"
 import "./assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
 import TestVoucherList from './components/views/TestVoucherList';
 import TestResultList from './components/views/TestResultList';
+import LabServiceUpdate from './components/views/LabServiceUpdate'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LabServiceList />}></Route>
+        <Route path="/lab-test" element={<LabServiceList />}></Route>
+        <Route path="/lab-test/:id" element={<LabServiceUpdate />}></Route>
         <Route path="/lab-register" element={<LabServiceRegister />}></Route>
         <Route path="/lab-cat" element={<CatRegister />}></Route>
         <Route path="/reagent" element={<Reagent />}></Route>
@@ -58,7 +60,7 @@ function App() {
         <Route path="/tvoucherList" element={<TestVoucherList />}></Route>
         <Route path="/tresultList" element={<TestResultList />}></Route>
         <Route path="/refDoctor/:id" element={<ReferDoctorCharge />}></Route>
-        <Route path='/login' element={<Login/>}></Route>
+        <Route path='/' element={<Login/>}></Route>
       </Routes>
     </Router>
   );
