@@ -14,7 +14,7 @@ import axios from 'axios';
 import { loginSuccess,addUser } from '../../redux/authRedux';
 import Doctors from '../../../src/doctors.svg'
 import Swal from "sweetalert2";
-
+import { MouseEvent } from 'react';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
@@ -23,11 +23,15 @@ const Login = () => {
   const url =  useSelector(state=>state.auth.url);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
-  };
+          
+      };
   const handleClickShowEmail = () => setShowEmail((show) => !show);
 
   const handleMouseDownEmail = (event: MouseEvent<HTMLButtonElement>) => {
@@ -38,39 +42,44 @@ const Login = () => {
       email:email,
       password:password
     }
-    axios.post(url+'api/auth/login',data)
-    .then(function (response){
-      Swal.fire({
-        title: "Success",
-        text: "successfully Login!",
-        icon: "success",
-        confirmButtonText: "OK",
-      }).then(function () {
-        console.log(response.data.user.role)
-        dispatch(loginSuccess());
-        dispatch(addUser(response.data));
-        if(response.data.user.role == 'Sales'){
-          navigate('/lab-test');
-        }
-        if(response.data.user.role == 'Finance'){
-          navigate('/tvoucherList');
-        }
-        if(response.data.user.role == 'Admin'){
-          navigate('/lab-test');
-        }
-        if(response.data.user.role == 'Laboratory'){
-          navigate('/tresultList');
-        }
-        
-        })
-    }).catch(error =>{
-      Swal.fire({
-        title: "Error",
-        text: "Something Wrong Email or Password!",
-        icon: "error",
-        confirmButtonText: "CANCEL",
+  
+    axios
+      .post(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/auth/login",
+        data
+      )
+      .then(function (response) {
+        Swal.fire({
+          title: "Success",
+          text: "successfully Login!",
+          icon: "success",
+          confirmButtonText: "OK",
+        }).then(function () {
+          console.log(response.data.user.role);
+          dispatch(loginSuccess());
+          dispatch(addUser(response.data));
+          if (response.data.user.role == "Sales") {
+            navigate("/lab-test");
+          }
+          if (response.data.user.role == "Finance") {
+            navigate("/tvoucherList");
+          }
+          if (response.data.user.role == "Admin") {
+            navigate("/lab-test");
+          }
+          if (response.data.user.role == "Laboratory") {
+            navigate("/tresultList");
+          }
+        });
       })
-    }) 
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          text: "Something Wrong Email or Password!",
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        });
+      }); 
   }
   return (
     <div className='row'>

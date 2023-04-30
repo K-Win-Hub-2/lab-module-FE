@@ -232,24 +232,42 @@ function LabServiceRegister() {
                             </td>
 
                             <td>
-                              {testSelect.name.referenceRange.map((refer) => (
-                                <p>
-                                  {refer.gender ? (
-                                    <div>
-                                      {refer.gender}: &nbsp;
-                                      {refer.from}-{refer.to} &nbsp;
-                                    </div>
-                                  ) : (
-                                    ""
-                                  )}
-                                </p>
-                              ))}
+                              <div>
+                                {testSelect.name.specialComment ? (
+                                  "See below"
+                                ) : (
+                                  <div>
+                                    {testSelect.name.referenceRange.map(
+                                      (refer) => (
+                                        <p>
+                                          {refer.gender ? (
+                                            <div>
+                                              {refer.gender}: &nbsp;
+                                              {refer.from}-{refer.to} &nbsp;
+                                            </div>
+                                          ) : (
+                                            ""
+                                          )}
+                                        </p>
+                                      )
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </td>
 
                             <td>
-                              {testSelect.name.referenceRange.map((refer) => (
-                                <p>{refer.unit}</p>
-                              ))}
+                              {testSelect.name.specialComment ? (
+                                "See Below"
+                              ) : (
+                                <div>
+                                  {testSelect.name.referenceRange.map(
+                                    (refer) => (
+                                      <p> {refer.unit}</p>
+                                    )
+                                  )}
+                                </div>
+                              )}
                             </td>
 
                             <td>
