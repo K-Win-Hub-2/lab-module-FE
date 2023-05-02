@@ -34,7 +34,7 @@ function LabServiceRegister() {
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
   const [tableData, setTableData] = useState([]);
-
+const[referAmount,setReferAmount]=useState('');
 
     
      
@@ -105,7 +105,7 @@ function LabServiceRegister() {
     clearTextBox("flag")
     clearTextBox("charge")
     clearTextBox("cost")
-    clearTextBox("referdoc")
+    clearTextBox("referamo")
     clearTextBox("cat")
     clearTextBox("textArea")
     clearTextBox("subTestName")
@@ -123,6 +123,7 @@ function LabServiceRegister() {
     let data = {
       code: code,
       name: name,
+      referAmount:referAmount,
       leadTime: leadTime,
       charges: charges,
       cost: cost,
@@ -329,11 +330,11 @@ function LabServiceRegister() {
                         </div>
                       </div>
                       <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-6">
                           <div className="form-group">
                             <label className="control-label">Cost</label>
                             <input
-                              type="text"
+                              type="number"
                               className="form-control"
                               placeholder=""
                               id="cost"
@@ -342,27 +343,21 @@ function LabServiceRegister() {
                             />
                           </div>
                         </div>
-                        {/* <div className="col-md-6">
+                        <div className="col-md-6">
                           <div className="form-group">
                             <label className="control-label">
-                              Refer Doctor
+                              Refer Amount
                             </label>
-
-                            <select
-                              name="currency"
-                              id="referdoc"
-                              className="form-control mt-1"
-                              onchange="convert(this.value)"
-                              onChange={(e) => setDoctor(e.target.value)}>
-                              <option >Choose Doctor</option>
-                              {referDoctor.map((option) => (
-                                <option value={option._id}>
-                                  {option.name}
-                                </option>
-                              ))}
-                            </select>
+                            <input
+                              type="number"
+                              className="form-control"
+                              placeholder=""
+                              id="referamo"
+                              name="md_name"
+                              onChange={(e) => setReferAmount(e.target.value)}
+                            />
                           </div>
-                        </div> */}
+                        </div>
                       </div>
                       <div className="row">
                         <div className="col-md-12">
