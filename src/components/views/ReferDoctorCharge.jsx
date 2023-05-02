@@ -1,7 +1,7 @@
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function CatRegister() {
