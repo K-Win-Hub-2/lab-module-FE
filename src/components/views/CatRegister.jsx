@@ -11,6 +11,18 @@ function CatRegister() {
   const [flag, setFlag] = useState('');
   const [updateDialog, setUpdateDialog] = useState(false);
   const [id, setId] = useState("");
+  const [isValidated, setIsValidated] = useState(false);
+
+  const [formState, setFormState] = useState({
+    code: '',
+    name: '',
+    description: '',
+    flag: '',
+    codeError: '',
+    nameError: '',
+    descriptionError: '',
+    flagError: '',
+  });
 
   const handleDelete = (event) => {
     console.log(event, "event")
@@ -37,7 +49,16 @@ function CatRegister() {
     setUpdateDialog(true);
   };
 
-  const CategoryCreate = () => {
+  const CategoryCreate = (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    console.log(form.checkValidity())
+    if (form.checkValidity() === false) {
+      event.stopPropagation();
+    } else {
+      setIsValidated(true);
+    }
+
     const data = {
       code: code,
       name: name,
@@ -177,65 +198,69 @@ function CatRegister() {
                       <h5 className="card-header mb-4 fw-5 text-secondary">
                         Create Category
                       </h5>
+                      <form noValidate onSubmit={CategoryCreate} validated={isValidated}>
+                        <div class="form-group">
+                          <label for="code" className="text-secondary">
+                            Code
+                          </label>
+                          <input
+                            type="text"
+                            id="code"
+                            class="form-control border-info"
+                            name="code"
+                            //   ref={(el) => (this.name = el)}
+                            onChange={(e) => setCode(e.target.value)}
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="name" className="text-secondary">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control border-info"
+                            name="name"
+                            id="name"
+                            required
+                            //   ref={(el) => (this.name = el)}
+                            onChange={(e) => setName(e.target.value)}
+                          />
+                          <div class="invalid-feedback">Please provide Name.</div>
+                        </div>
+                        <div class="form-group">
+                          <label for="name" className="text-secondary">
+                            Description
+                          </label>
+                          <textarea
+                            className="form-control"
+                            id="desc"
+                            //   ref={(el) => (this.description = el)}
+                            onChange={(e) =>
+                              setDescription(e.target.value)
+                            }></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="name" className="text-secondary">
+                            Flag
+                          </label>
+                          <select
+                            class="custom-select border-info"
+                            name="account_type_id"
+                            id="flag"
+                            onChange={(e) => setFlag(e.target.value)}>
+                            <option></option>
+                            <option value="Service">Service</option>
+                            <option value="Reagent">Reagent</option>
+                          </select>
+                        </div>
+                        <button
+                          className="btn btn-primary form-control text-center fw-5"
+                          type="submit"
+                        >
+                          Save
+                        </button>
+                      </form>
 
-                      <div class="form-group">
-                        <label for="code" className="text-secondary">
-                          Code
-                        </label>
-                        <input
-                          type="text"
-                          id="code"
-                          class="form-control border-info"
-                          name="code"
-                          //   ref={(el) => (this.name = el)}
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control border-info"
-                          name="name"
-                          id="name"
-                          //   ref={(el) => (this.name = el)}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Description
-                        </label>
-                        <textarea
-                          className="form-control"
-                          id="desc"
-                          //   ref={(el) => (this.description = el)}
-                          onChange={(e) =>
-                            setDescription(e.target.value)
-                          }></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Flag
-                        </label>
-                        <select
-                          class="custom-select border-info"
-                          name="account_type_id"
-                          id="flag"
-                          onChange={(e) => setFlag(e.target.value)}>
-                          <option></option>
-                          <option value="Service">Service</option>
-                          <option value="Reagent">Reagent</option>
-                        </select>
-                      </div>
-                      <button
-                        className="btn btn-primary form-control text-center fw-5"
-                        type="submit"
-                        onClick={CategoryCreate}>
-                        Save
-                      </button>
                     </div>
                   </div>
                 </div>

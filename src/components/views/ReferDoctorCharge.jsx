@@ -1,15 +1,34 @@
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function CatRegister() {
   const [referDoctor, setReferDoctor] = useState([]);
   const DoctorID = useLocation().pathname.split('/')[2];
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState([]);
 
-  const CollectDialog = () =>
-  {
+  const handleCollect = () => {
+
+  }
+
+  const handleSearch = (event) => {
+    axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/' + DoctorID).then(function (response) {
+      setSearch(response.data.data)
+    })
+      .catch((err) => {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      })
+  }
+
+  const CollectDialog = () => {
     setOpen(true);
   }
 
@@ -18,12 +37,12 @@ function CatRegister() {
       try {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/" +
-            DoctorID
+          DoctorID
         );
 
         console.log(res.data.data.value);
         setReferDoctor(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getPackage();
   }, []);
