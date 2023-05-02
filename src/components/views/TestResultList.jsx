@@ -5,6 +5,7 @@ import {AiOutlinePlus,AiTwotoneFilter,AiFillInfoCircle} from 'react-icons/ai'
 import {FaFileExport} from "react-icons/fa"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Top = styled.div`
 display : flex;
@@ -91,14 +92,14 @@ const TestResultList = () => {
 
     useEffect(()=>{
         const getVouchers = async () => {
-            const res = await axios.get('http://localhost:9000/api/vouchers/today');
+            const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today');
             setVouchers(res.data.data);
         }
         getVouchers();
     },[])
 
     const search = async () =>{
-        const result = await axios.get('http://localhost:9000/api/vouchers');
+        const result = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers');
         if(name == '' && status == ''){
             setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
             el.date.split('T')[0]<= to))
@@ -238,7 +239,7 @@ const TestResultList = () => {
               }   
              </Td>
               <Td><Badge>{vou.status}</Badge></Td>
-              <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Td>
+              <Td><Link to={'/test/'+vou._id}><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Link></Td>
             </Tr>))}
             </Tbody>
           </Table>

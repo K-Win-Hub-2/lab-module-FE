@@ -7,6 +7,7 @@ import ReagentReg from './components/views/ReagentReg';
 import DoctorClinic from './components/views/DoctorClinic';
 import DoctorClinicReg from './components/views/DoctorClinicReg';
 import Test from './components/views/Test';
+import TestVoucherSlip from './components/views/TestVoucherSlip';
 import Patient from './patients/Patient';
 import PatientRegister from './patients/Register';
 import Member from './patients/Member';
@@ -48,6 +49,7 @@ function App() {
         <Route path="/doctorClinic" element={<DoctorClinic />}></Route>
         <Route path="/doctorClinicReg" element={<DoctorClinicReg />}></Route>
         <Route path="/test/:testVoucher_id" element={<Test />}></Route>
+        <Route path="/testslip/:testVoucher_id" element={<TestVoucherSlip />}></Route>
         <Route path="/patient/list" element={<Patient />} />
         <Route path="/patient/register" element={<PatientRegister />} />
         <Route path="/patient/member" element={<Member />} />

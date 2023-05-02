@@ -52,9 +52,9 @@ function LabServiceRegister() {
        // change /br to line brake format
        function formatString(data) {
          const base64String = decodeBase64(data);
-         const reactElements = ReactHtmlParser(base64String);
+        //  const reactElements = ReactHtmlParser(base64String);
 
-         return reactElements;
+        //  return reactElements;
        }
 
 

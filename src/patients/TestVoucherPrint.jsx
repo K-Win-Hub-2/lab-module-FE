@@ -81,21 +81,35 @@ const TestVoucherPrint = (props) => {
   const [testArray, setTestArray] = useState([]);
   const [labID_VouCode, setLabID_VouCode] = useState([]);
   const [headerOn, setHeaderOn] = useState(true);
+  const [refOn, setRefOn] = useState(true);
+  const [resOn,setResOn] = useState(true);
   // const [headerOff, setHeaderOff] = useState(false);
  
 
   const handleOnCheck = () =>
   {
-    setHeaderOn(true);
-  
-    
+    setHeaderOn(true); 
 }
 
    const handleOffCheck = () => {
-     setHeaderOn(false);
-      
-  
+     setHeaderOn(false);  
    };
+   const RefOnCheck = () =>
+   {
+     setRefOn(true); 
+ }
+ 
+    const RefOffCheck = () => {
+      setRefOn(false);  
+    };
+    const ResOnCheck = () =>
+   {
+     setResOn(true); 
+ }
+ 
+    const ResOffCheck = () => {
+      setResOn(false);  
+    };
   function decodeBase64(data) {
     const decode = Base64.decode(data);
 
@@ -260,7 +274,7 @@ const TestVoucherPrint = (props) => {
                   </thead>
                   <tbody></tbody>
                 </table>
-                <table className="table table-hover mt-5">
+               {resOn && <table className="table table-hover mt-5">
                   <thead className="bg-secondary">
                     <tr>
                       <th>Test</th>
@@ -304,9 +318,9 @@ const TestVoucherPrint = (props) => {
                       </tr>
                     </tbody>
                   ))}
-                </table>
+                </table>}
 
-                <div className="px-3 py-2">
+                {refOn && <div className="px-3 py-2">
                   <div className="row">
                     {voucherLists.map((specDecode) => (
                       <div className="col-md-6">
@@ -317,7 +331,7 @@ const TestVoucherPrint = (props) => {
                       </div>
                     ))}
                   </div>
-                </div>
+                </div>}
                 <div className="row" style={{ marginTop: "50px" }}>
                   <div className="col-6">
                     <span>Laboratory Technician</span>
@@ -337,21 +351,51 @@ const TestVoucherPrint = (props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-6">
-            <button
-              className="btn btn-success mt-4 mb-4"
-              style={{ marginLeft: "500px" }}
-              onClick={print}>
-              Print
-            </button>
+        <div className="offset-1 col-md-3 mb-4" style={{ marginTop: "2em" }}>
+            <label>Reference On</label>&nbsp;
+            <input
+              type="radio"
+              id="on"
+              name="reference"
+              onChange={RefOnCheck}
+              
+            />
+            &nbsp; &nbsp;
+            <label>Off</label>&nbsp;
+            <input
+              type="radio"
+              id="off"
+              name="reference"
+              onChange={RefOffCheck}
+            />
           </div>
-          <div className="offset-1 col-md-3 mb-4" style={{ marginTop: "2em" }}>
+          <div className="col-md-3 mb-4" style={{ marginTop: "2em" }}>
+            <label>Result On</label>&nbsp;
+            <input
+              type="radio"
+              id="on"
+              name="result"
+              onChange={ResOnCheck}
+              
+            />
+            &nbsp; &nbsp;
+            <label>Off</label>&nbsp;
+            <input
+              type="radio"
+              id="off"
+              name="result"
+              onChange={ResOffCheck}
+            />
+          </div>
+         
+          <div className="col-md-3 mb-4" style={{ marginTop: "2em" }}>
             <label>Header On</label>&nbsp;
             <input
               type="radio"
               id="on"
               name="amoper"
               onChange={handleOnCheck}
+              
             />
             &nbsp; &nbsp;
             <label>Off</label>&nbsp;
@@ -361,6 +405,14 @@ const TestVoucherPrint = (props) => {
               name="amoper"
               onChange={handleOffCheck}
             />
+          </div>
+          <div className="offset-md-3">
+            <button
+              className="btn btn-success mt-3 mb-4"
+              style={{ marginLeft: "150px" }}
+              onClick={print}>
+              Print
+            </button>
           </div>
         </div>
       </div>

@@ -207,7 +207,8 @@ const TestVoucherList = () => {
                         <Td>{vou.relatedPatient.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
-                        <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td>
+                        {/* <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td> */}
+                        <Td><Link to={'/testslip/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td>
                       </Tr>))}
                   </Tbody>
                 </Table>
