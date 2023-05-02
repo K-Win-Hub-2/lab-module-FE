@@ -2,12 +2,31 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 function CatRegister() {
   const [referDoctor, setReferDoctor] = useState([]);
   const DoctorID = useLocation().pathname.split('/')[2];
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState([]);
+
+  const handleCollect = () => {
+
+  }
+
+  const handleSearch = (event) => {
+    axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/' + DoctorID).then(function (response) {
+      setSearch(response.data.data)
+    })
+      .catch((err) => {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      })
+  }
 
   const CollectDialog = () => {
     setOpen(true);
@@ -17,18 +36,13 @@ function CatRegister() {
     const getPackage = async () => {
       try {
         const res = await axios.get(
-          "localhost:9000/api/refer-commissions/doctor/" +
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/" +
           DoctorID
-        )
+        );
+
+        console.log(res.data.data.value);
         setReferDoctor(res.data.data);
-      } catch (err) {
-        Swal.fire({
-          title: "Error",
-          text: err.response.data.message,
-          icon: "error",
-          confirmButtonText: "CANCEL",
-        })
-      }
+      } catch (err) { }
     };
     getPackage();
   }, []);
@@ -73,78 +87,47 @@ function CatRegister() {
                       </Link>
                     </div> */}
                   </div>
-                  <div class="col-md-12 py-3 card">
+                  <div class="col-md-12 py-3 card mx-auto">
                     <div class="card-header">
-                      <div class="row" id="trial_balance"></div>
+                      <div class="row" id="trial_balance">
+                        <div className="col-md-4">
+                          <div className="form-group">
+                            <select
+                              class="custom-select border-info"
+                              name="account_type_id"
+                              id="flag"
+                            >
+                              <option>Choose Date</option>
+                              <option value="Jan">January</option>
+                              <option value="Feb">February</option>
+                              <option value="Mar">March</option>
+                              <option value="Apr">April</option>
+                              <option value="May">May</option>
+                              <option value="Jun">June</option>
+                              <option value="Jul">July</option>
+                              <option value="Aug">August</option>
+                              <option value="Sep">September</option>
+                              <option value="Oct">October</option>
+                              <option value="Nov">November</option>
+                              <option value="Dec">December</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="form-group">
+                            <button
+                              className="btn btn-primary "
+                              type="button"
+                              onClick={(e)=> handleSearch(e.target.value)}
+                            >
+                              Search
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div class="table-responsive text-black" id="slimtest2">
-                      <table class="table table-hover px-3" id="filter_date">
-                        <thead class="bg-info text-white">
-                          <tr>
-                            <th>Index</th>
-                            <th>Month</th>
-
-                            <th>Refer Amount</th>
-                            <th>Status</th>
-                            <th>Collect Date</th>
-
-                            <th>Remark</th>
-                            <th className="text-center">Action</th>
-                          </tr>
-                        </thead>
-                        <tbody className="">
-                          <tr>
-                            <td>1</td>
-                            <td>January</td>
-                            <td>{referDoctor.value}</td>
-                            <td>
-                              <div className="badge badge-sm badge-info">
-                                Collect
-                              </div>
-                            </td>
-                            <td>2023-04-27</td>
-                            <td>test</td>
-                            <td className="text-center">
-                              <Link
-                                to=""
-                                className="btn btn-sm btn-primary rounded">
-                                Details
-                              </Link>
-                              &nbsp;
-                              <button
-                                onClick={CollectDialog}
-                                className="btn btn-sm btn-primary">
-                                Collect
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>February</td>
-                            <td>{referDoctor.value}</td>
-                            <td>
-                              <div className="badge badge-sm badge-info">
-                                Collect
-                              </div>
-                            </td>
-                            <td>2023-04-27</td>
-                            <td>test</td>
-                            <td className="text-center">
-                              <Link
-                                to=""
-                                className="btn btn-sm btn-primary rounded">
-                                Details
-                              </Link>
-                              &nbsp;
-                              <button
-                                onClick={CollectDialog}
-                                className="btn btn-sm btn-primary">
-                                Collect
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="card-body">
+                      <form onSubmit={handleCollect}></form>
                     </div>
                   </div>
                 </div>

@@ -11,6 +11,17 @@ function CatRegister() {
   const [flag, setFlag] = useState('');
   const [updateDialog, setUpdateDialog] = useState(false);
   const [id, setId] = useState("");
+  
+  const [formState, setFormState] = useState({
+    code: '',
+    name: '',
+    description: '',
+    flag: '',
+    codeError: '',
+    nameError: '',
+    descriptionError: '',
+    flagError: '',
+  });
 
   const handleDelete = (event) => {
     console.log(event, "event")
