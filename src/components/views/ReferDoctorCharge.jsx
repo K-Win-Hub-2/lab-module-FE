@@ -2,14 +2,14 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 function CatRegister() {
   const [referDoctor, setReferDoctor] = useState([]);
   const DoctorID = useLocation().pathname.split('/')[2];
   const [open, setOpen] = useState(false);
 
-  const CollectDialog = () =>
-  {
+  const CollectDialog = () => {
     setOpen(true);
   }
 
@@ -17,13 +17,18 @@ function CatRegister() {
     const getPackage = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/" +
-            DoctorID
-        );
-
-        console.log(res.data.data.value);
+          "localhost:9000/api/refer-commissions/doctor/" +
+          DoctorID
+        )
         setReferDoctor(res.data.data);
-      } catch (err) {}
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      }
     };
     getPackage();
   }, []);
@@ -91,6 +96,31 @@ function CatRegister() {
                           <tr>
                             <td>1</td>
                             <td>January</td>
+                            <td>{referDoctor.value}</td>
+                            <td>
+                              <div className="badge badge-sm badge-info">
+                                Collect
+                              </div>
+                            </td>
+                            <td>2023-04-27</td>
+                            <td>test</td>
+                            <td className="text-center">
+                              <Link
+                                to=""
+                                className="btn btn-sm btn-primary rounded">
+                                Details
+                              </Link>
+                              &nbsp;
+                              <button
+                                onClick={CollectDialog}
+                                className="btn btn-sm btn-primary">
+                                Collect
+                              </button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>February</td>
                             <td>{referDoctor.value}</td>
                             <td>
                               <div className="badge badge-sm badge-info">
