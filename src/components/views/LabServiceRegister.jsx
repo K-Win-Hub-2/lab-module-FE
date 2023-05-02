@@ -37,7 +37,14 @@ function LabServiceRegister() {
 const[referAmount,setReferAmount]=useState('');
 
     
-     
+     const handleAlert =()=>{
+       Swal.fire({
+         title: "Success",
+         text: "successfully Registered!",
+         icon: "success",
+         confirmButtonText: "OK",
+       });
+     }
   
 
   const handleAddRow = () => {
@@ -643,10 +650,11 @@ const[referAmount,setReferAmount]=useState('');
                                   <div className="col-md-2">
                                     <button
                                       type="button"
-                                      className="btn btn-primary"
-                                      onClick={(e) =>
-                                        handleRefRange(e.target.value)
-                                      }>
+                                      className="btn btn-success"
+                                      onClick={(e) => {
+                                        handleRefRange(e.target.value);
+                                        handleAlert();
+                                      }}>
                                       <i class="fa fa-save"></i>
                                     </button>
                                   </div>
@@ -702,10 +710,12 @@ const[referAmount,setReferAmount]=useState('');
                                 <div className="col-md-2">
                                   <button
                                     type="button"
-                                    className="btn btn-primary"
-                                    onClick={(e) =>
-                                      handleRefRange(e.target.value)
-                                    }>
+                                    className="btn btn-success"
+                                    onClick={(e) => {
+                                      handleRefRange(e.target.value);
+                                      handleAlert();
+                                    }}
+                                    checked>
                                     <i class="fa fa-save"></i>
                                   </button>
                                 </div>

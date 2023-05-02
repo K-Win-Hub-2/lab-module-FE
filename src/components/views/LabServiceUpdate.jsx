@@ -8,8 +8,7 @@ import { Base64 } from "js-base64";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
-
-
+import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar';
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -37,26 +36,26 @@ function LabServiceRegister() {
   const [referAmount, setReferAmount] = useState("");
   const [showRefForm, setShowRefForm] = useState(false);
   const [showMultiTest, setShowMultiTest] = useState(false);
+  const [subTest, setSubTest] = useState([]);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
-    const [tableData, setTableData] = useState([]);
-      const labid = useLocation().pathname.split("/")[2];
-      const navigate = useNavigate();
+  const [tableData, setTableData] = useState([]);
+  const labid = useLocation().pathname.split("/")[2];
+  const navigate = useNavigate();
 
-       function decodeBase64(data) {
-         const decode = Base64.decode(data);
+  function decodeBase64(data) {
+    const decode = Base64.decode(data);
 
-         return decode;
-       }
-       // end
+    return decode;
+  }
+  // end
 
        // change /br to line brake format
        function formatString(data) {
          const base64String = decodeBase64(data);
-        //  const reactElements = ReactHtmlParser(base64String);
+         const reactElements = ReactHtmlParser(base64String);
 
-        //  return reactElements;
+         return reactElements;
        }
-
 
   const handleAddRow = () => {
     setTableData([
@@ -144,7 +143,7 @@ function LabServiceRegister() {
       id: labid,
       code: code,
       name: name,
-      referAmount:referAmount,
+      referAmount: referAmount,
       leadTime: leadTime,
       charges: charges,
       cost: cost,
@@ -154,8 +153,8 @@ function LabServiceRegister() {
       specialComment: encodedString,
       subTest: tableData,
     };
-      
-      // alert(JSON.stringify.data);
+
+    // alert(JSON.stringify.data);
 
     // if (doctor) data= {...data, referDoctor:doctor}
     if (relatedCategory) data = { ...data, relatedCategory: relatedCategory };
@@ -200,8 +199,6 @@ function LabServiceRegister() {
       } catch (err) {}
     };
 
-    
-
     const getReagent = async () => {
       try {
         const res = await axios.get(
@@ -211,26 +208,29 @@ function LabServiceRegister() {
       } catch (err) {}
     };
 
-      const getUpdate = async () => {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-            labid
-        );
-        // console.log("success");
-        // console.log(res.data);
-        setCode(res.data.data.code);
-          setName(res.data.data.name);
-          setDescription(res.data.data.description);
-          setCharges(res.data.data.charges);
-           setCost(res.data.data.cost);
-           setRefArray(res.data.data.referenceRange);
-          //  console.log(res.data.data.referenceRange);
-          
-        setReferAmount(res.data.data);
-        // setCategoryName(res.data.data.relatedCategory.name);
-        setCharges(res.data.data.charges);
-      };
-      getUpdate();
+    const getUpdate = async () => {
+      const res = await axios.get(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
+          labid
+      );
+      // console.log("success");
+      // console.log(res.data);
+      setCode(res.data.data.code);
+      setName(res.data.data.name);
+      setDescription(res.data.data.description);
+      setCharges(res.data.data.charges);
+      setCost(res.data.data.cost);
+      setRefArray(res.data.data.referenceRange);
+      //  console.log(res.data.data.referenceRange);
+      setFrom(res.data.data.referenceRange.from);
+      setReferAmount(res.data.data.referAmount);
+      setSubTest(res.data.data.subTest);
+      console.log(res.data.data.subTest.name);
+      setSpecialComment(res.data.data.specialComment);
+      // setCategoryName(res.data.data.relatedCategory.name);
+      setCharges(res.data.data.charges);
+    };
+    getUpdate();
     getReagent();
     // getReferDoctor();
     getCategory();
@@ -580,38 +580,37 @@ function LabServiceRegister() {
 
                           {showSpecialRange ? (
                             <div className="row">
-                              <div className="row mt-5">
-                                <div className="col-md-4">
-                                  <label>Special Reference Range</label>
-                                </div>
-
-                                <div className="col-md-4">
-                                  <label>Yes</label>&nbsp;
-                                  <input
-                                    type="radio"
-                                    id="yes"
-                                    name="amoper"
-                                    value="true"
-                                    onChange={(e) => {
-                                      setSpecialFlag(e.target.value);
-                                      handleYesChange();
-                                    }}
-                                  />
-                                </div>
-                                <div className="col-md-4">
-                                  <label>No</label>&nbsp;
-                                  <input
-                                    type="radio"
-                                    id="no"
-                                    name="amoper"
-                                    value="false"
-                                    onChange={(e) => {
-                                      setSpecialFlag(e.target.value);
-                                      handleNoChange();
-                                    }}
-                                  />
-                                </div>
+                              <div className="col-md-4">
+                                <label>Special Reference Range</label>
                               </div>
+
+                              <div className="col-md-4">
+                                <label>Yes</label>&nbsp;
+                                <input
+                                  type="radio"
+                                  id="yes"
+                                  name="ref"
+                                  value="true"
+                                  onChange={(e) => {
+                                    setSpecialFlag(e.target.value);
+                                    handleYesChange();
+                                  }}
+                                />
+                              </div>
+                              <div className="col-md-4">
+                                <label>No</label>&nbsp;
+                                <input
+                                  type="radio"
+                                  id="no"
+                                  name="ref"
+                                  value="false"
+                                  onChange={(e) => {
+                                    setSpecialFlag(e.target.value);
+                                    handleNoChange();
+                                  }}
+                                />
+                              </div>
+
                               {showSpecialCmt && (
                                 <div className="row mt-5">
                                   <div className="col-md-12">
@@ -630,7 +629,6 @@ function LabServiceRegister() {
 
                               {showRefForm && (
                                 <div className="row mt-3">
-                                  <label>Reference Range</label>
                                   <div className="col-md-2">
                                     <input
                                       type="number"

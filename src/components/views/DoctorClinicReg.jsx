@@ -22,14 +22,13 @@ function LabServiceRegister() {
     const data = {
       name: name,
       selection: selection,
-      value: value,
       education: education,
       position: position,
-      valueType: valueType,
+  
       phone: phone,
       email: email,
     };
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
@@ -47,6 +46,13 @@ function LabServiceRegister() {
           icon: "success",
           confirmButtonText: "OK",
         });
+
+        document.getElementById('name').value='';
+         document.getElementById('phone').value='';
+          document.getElementById("edu").value = "";
+           document.getElementById("pos").value = "";
+            document.getElementById("email").value = "";
+
       })
       .catch(function (err) {
         Swal.fire({
@@ -56,6 +62,8 @@ function LabServiceRegister() {
           confirmButtonText: "CANCEL",
         });
       });
+
+
   };
 
   return (
@@ -93,85 +101,86 @@ function LabServiceRegister() {
               <div class="card">
                 <div class="card-body p-b-0">
                   {/* @if($com == null) */}
-                  <form onSubmit={DoctorCreate}>
-                    {/* @csrf */}
 
-                    <div className="form-group">
-                      <div className="row">
-                        <div className="col-md-4">
-                          <label>ReferDoctor</label>&nbsp;
-                          <input
-                            type="radio"
-                            id="doccl"
-                            name="doccl"
-                            value="ReferDoctor"
-                            onChange={(e) => {
-                              setSelection(e.target.value);
-                              setShowRelatedDoc(true);
-                            }}
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <label>Clinic</label>&nbsp;
-                          <input
-                            type="radio"
-                            id="doccl"
-                            name="doccl"
-                            value="Clinic"
-                            onChange={(e) => {
-                              setSelection(e.target.value);
-                              setShowRelatedDoc(false);
-                            }}
-                          />
-                        </div>
-                        <div className="col-md-4">
-                          <label>Pathologist</label>&nbsp;
-                          <input
-                            type="radio"
-                            id="doccl"
-                            name="doccl"
-                            value="Pathologist"
-                            onChange={(e) => {
-                              setSelection(e.target.value);
-                              setShowRelatedDoc(false);
-                            }}
-                          />
-                        </div>
+                  {/* @csrf */}
+
+                  <div className="form-group">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <label>ReferDoctor</label>&nbsp;
+                        <input
+                          type="radio"
+                          id="doccl"
+                          name="doccl"
+                          value="ReferDoctor"
+                          onChange={(e) => {
+                            setSelection(e.target.value);
+                            setShowRelatedDoc(true);
+                          }}
+                        />
+                      </div>
+                      <div className="col-md-4">
+                        <label>Clinic</label>&nbsp;
+                        <input
+                          type="radio"
+                          id="doccl"
+                          name="doccl"
+                          value="Clinic"
+                          onChange={(e) => {
+                            setSelection(e.target.value);
+                            setShowRelatedDoc(false);
+                          }}
+                        />
+                      </div>
+                      <div className="col-md-4">
+                        <label>Pathologist</label>&nbsp;
+                        <input
+                          type="radio"
+                          id="doccl"
+                          name="doccl"
+                          value="Pathologist"
+                          onChange={(e) => {
+                            setSelection(e.target.value);
+                            setShowRelatedDoc(false);
+                          }}
+                        />
                       </div>
                     </div>
-                    <div className="form-group">
-                      <label className="control-label">Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="company_address"
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label className="control-label">Name</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="company_address"
+                      id='name'
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                  </div>
 
-                    <div className="form-group">
-                      <label className="control-label">Phone</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        name="company_contact"
-                        onChange={(e) => setPhone(e.target.value)}
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="control-label">Phone</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id='phone'
+                      name="company_contact"
+                      onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </div>
 
-                    <div className="form-group">
-                      <label className="control-label">Email</label>
-                      <input
-                        type="email"
-                        className="form-control"
-                        placeholder=""
-                        name="company_email"
-                        onChange={(e) => setEmail(e.target.value)}
-                      />
-                    </div>
+                  <div className="form-group">
+                    <label className="control-label">Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id='email'
+                      name="company_email"
+                      onChange={(e) => setEmail(e.target.value)}
+                    />
+                  </div>
 
-                    <div className="form-group">
+                  {/* <div className="form-group">
                       <div className="row  mt-3">
                         <div className="col-md-4">
                           <label>Amount</label>&nbsp;
@@ -204,52 +213,56 @@ function LabServiceRegister() {
                         className="form-control"
                         onChange={(e) => setValue(e.target.value)}
                       />
-                    </div>
-                    {showRelatedDoc ? (
-                      <div>
-                        <div className="form-group">
-                          <label className="control-label">Education</label>
+                    </div> */}
+                  {showRelatedDoc ? (
+                    <div>
+                      <div className="form-group">
+                        <label className="control-label">Education</label>
 
-                          <input
-                            type="text"
-                            className="form-control"
-                            onChange={(e) => setEducation(e.target.value)}
-                          />
-                        </div>
-                        <div className="form-group">
-                          <label className="control-label">Position</label>
-
-                          <input
-                            type="text"
-                            className="form-control"
-                            onChange={(e) => setPosition(e.target.value)}
-                          />
-                        </div>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id='edu'
+                          onChange={(e) => setEducation(e.target.value)}
+                        />
                       </div>
-                    ) : (
-                      ""
-                    )}
-                    <br />
+                      <div className="form-group">
+                        <label className="control-label">Position</label>
 
-                    <div className="row">
-                      <div className="col-md-6">
-                        <div className="row">
-                          <div className=" col-md-9">
-                            <button type="submit" className="btn btn-primary">
-                              Create
-                            </button>
-                            &nbsp;
-                            <button
-                              type="button"
-                              className="btn btn-danger"
-                              data-dismiss="modal">
-                              Cancel
-                            </button>
-                          </div>
-                        </div>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id='pos'
+                          onChange={(e) => setPosition(e.target.value)}
+                        />
                       </div>
                     </div>
-                  </form>
+                  ) : (
+                    ""
+                  )}
+                  <br />
+
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="row">
+                        <div className=" col-md-9">
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            onClick={DoctorCreate}>
+                            Create
+                          </button>
+                          &nbsp;
+                          <button
+                            type="button"
+                            className="btn btn-danger"
+                            data-dismiss="modal">
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
