@@ -10,7 +10,7 @@ import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar';
 
-function LabServiceRegister() {
+function LabServiceUpdate() {
   const [category, setCategory] = useState([]);
   const [reagentArray, setReagentArray] = useState([]);
   // const [referDoctor, setReferDoctor] = useState([]);
@@ -28,6 +28,14 @@ function LabServiceRegister() {
   const [to, setTo] = useState("");
   const [gender, setGender] = useState("");
   const [unit, setUnit] = useState("");
+  const [mfrom, setmFrom] = useState("");
+  const [mto, setmTo] = useState("");
+  const [mgender, setmGender] = useState("");
+  const [munit, setmUnit] = useState("");
+  const [ffrom, setfFrom] = useState("");
+  const [fto, setfTo] = useState("");
+  const [fgender, setfGender] = useState("");
+  const [funit, setfUnit] = useState("");
   const [specialComment, setSpecialComment] = useState("");
   const [showNextRef, setShowNextRef] = useState(false);
   const [refArray, setRefArray] = useState([]);
@@ -50,12 +58,12 @@ function LabServiceRegister() {
   // end
 
        // change /br to line brake format
-       function formatString(data) {
-         const base64String = decodeBase64(data);
-         const reactElements = ReactHtmlParser(base64String);
+      //  function formatString(data) {
+      //    const base64String = decodeBase64(data);
+      //    const reactElements = ReactHtmlParser(base64String);
 
-         return reactElements;
-       }
+      //    return reactElements;
+      //  }
 
   const handleAddRow = () => {
     setTableData([
@@ -147,10 +155,13 @@ function LabServiceRegister() {
       leadTime: leadTime,
       charges: charges,
       cost: cost,
+      relatedCategories: relatedCategory,
       reagentItems: reagentArray,
       referenceRange: refArray,
       description: description,
+      specialFlag: showSpecialCmt,
       specialComment: encodedString,
+      subTestFlag: showMultiTest,
       subTest: tableData,
     };
 
@@ -224,9 +235,13 @@ function LabServiceRegister() {
       //  console.log(res.data.data.referenceRange);
       setFrom(res.data.data.referenceRange.from);
       setReferAmount(res.data.data.referAmount);
+      setShowMultiTest(res.data.data.subTestFlag);
+      console.log(res.data.data.subTestFlag);
       setSubTest(res.data.data.subTest);
       console.log(res.data.data.subTest.name);
-      setSpecialComment(res.data.data.specialComment);
+      setShowSpecialCmt(res.data.data.specialFlag);
+      console.log(res.data.data.specialFlag);
+      setSpecialComment(decodeBase64(res.data.data.specialComment));
       // setCategoryName(res.data.data.relatedCategory.name);
       setCharges(res.data.data.charges);
     };
@@ -235,6 +250,40 @@ function LabServiceRegister() {
     // getReferDoctor();
     getCategory();
   }, []);
+
+  useEffect(()=>{
+    if(showMultiTest){
+      setShowMultiTest(true);
+      setShowSpecialRange(false);
+      setShowNextRef(false);
+    }else{
+      setShowMultiTest(false);
+      setShowSpecialRange(true);
+      if(showSpecialCmt){
+        
+        setShowRefForm(false);
+      }else{
+        setShowRefForm(true);
+        if(refArray !== null){
+          //console.log(refArray[0].unit);
+          //console.log(refArray[0].gender);
+          setmFrom(refArray[0].from);
+          setmTo(refArray[0].to);
+          setmGender("Male");
+          setmUnit(refArray[0].unit);
+          if(refArray.length > 1){
+            setShowNextRef(true);
+           setfFrom(refArray[1].from);
+          setfTo(refArray[1].to);
+          setfGender("Female");
+          setfUnit(refArray[1].unit);
+          }
+        }
+      }
+    }
+  },showMultiTest);
+
+ 
 
   return (
     <div classNameName="App">
@@ -473,6 +522,7 @@ function LabServiceRegister() {
                               id="yes"
                               name="amoper"
                               value="true"
+                              selected={showMultiTest}
                               onChange={(e) => {
                                 setShowMultiTest(true);
                                 setShowSpecialRange(false);
@@ -487,6 +537,7 @@ function LabServiceRegister() {
                               id="no"
                               name="amoper"
                               value="false"
+                              selected={showMultiTest}
                               onChange={(e) => {
                                 setShowSpecialRange(true);
                                 setShowMultiTest(false);
@@ -620,6 +671,7 @@ function LabServiceRegister() {
                                       cols="40"
                                       className="form-control"
                                       id="textArea"
+                                      value={specialComment}
                                       onChange={(e) =>
                                         setSpecialComment(e.target.value)
                                       }></textarea>
@@ -635,6 +687,7 @@ function LabServiceRegister() {
                                       placeholder="From"
                                       className="form-control"
                                       step={0.01}
+                                      value={mfrom}
                                       onChange={(e) => setFrom(e.target.value)}
                                     />
                                   </div>
@@ -644,6 +697,7 @@ function LabServiceRegister() {
                                       placeholder="To"
                                       step={0.01}
                                       className="form-control"
+                                      value={mto}
                                       onChange={(e) => setTo(e.target.value)}
                                     />
                                   </div>
@@ -652,6 +706,7 @@ function LabServiceRegister() {
                                       class="custom-select border-info"
                                       name="account_type_id"
                                       id="flag"
+                                      
                                       onChange={(e) => {
                                         if (
                                           e.target.value === "Male" ||
@@ -663,8 +718,8 @@ function LabServiceRegister() {
                                         setGender(e.target.value);
                                       }}>
                                       <option>Gender</option>
-                                      <option value="Male">Male</option>
-                                      <option value="Female">Female</option>
+                                      <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
+                                      <option value="Female" selected={(mgender === "Female" ? true : false)}>Female</option>
                                       <option value="Null">Neutral</option>
                                     </select>
                                   </div>
@@ -674,6 +729,7 @@ function LabServiceRegister() {
                                       type="text"
                                       placeholder="Unit"
                                       className="form-control"
+                                      value={munit}
                                       onChange={(e) => setUnit(e.target.value)}
                                     />
                                   </div>
@@ -705,6 +761,7 @@ function LabServiceRegister() {
                                     placeholder="From"
                                     className="form-control"
                                     step={0.01}
+                                    value={ffrom}
                                     onChange={(e) => setFrom(e.target.value)}
                                   />
                                 </div>
@@ -714,6 +771,7 @@ function LabServiceRegister() {
                                     placeholder="To"
                                     step={0.01}
                                     className="form-control"
+                                    value={fto}
                                     onChange={(e) => setTo(e.target.value)}
                                   />
                                 </div>
@@ -724,8 +782,8 @@ function LabServiceRegister() {
                                     id="flag"
                                     onChange={(e) => setGender(e.target.value)}>
                                     <option>Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
+                                    <option value="Female" selected={(mgender === "Female" ? true : false)}>Female</option>
                                   </select>
                                 </div>
 
@@ -734,6 +792,7 @@ function LabServiceRegister() {
                                     type="text"
                                     placeholder="Unit"
                                     className="form-control"
+                                    value={funit}
                                     onChange={(e) => setUnit(e.target.value)}
                                   />
                                 </div>
@@ -808,4 +867,4 @@ function LabServiceRegister() {
     </div>
   );
 }
-export default LabServiceRegister;
+export default LabServiceUpdate;

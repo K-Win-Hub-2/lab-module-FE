@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LabServiceList from './components/views/LabServiceList';
 import LabServiceRegister from './components/views/LabServiceRegister';
+import LabServiceUpdate from './components/views/LabServiceUpdate';
 import CatRegister from './components/views/CatRegister';
 import Reagent from './components/views/Reagent';
 import ReagentReg from './components/views/ReagentReg';
@@ -34,7 +35,6 @@ import "./assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css"
 import "./assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css"
 import TestVoucherList from './components/views/TestVoucherList';
 import TestResultList from './components/views/TestResultList';
-import LabServiceUpdate from './components/views/LabServiceUpdate'
 
 function App() {
   return (
