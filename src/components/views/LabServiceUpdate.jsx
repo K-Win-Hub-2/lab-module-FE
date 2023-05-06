@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar';
+import ReactHtmlParser from "react-html-parser";
 
 function LabServiceUpdate() {
   const [category, setCategory] = useState([]);
