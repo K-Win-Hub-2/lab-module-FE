@@ -20,6 +20,11 @@ import TestPackage from './components/views/TestPackage';
 import TestPackageReg from './components/views/TestPackageReg';
 import ReferDoctorCharge from './components/views/ReferDoctorCharge';
 import Login from './components/views/Login';
+import AccountList from "./components/views/Finance/AccountList/AccountList";
+import AccountListUpdate from "./components/views/Finance/AccountList/AccListUpdate";
+import Income from "./components/views/Finance/Income/Income";
+import Expense from "./components/views/Finance/Expense/Expense";
+import Bank from "./components/views/Finance/Bank/Bank";
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -49,7 +54,9 @@ function App() {
         <Route path="/doctorClinic" element={<DoctorClinic />}></Route>
         <Route path="/doctorClinicReg" element={<DoctorClinicReg />}></Route>
         <Route path="/test/:testVoucher_id" element={<Test />}></Route>
-        <Route path="/testslip/:testVoucher_id" element={<TestVoucherSlip />}></Route>
+        <Route
+          path="/testslip/:testVoucher_id"
+          element={<TestVoucherSlip />}></Route>
         <Route path="/patient/list" element={<Patient />} />
         <Route path="/patient/register" element={<PatientRegister />} />
         <Route path="/patient/member" element={<Member />} />
@@ -62,7 +69,12 @@ function App() {
         <Route path="/tvoucherList" element={<TestVoucherList />}></Route>
         <Route path="/tresultList" element={<TestResultList />}></Route>
         <Route path="/refDoctor/:id" element={<ReferDoctorCharge />}></Route>
-        <Route path='/' element={<Login/>}></Route>
+        <Route path="/" element={<Login />}></Route>
+        <Route path="/account_list" element={<AccountList />}></Route>
+        <Route path="/accUpdate/:id" element={<AccountListUpdate />}></Route>
+        <Route path="/income" element={<Income />}></Route>
+        <Route path="/expense" element={<Expense />}></Route>
+        <Route path="/bank" element={<Bank />}></Route>
       </Routes>
     </Router>
   );

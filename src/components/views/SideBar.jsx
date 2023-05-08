@@ -215,21 +215,34 @@ function Sidebar() {
                        </Link>
                      </li>
                      <li className="nav-item">
-                       <Link to="/profit_loss" className="nav-link">
+                       <Link to="/account_list" className="nav-link">
                          <i className="nav-icon fas fa-circle"></i>&nbsp;
-                         <p>Profit & Loss</p>
+                         <p>Account Lists</p>
                        </Link>
                      </li>
+
                      <li className="nav-item">
-                       <Link to="/balance_sheet" className="nav-link">
+                       <Link to="/income" className="nav-link">
                          <i className="nav-icon fas fa-circle"></i>&nbsp;
                          <p>Income</p>
                        </Link>
                      </li>
                      <li className="nav-item">
-                       <Link to="/trail_bal" className="nav-link">
+                       <Link to="/expense" className="nav-link">
                          <i className="nav-icon fas fa-circle"></i>&nbsp;
                          <p>Expense</p>
+                       </Link>
+                     </li>
+                     <li className="nav-item">
+                       <Link to="/bank" className="nav-link">
+                         <i className="nav-icon fas fa-circle"></i>&nbsp;
+                         <p>Bank</p>
+                       </Link>
+                     </li>
+                     <li className="nav-item">
+                       <Link to="/profit_loss" className="nav-link">
+                         <i className="nav-icon fas fa-circle"></i>&nbsp;
+                         <p>Profit & Loss</p>
                        </Link>
                      </li>
                    </li>
