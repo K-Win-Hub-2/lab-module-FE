@@ -124,7 +124,7 @@ function LabServiceRegister() {
             TestVou_id
         );
 
-        setReferDoctorLists(res.data.data.referDoctor);
+        setReferDoctorLists(res.data.data.referDoctor.name);
       } catch (err) {}
     };
 
@@ -192,7 +192,7 @@ function LabServiceRegister() {
                         </tr>
                         <tr>
                           <th>Referred From:</th>
-                          <td>{referDoctorLists.name}</td>
+                          <td>{referDoctorLists}</td>
                           <th>Lab Reg No:</th>
                           <td>123</td>
                           <th>Date of Report:</th>

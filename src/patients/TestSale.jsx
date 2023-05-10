@@ -79,10 +79,12 @@ const TestSale = () => {
        const getVoucherCode = async () => {
          try {
            const res = await axios.get(
-             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/"
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
+               patient_id
            );
 
-           setVoucherCode(res.data.data);
+           console.log(res.data.data.voucherID);
+           setVoucherCode(res.data.data.voucherID);
          } catch (err) {}
        };
 
@@ -145,10 +147,10 @@ const TestSale = () => {
   };
   const saveTest = () => {
     const data = {
-      code: code,
+      code: voucherCode,
       date: date,
       relatedPatient: patient_id,
-      referDoctor: did,
+      // referDoctor: did,
       options: option,
       email: email,
       testSelection: array,
@@ -157,7 +159,9 @@ const TestSale = () => {
       netDiscount: net,
       pay: pay,
       change: change,
+      seq:2
     };
+    if(did) data.referDoctor=did;
     const res = axios
       .post(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher",
@@ -225,7 +229,7 @@ const TestSale = () => {
                       type="text"
                       className="form-control"
                       value={voucherCode}
-                      onChange={(e) => setCode(e.target.value)}
+                      
                     />
                   </div>
                   <div className="col-6 mt-2">

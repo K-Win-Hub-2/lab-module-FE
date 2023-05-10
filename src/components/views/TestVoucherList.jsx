@@ -6,6 +6,7 @@ import axios from 'axios';
 import ExportVoucher from './ExportVoucher'
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
+import RePayDialog from '../../components/views/RePayDialog';
 
 const Top = styled.div`
 display : flex;
@@ -89,11 +90,17 @@ const TestVoucherList = () => {
   const [to, setTo] = useState('');
   const [name, setName] = useState('');
   const [array, setArray] = useState([]);
+  const [open,setOpen]=useState(false);
+
+  const showDialog=()=>{
+    setOpen(true);
+  }
 
   useEffect(() => {
     const getVouchers = async () => {
       try {
         const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today');
+        console.log(res.data.data);
         setVouchers(res.data.data);
         res.data.data.map((el, i) => {
           const obj = {
@@ -151,40 +158,62 @@ const TestVoucherList = () => {
         <div className="content-header">
           <div className="container-fluid">
             <Top>
-              <Left><Title>Test Voucher List</Title></Left>
+              <Left>
+                <Title>Test Voucher List</Title>
+              </Left>
             </Top>
-            <Div className='card'>
-              <Div className='card-body'>
+            <Div className="card">
+              <Div className="card-body">
                 <Top>
                   <Left>
-                    <div className='row'>
-                      <div className='col-3'>
+                    <div className="row">
+                      <div className="col-3">
                         <label htmlFor="">From:</label>
-                        <input type="date" placeholder="Search..." className='form-control' onChange={(e) => setFrom(e.target.value)} />
+                        <input
+                          type="date"
+                          placeholder="Search..."
+                          className="form-control"
+                          onChange={(e) => setFrom(e.target.value)}
+                        />
                       </div>
-                      <div className='col-3'>
+                      <div className="col-3">
                         <label htmlFor="">To:</label>
-                        <input type="date" placeholder="Search..." className='form-control' onChange={(e) => setTo(e.target.value)} />
+                        <input
+                          type="date"
+                          placeholder="Search..."
+                          className="form-control"
+                          onChange={(e) => setTo(e.target.value)}
+                        />
                       </div>
-                      <div className='col-6'>
-                        <div className='row'>
-                          <div className='col-6'>
+                      <div className="col-6">
+                        <div className="row">
+                          <div className="col-6">
                             <label htmlFor="">Patient Name:</label>
-                            <input type="text" placeholder="Search..." className='form-control' onChange={(e) => setName(e.target.value)} />
+                            <input
+                              type="text"
+                              placeholder="Search..."
+                              className="form-control"
+                              onChange={(e) => setName(e.target.value)}
+                            />
                           </div>
-                          <div className='col-6' style={{ marginTop: '35px' }}>
-                            <button className='btn btn-sm btn-primary' onClick={search}>Search</button>
+                          <div className="col-6" style={{ marginTop: "35px" }}>
+                            <button
+                              className="btn btn-sm btn-primary"
+                              onClick={search}>
+                              Search
+                            </button>
                             {/* <button className='btn btn-sm btn-primary ml-3'>Export</button> */}
-                            <ExportVoucher excelData={array} fileName={'Excel Export'} />
+                            <ExportVoucher
+                              excelData={array}
+                              fileName={"Excel Export"}
+                            />
                           </div>
                         </div>
                       </div>
-
                     </div>
-
                   </Left>
                 </Top>
-                <Table className='table table-hover'>
+                <Table className="table table-hover">
                   <Thead>
                     <Tr>
                       <Th>#</Th>
@@ -194,31 +223,59 @@ const TestVoucherList = () => {
                       <Th>Patient Name</Th>
                       <Th>Test Qty</Th>
                       <Th>Amount</Th>
-                      <Th>Action</Th>
+                      <Th>Status</Th>
+                      <Th className="">Action</Th>
                     </Tr>
                   </Thead>
                   <Tbody>
                     {vouchers.map((vou, index) => (
                       <Tr>
                         <Td>{++index}</Td>
-                        <Td>{vou.date.split('T')[0]}</Td>
+                        <Td>{vou.date.split("T")[0]}</Td>
                         <Td>{vou.code}</Td>
-                        <Td></Td>
+                        <Td>{vou.referDoctor ? vou.referDoctor.name : ""}</Td>
                         <Td>{vou.relatedPatient.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
+                        <Td>
+                          <div className="badge badge-success px-3 py-2">
+                            Paid
+                          </div>
+                        </Td>
                         {/* <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td> */}
-                        <Td><Link to={'/testslip/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td>
-                      </Tr>))}
+                        <Td>
+                          <Link
+                            to={"/testslip/" + vou._id}
+                            className="btn btn-sm btn-primary">
+                            Detail
+                            <AiFillInfoCircle style={{ marginLeft: "7px" }} />
+                          </Link>
+                          &nbsp;
+                          <button
+                            type="button"
+                            onClick={showDialog}
+                            className="btn btn-sm btn-primary">
+                            RePay
+                          </button>
+                        </Td>
+                      </Tr>
+                    ))}
                   </Tbody>
                 </Table>
               </Div>
             </Div>
           </div>
+          <RePayDialog
+            open={open}
+            close={() => setOpen(false)}
+            setOpen={setOpen}
+            setVouchers={setVouchers}
+            vouchers={vouchers}
+          />
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default TestVoucherList
