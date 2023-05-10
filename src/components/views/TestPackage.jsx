@@ -10,10 +10,10 @@ function CatRegister() {
     const getPackage = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/packages?limit=30"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/packages"
         );
-
-        setTestPackage(res.data.list);
+        console.log(res.data.data);
+        setTestPackage(res.data.data);
       } catch (err) {}
     };
     getPackage();
@@ -78,7 +78,7 @@ function CatRegister() {
                           </tr>
                         </thead>
 
-                        {testPackage.map((pack, i) => (
+                        {testPackage && testPackage.map((pack, i) => (
                           <tbody className="">
                             <tr>
                               <td>{++i}</td>

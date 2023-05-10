@@ -209,8 +209,8 @@ const TestVoucherPrint = (props) => {
               <div
                 calssName="card-body"
                 style={{ border: "1px solid black", padding: "14px 14px" }}>
-                {headerOn && (
-                  <div className="row">
+              
+                  <div className="row" style={{visibility: headerOn ? 'visible' : 'hidden' }}>
                     <div className="col-3">
                       <img src={require("../logo.png")} alt="" />
                     </div>
@@ -235,7 +235,7 @@ const TestVoucherPrint = (props) => {
                       />
                     </div>
                   </div>
-                )}
+                
 
                
 

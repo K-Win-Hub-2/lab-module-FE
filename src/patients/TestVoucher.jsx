@@ -90,8 +90,11 @@ const TestVoucher = () => {
           relatePatient: patient_id,
         };
         const res = await axios.get(
+
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers",
           data
+
+
         );
         console.log(res.data.data, "id");
         setVouchers(res.data.data);

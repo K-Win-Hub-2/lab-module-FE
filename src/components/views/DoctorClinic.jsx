@@ -54,6 +54,7 @@ const LabServiceList = () => {
     const getDoctorLists = async () => {
       const res = await axios.get(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
+        
       );
 
       setDoctorLists(res.data.data);
@@ -93,7 +94,7 @@ const LabServiceList = () => {
           <section className="content">
             <div className="container-fluid">
               <div className="row">
-                <div className="col-md-6">
+                {/* <div className="col-md-6">
                   <div className="row">
                     <div className="form-group col-md-5">
                       <label>From</label>
@@ -122,7 +123,7 @@ const LabServiceList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
                 <div className="offset-md-1 col-md-5">
                   <div className="input-group" style={{ marginTop: "35px" }}>
                     <input

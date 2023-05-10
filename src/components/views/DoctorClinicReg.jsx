@@ -119,7 +119,7 @@ function LabServiceRegister() {
                           }}
                         />
                       </div>
-                      <div className="col-md-4">
+                      {/* <div className="col-md-4">
                         <label>Clinic</label>&nbsp;
                         <input
                           type="radio"
@@ -131,7 +131,7 @@ function LabServiceRegister() {
                             setShowRelatedDoc(false);
                           }}
                         />
-                      </div>
+                      </div> */}
                       <div className="col-md-4">
                         <label>Pathologist</label>&nbsp;
                         <input

@@ -19,6 +19,7 @@ function LabServiceUpdate() {
   const [name, setName] = useState("");
   const [leadTime, setLeadTime] = useState("");
   const [relatedCategory, setRelatedCategory] = useState("");
+  const[updateCategory,setUpdateCategory] = useState("");
   // const [doctor, setDoctor] = useState("");
   const [charges, setCharges] = useState("");
   const [cost, setCost] = useState("");
@@ -227,14 +228,15 @@ function LabServiceUpdate() {
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
           labid
       );
-      // console.log("success");
-      // console.log(res.data);
+      //console.log("success");
+      console.log(res.data.data);
       setCode(res.data.data.code);
       setName(res.data.data.name);
       setDescription(res.data.data.description);
       setCharges(res.data.data.charges);
       setCost(res.data.data.cost);
       setRefArray(res.data.data.referenceRange);
+      setUpdateCategory(res.data.data.relatedCategory._id);
       //  console.log(res.data.data.referenceRange);
       setFrom(res.data.data.referenceRange.from);
       setReferAmount(res.data.data.referAmount);
@@ -266,9 +268,9 @@ function LabServiceUpdate() {
         setShowRefForm(false);
       } else {
         setShowRefForm(true);
-        if (refArray !== null && refArray.length > 0) {
-          //console.log(refArray[0].unit);
-          //console.log(refArray[0].gender);
+
+        if((refArray !== null) && (refArray.length > 0)){
+
           setmFrom(refArray[0].from);
           setmTo(refArray[0].to);
           setmGender("Male");
@@ -394,7 +396,7 @@ function LabServiceUpdate() {
                               }>
                               <option>Choose Category</option>
                               {category.map((option) => (
-                                <option value={option._id}>
+                                <option value={option._id} selected={(option._id === updateCategory) ? true : false}>
                                   {option.name}
                                 </option>
                               ))}
@@ -521,8 +523,10 @@ function LabServiceUpdate() {
                               type="radio"
                               id="yes"
                               name="amoper"
-                              value="true"
+
                               checked={showMultiTest}
+                             
+
                               onChange={(e) => {
                                 setShowMultiTest(true);
                                 setShowSpecialRange(false);
@@ -536,9 +540,9 @@ function LabServiceUpdate() {
                               type="radio"
                               id="no"
                               name="amoper"
-                              value="false"
-                              // checked={showMultiTest}
-                         
+
+                                checked={!showMultiTest}
+
                               onChange={(e) => {
                                 setShowSpecialRange(true);
                                 setShowMultiTest(false);
@@ -642,7 +646,7 @@ function LabServiceUpdate() {
                                   type="radio"
                                   id="yes"
                                   name="ref"
-                                  value="true"
+                                  checked={showSpecialRange}
                                   onChange={(e) => {
                                     setSpecialFlag(e.target.value);
                                     handleYesChange();
@@ -655,7 +659,7 @@ function LabServiceUpdate() {
                                   type="radio"
                                   id="no"
                                   name="ref"
-                                  value="false"
+                                  checked={!showSpecialRange}
                                   onChange={(e) => {
                                     setSpecialFlag(e.target.value);
                                     handleNoChange();
@@ -718,20 +722,10 @@ function LabServiceUpdate() {
                                         setGender(e.target.value);
                                       }}>
                                       <option>Gender</option>
-                                      <option
-                                        value="Male"
-                                        selected={
-                                          mgender === "Male" ? true : false
-                                        }>
-                                        Male
-                                      </option>
-                                      <option
-                                        value="Female"
-                                        selected={
-                                          mgender === "Female" ? true : false
-                                        }>
-                                        Female
-                                      </option>
+
+                                      <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
+                                      <option value="Female" selected={(fgender === "Female" ? true : false)}>Female</option>
+
                                       <option value="Null">Neutral</option>
                                     </select>
                                   </div>
@@ -794,20 +788,10 @@ function LabServiceUpdate() {
                                     id="flag"
                                     onChange={(e) => setGender(e.target.value)}>
                                     <option>Gender</option>
-                                    <option
-                                      value="Male"
-                                      selected={
-                                        mgender === "Male" ? true : false
-                                      }>
-                                      Male
-                                    </option>
-                                    <option
-                                      value="Female"
-                                      selected={
-                                        mgender === "Female" ? true : false
-                                      }>
-                                      Female
-                                    </option>
+
+                                    <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
+                                    <option value="Female" selected={(fgender === "Female" ? true : false)}>Female</option>
+
                                   </select>
                                 </div>
 
