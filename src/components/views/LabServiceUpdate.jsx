@@ -8,7 +8,7 @@ import { Base64 } from "js-base64";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
-import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar';
+import { calendar } from "../../assets/plugins/moment/src/lib/moment/calendar";
 import ReactHtmlParser from "react-html-parser";
 
 function LabServiceUpdate() {
@@ -58,13 +58,13 @@ function LabServiceUpdate() {
   }
   // end
 
-       // change /br to line brake format
-      //  function formatString(data) {
-      //    const base64String = decodeBase64(data);
-      //    const reactElements = ReactHtmlParser(base64String);
+  // change /br to line brake format
+  //  function formatString(data) {
+  //    const base64String = decodeBase64(data);
+  //    const reactElements = ReactHtmlParser(base64String);
 
-      //    return reactElements;
-      //  }
+  //    return reactElements;
+  //  }
 
   const handleAddRow = () => {
     setTableData([
@@ -211,6 +211,8 @@ function LabServiceUpdate() {
       } catch (err) {}
     };
 
+  
+
     const getReagent = async () => {
       try {
         const res = await axios.get(
@@ -252,39 +254,36 @@ function LabServiceUpdate() {
     getCategory();
   }, []);
 
-  useEffect(()=>{
-    if(showMultiTest){
+  useEffect(() => {
+    if (showMultiTest) {
       setShowMultiTest(true);
       setShowSpecialRange(false);
       setShowNextRef(false);
-    }else{
+    } else {
       setShowMultiTest(false);
       setShowSpecialRange(true);
-      if(showSpecialCmt){
-        
+      if (showSpecialCmt) {
         setShowRefForm(false);
-      }else{
+      } else {
         setShowRefForm(true);
-        if(refArray !== null){
+        if (refArray !== null && refArray.length > 0) {
           //console.log(refArray[0].unit);
           //console.log(refArray[0].gender);
           setmFrom(refArray[0].from);
           setmTo(refArray[0].to);
           setmGender("Male");
           setmUnit(refArray[0].unit);
-          if(refArray.length > 1){
+          if (refArray.length > 1) {
             setShowNextRef(true);
-           setfFrom(refArray[1].from);
-          setfTo(refArray[1].to);
-          setfGender("Female");
-          setfUnit(refArray[1].unit);
+            setfFrom(refArray[1].from);
+            setfTo(refArray[1].to);
+            setfGender("Female");
+            setfUnit(refArray[1].unit);
           }
         }
       }
     }
-  },showMultiTest);
-
- 
+  }, showMultiTest);
 
   return (
     <div classNameName="App">
@@ -523,7 +522,7 @@ function LabServiceUpdate() {
                               id="yes"
                               name="amoper"
                               value="true"
-                              selected={showMultiTest}
+                              checked={showMultiTest}
                               onChange={(e) => {
                                 setShowMultiTest(true);
                                 setShowSpecialRange(false);
@@ -538,7 +537,8 @@ function LabServiceUpdate() {
                               id="no"
                               name="amoper"
                               value="false"
-                              selected={showMultiTest}
+                              // checked={showMultiTest}
+                         
                               onChange={(e) => {
                                 setShowSpecialRange(true);
                                 setShowMultiTest(false);
@@ -688,7 +688,7 @@ function LabServiceUpdate() {
                                       placeholder="From"
                                       className="form-control"
                                       step={0.01}
-                                      value={mfrom}
+                                      defaultValue={mfrom}
                                       onChange={(e) => setFrom(e.target.value)}
                                     />
                                   </div>
@@ -698,7 +698,7 @@ function LabServiceUpdate() {
                                       placeholder="To"
                                       step={0.01}
                                       className="form-control"
-                                      value={mto}
+                                      defaultValue={mto}
                                       onChange={(e) => setTo(e.target.value)}
                                     />
                                   </div>
@@ -707,7 +707,6 @@ function LabServiceUpdate() {
                                       class="custom-select border-info"
                                       name="account_type_id"
                                       id="flag"
-                                      
                                       onChange={(e) => {
                                         if (
                                           e.target.value === "Male" ||
@@ -719,8 +718,20 @@ function LabServiceUpdate() {
                                         setGender(e.target.value);
                                       }}>
                                       <option>Gender</option>
-                                      <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
-                                      <option value="Female" selected={(mgender === "Female" ? true : false)}>Female</option>
+                                      <option
+                                        value="Male"
+                                        selected={
+                                          mgender === "Male" ? true : false
+                                        }>
+                                        Male
+                                      </option>
+                                      <option
+                                        value="Female"
+                                        selected={
+                                          mgender === "Female" ? true : false
+                                        }>
+                                        Female
+                                      </option>
                                       <option value="Null">Neutral</option>
                                     </select>
                                   </div>
@@ -762,7 +773,7 @@ function LabServiceUpdate() {
                                     placeholder="From"
                                     className="form-control"
                                     step={0.01}
-                                    value={ffrom}
+                                    defaultValue={ffrom}
                                     onChange={(e) => setFrom(e.target.value)}
                                   />
                                 </div>
@@ -772,7 +783,7 @@ function LabServiceUpdate() {
                                     placeholder="To"
                                     step={0.01}
                                     className="form-control"
-                                    value={fto}
+                                    defaultValue={fto}
                                     onChange={(e) => setTo(e.target.value)}
                                   />
                                 </div>
@@ -783,8 +794,20 @@ function LabServiceUpdate() {
                                     id="flag"
                                     onChange={(e) => setGender(e.target.value)}>
                                     <option>Gender</option>
-                                    <option value="Male" selected={(mgender === "Male" ? true : false)}>Male</option>
-                                    <option value="Female" selected={(mgender === "Female" ? true : false)}>Female</option>
+                                    <option
+                                      value="Male"
+                                      selected={
+                                        mgender === "Male" ? true : false
+                                      }>
+                                      Male
+                                    </option>
+                                    <option
+                                      value="Female"
+                                      selected={
+                                        mgender === "Female" ? true : false
+                                      }>
+                                      Female
+                                    </option>
                                   </select>
                                 </div>
 

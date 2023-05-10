@@ -171,7 +171,7 @@ const Id = useLocation().pathname.split("/")[2];
                       class="form-control border border-info"
                       name="acc_code"
                       id="acc_code"
-                      defaultValue={upCode}
+                      dafaultValue={upCode}
                       onChange={(e) => setCode(e.target.value)}
                     />
                   </div>

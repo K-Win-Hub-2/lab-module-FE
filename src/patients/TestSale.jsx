@@ -69,12 +69,23 @@ const TestSale = () => {
   const [arr, setArr] = useState([]);
   const [array, setArray] = useState([]);
   const [serId, setSerId] = useState("");
+  const [voucherCode,setVoucherCode]=useState('');
   const [isDoctor, setIsDoctor] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const patient_id = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
   useEffect(() => {
+       const getVoucherCode = async () => {
+         try {
+           const res = await axios.get(
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/"
+           );
+
+           setVoucherCode(res.data.data);
+         } catch (err) {}
+       };
+
     const getPatient = async () => {
       try {
         const res = await axios.get(
@@ -106,6 +117,7 @@ const TestSale = () => {
     getServs();
     getDoctors();
     addService();
+    getVoucherCode();
   }, []);
 
   const addService = async () => {
@@ -212,6 +224,7 @@ const TestSale = () => {
                     <input
                       type="text"
                       className="form-control"
+                      value={voucherCode}
                       onChange={(e) => setCode(e.target.value)}
                     />
                   </div>

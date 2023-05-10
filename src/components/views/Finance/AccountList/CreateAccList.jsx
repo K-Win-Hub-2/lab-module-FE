@@ -11,6 +11,7 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useSelector } from 'react-redux';
 
 export default function BankInfoDialog(props) {
   const [code, setCode] = useState("");
@@ -21,7 +22,7 @@ export default function BankInfoDialog(props) {
   const [accType, setAccType] = useState([]);
 
   const [amount, setAmount] = useState("");
-  // const [openingBalance, setOpeningBalance] = useState('');
+ 
   const [generalFlag, setGeneralFlag] = useState(false);
   // const [bankAddress, setBankAddress] = useState('');
   const [relatedCurrency, setRelatedCurrency] = useState("");
@@ -62,7 +63,7 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: "Close",
         });
-        // props.setAccountLists([...props.accountLists, response.data.data]);
+        props.setAccountLists([...props.accountLists, response.data.data]);
       })
       .catch(function (err) {
         Swal.fire({

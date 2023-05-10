@@ -15,6 +15,18 @@ function AccountList() {
 
   const showDialog = () => setOpen(true);
 
+  const handleDelete =(val)=>{
+     const getDELETE = async () => {
+       try {
+         const res = await axios.DELETE(
+           "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list/"+val
+         );
+
+       
+       } catch (err) {}
+     };
+     getDELETE();
+  }
   const _export = React.useRef(null);
   const excelExport = () => {
     if (_export.current !== null) {
@@ -207,9 +219,11 @@ function AccountList() {
                                   </div>
 
                                   <div className="offset-1 col-md-4 ml-4">
-                                    <a href="" class="btn btn-danger btn-sm ">
+                                    <button
+                                      onClick={()=>handleDelete(accountList._id)}
+                                      class="btn btn-danger btn-sm ">
                                       Delete
-                                    </a>
+                                    </button>
                                   </div>
                                 </div>
                               </td>
