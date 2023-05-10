@@ -86,13 +86,19 @@ const TestVoucher = () => {
   useEffect(() => {
     const getVouchers = async () => {
       try {
+        let data = {
+          relatePatient: patient_id,
+        };
         const res = await axios.get(
-          "http://localhost:9000/api/vouchers"
+
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers",
+          data
+
+
         );
-        console.log(res.data.data);
-        setVouchers(
-          res.data.data.filter((el) => el.relatedPatient == patient_id)
-        );
+        console.log(res.data.data, "id");
+        setVouchers(res.data.data);
+        console.log(vouchers);
       } catch (err) {}
     };
     const getPatient = async () => {
@@ -154,10 +160,10 @@ const TestVoucher = () => {
                     <Tbody>
                       <Tr>
                         <Td>{++i}</Td>
-                        <Td>{vou.code}</Td>
-                        <Td>{vou.date.split('T')[0]}</Td>
-                        <Td>{vou.discount}</Td>
-                        <Td>{vou.totalCharge}</Td>
+                        <Td>{vou.code ? vou.code : ""}</Td>
+                        <Td>{vou.date ? vou.date.split("T")[0] : ""}</Td>
+                        <Td>{vou.discount ? vou.discount : ""}</Td>
+                        <Td>{vou.totalCharge ? vou.totalCharge : ""}</Td>
                         <Td>
                           {/* <Link
                             to={"/test_voucher/" + patient_id + "/" + vou._id}

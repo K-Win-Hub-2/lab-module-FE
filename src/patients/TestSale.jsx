@@ -69,12 +69,25 @@ const TestSale = () => {
   const [arr, setArr] = useState([]);
   const [array, setArray] = useState([]);
   const [serId, setSerId] = useState("");
+  const [voucherCode,setVoucherCode]=useState('');
   const [isDoctor, setIsDoctor] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const patient_id = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
   useEffect(() => {
+       const getVoucherCode = async () => {
+         try {
+           const res = await axios.get(
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
+               patient_id
+           );
+
+           console.log(res.data.data.voucherID);
+           setVoucherCode(res.data.data.voucherID);
+         } catch (err) {}
+       };
+
     const getPatient = async () => {
       try {
         const res = await axios.get(
@@ -106,6 +119,7 @@ const TestSale = () => {
     getServs();
     getDoctors();
     addService();
+    getVoucherCode();
   }, []);
 
   const addService = async () => {
@@ -133,10 +147,10 @@ const TestSale = () => {
   };
   const saveTest = () => {
     const data = {
-      code: code,
+      code: voucherCode,
       date: date,
       relatedPatient: patient_id,
-      referDoctor: did,
+      // referDoctor: did,
       options: option,
       email: email,
       testSelection: array,
@@ -145,7 +159,9 @@ const TestSale = () => {
       netDiscount: net,
       pay: pay,
       change: change,
+      seq:2
     };
+    if(did) data.referDoctor=did;
     const res = axios
       .post(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher",
@@ -212,7 +228,8 @@ const TestSale = () => {
                     <input
                       type="text"
                       className="form-control"
-                      onChange={(e) => setCode(e.target.value)}
+                      value={voucherCode}
+                      
                     />
                   </div>
                   <div className="col-6 mt-2">
