@@ -87,7 +87,7 @@ const TestVoucher = () => {
     const getVouchers = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers?limit=50"
+          "http://localhost:9000/api/vouchers"
         );
         console.log(res.data.data);
         setVouchers(

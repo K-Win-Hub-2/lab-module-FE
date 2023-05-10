@@ -97,7 +97,7 @@ const TestSale = () => {
     const getDoctors = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
+          "http://localhost:9000/api/doctors"
         );
         setDoctors(res.data.data);
       } catch (err) {}
