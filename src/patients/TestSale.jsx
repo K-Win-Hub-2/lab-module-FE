@@ -72,61 +72,60 @@ const TestSale = () => {
   const [voucherCode, setVoucherCode] = useState("");
   const [isDoctor, setIsDoctor] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
-  const [bankShow,setBankShow]=useState(false);
-   const [cashShow, setCashShow] = useState(false);
-   const [bankList,setBankList]=useState([]);
-   const [cashList,setCashList]=useState([]);
-   const [accountingList,setAccountingList]=useState([]);
-   const [relatedBankAcc, setRelatedBankAcc] = useState("");
-   const [relatedCashAcc,setRelatedCashAcc]=useState('');
-   const [account,setAccount]=useState('');
+  const [bankShow, setBankShow] = useState(false);
+  const [cashShow, setCashShow] = useState(false);
+  const [bankList, setBankList] = useState([]);
+  const [cashList, setCashList] = useState([]);
+  const [accountingList, setAccountingList] = useState([]);
+  const [relatedBankAcc, setRelatedBankAcc] = useState("");
+  const [relatedCashAcc, setRelatedCashAcc] = useState("");
+  const [account, setAccount] = useState("");
   const patient_id = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
   useEffect(() => {
+    const getCashLists = async () => {
+      try {
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        );
 
-       const getCashLists = async () => {
-         try {
-           const res = await axios.get(
-             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-           );
+        const cash = res.data.list.filter(
+          (el) =>
+            el.relatedHeader.name == "Cash In Hand" &&
+            el.relatedType.name === "Asset"
+        );
+        setCashList(cash);
+      } catch (err) {}
+    };
 
-           const cash = res.data.list.filter(
-             (el) =>
-               el.relatedHeader.name == "Cash In Hand" &&
-               el.relatedType.name === "Asset"
-           );
-           setCashList(cash);
-         } catch (err) {}
-       };
+    const getBankLists = async () => {
+      try {
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        );
 
-       const getBankLists = async () => {
-         try {
-           const res = await axios.get(
-             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-           );
+        const bank = res.data.list.filter(
+          (el) =>
+            el.relatedHeader.name == "Cash At Bank" &&
+            el.relatedType.name === "Assets"
+        );
+        setBankList(bank);
+      } catch (err) {}
+    };
 
-           const bank = res.data.list.filter(
-             (el) =>
-               el.relatedHeader.name == "Cash At Bank" &&
-               el.relatedType.name === "Assets"
-           );
-           setBankList(bank);
-         } catch (err) {}
-       };
+    const getAccountingLists = async () => {
+      try {
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        );
+        const acc = res.data.list.filter(
+          (e) => e.relatedType.name == "Revenues"
+        );
 
-         const getAccountingLists = async () => {
-           try {
-             const res = await axios.get(
-               "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-             );
-             const acc = res.data.list.filter(
-               (e) => e.relatedType.name == "Revenues"
-             );
-          
-             setAccountingList(acc);
-           } catch (err) {}
-         };
+        setAccountingList(acc);
+      } catch (err) {}
+    };
 
     const getVoucherCode = async () => {
       try {
@@ -216,24 +215,19 @@ const TestSale = () => {
       netDiscount: net,
       pay: pay,
       change: change,
-      amount:0,
+      amount: 0,
       seq: 2,
     };
-     if (relatedCashAcc) data.relatedCashAccount = relatedCashAcc;
-     if (relatedBankAcc) data.relatedBankAccount = relatedBankAcc;
+    if (relatedCashAcc) data.relatedCashAccount = relatedCashAcc;
+    if (relatedBankAcc) data.relatedBankAccount = relatedBankAcc;
     if (did) data.referDoctor = did;
 
     if (change < 0) {
       data.creditAmount = change;
-     
-      
     }
 
     const res = axios
-      .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher",
-        data
-      )
+      .post("http://localhost:9000/api/voucher", data)
       .then(function (response) {
         Swal.fire({
           title: "Success",
