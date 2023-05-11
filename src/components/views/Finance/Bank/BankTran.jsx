@@ -107,7 +107,7 @@ export default function BankInfoDialog(props) {
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
         const toBank = res.data.list.filter(
           (el) =>

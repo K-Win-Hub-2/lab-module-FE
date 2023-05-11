@@ -32,7 +32,7 @@ const Expense = () => {
          try {
            console.log(val);
            const res = await axios.get(
-             "http://backendcherryk.kwintechnologykw11.com:4000/api/transactions/related/" +
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/" +
                val
            );
 
@@ -57,7 +57,7 @@ const Expense = () => {
   useEffect(() => {
     const getExpenseLists = async () => {
       const res = await axios.get(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/expenses"
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/expenses"
       );
       // alert("success");
       // console.log(res.data.list);

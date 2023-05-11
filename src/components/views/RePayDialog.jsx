@@ -12,47 +12,34 @@ import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function BankInfoDialog(props) {
-  const [code, setCode] = useState("");
-  const [accountingTypes, setAccountingTypes] = useState("");
-  const [headingList, setHeadingList] = useState([]);
-  const [heading, setHeading] = useState("");
-  const [subHeading, setSubHeading] = useState("");
-  const [accType, setAccType] = useState([]);
+const [creditAmount,setCreditAmount]=useState('');
+const [remark,setRemark]=useState('');
+const [date,setDate]=useState('');
+const [isPaid,setIsPaid]=useState('');
+const [repayAmount,setRepayAmount]=useState('');
+ const [crdAmount, setCrdAmount] = useState("");
 
-  const [amount, setAmount] = useState("");
-  // const [openingBalance, setOpeningBalance] = useState('');
-  const [generalFlag, setGeneralFlag] = useState(false);
-  // const [bankAddress, setBankAddress] = useState('');
-  const [relatedCurrency, setRelatedCurrency] = useState("");
-  const [carryForWork, setCarryForWork] = useState(false);
-  const [flag, setFlag] = useState(false);
-
-  const AccountCreate = () => {
+  const Repay = () => {
     const data = {
-      code: code,
-      name: subHeading,
-      relatedType: accountingTypes,
-      relatedHeader: heading,
-      subHeader: subHeading,
-      amount: amount,
-      openingBalance: amount,
-      generalFlag: generalFlag,
-      relatedCurrency: relatedCurrency,
-      carryForWork: carryForWork,
+      id: props.id,
+      repayAmount: repayAmount,
+      repayDate: date,
+      creditRemark: remark,
+      creditAmount: Number(crdAmount),
     };
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    // alert(JSON.stringify(data));
+    alert(JSON.stringify(data));
     axios
-      .post(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list",
+      .put(
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/repayment",
         data,
         config
       )
       .then(function (response) {
         alert("success");
-        props.setAccountLists([...props.accountLists, response.data.data]);
+        props.setVouchers([...props.vouchers, response.data.data]);
       })
       .catch(function (err) {
         alert(err.message);
@@ -60,41 +47,19 @@ export default function BankInfoDialog(props) {
     props.setOpen(false);
   };
 
-  const handleHeading = async (event) => {
-    setHeading(event);
-    console.log(heading, headingList);
-  };
 
-  const handleAccountHeader = async (event) => {
-    setAccountingTypes(event);
-    console.log(accountingTypes);
-    const url = `http://backendcherryk.kwintechnologykw11.com:4000/api/account-headers/related/${event}`;
-    console.log(url);
-    const res = await axios.get(url);
-    console.log(res.data.data, "res.data.data");
-    setHeadingList(res.data.data);
-    setFlag(true);
-    console.log(headingList, "heading");
-  };
   useEffect(() => {
-    const getAccountingType = async () => {
+    const getAccountingType =() => {
+      console.log(props.id,'id');
       try {
-        const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/account-types"
+        const res = axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today"
         );
-        setAccType(res.data.list);
+        console.log(res.data.data.creditAmount);
+        setCrdAmount(res.data.data.creditAmount,'credit');
+        
       } catch (err) {}
     };
-
-    // const getAccountingHeadingType = async () => {
-    //   try {
-    //     const res = await axios.get(
-    //       `http://localhost:9000/api/account-headers/related/${heading}`
-    //     );
-    //     setHeading(res.data.list);
-    //   } catch (err) {}
-    // };
-
     getAccountingType();
   }, []);
 
@@ -127,8 +92,8 @@ export default function BankInfoDialog(props) {
                   class="form-control border border-info"
                   name="acc_code"
                   id="acc_code"
-
-                  //   onChange={(e) => setCode(e.target.value)}
+                  defaultValue={crdAmount}
+                  onChange={(e) => setCrdAmount(e.target.value)}
                 />
               </div>
 
@@ -139,8 +104,7 @@ export default function BankInfoDialog(props) {
                   class="form-control border border-info"
                   name="acc_code"
                   id="acc_code"
-
-                  //   onChange={(e) => setCode(e.target.value)}
+                  onChange={(e) => setRepayAmount(e.target.value)}
                 />
               </div>
 
@@ -152,7 +116,7 @@ export default function BankInfoDialog(props) {
                   name="sub_head"
                   className="form-control border-info"
                   id=""
-                  //   onChange={(e) => setSubHeading(e.target.value)}
+                  onChange={(e) => setRemark(e.target.value)}
                 />
               </div>
 
@@ -164,7 +128,7 @@ export default function BankInfoDialog(props) {
                   name="sub_head"
                   className="form-control border-info"
                   id=""
-                  //   onChange={(e) => setSubHeading(e.target.value)}
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </div>
 
@@ -175,10 +139,10 @@ export default function BankInfoDialog(props) {
                   type="checkbox"
                   name="sub_head"
                   className="ml-3"
-                  style={{ width: "1.5em", height:'1.5em'}}
-                  value="Is Paid"
+                  style={{ width: "1.5em", height: "1.5em" }}
+                  value="true"
                   id=""
-                  //   onChange={(e) => setSubHeading(e.target.value)}
+                  onChange={(e) => setIsPaid(e.target.value)}
                 />
               </div>
             </div>
@@ -190,7 +154,7 @@ export default function BankInfoDialog(props) {
                 onClick={props.close}>
                 Close
               </button>
-              <Button class="btn btn-primary" onClick={AccountCreate}>
+              <Button class="btn btn-primary" onClick={Repay}>
                 Save
               </Button>
             </div>

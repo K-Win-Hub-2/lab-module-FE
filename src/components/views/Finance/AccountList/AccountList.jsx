@@ -19,7 +19,8 @@ function AccountList() {
      const getDELETE = async () => {
        try {
          const res = await axios.DELETE(
-           "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list/"+val
+           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/" +
+             val
          );
 
        
@@ -53,7 +54,7 @@ function AccountList() {
     const getAccountLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
 
         setAccountLists(res.data.list);
@@ -202,7 +203,11 @@ function AccountList() {
                               <td>{accountList.code}</td>
 
                               <td>{accountList.relatedType.name}</td>
-                              <td>{accountList.relatedHeader.name}</td>
+                              <td>
+                                {accountList.relatedHeader
+                                  ? accountList.relatedHeader.name
+                                  : ""}
+                              </td>
                               <td>{accountList.name}</td>
                               <td>{accountList.amount}</td>
                               <td>{accountList.relatedCurrency}</td>
@@ -220,7 +225,9 @@ function AccountList() {
 
                                   <div className="offset-1 col-md-4 ml-4">
                                     <button
-                                      onClick={()=>handleDelete(accountList._id)}
+                                      onClick={() =>
+                                        handleDelete(accountList._id)
+                                      }
                                       class="btn btn-danger btn-sm ">
                                       Delete
                                     </button>

@@ -54,7 +54,7 @@ export default function BankInfoDialog(props) {
 
     axios
       .post(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/expense",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/expense",
         jsonData,
         config
       )
@@ -129,7 +129,7 @@ export default function BankInfoDialog(props) {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
@@ -144,7 +144,7 @@ export default function BankInfoDialog(props) {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
@@ -159,7 +159,7 @@ export default function BankInfoDialog(props) {
     const getInitialCurrency = async () => {
       try {
         const res = await axios.get(
-          `http://backendcherryk.kwintechnologykw11.com:4000/api/currency/${initialCurrency}`
+          `http://centralclinicbackend.kwintechnologykw11.com:3000/api/currency/${initialCurrency}`
         );
         console.log(res);
         setCurrency(res.data.list);
@@ -168,7 +168,7 @@ export default function BankInfoDialog(props) {
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
         const medicineSale = res.data.list.filter(
           (e) => e.relatedType.name == "Expenses"
@@ -185,7 +185,7 @@ export default function BankInfoDialog(props) {
     const getCurrencyLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/currencies"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/currencies"
         );
         // const currency = res.data.list.filter((e)=>e.code=='MMK')
         setCurrencyList(res.data.list);

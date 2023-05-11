@@ -59,7 +59,7 @@ const Income = () => {
       try {
         console.log(val);
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/transactions/related/" +
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/" +
             val
         );
 
@@ -86,7 +86,7 @@ const Income = () => {
     const getIncomeLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/incomes?limit=50"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/incomes?limit=50"
         );
          
       

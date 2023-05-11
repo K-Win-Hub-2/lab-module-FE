@@ -91,9 +91,16 @@ const TestVoucherList = () => {
   const [name, setName] = useState('');
   const [array, setArray] = useState([]);
   const [open,setOpen]=useState(false);
+  const [id,setId]=useState('');
 
-  const showDialog=()=>{
+  const showDialog=(id)=>{
     setOpen(true);
+    setId(id);
+    console.log(id);
+  }
+
+  const DateFilter = ()=>{
+    
   }
 
   useEffect(() => {
@@ -102,6 +109,8 @@ const TestVoucherList = () => {
         const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today');
         console.log(res.data.data);
         setVouchers(res.data.data);
+       
+     
         res.data.data.map((el, i) => {
           const obj = {
             'No': ++i,
@@ -167,24 +176,36 @@ const TestVoucherList = () => {
                 <Top>
                   <Left>
                     <div className="row">
-                      <div className="col-3">
-                        <label htmlFor="">From:</label>
-                        <input
-                          type="date"
-                          placeholder="Search..."
-                          className="form-control"
-                          onChange={(e) => setFrom(e.target.value)}
-                        />
+                      <div className="col-md-6">
+                        <div className="row">
+                          <div className="col-5">
+                            <label htmlFor="">From:</label>
+                            <input
+                              type="date"
+                              placeholder="Search..."
+                              className="form-control"
+                              onChange={(e) => setFrom(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-5">
+                            <label htmlFor="">To:</label>
+                            <input
+                              type="date"
+                              placeholder="Search..."
+                              className="form-control"
+                              onChange={(e) => setTo(e.target.value)}
+                            />
+                          </div>
+                          <div className="col-md-2" style={{ marginTop: "35px" }}>
+                            <button
+                              className="btn btn-sm btn-primary"
+                              onClick={DateFilter}>
+                              Filter
+                            </button>
+                            </div>
+                        </div>
                       </div>
-                      <div className="col-3">
-                        <label htmlFor="">To:</label>
-                        <input
-                          type="date"
-                          placeholder="Search..."
-                          className="form-control"
-                          onChange={(e) => setTo(e.target.value)}
-                        />
-                      </div>
+
                       <div className="col-6">
                         <div className="row">
                           <div className="col-6">
@@ -238,9 +259,15 @@ const TestVoucherList = () => {
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
                         <Td>
-                          <div className="badge badge-success px-3 py-2">
-                            Paid
-                          </div>
+                          {vou.creditAmount ? (
+                            <div className="badge badge-danger px-3 py-2">
+                              Credit
+                            </div>
+                          ) : (
+                            <div className="badge badge-success px-3 py-2">
+                              Paid
+                            </div>
+                          )}
                         </Td>
                         {/* <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td> */}
                         <Td>
@@ -253,7 +280,7 @@ const TestVoucherList = () => {
                           &nbsp;
                           <button
                             type="button"
-                            onClick={showDialog}
+                            onClick={() => showDialog(vou._id)}
                             className="btn btn-sm btn-primary">
                             RePay
                           </button>
@@ -268,6 +295,7 @@ const TestVoucherList = () => {
           <RePayDialog
             open={open}
             close={() => setOpen(false)}
+            id={id}
             setOpen={setOpen}
             setVouchers={setVouchers}
             vouchers={vouchers}

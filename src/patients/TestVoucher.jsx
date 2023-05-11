@@ -10,6 +10,7 @@ import { FaFileExport } from "react-icons/fa";
 import axios from "axios";
 import ResultDialog from "./ResultDialog";
 import { useLocation, Link } from "react-router-dom";
+import { data } from "../plugins/datatables-buttons/js/dataTables.buttons";
 
 const Top = styled.div`
   display: flex;
@@ -82,38 +83,36 @@ const TestVoucher = () => {
   const [page, setPage] = useState("");
   const [pgender, setPgender] = useState("");
   const patient_id = useLocation().pathname.split("/")[2];
+  console.log(patient_id, "patient_id");
 
   useEffect(() => {
+    // const getPatient = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
+    //         patient_id
+    //     );
+    //     setPname(res.data.data.name);
+    //     setPage(res.data.data.age);
+    //     setPgender(res.data.data.gender);
+    //   } catch (err) {}
+    // };
     const getVouchers = async () => {
       try {
         let data = {
-          relatePatient: patient_id,
+          relatedPatient: patient_id,
         };
-        const res = await axios.get(
 
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers",
+        const res = await axios.post(
+          "http://localhost:9000/api/vouchers/related-vouchers",
           data
-
-
         );
-        console.log(res.data.data, "id");
+        console.log(data, "data");
         setVouchers(res.data.data);
-        console.log(vouchers);
       } catch (err) {}
     };
-    const getPatient = async () => {
-      try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
-            patient_id
-        );
-        setPname(res.data.data.name);
-        setPage(res.data.data.age);
-        setPgender(res.data.data.gender);
-      } catch (err) {}
-    };
+    // getPatient();
     getVouchers();
-    getPatient();
   }, []);
 
   const show = (id) => {
@@ -162,6 +161,7 @@ const TestVoucher = () => {
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ""}</Td>
                         <Td>{vou.date ? vou.date.split("T")[0] : ""}</Td>
+                        {/* <Td>{vou.netDiscount}</Td> */}
                         <Td>{vou.discount ? vou.discount : ""}</Td>
                         <Td>{vou.totalCharge ? vou.totalCharge : ""}</Td>
                         <Td>

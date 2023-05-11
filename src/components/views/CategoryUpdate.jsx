@@ -31,7 +31,7 @@ export default function AccTypeUpdate(props) {
     };
     axios
       .put(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/account-type",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type",
         data,
         config
       )
@@ -50,7 +50,7 @@ export default function AccTypeUpdate(props) {
     const getAccountType = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/account-type/" +
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type/" +
             props.id
         );
 

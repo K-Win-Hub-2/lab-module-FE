@@ -48,13 +48,13 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(data));
     axios
       .post(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list",
         data,
         config
       )
       .then(function (response) {
         // alert("success");
-        
+
         Swal.fire({
           title: "Successful!",
           text: "You Created Income Data!",
@@ -86,7 +86,7 @@ export default function BankInfoDialog(props) {
   const handleAccountHeader = async (event) => {
     setAccountingTypes(event);
     console.log(accountingTypes);
-    const url = `http://backendcherryk.kwintechnologykw11.com:4000/api/account-headers/related/${event}`;
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`;
     console.log(url);
     const res = await axios.get(url);
     console.log(res.data.data, "res.data.data");
@@ -98,7 +98,7 @@ export default function BankInfoDialog(props) {
     const getAccountingType = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/account-types"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types"
         );
         setAccType(res.data.list);
       } catch (err) {}

@@ -27,7 +27,7 @@ function Bank() {
     const getRelated = async () => {
       console.log(val);
       const res = await axios.get(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/bank/" + val
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank/" + val
       );
 
       console.log(res.data.data);
@@ -48,7 +48,7 @@ function Bank() {
       try {
         console.log(val);
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/transfer"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transfer"
            
         );
 
@@ -71,7 +71,7 @@ function Bank() {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/banks?limit=50"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/banks?limit=50"
         );
 
         setBankLists(res.data.list);
@@ -81,7 +81,7 @@ function Bank() {
     // const getTransactionList = async () => {
     //   try {
     //     const res = await axios.get(
-    //       "http://backendcherryk.kwintechnologykw11.com:4000/api/transactions/related/"+bankLists._id
+    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/"+bankLists._id
     //     );
 
     //     setTransactionLists(res.data.list);

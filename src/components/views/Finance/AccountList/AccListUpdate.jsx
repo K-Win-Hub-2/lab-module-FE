@@ -59,7 +59,7 @@ const Id = useLocation().pathname.split("/")[2];
     // alert(JSON.stringify(data));
     axios
       .put(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list",
         data,
         config
       )
@@ -90,7 +90,7 @@ const Id = useLocation().pathname.split("/")[2];
   const handleAccountHeader = async (event) => {
     setAccountingTypes(event);
     console.log(accountingTypes);
-    const url = `http://backendcherryk.kwintechnologykw11.com:4000/api/account-headers/related/${event}`;
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`;
     console.log(url);
     const res = await axios.get(url);
     console.log(res.data.data, "res.data.data");
@@ -102,7 +102,7 @@ const Id = useLocation().pathname.split("/")[2];
     const getAccountingType = async () => {
       try {
         const res = await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/account-types"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types"
         );
         setAccType(res.data.list);
       } catch (err) {}
@@ -112,7 +112,7 @@ const Id = useLocation().pathname.split("/")[2];
       try {
         console.log(Id, "Id");
         const res =await axios.get(
-          "http://backendcherryk.kwintechnologykw11.com:4000/api/accounting-list/"+Id
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/"+Id
         );
         console.log(res.data.data);
         setUpCode(res.data.data[0].code);

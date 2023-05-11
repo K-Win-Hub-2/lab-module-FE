@@ -88,7 +88,7 @@ export default function BankTran(props) {
     };
     axios
       .post(
-        "http://backendcherryk.kwintechnologykw11.com:4000/api/bank",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank",
         data,
         config
       )
@@ -110,7 +110,7 @@ export default function BankTran(props) {
      const getTypeLists = async () => {
        try {
          const res = await axios.get(
-           "http://backendcherryk.kwintechnologykw11.com:4000/api/account-types"
+           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types"
          );
 
          const types = res.data.list.filter(
@@ -125,7 +125,7 @@ export default function BankTran(props) {
      const getHeaderLists = async () => {
        try {
          const res = await axios.get(
-           "http://backendcherryk.kwintechnologykw11.com:4000/api/account-headers"
+           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers"
          );
 
          const header = res.data.list.filter((el) => el.name == "Cash At Bank");

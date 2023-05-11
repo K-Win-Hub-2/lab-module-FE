@@ -69,24 +69,76 @@ const TestSale = () => {
   const [arr, setArr] = useState([]);
   const [array, setArray] = useState([]);
   const [serId, setSerId] = useState("");
-  const [voucherCode,setVoucherCode]=useState('');
+  const [voucherCode, setVoucherCode] = useState("");
   const [isDoctor, setIsDoctor] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
+  const [bankShow,setBankShow]=useState(false);
+   const [cashShow, setCashShow] = useState(false);
+   const [bankList,setBankList]=useState([]);
+   const [cashList,setCashList]=useState([]);
+   const [accountingList,setAccountingList]=useState([]);
+   const [relatedBankAcc, setRelatedBankAcc] = useState("");
+   const [relatedCashAcc,setRelatedCashAcc]=useState('');
+   const [account,setAccount]=useState('');
   const patient_id = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
   useEffect(() => {
-       const getVoucherCode = async () => {
+
+       const getCashLists = async () => {
          try {
            const res = await axios.get(
-             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
-               patient_id
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
            );
 
-           console.log(res.data.data.voucherID);
-           setVoucherCode(res.data.data.voucherID);
+           const cash = res.data.list.filter(
+             (el) =>
+               el.relatedHeader.name == "Cash In Hand" &&
+               el.relatedType.name === "Asset"
+           );
+           setCashList(cash);
          } catch (err) {}
        };
+
+       const getBankLists = async () => {
+         try {
+           const res = await axios.get(
+             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+           );
+
+           const bank = res.data.list.filter(
+             (el) =>
+               el.relatedHeader.name == "Cash At Bank" &&
+               el.relatedType.name === "Assets"
+           );
+           setBankList(bank);
+         } catch (err) {}
+       };
+
+         const getAccountingLists = async () => {
+           try {
+             const res = await axios.get(
+               "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+             );
+             const acc = res.data.list.filter(
+               (e) => e.relatedType.name == "Revenues"
+             );
+          
+             setAccountingList(acc);
+           } catch (err) {}
+         };
+
+    const getVoucherCode = async () => {
+      try {
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
+            patient_id
+        );
+
+        console.log(res.data.data.voucherID);
+        setVoucherCode(res.data.data.voucherID);
+      } catch (err) {}
+    };
 
     const getPatient = async () => {
       try {
@@ -110,7 +162,7 @@ const TestSale = () => {
     const getDoctors = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/doctors"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
         );
         setDoctors(res.data.data);
       } catch (err) {}
@@ -118,8 +170,10 @@ const TestSale = () => {
     getPatient();
     getServs();
     getDoctors();
-    addService();
+    getCashLists();
     getVoucherCode();
+    getBankLists();
+    getAccountingLists();
   }, []);
 
   const addService = async () => {
@@ -127,6 +181,7 @@ const TestSale = () => {
       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
         serId
     );
+    console.log(res.data.data, "res.data.data");
     setArr((arr) => [...arr, res.data.data]);
     setTotal(total + res.data.data.charges);
     setNet(total + res.data.data.charges);
@@ -138,6 +193,7 @@ const TestSale = () => {
     };
     setArray((array) => [...array, obj]);
   };
+
   const delSer = (id) => {
     const charges = arr.filter((el) => el._id == id);
     setTotal(total - charges[0].charges);
@@ -148,6 +204,7 @@ const TestSale = () => {
   const saveTest = () => {
     const data = {
       code: voucherCode,
+      relatedAccounting: account,
       date: date,
       relatedPatient: patient_id,
       // referDoctor: did,
@@ -159,35 +216,43 @@ const TestSale = () => {
       netDiscount: net,
       pay: pay,
       change: change,
-      seq:2
+      amount:0,
+      seq: 2,
     };
-    if(did) data.referDoctor=did;
+     if (relatedCashAcc) data.relatedCashAccount = relatedCashAcc;
+     if (relatedBankAcc) data.relatedBankAccount = relatedBankAcc;
+    if (did) data.referDoctor = did;
+
+    if (change < 0) {
+      data.creditAmount = change;
+     
+      
+    }
+
     const res = axios
       .post(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher",
         data
       )
       .then(function (response) {
-        
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
           icon: "success",
           confirmButtonText: "OK",
         });
-     
+
         navigate(-1);
       })
 
-   .catch(function (err) {
+      .catch(function (err) {
         Swal.fire({
           title: "Error",
-          text: err.response.data.message,
+          text: "Something Wrong",
           icon: "error",
           confirmButtonText: "CANCEL",
-        })
+        });
       });
-    
   };
   const print = () => {
     var print_div = document.getElementById("print");
@@ -229,7 +294,6 @@ const TestSale = () => {
                       type="text"
                       className="form-control"
                       value={voucherCode}
-                      
                     />
                   </div>
                   <div className="col-6 mt-2">
@@ -309,6 +373,77 @@ const TestSale = () => {
                       />
                     </div>
                   )}
+
+                  <div className="row">
+                    <div className="col-md-6 mt-4">
+                      <label htmlFor="">Bank / Cash</label>
+                      <input
+                        className="ml-4"
+                        type="radio"
+                        name="doctordata"
+                        id="male"
+                        onClick={() => {
+                          setBankShow(true);
+                          setCashShow(false);
+                        }}
+                      />{" "}
+                      Bank
+                      <input
+                        className="ml-4"
+                        type="radio"
+                        name="doctordata"
+                        id="male"
+                        onClick={() => {
+                          setBankShow(false);
+                          setCashShow(true);
+                        }}
+                        active
+                      />{" "}
+                      Cash
+                    </div>
+
+                    {bankShow && (
+                      <div className="col-6 mt-3">
+                        <label className="ml-2">Select Bank</label>
+                        <select
+                          className="form-control"
+                          onChange={(e) => setRelatedBankAcc(e.target.value)}>
+                          <option>Choose Bank</option>
+                          {bankList.map((doc, index) => (
+                            <option value={doc._id}>{doc.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                    {cashShow && (
+                      <div className="col-6 mt-3">
+                        <label className="ml-2">Select Cash</label>
+                        <select
+                          className="form-control"
+                          onChange={(e) => setRelatedCashAcc(e.target.value)}>
+                          <option>Choose Cash</option>
+                          {cashList.map((doc, index) => (
+                            <option value={doc._id}>{doc.name}</option>
+                          ))}
+                        </select>
+                      </div>
+                    )}
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6"></div>
+                    <div className="col-6 mt-3">
+                      <label className="ml-2">Income Account</label>
+                      <select
+                        className="form-control"
+                        onChange={(e) => setAccount(e.target.value)}>
+                        <option>Choose Account</option>
+                        {accountingList.map((doc, index) => (
+                          <option value={doc._id}>{doc.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
                   <Div className="col-10 mt-5">
                     <Select
                       onChange={(e) => setSerId(e.target.value)}
