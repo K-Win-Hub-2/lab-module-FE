@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from "./SideBar";
 import styled from 'styled-components'
-import {  AiFillInfoCircle } from 'react-icons/ai'
+import { AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
 import { FaCheck } from "react-icons/fa";
 import ExportVoucher from './ExportVoucher'
@@ -25,37 +25,37 @@ font-weight : bold;
 margin-top : 10px;
 `
 
-const Right = styled.div`
-font-weight : normal;
-flex: 1;
-display : flex;
-justify-content: flex-end;
-`;
+// const Right = styled.div`
+// font-weight : normal;
+// flex: 1;
+// display : flex;
+// justify-content: flex-end;
+// `;
 
 
-const Button = styled.button`
-background: rgb(0,7,51);
-color: white; 
-justify-content: flex-end;
-padding: 5px 10px;
-border:none;
-border-radius:10px;
-`
+// const Button = styled.button`
+// background: rgb(0,7,51);
+// color: white; 
+// justify-content: flex-end;
+// padding: 5px 10px;
+// border:none;
+// border-radius:10px;
+// `
 
-const Btn = styled.button`
-padding: 4px 8px;
-border-radius:5px;
-margin-left : 13px;
-`
+// const Btn = styled.button`
+// padding: 4px 8px;
+// border-radius:5px;
+// margin-left : 13px;
+// `
 
 const Div = styled.div`
 `
-const Input = styled.input`
-width:165px;
-border:1px solid grey;
-border-radius:12px;
-padding:3px;
-`
+// const Input = styled.input`
+// width:165px;
+// border:1px solid grey;
+// border-radius:12px;
+// padding:3px;
+// `
 const Table = styled.table`
 `
 const Thead = styled.thead`
@@ -71,19 +71,19 @@ font-size:15px;
 const Td = styled.td`
 font-size:14px;
 `
-const Select = styled.select`
-padding:0px 7px;
-border-radius: 5px;
-`
-const Option = styled.option`
-`
-const Badge = styled.span`
-background:lightgreen;
-padding:1px 5px;
-color:white;
-border:none;
-border-radius:4px;
-`
+// const Select = styled.select`
+// padding:0px 7px;
+// border-radius: 5px;
+// `
+// const Option = styled.option`
+// `
+// const Badge = styled.span`
+// background:lightgreen;
+// padding:1px 5px;
+// color:white;
+// border:none;
+// border-radius:4px;
+// `
 
 const TestVoucherList = () => {
   const [vouchers, setVouchers] = useState([]);
@@ -91,18 +91,15 @@ const TestVoucherList = () => {
   const [to, setTo] = useState('');
   const [name, setName] = useState('');
   const [array, setArray] = useState([]);
-  const [open,setOpen]=useState(false);
-  const [id,setId]=useState('');
+  // const [open,setOpen]=useState(false);
+  // const [id,setId]=useState('');
 
-  const showDialog=(id)=>{
-    setOpen(true);
-    setId(id);
-    console.log(id);
-  }
+  // const showDialog=(id)=>{
+  //   setOpen(true);
+  //   setId(id);
+  //   console.log(id);
+  // }
 
-  const DateFilter = ()=>{
-    
-  }
 
   useEffect(() => {
     const getVouchers = async () => {
@@ -110,8 +107,8 @@ const TestVoucherList = () => {
         const res = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today');
         console.log(res.data.data);
         setVouchers(res.data.data);
-       
-     
+
+
         res.data.data.map((el, i) => {
           const obj = {
             'No': ++i,
@@ -124,14 +121,14 @@ const TestVoucherList = () => {
           setArray((array) => [...array, obj]);
         })
       } catch (error) {
-          Swal.fire({
-            title: "Data not found for this day",
-            text: error.response.data.message,
-            icon: "warning",
-            confirmButtonText: "CANCEL",
-          });
+        Swal.fire({
+          title: "Data not found for this day",
+          text: error.response.data.message,
+          icon: "warning",
+          confirmButtonText: "CANCEL",
+        });
       }
-        }
+    }
     getVouchers();
   }, [])
 
@@ -253,7 +250,7 @@ const TestVoucherList = () => {
                   </Thead>
                   <Tbody>
                     {vouchers.map((vou, index) => (
-                      <Tr>
+                      <Tr key={vou._id}>
                         <Td>{++index}</Td>
                         <Td>{vou.date.split("T")[0]}</Td>
                         <Td>{vou.code}</Td>
@@ -282,8 +279,8 @@ const TestVoucherList = () => {
                           </Link>
                           &nbsp;
                           {vou.creditAmount ? (
-                            <Link to={"/repay/"+vou._id}
-                              
+                            <Link to={"/repay/" + vou._id}
+
                               className="btn btn-sm btn-primary">
                               RePay
                             </Link>

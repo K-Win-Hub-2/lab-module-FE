@@ -26,6 +26,8 @@ import Income from "./components/views/Finance/Income/Income";
 import Expense from "./components/views/Finance/Expense/Expense";
 import Bank from "./components/views/Finance/Bank/Bank";
 import Repay from "./components/views/RePay.jsx";
+import TrialBalance from './components/views/TrialBalance';
+import React from 'react';
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -47,6 +49,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/lab-test" element={<LabServiceList />}></Route>
+        <Route path="/trial-balance" element={<TrialBalance />}></Route>
         <Route path="/lab-test/:id" element={<LabServiceUpdate />}></Route>
         <Route path="/lab-register" element={<LabServiceRegister />}></Route>
         <Route path="/lab-cat" element={<CatRegister />}></Route>
@@ -55,9 +58,7 @@ function App() {
         <Route path="/doctorClinic" element={<DoctorClinic />}></Route>
         <Route path="/doctorClinicReg" element={<DoctorClinicReg />}></Route>
         <Route path="/test/:testVoucher_id" element={<Test />}></Route>
-        <Route
-          path="/testslip/:testVoucher_id"
-          element={<TestVoucherSlip />}></Route>
+        <Route path="/testslip/:testVoucher_id" element={<TestVoucherSlip />}></Route>
         <Route path="/patient/list" element={<Patient />} />
         <Route path="/patient/register" element={<PatientRegister />} />
         <Route path="/patient/member" element={<Member />} />

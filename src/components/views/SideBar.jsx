@@ -215,6 +215,12 @@ function Sidebar() {
                        </Link>
                      </li>
                      <li className="nav-item">
+                       <Link to="/trial-balance" className="nav-link">
+                         <i className="nav-icon fas fa-circle"></i>&nbsp;
+                         <p>Trial Balance</p>
+                       </Link>
+                     </li>
+                     <li className="nav-item">
                        <Link to="/account_list" className="nav-link">
                          <i className="nav-icon fas fa-circle"></i>&nbsp;
                          <p>Account Lists</p>
