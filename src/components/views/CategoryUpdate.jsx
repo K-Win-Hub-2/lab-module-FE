@@ -1,3 +1,4 @@
+/* eslint-disable */
 import * as React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -8,7 +9,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+  
 export default function AccTypeUpdate(props) {
   const [accountType, setAccountType] = useState([]);
   const [code, setCode] = useState("");

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -13,20 +14,9 @@ function CatRegister() {
   const [id, setId] = useState("");
   const [isValidated, setIsValidated] = useState(false);
 
-  const [formState, setFormState] = useState({
-    code: '',
-    name: '',
-    description: '',
-    flag: '',
-    codeError: '',
-    nameError: '',
-    descriptionError: '',
-    flagError: '',
-  });
-
   const handleDelete = (event) => {
     console.log(event, "event")
-    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/category/' + event).then(response => {
+    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/category/' + event).then(() => {
       Swal.fire({
         title: "Success",
         text: "Successfully Deleted!",
@@ -109,12 +99,19 @@ function CatRegister() {
         );
 
         setCategoryLists(res.data.data);
-      } catch (err) { }
+      } catch (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      }
     };
     getCategory();
   }, []);
   return (
-    <div classNameName="App">
+    <div className="App">
       {/* <!-- end preloader --> */}
       {/* @include('sweet::alert') */}
 
@@ -146,11 +143,11 @@ function CatRegister() {
           <section className="content">
             <div className="container-fluid">
               <div className="row">
-                <div class="row">
-                  <div class="col-md-9 py-3 card">
-                    <div class="table-responsive text-black" id="slimtest2">
-                      <table class="table table-hover" id="filter_date">
-                        <thead class="bg-info text-white">
+                <div className="row">
+                  <div className="col-md-9 py-3 card">
+                    <div className="table-responsive text-black" id="slimtest2">
+                      <table className="table table-hover" id="filter_date">
+                        <thead className="bg-info text-white">
                           <tr>
                             <th>No.</th>
                             <th>Code</th>
@@ -165,7 +162,7 @@ function CatRegister() {
                         </thead>
 
                         {categoryLists.map((cat, i) => (
-                          <tbody className="">
+                          <tbody key={cat._id}>
                             <tr>
                               <td>{++i}</td>
                               <td>{cat.code}</td>
@@ -179,11 +176,11 @@ function CatRegister() {
                                 <button
                                   type="button"
                                   onClick={() => showUpdate(cat._id)}
-                                  class="btn btn-warning btn-sm ml-2">
+                                  className="btn btn-warning btn-sm ml-2">
                                   Update
                                 </button>
                                 &nbsp;
-                                <button className="btn btn-sm btn-danger" role="" onClick={(e) => handleDelete(cat._id)}>
+                                <button className="btn btn-sm btn-danger" role="" onClick={() => handleDelete(cat._id)}>
                                   Delete
                                 </button>
                               </td>
@@ -199,35 +196,35 @@ function CatRegister() {
                         Create Category
                       </h5>
                       <form noValidate onSubmit={CategoryCreate} validated={isValidated}>
-                        <div class="form-group">
+                        <div className="form-group">
                           <label for="code" className="text-secondary">
                             Code
                           </label>
                           <input
                             type="text"
                             id="code"
-                            class="form-control border-info"
+                            className="form-control border-info"
                             name="code"
                             //   ref={(el) => (this.name = el)}
                             onChange={(e) => setCode(e.target.value)}
                           />
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                           <label for="name" className="text-secondary">
                             Name
                           </label>
                           <input
                             type="text"
-                            class="form-control border-info"
+                            className="form-control border-info"
                             name="name"
                             id="name"
                             required
                             //   ref={(el) => (this.name = el)}
                             onChange={(e) => setName(e.target.value)}
                           />
-                          <div class="invalid-feedback">Please provide Name.</div>
+                          <div className="invalid-feedback">Please provide Name.</div>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                           <label for="name" className="text-secondary">
                             Description
                           </label>
@@ -239,12 +236,12 @@ function CatRegister() {
                               setDescription(e.target.value)
                             }></textarea>
                         </div>
-                        <div class="form-group">
+                        <div className="form-group">
                           <label for="name" className="text-secondary">
                             Flag
                           </label>
                           <select
-                            class="custom-select border-info"
+                            className="custom-select border-info"
                             name="account_type_id"
                             id="flag"
                             onChange={(e) => setFlag(e.target.value)}>

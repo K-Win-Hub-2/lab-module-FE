@@ -11,7 +11,7 @@ export default function TrialBalance() {
     const calculation = async (data) => {
         data.map((element) => {
             axios.get(url + '/transactions/trial-balance/' + element._id).then((response)=> {
-                console.log(response,'response')
+                console.log(response.data.data,'response')
             }).catch( (error) => {
                 console.log(error)
             })
