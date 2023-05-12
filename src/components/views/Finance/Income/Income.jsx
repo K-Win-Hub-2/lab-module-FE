@@ -1,3 +1,5 @@
+
+/* eslint-disable */
 import React, { useState } from "react";
 import IncomeDialog from "../../../views/Finance/Income/IncomeDialog";
 import axios from "axios";

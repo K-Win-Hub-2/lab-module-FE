@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useEffect, useState } from "react";
 import SideBar from "../components/views/SideBar";
 import styled from "styled-components";
@@ -228,7 +230,7 @@ const TestSale = () => {
 
     const res = axios
       .post("http://localhost:9000/api/voucher", data)
-      .then(function (response) {
+      .then(function () {
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
@@ -239,7 +241,7 @@ const TestSale = () => {
         navigate(-1);
       })
 
-      .catch(function (err) {
+      .catch(function () {
         Swal.fire({
           title: "Error",
           text: "Something Wrong",

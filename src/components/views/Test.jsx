@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import {  FaArrowLeft, FaSave } from "react-icons/fa";

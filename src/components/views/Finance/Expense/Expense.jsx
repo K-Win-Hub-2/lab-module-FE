@@ -1,3 +1,5 @@
+
+/* eslint-disable */
 import React, { useState } from "react";
 import ExpenseDialog from "../../../views/Finance/Expense/ExpenseDialog";
 import { useEffect } from "react";

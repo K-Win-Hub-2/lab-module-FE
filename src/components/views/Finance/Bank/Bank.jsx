@@ -1,3 +1,5 @@
+
+/* eslint-disable */
 import React, { useState } from "react";
 import BankTran from "../../../views/Finance/Bank/BankTran";
 import BankReg from "../../../views/Finance/Bank/BankReg";

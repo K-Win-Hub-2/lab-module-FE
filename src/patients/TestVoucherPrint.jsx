@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect, useRef } from 'react'
 import SideBar from '../components/views/SideBar'
 

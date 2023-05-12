@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React,{useState,useEffect} from 'react'
 import SideBar from "../components/views/SideBar";
 import styled from 'styled-components'

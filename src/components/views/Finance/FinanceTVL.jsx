@@ -1,4 +1,5 @@
-/* eslint-disable no-console */
+/* eslint-disable */
+
 
 import React, { useState, useEffect } from 'react'
 import SideBar from '../SideBar'

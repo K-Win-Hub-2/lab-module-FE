@@ -26,12 +26,12 @@ import Income from "./components/views/Finance/Income/Income";
 import Expense from "./components/views/Finance/Expense/Expense";
 import Bank from "./components/views/Finance/Bank/Bank";
 import Repay from "./components/views/RePay.jsx";
-<<<<<<< HEAD
+
 import TrialBalance from './components/views/TrialBalance';
 import React from 'react';
-=======
+
 import FinanceTestVouList from "./components/views/Finance/FinanceTVL.jsx";
->>>>>>> 058f8a0 (lab)
+
 
 import './App.css';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";

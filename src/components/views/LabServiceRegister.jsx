@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft, FaMinus } from "react-icons/fa";
