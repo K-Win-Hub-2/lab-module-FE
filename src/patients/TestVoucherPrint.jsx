@@ -1,85 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SideBar from '../components/views/SideBar'
-import styled from 'styled-components'
+
 import axios from 'axios'
-import { useLocation, Link } from 'react-router-dom'
-import { FaCashRegister, FaArrowLeft, FaMinus, FaSave } from 'react-icons/fa'
+import { useLocation} from 'react-router-dom'
+
 import { Base64 } from 'js-base64'
 import ReactHtmlParser from 'react-html-parser'
 import ReactToPrint from 'react-to-print'
 // import Printer from "@eyelly/react-printer";
 
-const Top = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
-`
 
-const Left = styled.div`
-  font-weight: normal;
-  flex: 1;
-`
+const TestVoucherPrint = () => {
 
-const Title = styled.h5`
-  font-weight: bold;
-  margin-top: 10px;
-`
-
-const Right = styled.div`
-  font-weight: normal;
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-`
-
-const Button = styled.button`
-  background: #007bff;
-  color: white;
-  justify-content: flex-end;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 10px;
-`
-
-const Btn = styled.button`
-  padding: 4px 8px;
-  border-radius: 5px;
-  margin-left: 13px;
-`
-
-const Div = styled.div``
-const Input = styled.input`
-  width: 165px;
-  border: 1px solid grey;
-  border-radius: 12px;
-  padding: 3px;
-`
-const Table = styled.table``
-const Thead = styled.thead``
-const Tbody = styled.tbody``
-const Tr = styled.tr`
-  text-align: center;
-`
-const Th = styled.th`
-  font-size: 15px;
-`
-const Td = styled.td`
-  font-size: 14px;
-`
-const Select = styled.select`
-  padding: 0px 7px;
-  border-radius: 5px;
-`
-const Option = styled.option``
-
-const TestVoucherPrint = props => {
-  const [vouDate, setVouDate] = useState('')
-  const [referRange, setReferRange] = useState([])
   const [referDoctorLists, setReferDoctorLists] = useState([])
   const [voucherLists, setVoucherLists] = useState([])
   const [patientLists, setPatientLists] = useState([])
-  const [serviceLists, setServiceLists] = useState([])
-  const [testArray, setTestArray] = useState([])
+
   const [labID_VouCode, setLabID_VouCode] = useState([])
   const [headerOn, setHeaderOn] = useState(true)
   const [refOn, setRefOn] = useState(true)
@@ -147,9 +83,11 @@ const TestVoucherPrint = props => {
 
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
-        setVouDate(res.data.data.date.split('T')[0])
+       
         // console.log(res.data.data.testSelection[0].result);
-      } catch (err) {}
+      } catch (err) {
+        alert('Error');
+      }
     }
 
     const getPatientList = async () => {
@@ -160,7 +98,9 @@ const TestVoucherPrint = props => {
         )
 
         setPatientLists(res.data.data.relatedPatient)
-      } catch (err) {}
+      } catch (err) {
+        alert('Error')
+      }
     }
 
     const getReferDoctorList = async () => {
@@ -173,7 +113,9 @@ const TestVoucherPrint = props => {
         setReferDoctorLists(res.data.data.referDoctor)
         console.log(res.data.data.referDoctor
 );
-      } catch (err) {}
+      } catch (err) {
+        alert('Error')
+      }
     }
 
     getReferDoctorList()
@@ -191,13 +133,13 @@ const TestVoucherPrint = props => {
         <div className='content-header'>
           <div className='container-fluid'>
             <div
-              calssName='card content'
+              // calssName='card content'
               // style={{ maxWidth: "700px", marginLeft: "170px" }}
               id='print'
               ref={el => (componentRef = el)}
             >
               <div
-                calssName='card-body'
+                // calssName='card-body'
                 style={{ border: '1px solid black', padding: '14px 14px' }}
               >
                 {headerOn && (
@@ -286,14 +228,14 @@ const TestVoucherPrint = props => {
                   </tbody> */}
 
                     {voucherLists.map(testSelect => (
-                      <tbody>
+                      <tbody key={testSelect._id}>
                         <tr>
                           <td>{testSelect.name.name}</td>
                           <td>{testSelect.result}</td>
 
                           <td>
                             {testSelect.name.referenceRange.map(refer => (
-                              <p className=''>
+                              <p key={refer._id}>
                                 {refer.from}-{refer.to} &nbsp;
                               </p>
                             ))}
@@ -301,7 +243,7 @@ const TestVoucherPrint = props => {
 
                           <td>
                             {testSelect.name.referenceRange.map(refer => (
-                              <p>{refer.unit}</p>
+                              <p key={refer._id}>{refer.unit}</p>
                             ))}
                           </td>
 
@@ -316,7 +258,7 @@ const TestVoucherPrint = props => {
                   <div className='px-3 py-2'>
                     <div className='row'>
                       {voucherLists.map(specDecode => (
-                        <div className='col-md-6'>
+                        <div className='col-md-6' key={specDecode._id}>
                           <h6 className='text-bold text-decoration-underline'>
                             {specDecode.name.name} Reference Range
                           </h6>

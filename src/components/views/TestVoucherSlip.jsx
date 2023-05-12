@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SideBar from './SideBar'
 import styled from 'styled-components'
-import {  AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
-import ExportVoucher from './ExportVoucher'
 import Swal from "sweetalert2";
-import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { textAlign } from '@mui/system';
+import ReactToPrint from 'react-to-print'
+
+
 
 const Top = styled.div`
 display : flex;
@@ -47,18 +46,7 @@ font-size:15px;
 const Td = styled.td`
   font-size: 14px;
 `
-const Select = styled.select`
-  padding: 0px 7px;
-  border-radius: 5px;
-`
-const Option = styled.option``
-const Badge = styled.span`
-  background: lightgreen;
-  padding: 1px 5px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-`
+
 
 const TestVoucherSlip = () => {
   const [vouchers, setVouchers] = useState([])
@@ -71,7 +59,7 @@ const TestVoucherSlip = () => {
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
-  const [array, setArray] = useState([])
+
   let componentRef = useRef()
   const vouid = useLocation().pathname.split('/')[2]
 
@@ -146,7 +134,7 @@ const TestVoucherSlip = () => {
                       </Thead>
                       <Tbody>
                         {vouchers.map((vou, index) => (
-                          <Tr>
+                          <Tr key={vou._id}>
                             <Td>{++index}</Td>
                             <Td
                               style={{ marginLeft: '50px', textAlign: 'right' }}

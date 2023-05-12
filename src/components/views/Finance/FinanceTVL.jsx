@@ -26,35 +26,12 @@ const Title = styled.h5`
   margin-top: 10px;
 `
 
-const Right = styled.div`
-  font-weight: normal;
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-`
 
-const Button = styled.button`
-  background: rgb(0, 7, 51);
-  color: white;
-  justify-content: flex-end;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 10px;
-`
 
-const Btn = styled.button`
-  padding: 4px 8px;
-  border-radius: 5px;
-  margin-left: 13px;
-`
+
 
 const Div = styled.div``
-const Input = styled.input`
-  width: 165px;
-  border: 1px solid grey;
-  border-radius: 12px;
-  padding: 3px;
-`
+
 const Table = styled.table``
 const Thead = styled.thead``
 const Tbody = styled.tbody``
@@ -67,18 +44,7 @@ const Th = styled.th`
 const Td = styled.td`
   font-size: 14px;
 `
-const Select = styled.select`
-  padding: 0px 7px;
-  border-radius: 5px;
-`
-const Option = styled.option``
-const Badge = styled.span`
-  background: lightgreen;
-  padding: 1px 5px;
-  color: white;
-  border: none;
-  border-radius: 4px;
-`
+
 
 const TestVoucherList = () => {
   const [vouchers, setVouchers] = useState([])
@@ -89,8 +55,6 @@ const TestVoucherList = () => {
   const [array, setArray] = useState([])
   const [isShow, setIsShow] = useState([])
   const [vouCode, setVouCode] = useState('')
-  const [open, setOpen] = useState(false)
-  const [id, setId] = useState('')
 
   const handleRelated = val => {
     const getRelated = async () => {
@@ -268,7 +232,7 @@ const TestVoucherList = () => {
                   </Thead>
 
                   {vouchers.map((vou, index) => (
-                    <Tbody>
+                    <Tbody key={vou._id}>
                       <Tr>
                         <Td>{++index}</Td>
                         <Td>{vou.date ? vou.date.split('T')[0] : ''}</Td>

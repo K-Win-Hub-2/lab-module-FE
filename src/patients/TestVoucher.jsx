@@ -3,14 +3,12 @@ import SideBar from "../components/views/SideBar";
 import styled from "styled-components";
 import {
   AiOutlinePlus,
-  AiTwotoneFilter,
-  AiFillInfoCircle,
+  
 } from "react-icons/ai";
-import { FaFileExport } from "react-icons/fa";
 import axios from "axios";
-import ResultDialog from "./ResultDialog";
+
 import { useLocation, Link } from "react-router-dom";
-import { data } from "../plugins/datatables-buttons/js/dataTables.buttons";
+
 
 const Top = styled.div`
   display: flex;
@@ -44,19 +42,10 @@ const Button = styled.button`
   border-radius: 10px;
 `;
 
-const Btn = styled.button`
-  padding: 4px 8px;
-  border-radius: 5px;
-  margin-left: 13px;
-`;
+
 
 const Div = styled.div``;
-const Input = styled.input`
-  width: 165px;
-  border: 1px solid grey;
-  border-radius: 12px;
-  padding: 3px;
-`;
+
 const Table = styled.table``;
 const Thead = styled.thead``;
 const Tbody = styled.tbody``;
@@ -69,34 +58,17 @@ const Th = styled.th`
 const Td = styled.td`
   font-size: 14px;
 `;
-const Select = styled.select`
-  padding: 0px 7px;
-  border-radius: 5px;
-`;
-const Option = styled.option``;
+
 
 const TestVoucher = () => {
   const [vouchers, setVouchers] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [pname, setPname] = useState("");
-  const [vouId, setVouId] = useState("");
-  const [page, setPage] = useState("");
-  const [pgender, setPgender] = useState("");
+ 
+ 
   const patient_id = useLocation().pathname.split("/")[2];
   console.log(patient_id, "patient_id");
 
   useEffect(() => {
-    const getPatient = async () => {
-      try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
-            patient_id
-        );
-        setPname(res.data.data.name);
-        setPage(res.data.data.age);
-        setPgender(res.data.data.gender);
-      } catch (err) {}
-    };
+  
     const getVouchers = async () => {
       try {
         let data = {
@@ -109,16 +81,15 @@ const TestVoucher = () => {
         );
         console.log(data, "data");
         setVouchers(res.data.data);
-      } catch (err) {}
+      } catch (err) {
+        alert('error');
+      }
     };
     // getPatient();
     getVouchers();
   }, []);
 
-  const show = (id) => {
-    setVouId(id);
-    setIsOpen(!isOpen);
-  };
+ 
 
   return (
     <div className="wrapper">
@@ -156,7 +127,7 @@ const TestVoucher = () => {
                     </Tr>
                   </Thead>
                   {vouchers.map((vou, i) => (
-                    <Tbody>
+                    <Tbody key={vou._id}>
                       <Tr>
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ""}</Td>
