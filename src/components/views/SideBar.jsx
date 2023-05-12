@@ -251,6 +251,12 @@ function Sidebar() {
                          <p>Profit & Loss</p>
                        </Link>
                      </li>
+                      <li className="nav-item">
+                       <Link to="/ftvl" className="nav-link">
+                         <i className="nav-icon fas fa-circle"></i>&nbsp;
+                         <p>Test Voucher List</p>
+                       </Link>
+                     </li>
                    </li>
                  </>
                )}

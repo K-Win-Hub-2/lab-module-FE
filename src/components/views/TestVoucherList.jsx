@@ -109,6 +109,7 @@ const TestVoucherList = () => {
         setVouchers(res.data.data);
 
 
+
         res.data.data.map((el, i) => {
           const obj = {
             'No': ++i,
@@ -127,6 +128,22 @@ const TestVoucherList = () => {
           icon: "warning",
           confirmButtonText: "CANCEL",
         });
+
+       
+     
+        // res.data.data.map((el, i) => {
+        //   const obj = {
+        //     'No': ++i,
+        //     'Voucher Date': el.date.split('T')[0],
+        //     'Voucher Code': el.code,
+        //     'Patient Name': el.relatedPatient.name,
+        //     'Test Qty': el.testSelection.length,
+        //     'Amount': el.totalCharge
+        //   }
+        //   setArray((array) => [...array, obj]);
+        // })
+     
+
       }
     }
     getVouchers();

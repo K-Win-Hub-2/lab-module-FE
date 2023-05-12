@@ -291,14 +291,18 @@ const Income = () => {
                                     <td>
                                       {incomeList.relatedBankAccount
                                         ? incomeList.relatedBankAccount.name
-                                        : incomeList.relatedCashAccount.name}
+                                        : ''}
+                                        
+                                        {incomeList.relatedCashAccount
+                                        ? incomeList.relatedCashAccount.name
+                                        : ''}
                                       {/* {
                                         incomeList.relatedCashAccount ? incomeList
                                           .relatedCashAccount.name:''
                                       } */}
                                     </td>
 
-                                    <td>{incomeList.relatedAccounting.name}</td>
+                                    <td>{incomeList.relatedAccounting ? incomeList.relatedAccounting.name :''}</td>
 
                                     <td>
                                       {incomeList.finalAmount.toLocaleString(

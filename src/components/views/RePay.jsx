@@ -9,32 +9,32 @@ import DialogTitle from "@mui/material/DialogTitle";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { Link,useLocation,Navigate, useNavigate } from "react-router-dom";
+import { Link, useLocation, Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import SideBar from "./SideBar";
 
-
 export default function BankInfoDialog(props) {
-
-const [remark,setRemark]=useState('');
-const [date,setDate]=useState('');
-const [isPaid,setIsPaid]=useState('');
-const [repayAmount,setRepayAmount]=useState('');
- const [crdAmount, setCrdAmount] = useState("");
+  const [remark, setRemark] = useState("");
+  const [date, setDate] = useState("");
+  const [isPaid, setIsPaid] = useState("");
+  const [repayAmount, setRepayAmount] = useState("");
+  const [crdAmount, setCrdAmount] = useState("");
   const VoucherID = useLocation().pathname.split("/")[2];
+
 
   const Repay = () => {
     const data = {
-      id:VoucherID,
+      voucherID: VoucherID,
       repayAmount: repayAmount,
       repayDate: date,
       creditRemark: remark,
-      creditAmount:Number(crdAmount),
+      creditAmount: -crdAmount
     };
+    alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    alert(JSON.stringify(data));
+
     axios
       .put(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/repayment",
@@ -48,30 +48,27 @@ const [repayAmount,setRepayAmount]=useState('');
       .catch(function (err) {
         alert(err.message);
       });
-
   };
 
-
   useEffect(() => {
-    const getAccountingType =async () => {
-      
+    const getAccountingType = async () => {
       try {
-        console.log(VoucherID,'id');
-        const res =await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/"+ VoucherID
+        console.log(VoucherID, "id");
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+            VoucherID
         );
-      
+
         setCrdAmount(res.data.data.creditAmount);
-        console.log(res.data.data.creditAmount,'credit');
-        
+        console.log(res.data.data.creditAmount, "credit");
       } catch (err) {}
     };
     getAccountingType();
   }, []);
+  // const crdAmo= -(crdAmount);
 
   return (
-
-      <div classNameName="App">
+    <div classNameName="App">
       {/* <!-- end preloader --> */}
       {/* @include('sweet::alert') */}
 
@@ -106,80 +103,82 @@ const [repayAmount,setRepayAmount]=useState('');
             <div class="container-fluid">
               {/* <!-- Small boxes (Stat box) --> */}
 
-           <div class="modal-body">
-              <div class="form-group">
-                <label for="name">Credit Amount</label>
-                <input
-                  type="number"
-                  class="form-control border border-info"
-                  name="acc_code"
-                  id="acc_code"
-                  value={crdAmount}
-                  onChange={(e) => setCrdAmount(e.target.value)}
-                />
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="name">Credit Amount</label>
+                  <input
+                    type="text"
+                    class="form-control border border-info"
+                    name="acc_code"
+                    id="acc_code"
+                    min="0"
+                    step="1"
+                    value={-crdAmount}
+                    onChange={(e) => setCrdAmount(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Repay Amount</label>
+                  <input
+                    type="number"
+                    class="form-control border border-info"
+                    name="acc_code"
+                    id="acc_code"
+                    onChange={(e) => setRepayAmount(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Credit Remark</label>
+
+                  <input
+                    type="text"
+                    name="sub_head"
+                    className="form-control border-info"
+                    id=""
+                    onChange={(e) => setRemark(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Repay Date</label>
+
+                  <input
+                    type="date"
+                    name="sub_head"
+                    className="form-control border-info"
+                    id=""
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="name">Is Paid</label>
+
+                  <input
+                    type="checkbox"
+                    name="sub_head"
+                    className="ml-3"
+                    style={{ width: "1.5em", height: "1.5em" }}
+                    value="true"
+                    id=""
+                    onChange={(e) => setIsPaid(e.target.value)}
+                  />
+                </div>
               </div>
-
-              <div class="form-group">
-                <label for="name">Repay Amount</label>
-                <input
-                  type="number"
-                  class="form-control border border-info"
-                  name="acc_code"
-                  id="acc_code"
-                  onChange={(e) => setRepayAmount(e.target.value)}
-                />
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                  onClick={props.close}>
+                  Close
+                </button>
+                <button class="btn btn-primary" onClick={Repay}>
+                  Save
+                </button>
               </div>
-
-              <div class="form-group">
-                <label for="name">Credit Remark</label>
-
-                <input
-                  type="text"
-                  name="sub_head"
-                  className="form-control border-info"
-                  id=""
-                  onChange={(e) => setRemark(e.target.value)}
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="name">Repay Date</label>
-
-                <input
-                  type="date"
-                  name="sub_head"
-                  className="form-control border-info"
-                  id=""
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </div>
-
-              <div class="form-group">
-                <label for="name">Is Paid</label>
-
-                <input
-                  type="checkbox"
-                  name="sub_head"
-                  className="ml-3"
-                  style={{ width: "1.5em", height: "1.5em" }}
-                  value="true"
-                  id=""
-                  onChange={(e) => setIsPaid(e.target.value)}
-                />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-                onClick={props.close}>
-                Close
-              </button>
-              <button class="btn btn-primary" onClick={Repay}>
-                Save
-              </button>
-            </div>
 
               {/* <!-- /.row (main row) --> */}
             </div>
@@ -203,9 +202,6 @@ const [repayAmount,setRepayAmount]=useState('');
       </aside>
       {/* <!-- /.control-sidebar --> */}
     </div>
-
-
-    
   );
 }
 // phyo
