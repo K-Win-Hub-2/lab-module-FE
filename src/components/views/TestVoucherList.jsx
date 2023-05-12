@@ -3,10 +3,11 @@ import SideBar from "./SideBar";
 import styled from 'styled-components'
 import {  AiFillInfoCircle } from 'react-icons/ai'
 import axios from 'axios';
+import { FaCheck } from "react-icons/fa";
 import ExportVoucher from './ExportVoucher'
 import Swal from "sweetalert2";
 import { Link } from 'react-router-dom';
-import RePayDialog from '../../components/views/RePayDialog';
+// import RePayDialog from '../../components/views/RePayDialog';
 
 const Top = styled.div`
 display : flex;
@@ -137,11 +138,11 @@ const TestVoucherList = () => {
   const search = async () => {
     const result = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers');
     if (name == '') {
-      setVouchers(result.data.data.filter((el) => el.date.split('T')[0] >= from &&
+      setVouchers(result.data.data.filter((el) => el.date >= from &&
         el.date.split('T')[0] <= to))
     }
     else {
-      setVouchers(result.data.data.filter((el) => el.date.split('T')[0] >= from &&
+      setVouchers(result.data.data.filter((el) => el.date >= from &&
         el.date.split('T')[0] <= to && el.relatedPatient.name == name))
     }
     vouchers.map((el, i) => {
@@ -196,19 +197,21 @@ const TestVoucherList = () => {
                               onChange={(e) => setTo(e.target.value)}
                             />
                           </div>
-                          <div className="col-md-2" style={{ marginTop: "35px" }}>
+                          {/* <div
+                            className="col-md-2"
+                            style={{ marginTop: "35px" }}>
                             <button
                               className="btn btn-sm btn-primary"
                               onClick={DateFilter}>
                               Filter
                             </button>
-                            </div>
+                          </div> */}
                         </div>
                       </div>
 
                       <div className="col-6">
                         <div className="row">
-                          <div className="col-6">
+                          <div className="offset-2 col-6">
                             <label htmlFor="">Patient Name:</label>
                             <input
                               type="text"
@@ -217,7 +220,7 @@ const TestVoucherList = () => {
                               onChange={(e) => setName(e.target.value)}
                             />
                           </div>
-                          <div className="col-6" style={{ marginTop: "35px" }}>
+                          <div className="col-4" style={{ marginTop: "35px" }}>
                             <button
                               className="btn btn-sm btn-primary"
                               onClick={search}>
@@ -260,7 +263,7 @@ const TestVoucherList = () => {
                         <Td>{vou.totalCharge}</Td>
                         <Td>
                           {vou.creditAmount ? (
-                            <div className="badge badge-danger px-3 py-2">
+                            <div className="badge badge-warning px-3 py-2">
                               Credit
                             </div>
                           ) : (
@@ -273,17 +276,25 @@ const TestVoucherList = () => {
                         <Td>
                           <Link
                             to={"/testslip/" + vou._id}
-                            className="btn btn-sm btn-primary">
+                            className="btn btn-sm btn-primary float-left">
                             Detail
                             <AiFillInfoCircle style={{ marginLeft: "7px" }} />
                           </Link>
                           &nbsp;
-                          <button
-                            type="button"
-                            onClick={() => showDialog(vou._id)}
-                            className="btn btn-sm btn-primary">
-                            RePay
-                          </button>
+                          {vou.creditAmount ? (
+                            <Link to={"/repay/"+vou._id}
+                              
+                              className="btn btn-sm btn-primary">
+                              RePay
+                            </Link>
+                          ) : (
+                            <button
+                              type="button"
+                              className="btn btn-sm btn-secondary">
+                              Paid &nbsp;
+                              <FaCheck />
+                            </button>
+                          )}
                         </Td>
                       </Tr>
                     ))}
@@ -292,14 +303,14 @@ const TestVoucherList = () => {
               </Div>
             </Div>
           </div>
-          <RePayDialog
+          {/* <RePayDialog
             open={open}
             close={() => setOpen(false)}
             id={id}
             setOpen={setOpen}
             setVouchers={setVouchers}
             vouchers={vouchers}
-          />
+          /> */}
         </div>
       </div>
     </div>

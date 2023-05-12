@@ -8,24 +8,28 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link,useLocation,Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
+import SideBar from "./SideBar";
+
 
 export default function BankInfoDialog(props) {
-const [creditAmount,setCreditAmount]=useState('');
+
 const [remark,setRemark]=useState('');
 const [date,setDate]=useState('');
 const [isPaid,setIsPaid]=useState('');
 const [repayAmount,setRepayAmount]=useState('');
  const [crdAmount, setCrdAmount] = useState("");
+  const VoucherID = useLocation().pathname.split("/")[2];
 
   const Repay = () => {
     const data = {
-      id: props.id,
+      id:VoucherID,
       repayAmount: repayAmount,
       repayDate: date,
       creditRemark: remark,
-      creditAmount: Number(crdAmount),
+      creditAmount:Number(crdAmount),
     };
     const config = {
       headers: { "Content-Type": "application/json" },
@@ -39,24 +43,26 @@ const [repayAmount,setRepayAmount]=useState('');
       )
       .then(function (response) {
         alert("success");
-        props.setVouchers([...props.vouchers, response.data.data]);
+        // props.setVouchers([...props.vouchers, response.data.data]);
       })
       .catch(function (err) {
         alert(err.message);
       });
-    props.setOpen(false);
+
   };
 
 
   useEffect(() => {
-    const getAccountingType =() => {
-      console.log(props.id,'id');
+    const getAccountingType =async () => {
+      
       try {
-        const res = axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today"
+        console.log(VoucherID,'id');
+        const res =await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/"+ VoucherID
         );
-        console.log(res.data.data.creditAmount);
-        setCrdAmount(res.data.data.creditAmount,'credit');
+      
+        setCrdAmount(res.data.data.creditAmount);
+        console.log(res.data.data.creditAmount,'credit');
         
       } catch (err) {}
     };
@@ -64,27 +70,43 @@ const [repayAmount,setRepayAmount]=useState('');
   }, []);
 
   return (
-    <div>
-      <Dialog open={props.open} onClose={props.close}>
-        <DialogTitle>
-          <div className="modal-header bg-info">
-            <h4 className="modal-title">Add New Accounting</h4>
-            <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              onClick={props.close}>
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText></DialogContentText>
 
-          <form action="" method="post">
-            {/* @csrf */}
-            <div class="modal-body">
+      <div classNameName="App">
+      {/* <!-- end preloader --> */}
+      {/* @include('sweet::alert') */}
+
+      <div className="wrapper">
+        {/* <!-- Main Sidebar Container --> */}
+        <SideBar />
+
+        {/* <!-- Content Wrapper. Contains page content --> */}
+        <div className="content-wrapper">
+          {/* <!-- Content Header (Page header) --> */}
+          <div className="content-header">
+            <div className="container-fluid">
+              <div className="row ">
+                <div className="col-sm-12">
+                  <ol className="breadcrumb">
+                    <li className="breadcrumb-item">
+                      <Link to="/tvoucherList">
+                        <i>
+                          <FaArrowLeft />
+                        </i>
+                      </Link>
+                    </li>
+                    <li className="breadcrumb-item active">Repay</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <!-- Main content --> */}
+          <section class="content">
+            <div class="container-fluid">
+              {/* <!-- Small boxes (Stat box) --> */}
+
+           <div class="modal-body">
               <div class="form-group">
                 <label for="name">Credit Amount</label>
                 <input
@@ -92,7 +114,7 @@ const [repayAmount,setRepayAmount]=useState('');
                   class="form-control border border-info"
                   name="acc_code"
                   id="acc_code"
-                  defaultValue={crdAmount}
+                  value={crdAmount}
                   onChange={(e) => setCrdAmount(e.target.value)}
                 />
               </div>
@@ -154,14 +176,36 @@ const [repayAmount,setRepayAmount]=useState('');
                 onClick={props.close}>
                 Close
               </button>
-              <Button class="btn btn-primary" onClick={Repay}>
+              <button class="btn btn-primary" onClick={Repay}>
                 Save
-              </Button>
+              </button>
             </div>
-          </form>
-        </DialogContent>
-      </Dialog>
+
+              {/* <!-- /.row (main row) --> */}
+            </div>
+          </section>
+          {/* <!-- /.content --> */}
+        </div>
+      </div>
+
+      {/* <!-- /.content-wrapper --> */}
+      <footer className="main-footer">
+        <strong>
+          Copyright &copy; 2017-2020{" "}
+          <a href="http://www.kwintechnologies.com">K-win Technology</a>.
+        </strong>
+        All rights reserved.
+      </footer>
+
+      {/* <!-- Control Sidebar --> */}
+      <aside classNameName="control-sidebar control-sidebar-dark">
+        {/* <!-- Control sidebar content goes here --> */}
+      </aside>
+      {/* <!-- /.control-sidebar --> */}
     </div>
+
+
+    
   );
 }
 // phyo

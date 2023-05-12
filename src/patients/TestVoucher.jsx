@@ -86,17 +86,17 @@ const TestVoucher = () => {
   console.log(patient_id, "patient_id");
 
   useEffect(() => {
-    // const getPatient = async () => {
-    //   try {
-    //     const res = await axios.get(
-    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
-    //         patient_id
-    //     );
-    //     setPname(res.data.data.name);
-    //     setPage(res.data.data.age);
-    //     setPgender(res.data.data.gender);
-    //   } catch (err) {}
-    // };
+    const getPatient = async () => {
+      try {
+        const res = await axios.get(
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
+            patient_id
+        );
+        setPname(res.data.data.name);
+        setPage(res.data.data.age);
+        setPgender(res.data.data.gender);
+      } catch (err) {}
+    };
     const getVouchers = async () => {
       try {
         let data = {

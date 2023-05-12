@@ -6,6 +6,7 @@ import {FaFileExport} from "react-icons/fa"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Swal from "sweetalert2";
 
 const Top = styled.div`
 display : flex;
@@ -84,6 +85,17 @@ border-radius:4px;
 `
 
 const TestResultList = () => {
+  const customStyles = {
+  tabsPen: {
+    border: '1px solid red', // Change this value to the desired color
+  },
+  tabsPro: {
+     border: '1px solid yellow',
+  },
+  tabsFin:{
+ border: '1px solid green',
+  }
+};
     const [vouchers,setVouchers] = useState([]);
     const [from,setFrom] = useState('');
     const [to,setTo] = useState('');
@@ -98,21 +110,19 @@ const TestResultList = () => {
         getVouchers();
     },[])
 
-    const search = async () =>{
-        const result = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers');
-        if(name == '' && status == ''){
-            setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
-            el.date.split('T')[0]<= to))
-        }
-        else if(status == ''){
-          setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
-          el.date.split('T')[0]<= to && el.relatedPatient.name == name))
-        }
-        else if(name == ''){
-          setVouchers(result.data.data.filter((el)=>el.date.split('T')[0]>= from &&
-          el.date.split('T')[0]<= to && el.status == status))
-        }
+   const search = async () => {
+    const result = await axios.get('http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers');
+    if (name == '') {
+      setVouchers(result.data.data.filter((el) => el.date >= from &&
+        el.date.split('T')[0] <= to))
     }
+    else {
+      setVouchers(result.data.data.filter((el) => el.date >= from &&
+        el.date.split('T')[0] <= to && el.relatedPatient.name == name))
+    }
+  }
+  
+  
 
   return (
     <div className="wrapper">
@@ -139,7 +149,7 @@ const TestResultList = () => {
                 <label htmlFor="">To:</label>
                 <input type="date" placeholder="Search..." className='form-control' onChange={(e)=>setTo(e.target.value)}/>
                 </div>
-                <div className='col-2'>
+                {/* <div className='col-2'>
                     <label htmlFor="">Status:</label>
                     <select className='form-control' onChange={(e)=>setStatus(e.target.value)}>
                         <option value="">Choose Status</option>
@@ -147,12 +157,12 @@ const TestResultList = () => {
                         <option value="In Progress">In Progress</option>
                         <option value="Finished">Finished</option>
                     </select>
-                </div>
-                <div className='col-6'>
-                    <div className='row'>
-                    <div className='col-6'>
-                    <label htmlFor="">Patient Name:</label>
-                    <input type="text" placeholder="Search..." className='form-control' onChange={(e)=>setName(e.target.value)}/>
+                </div> */}
+                <div className='offset-2 col-6 '>
+                    <div className='row float-right'>
+                    <div className='col-6 ' style={{marginTop:'35px'}}>
+                    {/* <label htmlFor="">Patient Name:</label> */}
+                    <input type="text" placeholder="Enter Patient Name..." className='form-control' onChange={(e)=>setName(e.target.value)}/>
                     </div>
                     <div className='col-6' style={{marginTop:'35px'}}>
                     <button className='btn btn-sm btn-primary' onClick={search}>Search</button>
@@ -162,12 +172,13 @@ const TestResultList = () => {
                 </div>
            
             </div>
-            <div className='mt-3'>
+            <div className='mt-5'>
             <Tabs>
                   <TabList>
-                    <Tab>Pending</Tab>
-                    <Tab>In Progess</Tab>
-                    <Tab>Finished</Tab>
+                    <Tab 
+style={customStyles.tabsPen}>Pending</Tab>
+                    <Tab style={customStyles.tabsPro}>In Progess</Tab>
+                    <Tab style={customStyles.tabsFin}>Finished</Tab>
                   </TabList>
 
                   <TabPanel>
@@ -202,7 +213,10 @@ const TestResultList = () => {
               }   
              </Td>
               <Td><Badge>{vou.status}</Badge></Td>
-              <Td><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Td>
+              <Td>
+              {vou.status == 'Finished' && ( <Btn className='btn btn-sm btn-info'>Finished<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn> )}
+            
+              </Td>
             </Tr>))}
             </Tbody>
           </Table>
@@ -238,8 +252,8 @@ const TestResultList = () => {
                 ))
               }   
              </Td>
-              <Td><Badge>{vou.status}</Badge></Td>
-              <Td><Link to={'/test/'+vou._id}><Btn className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Link></Td>
+              <Td><div className='badge badge-primary px-3 py-2'>{vou.status}</div></Td>
+              <Td><Link to={'/test/'+vou._id}><Btn className='btn btn-sm btn-primary '>Detail<AiFillInfoCircle style={{marginLeft:'7px'}}/></Btn></Link></Td>
             </Tr>))}
             </Tbody>
           </Table>
