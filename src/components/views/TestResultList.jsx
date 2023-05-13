@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import SideBar from './SideBar'
 import styled from 'styled-components'
@@ -232,7 +233,7 @@ const TestResultList = () => {
                             </Tbody>
                           </Table>
                         </TabPanel>
-                        {/* <TabPanel>
+                        <TabPanel>
                           <Table className='table table-hover mt-3'>
                             <Thead>
                               <Tr>
@@ -327,7 +328,7 @@ const TestResultList = () => {
                               )}
                             </Tbody>
                           </Table>
-                        </TabPanel> */}
+                        </TabPanel>
                       </Tabs>
                     </div>
                   </Left>

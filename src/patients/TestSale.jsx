@@ -136,7 +136,7 @@ const TestSale = () => {
             patient_id
         );
 
-        console.log(res.data.data.voucherID);
+        console.log(res.data.data);
         setVoucherCode(res.data.data.voucherID);
       } catch (err) {}
     };
@@ -229,7 +229,7 @@ const TestSale = () => {
     }
 
     const res = axios
-      .post("http://localhost:9000/api/voucher", data)
+      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
       .then(function () {
         Swal.fire({
           title: "Success",
@@ -289,7 +289,7 @@ const TestSale = () => {
                     <input
                       type="text"
                       className="form-control"
-                      value={voucherCode}
+                      defaultValue={voucherCode}
                     />
                   </div>
                   <div className="col-6 mt-2">

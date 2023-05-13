@@ -26,6 +26,8 @@ import Income from "./components/views/Finance/Income/Income";
 import Expense from "./components/views/Finance/Expense/Expense";
 import Bank from "./components/views/Finance/Bank/Bank";
 import Repay from "./components/views/RePay.jsx";
+// import Supplier from "./components/views/Supplier.jsx";
+
 
 import TrialBalance from './components/views/TrialBalance';
 import React from 'react';
@@ -83,6 +85,7 @@ function App() {
         <Route path="/bank" element={<Bank />}></Route>
         <Route path='/repay/:id' element={<Repay/>}></Route>
         <Route path='/ftvl' element={<FinanceTestVouList/>}></Route>
+       
       </Routes>
     </Router>
   );

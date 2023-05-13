@@ -4,16 +4,14 @@ import React, { useState, useEffect, useRef } from 'react'
 import SideBar from '../components/views/SideBar'
 
 import axios from 'axios'
-import { useLocation} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { Base64 } from 'js-base64'
 import ReactHtmlParser from 'react-html-parser'
 import ReactToPrint from 'react-to-print'
 // import Printer from "@eyelly/react-printer";
 
-
 const TestVoucherPrint = () => {
-
   const [referDoctorLists, setReferDoctorLists] = useState([])
   const [voucherLists, setVoucherLists] = useState([])
   const [patientLists, setPatientLists] = useState([])
@@ -47,7 +45,7 @@ const TestVoucherPrint = () => {
   const ResOffCheck = () => {
     setResOn(false)
   }
-  function decodeBase64 (data) {
+  function decodeBase64(data) {
     const decode = Base64.decode(data)
 
     return decode
@@ -55,7 +53,7 @@ const TestVoucherPrint = () => {
   // end
 
   // change /br to line brake format
-  function formatString (data) {
+  function formatString(data) {
     const base64String = decodeBase64(data)
     const reactElements = ReactHtmlParser(base64String)
 
@@ -85,10 +83,9 @@ const TestVoucherPrint = () => {
 
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
-       
         // console.log(res.data.data.testSelection[0].result);
       } catch (err) {
-        alert('Error');
+        alert('Error')
       }
     }
 
@@ -112,9 +109,8 @@ const TestVoucherPrint = () => {
             TestVou_id
         )
 
-        setReferDoctorLists(res.data.data.referDoctor)
-        console.log(res.data.data.referDoctor
-);
+        setReferDoctorLists(res.data.data)
+        console.log(res.data.data)
       } catch (err) {
         alert('Error')
       }
@@ -200,8 +196,11 @@ const TestVoucherPrint = () => {
                     </tr>
                     <tr>
                       <th>Referring Doctor:</th>
-                      <td colSpan='2'>{referDoctorLists.name &&( referDoctorLists.name)
- }</td>
+                      <td colSpan='2'>
+                        {referDoctorLists.referDoctor
+                          ? referDoctorLists.referDoctor.name
+                          : ''}
+                      </td>
                       <th>Clinic:</th>
                       <td colSpan='2'>Central Clinic</td>
                     </tr>
@@ -275,14 +274,23 @@ const TestVoucherPrint = () => {
                     <span>Laboratory Technician</span>
                   </div>
                   <div className='col-6' style={{ textAlign: 'right' }}>
-                    <span>{referDoctorLists.name && (referDoctorLists.name
- )}</span>
+                    {console.log(referDoctorLists)}
+                    <span>
+                      {referDoctorLists.referDoctor &&
+                        referDoctorLists.referDoctor.name}
+                    </span>
                     <br></br>
-                    <span>{referDoctorLists.position ? referDoctorLists.position
- : ''}</span>
+                    <span>
+                      {referDoctorLists.referDoctor
+                        ? referDoctorLists.referDoctor.position
+                        : ''}
+                    </span>
                     <br></br>
-                    <span>{referDoctorLists.education ? referDoctorLists.education
- : ''}</span>
+                    <span>
+                      {referDoctorLists.referDoctor
+                        ? referDoctorLists.referDoctor.education
+                        : ''}
+                    </span>
                     <br></br>
                     <span>Central Lab, Ahlone, Yangon</span>
                   </div>

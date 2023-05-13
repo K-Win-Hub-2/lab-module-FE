@@ -1,44 +1,44 @@
 /* eslint-disable */
-import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import styled from "styled-components";
-import { FaArrowLeft, FaMinus } from "react-icons/fa";
+import * as React from 'react'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import styled from 'styled-components'
+import { FaArrowLeft, FaMinus } from 'react-icons/fa'
 
-import {useState, useEffect } from "react";
-import { useLocation,Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
-import SideBar from "../../SideBar";
-import AccountList from './AccountList';
-import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react'
+import { useLocation, Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import SideBar from '../../SideBar'
+import AccountList from './AccountList'
+import { Link } from 'react-router-dom'
 
 
 export default function BankInfoDialog(props) {
-  const [code, setCode] = useState("");
-  const [accountingTypes, setAccountingTypes] = useState("");
-  const [headingList, setHeadingList] = useState([]);
-  const [heading, setHeading] = useState("");
-  const [subHeading, setSubHeading] = useState("");
-  const [accType, setAccType] = useState([]);
+  const [code, setCode] = useState('')
+  const [accountingTypes, setAccountingTypes] = useState('')
+  const [headingList, setHeadingList] = useState([])
+  const [heading, setHeading] = useState('')
+  const [subHeading, setSubHeading] = useState('')
+  const [accType, setAccType] = useState([])
 
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState('')
   // const [openingBalance, setOpeningBalance] = useState('');
-  const [generalFlag, setGeneralFlag] = useState(false);
+  const [generalFlag, setGeneralFlag] = useState(false)
   // const [bankAddress, setBankAddress] = useState('');
-  const [relatedCurrency, setRelatedCurrency] = useState("");
-  const [carryForWork, setCarryForWork] = useState(false);
-  const [flag, setFlag] = useState(false);
-  const [upCode, setUpCode] = useState('');
-  const [upSub,setUpSub]=useState('');
-  const [upBal,setUpBal]=useState('');
-  const [upCur,setUpCur]=useState('');
-const Id = useLocation().pathname.split("/")[2];
+  const [relatedCurrency, setRelatedCurrency] = useState('')
+  const [upWork, setUpWork] = useState(false)
+  const [flag,setFlag]=useState('');
+  const [upFlag, setUpFlag] = useState(false)
+  const [upCode, setUpCode] = useState('')
+  const [upSub, setUpSub] = useState('')
+  const [upBal, setUpBal] = useState('')
+  const [upCur, setUpCur] = useState('')
+  const Id = useLocation().pathname.split('/')[2]
 
   const AccountCreate = () => {
     const data = {
@@ -52,21 +52,20 @@ const Id = useLocation().pathname.split("/")[2];
       openingBalance: amount,
       generalFlag: generalFlag,
       relatedCurrency: relatedCurrency,
-      carryForWork: carryForWork,
-    };
+      carryForWork: carryForWork
+    }
     const config = {
-      headers: { "Content-Type": "application/json" },
-    };
+      headers: { 'Content-Type': 'application/json' }
+    }
     // alert(JSON.stringify(data));
     axios
       .put(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list",
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
         data,
         config
       )
-      .then(function (response)
-      {
-        alert("success");
+      .then(function (response) {
+        alert('success')
         // props.setAccountLists([...props.accountLists, response.data.data]);
         // const index = props.accountLists.findIndex(
         //   (item) => item._id === props.id
@@ -77,80 +76,81 @@ const Id = useLocation().pathname.split("/")[2];
         //   ...response.data.data,
         // };
         // props.setAccountLists(arr);
-      });
-      
-     
-  
-  };
+      })
+  }
 
-  const handleHeading = async (event) => {
-    setHeading(event);
-    console.log(heading, headingList);
-  };
+  const handleHeading = async event => {
+    setHeading(event)
+    console.log(heading, headingList)
+  }
 
-  const handleAccountHeader = async (event) => {
-    setAccountingTypes(event);
-    console.log(accountingTypes);
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`;
-    console.log(url);
-    const res = await axios.get(url);
-    console.log(res.data.data, "res.data.data");
-    setHeadingList(res.data.data);
-    setFlag(true);
-    console.log(headingList, "heading");
-  };
+  const handleAccountHeader = async event => {
+    setAccountingTypes(event)
+    console.log(accountingTypes)
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
+    console.log(url)
+    const res = await axios.get(url)
+    console.log(res.data.data, 'res.data.data')
+    setHeadingList(res.data.data)
+    setFlag(true)
+    console.log(headingList, 'heading')
+  }
   useEffect(() => {
     const getAccountingType = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types"
-        );
-        setAccType(res.data.list);
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        )
+        setAccType(res.data.list)
       } catch (err) {}
-    };
+    }
 
     const getAccount = async () => {
       try {
-        console.log(Id, "Id");
-        const res =await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/"+Id
-        );
-        console.log(res.data.data);
-        setUpCode(res.data.data[0].code);
-        setUpSub(res.data.data[0].name);
-        setUpBal(res.data.data[0].amount);
-        setUpCur(res.data.data[0].relatedCurrency);
+        console.log(Id, 'Id')
+        const res = await axios.get(
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
+            Id
+        )
+        console.log(res.data.data)
+        setUpCode(res.data.data[0].code)
+        console.log(res.data.data[0].code)
+
+        setUpSub(res.data.data[0].name)
+        setUpBal(res.data.data[0].amount)
+        setUpCur(res.data.data[0].relatedCurrency)
+        setUpFlag(res.data.data[0].generalFlag)
       } catch (err) {}
-    };
-    getAccountingType();
-    getAccount();
-  },);
+    }
+    getAccountingType()
+    getAccount()
+  })
 
   return (
-    <div classNameName="App">
+    <>
       {/* <!-- end preloader --> */}
       {/* @include('sweet::alert') */}
 
-      <div className="wrapper">
+      <div className='wrapper'>
         {/* <!-- Main Sidebar Container --> */}
         <SideBar />
 
         {/* <!-- Content Wrapper. Contains page content --> */}
-        <div className="content-wrapper">
+        <div className='content-wrapper'>
           {/* <!-- Content Header (Page header) --> */}
-          <div className="content-header">
-            <div className="container-fluid">
-              <div className="row ">
-                <div className="col-sm-12">
-                  <ol className="breadcrumb">
-                    <li className="breadcrumb-item">
-                      <Link to="/account_list">
+          <div className='content-header'>
+            <div className='container-fluid'>
+              <div className='row '>
+                <div className='col-sm-12'>
+                  <ol className='breadcrumb'>
+                    <li className='breadcrumb-item'>
+                      <Link to='/account_list'>
                         <i>
                           <FaArrowLeft />
                         </i>
                       </Link>
                     </li>
-                    <li className="breadcrumb-item active">Account List</li>
+                    <li className='breadcrumb-item active'>Account List</li>
                   </ol>
                 </div>
               </div>
@@ -158,22 +158,22 @@ const Id = useLocation().pathname.split("/")[2];
           </div>
 
           {/* <!-- Main content --> */}
-          <section class="content">
-            <div class="container-fluid">
+          <section class='content'>
+            <div class='container-fluid'>
               {/* <!-- Small boxes (Stat box) --> */}
 
-              <form action="" method="post">
+              <form action='' method='post'>
                 {/* @csrf */}
-                <div class="modal-body">
-                  <div class="form-group">
-                    <label for="name">Account Code</label>
+                <div class='modal-body'>
+                  <div class='form-group'>
+                    <label for='name'>Account Code</label>
                     <input
-                      type="text"
-                      class="form-control border border-info"
-                      name="acc_code"
-                      id="acc_code"
-                      dafaultValue={upCode}
-                      onChange={(e) => setCode(e.target.value)}
+                      type='text'
+                      class='form-control border border-info'
+                      name='acc_code'
+                      id='acc_code'
+                      defaultValue={upCode}
+                      onChange={e => setUpCode(e.target.value)}
                     />
                   </div>
                   {/* <div class="form-group">
@@ -188,95 +188,98 @@ const Id = useLocation().pathname.split("/")[2];
                 />
               </div> */}
 
-                  <div class="form-group">
-                    <label for="name">Account Type</label>
+                  <div class='form-group'>
+                    <label for='name'>Account Type</label>
                     <select
-                      class="custom-select border-info"
-                      name="account_type_id"
-                      onChange={(e) => handleAccountHeader(e.target.value)}>
+                      class='custom-select border-info'
+                      name='account_type_id'
+                      onChange={e => handleAccountHeader(e.target.value)}
+                    >
                       <option>Choose Account Type</option>
-                      {accType.map((option) => (
+                      {accType.map(option => (
                         <option value={option._id}>{option.name}</option>
                       ))}
                     </select>
                   </div>
-                  {flag ? (
-                    <div class="form-group">
-                      <label for="name">Heading</label>
+                  {upFlag ? (
+                    <div class='form-group'>
+                      <label for='name'>Heading</label>
                       <select
-                        class="custom-select border-info"
-                        name="account_type_id"
-                        onChange={(e) => handleHeading(e.target.value)}>
+                        class='custom-select border-info'
+                        name='account_type_id'
+                        onChange={e => handleHeading(e.target.value)}
+                      >
                         <option>Choose Heading Account</option>
-                        {headingList.map((option) => (
+                        {headingList.map(option => (
                           <option value={option._id}>{option.name}</option>
                         ))}
                       </select>
                     </div>
                   ) : null}
-                  <div class="form-group">
-                    <label for="name">Sub Heading</label>
+                  <div class='form-group'>
+                    <label for='name'>Sub Heading</label>
 
                     <input
-                      type="text"
-                      name="sub_head"
-                      className="form-control border-info"
-                      id=""
+                      type='text'
+                      name='sub_head'
+                      className='form-control border-info'
+                      id=''
                       defaultValue={upSub}
-                      onChange={(e) => setSubHeading(e.target.value)}
+                      onChange={e => setUpSub(e.target.value)}
                     />
                   </div>
 
-                  <div class="form-group">
-                    <label for="name">Balance</label>
+                  <div class='form-group'>
+                    <label for='name'>Balance</label>
                     <input
-                      type="text"
-                      class="form-control border-info"
-                      name="balance"
+                      type='text'
+                      class='form-control border-info'
+                      name='balance'
                       defaultValue={upBal}
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={e => setUpBal(e.target.value)}
                     />
                   </div>
-                  <div class="form-group">
-                    <label for="name">Currency</label>
+                  <div class='form-group'>
+                    <label for='name'>Currency</label>
                     <input
-                      type="text"
-                      class="form-control border-info"
-                      name="releatedCurrency"
+                      type='text'
+                      class='form-control border-info'
+                      name='releatedCurrency'
                       defaultValue={upCur}
-                      onChange={(e) => setRelatedCurrency(e.target.value)}
+                      onChange={e => setUpCur(e.target.value)}
                     />
                   </div>
-                  <div class="form-group">
-                    <label for="name">General Flag</label>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-check form-check-inline">
+                  <div class='form-group'>
+                    <label for='name'>General Flag</label>
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <div class='form-check form-check-inline'>
                           <input
-                            class="form-check-input"
-                            type="radio"
-                            name="yes_no"
-                            id="yes"
-                            onclick="show_project()"
-                            onChange={(e) => setGeneralFlag(true)}
+                            class='form-check-input'
+                            type='radio'
+                            name='yes_no'
+                            id='yes'
+                            onclick='show_project()'
+                            onChange={e => setUpFlag(true)}
+                           
                           />
-                          <label class="form-check-label text-info" for="yes">
+                          <label class='form-check-label text-info' for='yes'>
                             Yes
                           </label>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-check form-check-inline">
+                      <div class='col-md-6'>
+                        <div class='form-check form-check-inline'>
                           <input
-                            class="form-check-input"
-                            type="radio"
-                            name="yes_no"
-                            id="no"
-                            onclick="hide_project()"
-                            onChange={(e) => setGeneralFlag(false)}
-                            checked
+                            class='form-check-input'
+                            type='radio'
+                            name='yes_no'
+                            id='no'
+                            onclick='hide_project()'
+                            onChange={e => setUpFlag(false)}
+                          
                           />
-                          <label class="form-check-label text-info" for="no">
+                          <label class='form-check-label text-info' for='no'>
                             No
                           </label>
                         </div>
@@ -284,36 +287,36 @@ const Id = useLocation().pathname.split("/")[2];
                     </div>
                   </div>
 
-                  <div class="form-group">
-                    <label for="name">Carry Forward</label>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-check form-check-inline">
+                  <div class='form-group'>
+                    <label for='name'>Carry Forward</label>
+                    <div class='row'>
+                      <div class='col-md-6'>
+                        <div class='form-check form-check-inline'>
                           <input
-                            class="form-check-input"
-                            type="radio"
-                            name="no_yes"
-                            id="yes1"
-                            onclick="show_project()"
-                            onChange={(e) => setCarryForWork(true)}
+                            class='form-check-input'
+                            type='radio'
+                            name='no_yes'
+                            id='yes1'
+                            onclick='show_project()'
+                            onChange={e => setUpWork(true)}
                           />
-                          <label class="form-check-label text-info" for="bank">
+                          <label class='form-check-label text-info' for='bank'>
                             Yes
                           </label>
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-check form-check-inline">
+                      <div class='col-md-6'>
+                        <div class='form-check form-check-inline'>
                           <input
-                            class="form-check-input"
-                            type="radio"
-                            name="no_yes"
-                            id="no1"
-                            onclick="hide_project()"
-                            onChange={(e) => setCarryForWork(false)}
-                            checked
+                            class='form-check-input'
+                            type='radio'
+                            name='no_yes'
+                            id='no1'
+                            onclick='hide_project()'
+                            onChange={e => setUpWork(false)}
+                          
                           />
-                          <label class="form-check-label text-info" for="cash">
+                          <label class='form-check-label text-info' for='cash'>
                             No
                           </label>
                         </div>
@@ -321,14 +324,15 @@ const Id = useLocation().pathname.split("/")[2];
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
+                <div class='modal-footer'>
                   <button
-                    type="button"
-                    class="btn btn-secondary"
-                    data-dismiss="modal">
+                    type='button'
+                    class='btn btn-secondary'
+                    data-dismiss='modal'
+                  >
                     Close
                   </button>
-                  <Button class="btn btn-primary" onClick={AccountCreate}>
+                  <Button class='btn btn-primary' onClick={AccountCreate}>
                     Update
                   </Button>
                 </div>
@@ -342,21 +346,21 @@ const Id = useLocation().pathname.split("/")[2];
       </div>
 
       {/* <!-- /.content-wrapper --> */}
-      <footer className="main-footer">
+      <footer className='main-footer'>
         <strong>
-          Copyright &copy; 2017-2020{" "}
-          <a href="http://www.kwintechnologies.com">K-win Technology</a>.
+          Copyright &copy; 2017-2020{' '}
+          <a href='http://www.kwintechnologies.com'>K-win Technology</a>.
         </strong>
         All rights reserved.
       </footer>
 
       {/* <!-- Control Sidebar --> */}
-      <aside classNameName="control-sidebar control-sidebar-dark">
+      <aside className='control-sidebar control-sidebar-dark'>
         {/* <!-- Control sidebar content goes here --> */}
       </aside>
       {/* <!-- /.control-sidebar --> */}
-    </div>
-  );
+    </>
+  )
 }
 // phyo
 //maymyat
