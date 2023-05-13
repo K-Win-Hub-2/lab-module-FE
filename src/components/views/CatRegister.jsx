@@ -197,7 +197,7 @@ alert(JSON.stringify(data));
                     <li className='breadcrumb-item'>
                       <a href='/'>Home</a>
                     </li>
-                    <li className='breadcrumb-item active'>Category List</li>
+                    <li className='breadcrumb-item active'>All Category List</li>
                   </ol>
                 </div>
               </div>
