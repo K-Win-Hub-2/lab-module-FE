@@ -80,7 +80,7 @@ export default function BankInfoDialog(props) {
       headers: { "Content-Type": "application/json" },
     };
     const res = axios
-      .post("http://localhost:9000/api/transfer", data, config)
+      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/transfer", data, config)
       .then(function (response) {
         Swal.fire({
           title: "Successful!",
@@ -148,7 +148,6 @@ export default function BankInfoDialog(props) {
 
               <input
                 type="text"
-                value="CB-Bank-MMK"
                 name="from"
                 class="form-control"
                 value={props.name}

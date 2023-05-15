@@ -42,11 +42,11 @@ const Expense = () => {
           // };
           // await axios.post(
              //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related",
-            //  "http://localhost:9000/api/transactions/relatedtransactions",
+            //  "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedtransactions",
             //    jsonData,
             //    config
             await axios.get(
-              "http://localhost:9000/api/transactions/relatedExpense/" + id
+              "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedExpense/" + id
            ).then(function(response){
             console.log(response.data.data);
             setRelatedLists(response.data.data);
