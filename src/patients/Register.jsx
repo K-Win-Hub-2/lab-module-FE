@@ -74,9 +74,9 @@ const Register = () => {
   const patientCreate = () => {
     const data = {
       name: name,
-      // email: email,
+      email: email,
       age: age,
-      // phone: phone,
+      phone: phone,
       img:img,
       address: address,
       occupation: occupation,
@@ -87,8 +87,8 @@ const Register = () => {
 
     // if (img) data.img = img;
 
- if (email !== null) data = { ...data, email: email };
- if (phone !== null) data = { ...data, phone: phone };
+//  if (email !== null) data = { ...data, email: email };
+//  if (phone !== null) data = { ...data, phone: phone };
 //  if (address) data = { ...data, address: address };
 //  if (occupation) data = { ...data, occupation: occupation };
     // alert(JSON.stringify(data));

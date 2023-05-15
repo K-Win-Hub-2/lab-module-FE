@@ -1,52 +1,47 @@
-import React, { useState, useEffect, useRef } from 'react'
+/* eslint-disable */
+import React, { Component,useState, useEffect, useRef } from 'react'
 import SideBar from './SideBar'
-import styled from 'styled-components'
-import axios from 'axios';
-import Swal from "sweetalert2";
-import { useLocation } from 'react-router-dom';
+import styled ,{keyframes} from 'styled-components'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { useLocation } from 'react-router-dom'
 import ReactToPrint from 'react-to-print'
+import {bounce} from 'react-animation';
 
 
 
 const Top = styled.div`
-display : flex;
+  display: flex;
   justify-content: space-between;
-margin : 10px 0;
-`;
+  margin: 10px 0;
+`
 
 const Left = styled.div`
-font-weight : normal;
+  font-weight: normal;
   flex: 1;
-`;
+`
 
 const Title = styled.h5`
-font-weight : bold;
-margin-top : 10px;
+  font-weight: bold;
+  margin-top: 10px;
 `
 
+const Div = styled.div``
 
-
-
-
-const Div = styled.div`
-`
-
-const Table = styled.table`
-`
-const Thead = styled.thead`
-`
-const Tbody = styled.tbody`
-`
+const Table = styled.table``
+const Thead = styled.thead``
+const Tbody = styled.tbody``
 const Tr = styled.tr`
-text-align:center;
+  text-align: center;
 `
 const Th = styled.th`
-font-size:15px;
+  font-size: 15px;
 `
 const Td = styled.td`
   font-size: 14px;
 `
 
+const Bounce = styled.div`animation :2s ${keyframes `${bounce}`} infinite`;
 
 const TestVoucherSlip = () => {
   const [vouchers, setVouchers] = useState([])
@@ -59,6 +54,7 @@ const TestVoucherSlip = () => {
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
+  const [creditAmount, serCreditAmount] = useState('')
 
   let componentRef = useRef()
   const vouid = useLocation().pathname.split('/')[2]
@@ -81,7 +77,7 @@ const TestVoucherSlip = () => {
         setDate(res.data.data.date)
         setName(res.data.data.relatedPatient.name)
         setAge(res.data.data.relatedPatient.age)
-       
+        serCreditAmount(res.data.data.creditAmount)
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -200,13 +196,37 @@ const TestVoucherSlip = () => {
                             {change}
                           </td>
                         </tr>
+
+                        {creditAmount == 0 && (
+                          <>
+                          <tr>
+                            <td colSpan={4} style={{ textAlign: 'right' }}>
+                              Credit Amount
+                            </td>
+                            <td colSpan={4} style={{ textAlign: 'right' }}>
+                              0
+                            </td>
+                          </tr>
+                       
+                          </>
+                        )}
                         <tr>
                           <td colSpan={5} style={{ textAlign: 'center' }}>
                             ***Thank You***
                           </td>
                         </tr>
+                      
                       </tfoot>
                     </Table>
+                    {
+  creditAmount == 0 && (
+    <Bounce><h5 style={{ textAlign: 'center' }} className='mt-3'>
+  You paid your credit amount!
+</h5>
+</Bounce>
+  )
+}
+
                   </Div>
                 </Div>
                 <ReactToPrint

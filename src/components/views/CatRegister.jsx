@@ -322,7 +322,7 @@ alert(JSON.stringify(data));
                               value='false'
                               onclick='hide_project()'
                               onChange={e => setUpCheck(e.target.value)}
-                              checked
+                              
                             />
                             <label class='form-check-label text-info' for='no'>
                               No
@@ -441,7 +441,7 @@ alert(JSON.stringify(data));
                               value='false'
                               onclick='hide_project()'
                               onChange={e => setCheck(e.target.value)}
-                              checked
+                         
                             />
                             <label class='form-check-label text-info' for='no'>
                               No
