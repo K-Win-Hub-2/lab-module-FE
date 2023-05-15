@@ -62,7 +62,7 @@ export default function BankInfoDialog(props) {
     axios
       .post(
        // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/expense",
-       "http://localhost:9000/api/expense",
+       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/expense",
         jsonData,
         config
       )
