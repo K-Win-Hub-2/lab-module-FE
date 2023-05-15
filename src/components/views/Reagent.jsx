@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+
 
 function CatRegister() {
   const [reagent, setReagent] = useState([]);
@@ -88,10 +90,11 @@ function CatRegister() {
                             </a> */}
                             <button
                               type="button"
-                              className="btn btn-primary"
+                              className="btn btn-success"
                               // onClick={excelExport}
                             >
-                              Export Excel
+                              <FaFileExcel
+/>&nbsp;Export
                             </button>
                           </span>
                         </label>
@@ -143,72 +146,7 @@ function CatRegister() {
                       </table>
                     </div>
                   </div>
-                  {/* <div className="col-md-3">
-                    <div className="card px-3 py-3">
-                      <h5 className="card-header mb-4 text-secondary">
-                        Create Reagent
-                      </h5>
-
-                      <div class="form-group">
-                        <label for="code" className="text-secondary">
-                          Code
-                        </label>
-                        <input
-                          type="text"
-                          id="code"
-                          class="form-control border-info"
-                          name="code"
-                          //   ref={(el) => (this.name = el)}
-                          onChange={(e) => setCode(e.target.value)}
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Name
-                        </label>
-                        <input
-                          type="text"
-                          class="form-control border-info"
-                          name="name"
-                          id="name"
-                          //   ref={(el) => (this.name = el)}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Description
-                        </label>
-                        <textarea
-                          className="form-control"
-                          id="desc"
-                          //   ref={(el) => (this.description = el)}
-                          onChange={(e) =>
-                            setDescription(e.target.value)
-                          }></textarea>
-                      </div>
-                      <div class="form-group">
-                        <label for="name" className="text-secondary">
-                          Flag
-                        </label>
-                        <select
-                          class="custom-select border-info"
-                          name="account_type_id"
-                          id="flag"
-                          onChange={(e) => setFlag(e.target.value)}>
-                          <option></option>
-                          <option value="Service">Service</option>
-                          <option value="Reagent">Reagent</option>
-                        </select>
-                      </div>
-                      <button
-                        className="btn btn-primary form-control text-center fw-5"
-                        type="submit"
-                        onClick={CategoryCreate}>
-                        Save
-                      </button>
-                    </div>
-                  </div> */}
+            
                 </div>
               </div>
 

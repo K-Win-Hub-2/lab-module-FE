@@ -155,6 +155,7 @@ function LabServiceRegister() {
                       className='form-control'
                       placeholder=''
                       name='md_name'
+                      id='supplier'
                       onChange={(e)=>setSupplier(e.target.value)}
                     />
                   </div>

@@ -7,7 +7,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
+
 import { Link } from 'react-router-dom'
+
+
 
 const Top = styled.div`
   display: flex;
@@ -71,7 +74,10 @@ const TestResultList = () => {
   const [to, setTo] = useState('')
   const [name, setName] = useState('')
 
- useEffect(() => {
+
+
+
+useEffect(() => {
   const getVouchers = async () => {
     try {
       const res = await axios.get(
@@ -98,12 +104,11 @@ const TestResultList = () => {
         icon: 'warning',
         confirmButtonText: 'CANCEL'
       })
-
-    
     }
   }
   getVouchers()
 }, [])
+
 
 
   const search = async () => {
@@ -241,7 +246,10 @@ const TestResultList = () => {
                                         )}
                                       </Td>
                                       <Td>
-                                        <Badge>{vou.status}</Badge>
+                                        
+                                        <div className='badge badge-dark px-2 py-2'>
+                                          {vou.status}
+                                        </div>
                                       </Td>
                                       <Td>
                                         {vou.status == 'Finished' && (
@@ -299,7 +307,7 @@ const TestResultList = () => {
                                         )}
                                       </Td>
                                       <Td>
-                                        <div className='badge badge-primary px-3 py-2'>
+                                        <div className='badge badge-dark px-2 py-1'>
                                           {vou.status}
                                         </div>
                                       </Td>
@@ -353,7 +361,9 @@ const TestResultList = () => {
                                         )}
                                       </Td>
                                       <Td>
-                                        <Badge>{vou.status}</Badge>
+                                        <div className='badge badge-dark px-2 py-2'>
+                                          {vou.status}
+                                        </div>
                                       </Td>
                                       <Td>
                                         <Link to={'/test/' + vou._id}>

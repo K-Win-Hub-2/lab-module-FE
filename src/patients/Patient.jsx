@@ -199,7 +199,7 @@ const Patient = () => {
                     </Btn>
                   </Right>
                 </Top>
-                <Table ref={tableRef} className='table table-hover mt-4'>
+                <Table  className='table table-hover mt-4'>
                   <Thead>
                     <Tr>
                       <Th>#</Th>

@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
+import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+
 import Swal from "sweetalert2";
 import LabServiceUpdate from "../views/LabServiceUpdate";
 
@@ -192,9 +194,10 @@ const LabServiceList = () => {
                             </a> */}
                             <button
                               type="button"
-                              className="btn btn-primary"
+                              className="btn btn-success"
                               onClick={excelExport}>
-                              Export Excel
+                              <FaFileExcel
+/>&nbsp;Export
                             </button>
                           </span>
                         </label>

@@ -200,8 +200,13 @@ const Income = () => {
                               className='btn btn-sm btn-success'
                               onClick={excelExport}
                             >
+
                               <FaFileExcel />&nbsp;
                               Export
+
+                              <FaFileExcel />
+                              &nbsp; Export
+
                             </button>
                           </span>
                         </label>

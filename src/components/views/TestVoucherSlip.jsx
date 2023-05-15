@@ -198,7 +198,7 @@ const TestVoucherSlip = () => {
                           </td>
                         </tr>
 
-                        {creditAmount == 0 && (
+                        {/* {creditAmount == 0 && (
                           <>
                           <tr>
                             <td colSpan={4} style={{ textAlign: 'right' }}>
@@ -210,7 +210,7 @@ const TestVoucherSlip = () => {
                           </tr>
                        
                           </>
-                        )}
+                        )} */}
                         <tr>
                           <td colSpan={5} style={{ textAlign: 'center' }}>
                             ***Thank You***
@@ -219,7 +219,7 @@ const TestVoucherSlip = () => {
                       
                       </tfoot>
                     </Table>
-                    {
+                    {/* {
   creditAmount == 0 && (
 
       <h5 style={{ textAlign: 'center' }} className='mt-3'>
@@ -227,7 +227,7 @@ const TestVoucherSlip = () => {
       </h5>
 
   )
-}
+} */}
 
                   </Div>
                 </Div>

@@ -7,7 +7,7 @@ import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
 
 import SideBar from '../../SideBar'
 import { useEffect, useState } from 'react'
-import {useSelector,useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux'
 import { setList } from '../../../../features/accountListSlice'
 import CreateAccList from '../../../views/Finance/AccountList/CreateAccList'
 // import AccListUpdate from "../../../views/Finance/AccountList/AccListUpdate";
@@ -22,7 +22,7 @@ function AccountList() {
 
   const showDialog = () => setOpen(true)
   //const accountList = useSelector((state)=>state.accountName);
- // const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handleDelete = val => {
     const getDELETE = async () => {
@@ -35,6 +35,7 @@ function AccountList() {
         )
         .then(response => {
           Swal.fire({
+
             title: "Success",
             text: "Successfully Deleted!",
             icon: "success",
@@ -84,10 +85,10 @@ function AccountList() {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
         )
-        
+
         setAccountLists(res.data.list)
-       // dispatch(setList("success"));
-      //  console.log(accountList);
+        // dispatch(setList("success"));
+        //  console.log(accountList);
       } catch (err) {}
     }
     getAccountLists()
@@ -151,8 +152,13 @@ function AccountList() {
                               data-target='#new_account'
                               onClick={excelExport}
                             >
+
                              <FaFileExcel
 />&nbsp; Export
+
+                              <FaFileExcel />
+                              &nbsp; Export
+
                             </button>
                           </span>
                         </div>

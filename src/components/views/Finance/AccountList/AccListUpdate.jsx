@@ -9,7 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import styled from 'styled-components'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
-import Swal from 'sweetalert2'
+
 
 import { useState, useEffect } from 'react'
 import { useLocation, Navigate, useNavigate } from 'react-router-dom'
