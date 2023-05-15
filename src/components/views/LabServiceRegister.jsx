@@ -50,7 +50,7 @@ const[referAmount,setReferAmount]=useState('');
   
 
   const handleAddRow = () => {
-    setTableData([...tableData, { id: tableData.length + 1, name: "", range: "", unit: "" }]);
+    setTableData([...tableData, { id: tableData.length + 1, name: "", referenceRange: "", unit: "" }]);
   };
 
   const handleDeleteRow = (id) => {

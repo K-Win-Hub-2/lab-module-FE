@@ -3,9 +3,7 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import SideBar from './SideBar'
-import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
-import { FaCashRegister, FaFileMedical } from 'react-icons/fa'
 
 function Category() {
   const [category, setCategory] = useState([])
