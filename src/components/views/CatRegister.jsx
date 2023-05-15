@@ -80,8 +80,8 @@ function Category() {
       id: Id,
       code: upCode,
       name: upName,
-      createAcc:upCheck,
-      amount:upAmount,
+      createAcc: upCheck,
+      amount: upAmount,
       description: upDesc
     }
 
@@ -123,7 +123,7 @@ function Category() {
           cancelButtonText: 'Close'
         })
       })
-      setShowUpdate(false);
+    setShowUpdate(false)
     document.getElementById('udesc').value = ''
     document.getElementById('uname').value = ''
     document.getElementById('ucode').value = ''
@@ -137,10 +137,10 @@ function Category() {
       name: name,
       amount: amount,
       flag: flag,
-      createAcc:check,
+      createAcc: check,
       description: description
     }
-//alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -153,21 +153,21 @@ function Category() {
       )
       .then(function (response) {
         Swal.fire({
-          title: "Success",
-          text: "successfully Registered!",
-          icon: "success",
-          confirmButtonText: "OK",
+          title: 'Success',
+          text: 'successfully Registered!',
+          icon: 'success',
+          confirmButtonText: 'OK'
         })
-       // clearForm()
+        // clearForm()
         setCategory([...category, response.data.data])
       })
       .catch(function (err) {
         //alert(err.message)
         Swal.fire({
-          title: "Error",
-          text: "Cannot Register!",
-          icon: "error",
-          confirmButtonText: "CANCEL",
+          title: 'Error',
+          text: 'Cannot Register!',
+          icon: 'error',
+          confirmButtonText: 'CANCEL'
         })
       })
     document.getElementById('cdesc').value = ''
@@ -188,19 +188,18 @@ function Category() {
     getCategory()
   }, [])
 
-
-  const clearTextBox = (textboxId) => {
-    const textbox = document.getElementById(textboxId);
+  const clearTextBox = textboxId => {
+    const textbox = document.getElementById(textboxId)
     if (textbox && textbox.value) {
-      textbox.value = "";
+      textbox.value = ''
     }
-  };
+  }
 
   const clearForm = () => {
-    clearTextBox("ccode")
-    clearTextBox("cname")
-    clearTextBox("cdesc")
-    clearTextBox("camount")
+    clearTextBox('ccode')
+    clearTextBox('cname')
+    clearTextBox('cdesc')
+    clearTextBox('camount')
   }
 
   return (
@@ -226,7 +225,9 @@ function Category() {
                     <li className='breadcrumb-item'>
                       <a href='/'>Home</a>
                     </li>
-                    <li className='breadcrumb-item active'>All Category List</li>
+                    <li className='breadcrumb-item active'>
+                      All Category List
+                    </li>
                   </ol>
                 </div>
               </div>
@@ -266,20 +267,27 @@ function Category() {
                               <td>{cat.amount ? cat.amount : ''}</td>
                               <td>{cat.flag}</td>
                               <td>{cat.description}</td>
-                              <td className='text-center'>
-                                <button
-                                  className='btn btn-sm btn-warning'
-                                  onClick={e => handleUpdate(cat._id)}
-                                >
-                                  Update
-                                </button>
-                                &nbsp;
-                                <button
-                                  className='btn btn-sm btn-danger'
-                                  onClick={e => handleDelete(cat._id)}
-                                >
-                                  Delete
-                                </button>
+                              <td>
+                                <div className='row d-flex justify-content-between'>
+                                  <div className='col-md-5'>
+                                    
+                                    <button
+                                      className='btn btn-sm btn-warning'
+                                      onClick={e => handleUpdate(cat._id)}
+                                    >
+                                      Update
+                                    </button>
+                                  </div>
+                                  <div className='col-md-5'>
+                                    
+                                    <button
+                                      className='btn btn-sm btn-danger'
+                                      onClick={e => handleDelete(cat._id)}
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
+                                </div>
                               </td>
                             </tr>
                           </tbody>
@@ -335,7 +343,6 @@ function Category() {
                               id='uyes'
                               //checked = {upCheck ? true : false}
                               onChange={e => setUpCheck(true)}
-                              
                             />
                             <label class='form-check-label text-info' for='yes'>
                               Yes
@@ -349,7 +356,6 @@ function Category() {
                               type='radio'
                               name='uyes_no'
                               id='uno'
-                            
                               onclick='hide_project()'
                               onChange={e => setUpCheck(false)}
                               //checked = {upCheck ? true : false}
@@ -472,7 +478,6 @@ function Category() {
                               value='false'
                               onclick='hide_project()'
                               onChange={e => setCheck(e.target.value)}
-                              checked
                             />
                             <label class='form-check-label text-info' for='no'>
                               No

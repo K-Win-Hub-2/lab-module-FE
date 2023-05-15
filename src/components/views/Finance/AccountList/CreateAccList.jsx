@@ -77,7 +77,8 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: 'Close'
         })
-       // props.setAccountLists([...props.accountLists, response.data]);
+     props.setAccountLists([...props.accountLists, response.data.data])
+
         // props.setAccountLists([...props.accountLists, response.data.list])
       })
       .catch(function (err) {

@@ -56,6 +56,8 @@ const TestVoucherSlip = () => {
   const [pay, setPay] = useState('')
   const [change, setChange] = useState('')
   const [code, setCode] = useState('')
+  const [creditAmount, serCreditAmount] = useState('')
+
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
@@ -81,6 +83,8 @@ const TestVoucherSlip = () => {
         setDate(res.data.data.date)
         setName(res.data.data.relatedPatient.name)
         setAge(res.data.data.relatedPatient.age)
+        serCreditAmount(res.data.data.creditAmount)
+
        
       } catch (error) {
         Swal.fire({
@@ -194,7 +198,7 @@ const TestVoucherSlip = () => {
                         </tr>
                         <tr>
                           <td colSpan={4} style={{ textAlign: 'right' }}>
-                            Change
+                            Credit Amount
                           </td>
                           <td colSpan={4} style={{ textAlign: 'right' }}>
                             {change}
@@ -207,6 +211,16 @@ const TestVoucherSlip = () => {
                         </tr>
                       </tfoot>
                     </Table>
+                    {
+  creditAmount == 0 && (
+
+      <h5 style={{ textAlign: 'center' }} className='mt-3'>
+        You paid your credit amount!
+      </h5>
+
+  )
+}
+
                   </Div>
                 </Div>
                 <ReactToPrint

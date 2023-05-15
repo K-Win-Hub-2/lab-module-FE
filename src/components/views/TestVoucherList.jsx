@@ -124,7 +124,7 @@ const TestVoucherList = () => {
       } catch (error) {
         Swal.fire({
           title: "Data not found for this day",
-          text: error.response.data.message,
+          text: 'Something Wrong',
           icon: "warning",
           confirmButtonText: "CANCEL",
         });

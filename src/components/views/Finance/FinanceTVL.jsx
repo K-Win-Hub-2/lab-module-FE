@@ -1,4 +1,15 @@
 /* eslint-disable */
+import {
+  FaCashRegister,
+  FaFileMedical,
+  FaFileExcel,
+  FaAngleDown,
+  FaAngleUp,
+  FaList,
+  FaRegUser,
+  FaClipboardCheck,
+  FaPowerOff
+} from 'react-icons/fa'
 
 
 import React, { useState, useEffect } from 'react'
@@ -10,6 +21,7 @@ import ExportVoucher from '../ExportVoucher'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
 // import RePayDialog from '../../components/views/RePayDialog';
+
 
 const Top = styled.div`
   display: flex;
@@ -262,11 +274,12 @@ const TestVoucherList = () => {
 
                       <div className='col-6'>
                         <div className='row'>
-                          <div className='offset-2 col-3'>
-                            <label htmlFor=''>Patient Name:</label>
+                          <div className='offset-3 col-5'>
+                            {/* <label htmlFor=''>Patient Name:</label> */}
                             <input
                               type='text'
-                              placeholder='Search...'
+                              placeholder='Search by patient name...'
+                              style={{ marginTop: "31px" }}
                               className='form-control'
                               onChange={e => setName(e.target.value)}
                             />
@@ -282,18 +295,20 @@ const TestVoucherList = () => {
                             >
                               Search
                             </button>
-                            {/* <button className='btn btn-sm btn-primary ml-3'>Export</button> */}
+                            
                             <ExportVoucher
                               excelData={array}
+                              
                               fileName={'Excel Export'}
                             />
+                          
                           </div>
                         </div>
                       </div>
                     </div>
                   </Left>
                 </Top>
-                <Table className='table table-hover'>
+                <Table className='table table-hover mt-5'>
                   <Thead>
                     <Tr>
                       <Th>#</Th>
@@ -425,7 +440,8 @@ const TestVoucherList = () => {
                                   <div class='col-md-2'>{tran.type}</div>
                                   <div class='col-md-2'>
                                     <div style={{ fontSize: '15px' }}>
-                                      {tran.date.split('T')[0]}
+                                      {tran.date ? tran.date.split('T')[0]
+ : ''}
                                     </div>
                                   </div>
                                   <div class='col-md-2'>

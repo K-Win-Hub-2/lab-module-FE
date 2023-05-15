@@ -136,7 +136,7 @@ const TestVoucherPrint = () => {
     const getReferDoctorList = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:9000/api/pathologists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/pathologists"
         )
 
         setReferDoctorLists(res.data.data)
