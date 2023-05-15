@@ -2,6 +2,8 @@
 import React from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+
 
 import SideBar from '../../SideBar'
 import { useEffect, useState } from 'react'
@@ -33,14 +35,14 @@ function AccountList() {
         )
         .then(response => {
           Swal.fire({
-            title: 'Success',
-            text: 'Successfully Deleted!',
-            icon: 'success',
-            confirmButtonText: 'OK'
-          })
-          
+            title: "Success",
+            text: "Successfully Deleted!",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+         
           setAccountLists(accountLists.filter(item => item._id !== val)
-)
+);
         })
 
         .catch(error => {
@@ -128,13 +130,13 @@ function AccountList() {
                   <div class='card'>
                     <div class='card-header'>
                       {/* <h3 class="card-title">Account List</h3> */}
-                      <div className='row justify-content-between'>
+                      <div className='row justify-content-between py-3'>
                         <div>
                           <span className='float-right'>
                             <button
                               type='button'
                               id=''
-                              className='btn btn-primary'
+                              className='btn btn-sm btn-primary'
                               data-toggle='modal'
                               data-target='#new_account'
                               onClick={showDialog}
@@ -144,12 +146,13 @@ function AccountList() {
                             &nbsp;
                             <button
                               type='button'
-                              className='btn btn-primary'
+                              className='btn btn-sm btn-success'
                               data-toggle='modal'
                               data-target='#new_account'
                               onClick={excelExport}
                             >
-                              Export Excel
+                             <FaFileExcel
+/>&nbsp; Export
                             </button>
                           </span>
                         </div>
@@ -223,7 +226,7 @@ function AccountList() {
                             <th>Currency</th>
                             {/* <th>Flag</th>
                             <th>Forward</th> */}
-                            <th>Action</th>
+                            <th className='text-center'>Action</th>
                           </tr>
                         </thead>
                         <tbody className=''>

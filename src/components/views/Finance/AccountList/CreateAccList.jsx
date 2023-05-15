@@ -66,17 +66,9 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: 'Close'
         })
-        // props.setAccountLists(
-        //   props.accountLists.map(account => {
-        //     if (account._id === response.data.data._id) {
-        //       return response.data.data
-        //     } else {
-        //       return account
-        //     }
-        //   })
-        // )
-
         props.setAccountLists([...props.accountLists, response.data.data])
+
+        // props.setAccountLists([...props.accountLists, response.data.list])
       })
       .catch(function (err) {
         Swal.fire({
@@ -114,7 +106,7 @@ export default function BankInfoDialog(props) {
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
         )
         setAccType(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     // const getAccountingHeadingType = async () => {

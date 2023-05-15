@@ -41,8 +41,6 @@ const Td = styled.td`
   font-size: 14px;
 `
 
-const Bounce = styled.div`animation :2s ${keyframes `${bounce}`} infinite`;
-
 const TestVoucherSlip = () => {
   const [vouchers, setVouchers] = useState([])
   const [total, setTotal] = useState('')
@@ -51,10 +49,11 @@ const TestVoucherSlip = () => {
   const [pay, setPay] = useState('')
   const [change, setChange] = useState('')
   const [code, setCode] = useState('')
+  const [creditAmount, serCreditAmount] = useState('')
+
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [age, setAge] = useState('')
-  const [creditAmount, serCreditAmount] = useState('')
 
   let componentRef = useRef()
   const vouid = useLocation().pathname.split('/')[2]
@@ -78,6 +77,8 @@ const TestVoucherSlip = () => {
         setName(res.data.data.relatedPatient.name)
         setAge(res.data.data.relatedPatient.age)
         serCreditAmount(res.data.data.creditAmount)
+
+       
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -190,7 +191,7 @@ const TestVoucherSlip = () => {
                         </tr>
                         <tr>
                           <td colSpan={4} style={{ textAlign: 'right' }}>
-                            Change
+                            Credit Amount
                           </td>
                           <td colSpan={4} style={{ textAlign: 'right' }}>
                             {change}
@@ -220,10 +221,11 @@ const TestVoucherSlip = () => {
                     </Table>
                     {
   creditAmount == 0 && (
-    <Bounce><h5 style={{ textAlign: 'center' }} className='mt-3'>
-  You paid your credit amount!
-</h5>
-</Bounce>
+
+      <h5 style={{ textAlign: 'center' }} className='mt-3'>
+        You paid your credit amount!
+      </h5>
+
   )
 }
 

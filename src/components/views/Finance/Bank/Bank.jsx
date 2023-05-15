@@ -174,7 +174,7 @@ function Bank() {
                                 // })
                               }
                             </td>
-                            <td className="">
+                            <td className="text-center">
                               <button
                                 type="button"
                                 className="btn btn-sm btn-primary ml-2"

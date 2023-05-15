@@ -2,14 +2,12 @@
 import React, { useState, useEffect } from 'react'
 import SideBar from './SideBar'
 import styled from 'styled-components'
-import {
- 
-  AiFillInfoCircle
-} from 'react-icons/ai'
+import { AiFillInfoCircle } from 'react-icons/ai'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
+import { Link } from 'react-router-dom'
 
 const Top = styled.div`
   display: flex;
@@ -73,16 +71,40 @@ const TestResultList = () => {
   const [to, setTo] = useState('')
   const [name, setName] = useState('')
 
-
-  useEffect(() => {
-    const getVouchers = async () => {
+ useEffect(() => {
+  const getVouchers = async () => {
+    try {
       const res = await axios.get(
         'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today'
       )
+      console.log(res.data.data)
       setVouchers(res.data.data)
+
+      // res.data.data.map((el, i) => {
+      //   const obj = {
+      //     No: ++i,
+      //     'Voucher Date': el.date.split('T')[0],
+      //     'Voucher Code': el.code,
+      //     'Patient Name': el.relatedPatient.name,
+      //     'Test Qty': el.testSelection.length,
+      //     Amount: el.totalCharge
+      //   }
+      //   setArray(array => [...array, obj])
+      // })
+    } catch (error) {
+      Swal.fire({
+        title: 'Data not found for this day',
+        text: 'Something Wrong',
+        icon: 'warning',
+        confirmButtonText: 'CANCEL'
+      })
+
+    
     }
-    getVouchers()
-  }, [])
+  }
+  getVouchers()
+}, [])
+
 
   const search = async () => {
     const result = await axios.get(
@@ -205,7 +227,11 @@ const TestResultList = () => {
                                   vou.status == 'Pending' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
+                                      <Td>
+                                        {vou.date !== null
+                                          ? vou.date.split('T')[0]
+                                          : ''}
+                                      </Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
@@ -226,14 +252,13 @@ const TestResultList = () => {
                                             />
                                           </Btn>
                                         )}
-                                         <Link
-                            to={'/test/' + vou._id}
-                            className='btn btn-sm btn-primary ml-3'
-                          >
-                            Test Result
-                          </Link>
+                                        <Link
+                                          to={'/test/' + vou._id}
+                                          className='btn btn-sm btn-primary ml-3'
+                                        >
+                                          Test Result
+                                        </Link>
                                       </Td>
-                                      
                                     </Tr>
                                   )
                               )}
@@ -260,7 +285,11 @@ const TestResultList = () => {
                                   vou.status == 'In Progress' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
+                                      <Td>
+                                        {vou.date !== null
+                                          ? vou.date.split('T')[0]
+                                          : ''}
+                                      </Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
@@ -275,13 +304,12 @@ const TestResultList = () => {
                                         </div>
                                       </Td>
                                       <Td>
-                                      <Link
-                            to={'/test/' + vou._id}
-                            className='btn btn-sm btn-primary ml-3'
-                          >
-                            Test Result
-                          </Link>
-                                        
+                                        <Link
+                                          to={'/test/' + vou._id}
+                                          className='btn btn-sm btn-primary ml-3'
+                                        >
+                                          Test Result
+                                        </Link>
                                       </Td>
                                     </Tr>
                                   )
@@ -309,20 +337,26 @@ const TestResultList = () => {
                                   vou.status == 'Finished' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
+                                      <Td>
+                                        {vou.date !== null
+                                          ? vou.date.split('T')[0]
+                                          : ''}
+                                      </Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
                                       <Td>
                                         {vou.testSelection.map((test, i) =>
-                                          test.result != null ? (i = parseInt(i) + 1) : i
+                                          test.result != null
+                                            ? (i = parseInt(i) + 1)
+                                            : i
                                         )}
                                       </Td>
                                       <Td>
                                         <Badge>{vou.status}</Badge>
                                       </Td>
                                       <Td>
-                                      <Link to={'/test/' + vou._id}>
+                                        <Link to={'/test/' + vou._id}>
                                           <Btn className='btn btn-sm btn-primary '>
                                             Detail
                                             <AiFillInfoCircle

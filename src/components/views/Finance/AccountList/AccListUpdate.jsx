@@ -1,6 +1,5 @@
 /* eslint-disable */
 import * as React from 'react'
-import Swal from 'sweetalert2'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import Dialog from '@mui/material/Dialog'
@@ -27,12 +26,13 @@ export default function BankInfoDialog(props) {
   const [heading, setHeading] = useState('')
   const [subHeading, setSubHeading] = useState('')
   const [accType, setAccType] = useState([])
-  
+
   const [amount, setAmount] = useState('')
+
   const [relatedCurrency, setRelatedCurrency] = useState('')
   const [upWork, setUpWork] = useState(false)
   const [flag, setFlag] = useState(false)
-  const [upFlag, setUpFlag] = useState(false)
+  const [upFlag, setUpFlag] = useState(true)
   const [upCode, setUpCode] = useState('')
   const [upSub, setUpSub] = useState('')
   const [upBal, setUpBal] = useState('')
@@ -46,12 +46,12 @@ export default function BankInfoDialog(props) {
       id: Id,
       code: upCode,
       name: upSub,
-      relatedType: accountingTypes,
-      relatedHeader: heading,
+      relatedType: reType,
+      relatedHeader: reHead,
       subHeader: upSub,
       amount: upBal,
       openingBalance: upBal,
-      generalFlag: generalFlag,
+      generalFlag: upFlag,
       relatedCurrency: upCur,
       carryForWork: upWork
     }
@@ -111,45 +111,6 @@ export default function BankInfoDialog(props) {
     setFlag(true)
     // console.log(headingList, 'heading')
   }
-
-  const getAccountingType = async () => {
-    try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
-      )
-      setAccType(res.data.list)
-    } catch (err) {}
-  }
-
-  const getAccount = async () => {
-   // try {
-      console.log(Id, 'Id')
-      await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
-          Id
-      ).then(function(response){
-        //console.log(res.data.data)
-        setUpCode(response.data.data[0].code)
-        //console.log(res.data.data[0].code)
-
-        setUpSub(response.data.data[0].name)
-        setUpBal(response.data.data[0].amount)
-        setUpCur(response.data.data[0].relatedCurrency)
-        //setUpFlag(response.data.data[0].generalFlag)
-        setAccountingTypes(response.data.data[0].relatedType._id)
-        console.log(upAccType)
-        
-        setHeading(response.data.data[0].relatedHeader._id)
-       //handleAccountHeader(upAccType)
-       
-      }).catch(function(err){
-
-      })
-      
-      //handleAccountHeader(upAccType);
-   // } catch (err) {}
-  }
-
   useEffect(() => {
     const getAccountingType = async () => {
       try {
@@ -229,7 +190,7 @@ export default function BankInfoDialog(props) {
                       class='form-control border border-info'
                       name='acc_code'
                       id='acc_code'
-                      value={upCode}
+                      defaultValue={upCode}
                       onChange={e => setUpCode(e.target.value)}
                     />
                   </div>
@@ -254,7 +215,7 @@ export default function BankInfoDialog(props) {
                     >
                       <option value={reType._id}>{reType.name}</option>
                       {accType.map(option => (
-                        <option value={option._id} selected={(accountingTypes === option._id)}>{option.name}</option>
+                        <option value={option._id}>{option.name}</option>
                       ))}
                     </select>
                   </div>
@@ -268,7 +229,7 @@ export default function BankInfoDialog(props) {
                       >
                         <option value={reHead._id}>{reHead.name}</option>
                         {headingList.map(option => (
-                          <option value={option._id} selected={(heading === option._id)}>{option.name}</option>
+                          <option value={option._id}>{option.name}</option>
                         ))}
                       </select>
                     </div>
@@ -283,7 +244,7 @@ export default function BankInfoDialog(props) {
                       name='sub_head'
                       className='form-control border-info'
                       id=''
-                      value={upSub}
+                      defaultValue={upSub}
                       onChange={e => setUpSub(e.target.value)}
                     />
                   </div>
@@ -294,7 +255,7 @@ export default function BankInfoDialog(props) {
                       type='text'
                       class='form-control border-info'
                       name='balance'
-                      value={upBal}
+                      defaultValue={upBal}
                       onChange={e => setUpBal(e.target.value)}
                     />
                   </div>
