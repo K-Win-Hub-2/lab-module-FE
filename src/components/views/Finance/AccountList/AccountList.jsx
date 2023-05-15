@@ -25,31 +25,32 @@ function AccountList() {
   const handleDelete = val => {
     const getDELETE = async () => {
       console.log('ehre==')
-     
-        const res = await axios.delete(
+
+      const res = await axios
+        .delete(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
             val
         )
-        .then((response) => {
+        .then(response => {
           Swal.fire({
-            title: "Success",
-            text: "Successfully Deleted!",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-         
-          setAccountLists(accountLists.filter(item => item._id !== event)
-);
+            title: 'Success',
+            text: 'Successfully Deleted!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          })
+          
+          setAccountLists(accountLists.filter(item => item._id !== val)
+)
         })
-      
-        .catch((error) => {
+
+        .catch(error => {
           Swal.fire({
-            title: "Error",
+            title: 'Error',
             text: error.response.data.message,
-            icon: "error",
-            confirmButtonText: "CANCEL",
-          });
-        });
+            icon: 'error',
+            confirmButtonText: 'CANCEL'
+          })
+        })
     }
     getDELETE()
   }

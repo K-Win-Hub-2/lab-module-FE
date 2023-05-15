@@ -44,7 +44,7 @@ export default function BankInfoDialog(props) {
       carryForWork: carryForWork
     }
 
-    //alert(JSON.stringify(data))
+    // alert(JSON.stringify(data))
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -58,27 +58,25 @@ export default function BankInfoDialog(props) {
       )
       .then(function (response) {
         // alert("success");
-        console.log(response.data);
-        // const index = props.accountLists.findIndex(
-        //   item => item._id === props.id
-        // )
-        // let arr = [...props.accountLists]
-        // arr[index] = {
-        //   ...arr[index],
-        //   ...response.data.data
-        // }
-        // props.setAccountLists(arr)
-        
         Swal.fire({
           title: 'Successful!',
-          text: 'You Created Account Data!',
+          text: 'You Created Income Data!',
           icon: 'success',
           // showCancelButton: true,
 
           cancelButtonText: 'Close'
         })
-       // props.setAccountLists([...props.accountLists, response.data]);
-        // props.setAccountLists([...props.accountLists, response.data.list])
+        // props.setAccountLists(
+        //   props.accountLists.map(account => {
+        //     if (account._id === response.data.data._id) {
+        //       return response.data.data
+        //     } else {
+        //       return account
+        //     }
+        //   })
+        // )
+
+        props.setAccountLists([...props.accountLists, response.data.data])
       })
       .catch(function (err) {
         Swal.fire({
