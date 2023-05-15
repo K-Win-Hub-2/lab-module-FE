@@ -13,7 +13,10 @@ import ReactToPrint from 'react-to-print'
 
 const TestVoucherPrint = () => {
   const [referDoctorLists, setReferDoctorLists] = useState([])
+  const [selectedPatho,setSelectedPatho] = useState("");
   const [voucherLists, setVoucherLists] = useState([])
+  const [filteredVouchers,setFilteredVouchers] = useState([])
+  
   const [patientLists, setPatientLists] = useState([])
 
   const [labID_VouCode, setLabID_VouCode] = useState([])
@@ -50,6 +53,25 @@ const TestVoucherPrint = () => {
 
     return decode
   }
+
+  const handleChange = event => {
+    if (event.target.checked) {
+     voucherLists.map((vou)=>{
+      if(vou._id === event.target.value){
+        setFilteredVouchers([...filteredVouchers,vou])
+      }
+     })
+    } else {
+      if(filteredVouchers.length > 0){
+      setFilteredVouchers(
+        filteredVouchers.filter( 
+          vou => vou._id !== event.target.value
+        )
+      )
+    }
+    }
+    //setIsSubscribed(current => !current);
+  };
   // end
 
   // change /br to line brake format
@@ -68,6 +90,14 @@ const TestVoucherPrint = () => {
   // console.log(sampleStr.split(' '));
   // const Regdate = labID_VouCode.date;
 
+  const handlePathoChange = (value) => {
+      referDoctorLists.map((doctor,index)=> {
+        if(doctor._id === value){
+          setSelectedPatho(doctor);
+        }
+      })
+  }
+
   useEffect(() => {
     const getVoucherList = async () => {
       try {
@@ -78,6 +108,7 @@ const TestVoucherPrint = () => {
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection)
+        //setFilteredVouchers(res.data.data.testSelection)
 
         setLabID_VouCode(res.data.data)
 
@@ -105,11 +136,11 @@ const TestVoucherPrint = () => {
     const getReferDoctorList = async () => {
       try {
         const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            TestVou_id
+          "http://localhost:9000/api/pathologists"
         )
 
         setReferDoctorLists(res.data.data)
+        setSelectedPatho(res.data.data[0])
         console.log(res.data.data)
       } catch (err) {
         alert('Error')
@@ -140,8 +171,8 @@ const TestVoucherPrint = () => {
                 // calssName='card-body'
                 style={{ border: '1px solid black', padding: '14px 14px' }}
               >
-                {headerOn && (
-                  <div className='row'>
+                
+                  <div className='row' style={{visibility: headerOn ? 'visible' : 'hidden' }}>
                     <div className='col-3'>
                       <img src={require('../logo.png')} alt='' />
                     </div>
@@ -166,7 +197,7 @@ const TestVoucherPrint = () => {
                       />
                     </div>
                   </div>
-                )}
+               
 
                 <p style={{ textAlign: 'center' }} className='mt-5'>
                   <b>
@@ -207,9 +238,9 @@ const TestVoucherPrint = () => {
                   </thead>
                   <tbody></tbody>
                 </table>
-                {resOn && (
-                  <table className='table table-hover mt-5'>
-                    <thead className='bg-secondary'>
+               
+                  <table className='table table-hover mt-4'>
+                    <thead >
                       <tr>
                         <th>Test</th>
                         <th>Result</th>
@@ -227,38 +258,51 @@ const TestVoucherPrint = () => {
                     </tr>
                   
                   </tbody> */}
-
-                    {voucherLists.map(testSelect => (
-                      <tbody key={testSelect._id}>
-                        <tr>
+<tbody >
+                    {filteredVouchers.map(testSelect => (
+                      
+                        <tr key={testSelect._id}>
                           <td>{testSelect.name.name}</td>
                           <td>{testSelect.result}</td>
 
                           <td>
+                          {testSelect.name.specialComment ? (
+                                "See Below"
+                              ) : (
+                                <div>
                             {testSelect.name.referenceRange.map(refer => (
                               <p key={refer._id}>
                                 {refer.from}-{refer.to} &nbsp;
                               </p>
                             ))}
+                            </div>
+                              )}
                           </td>
 
                           <td>
+                          {testSelect.name.specialComment ? (
+                                "See Below"
+                              ) : (
+                                <div>
                             {testSelect.name.referenceRange.map(refer => (
                               <p key={refer._id}>{refer.unit}</p>
                             ))}
+                            </div>
+                              )}
                           </td>
 
                           <td>{testSelect.remark}</td>
                         </tr>
-                      </tbody>
+                      
                     ))}
+                    </tbody>
                   </table>
-                )}
+                
 
-                {refOn && (
+                
                   <div className='px-3 py-2'>
                     <div className='row'>
-                      {voucherLists.map(specDecode => (
+                      {filteredVouchers.map(specDecode => (
                         <div className='col-md-6' key={specDecode._id}>
                           <h6 className='text-bold text-decoration-underline'>
                             {specDecode.name.name} Reference Range
@@ -268,7 +312,7 @@ const TestVoucherPrint = () => {
                       ))}
                     </div>
                   </div>
-                )}
+                
                 <div className='row' style={{ marginTop: '50px' }}>
                   <div className='col-6'>
                     <span>Laboratory Technician</span>
@@ -276,20 +320,18 @@ const TestVoucherPrint = () => {
                   <div className='col-6' style={{ textAlign: 'right' }}>
                     {console.log(referDoctorLists)}
                     <span>
-                      {referDoctorLists.referDoctor &&
-                        referDoctorLists.referDoctor.name}
+                      {
+                        selectedPatho.name}
                     </span>
                     <br></br>
                     <span>
-                      {referDoctorLists.referDoctor
-                        ? referDoctorLists.referDoctor.position
-                        : ''}
+                      {selectedPatho.position
+                        }
                     </span>
                     <br></br>
                     <span>
-                      {referDoctorLists.referDoctor
-                        ? referDoctorLists.referDoctor.education
-                        : ''}
+                      {selectedPatho.education
+                       }
                     </span>
                     <br></br>
                     <span>Central Lab, Ahlone, Yangon</span>
@@ -301,8 +343,8 @@ const TestVoucherPrint = () => {
         </div>
         <div className='row'>
           <div className='offset-1 col-md-3 mb-4' style={{ marginTop: '2em' }}>
-            <label>Reference On</label>&nbsp;
-            <input
+            <label>Pathologist</label>&nbsp;
+            {/* <input
               type='radio'
               id='on'
               name='reference'
@@ -315,14 +357,37 @@ const TestVoucherPrint = () => {
               id='off'
               name='reference'
               onChange={RefOffCheck}
-            />
+            /> */}
+             <div className='col-6' >
+                          
+                          <select
+                className="form-control"
+                name="pathologist"
+                id="pathologist"
+               onChange={(e) => handlePathoChange(e.target.value)}
+                >
+                <option value="">Select Pathologist</option>
+                {referDoctorLists.map(option => (
+                    <option value={option._id}>{option.name}</option>
+                  ))}
+              </select>
+                          
+                          </div>
           </div>
           <div className='col-md-3 mb-4' style={{ marginTop: '2em' }}>
-            <label>Result On</label>&nbsp;
-            <input type='radio' id='on' name='result' onChange={ResOnCheck} />
+            <label>Tests Result</label>&nbsp;
+            {/* <input type='radio' id='on' name='result' onChange={ResOnCheck} />
             &nbsp; &nbsp;
             <label>Off</label>&nbsp;
-            <input type='radio' id='off' name='result' onChange={ResOffCheck} />
+            <input type='radio' id='off' name='result' onChange={ResOffCheck} /> */}
+            <div className='col-6'>
+              {voucherLists.map((vou)=> (
+                <div>
+                <input type="checkbox" id={vou._id} name={vou.name.name} value={vou._id} onChange={handleChange} />
+                <label htmlFor={vou.name.name}>{vou.name.name}</label>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className='col-md-3 mb-4' style={{ marginTop: '2em' }}>

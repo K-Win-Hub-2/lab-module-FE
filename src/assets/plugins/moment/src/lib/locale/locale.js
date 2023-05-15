@@ -1,3 +1,4 @@
+/* eslint-disable */
 // Side effect imports
 import './prototype';
 

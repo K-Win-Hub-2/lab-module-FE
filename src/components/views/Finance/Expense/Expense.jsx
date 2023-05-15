@@ -29,18 +29,32 @@ const Expense = () => {
       })
     }
   }
-     const handleRelatedShow = (id, val) => {
+     const handleRelatedShow = (id) => {
        const getRelated = async () => {
-         try {
-           console.log(val);
-           const res = await axios.get(
-             "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/" +
-               val
-           );
+         //try {
+          // console.log(val2);
+          //  const jsonData = {
+          //   account : val1,
+          //   bankorcash: val2
+          //  }
+          //  const config = {
+          //   headers: { "Content-Type": "application/json" },
+          // };
+          // await axios.post(
+             //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related",
+            //  "http://localhost:9000/api/transactions/relatedtransactions",
+            //    jsonData,
+            //    config
+            await axios.get(
+              "http://localhost:9000/api/transactions/relatedExpense/" + id
+           ).then(function(response){
+            console.log(response.data.data);
+            setRelatedLists(response.data.data);
+           }).catch(function(err){})
 
-           console.log(res.data.data);
-           setRelatedLists(res.data.data);
-         } catch (err) {}
+           //console.log(res.data.data);
+           
+       //  } catch (err) {}
        };
 
        getRelated();
@@ -291,7 +305,8 @@ const Expense = () => {
                                         onClick={() =>
                                           handleRelatedShow(
                                             expenseList._id,
-                                            expenseList.relatedAccounting._id
+                                           // expenseList.relatedAccounting._id,
+                                            //expenseList.relatedBankAccount._id,
                                           )
                                         }>
                                         Transaction

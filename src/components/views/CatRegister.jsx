@@ -97,7 +97,7 @@ function Category() {
       .then(function (response) {
         Swal.fire({
           title: 'Successful!',
-          text: 'You Created Income Data!',
+          text: 'Successfully Updated',
           icon: 'success',
           // showCancelButton: true,
 
@@ -123,11 +123,12 @@ function Category() {
           cancelButtonText: 'Close'
         })
       })
-    // document.getElementById('desc').value = ''
-    // document.getElementById('name').value = ''
-    // document.getElementById('code').value = ''
-    // document.getElementById('amount').value = ''
-    // document.getElementById('flag').value = ''
+      setShowUpdate(false);
+    document.getElementById('udesc').value = ''
+    document.getElementById('uname').value = ''
+    document.getElementById('ucode').value = ''
+    document.getElementById('uamount').value = ''
+    //document.getElementById('flag').value = ''
   }
 
   const CategoryCreate = () => {
@@ -139,7 +140,7 @@ function Category() {
       createAcc:check,
       description: description
     }
-alert(JSON.stringify(data));
+//alert(JSON.stringify(data));
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -151,16 +152,28 @@ alert(JSON.stringify(data));
         config
       )
       .then(function (response) {
-        alert('success')
+        Swal.fire({
+          title: "Success",
+          text: "successfully Registered!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
+       // clearForm()
         setCategory([...category, response.data.data])
       })
       .catch(function (err) {
-        alert(err.message)
+        //alert(err.message)
+        Swal.fire({
+          title: "Error",
+          text: "Cannot Register!",
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
       })
-    document.getElementById('desc').value = ''
-    document.getElementById('name').value = ''
-    document.getElementById('code').value = ''
-    document.getElementById('submit').value = ''
+    document.getElementById('cdesc').value = ''
+    document.getElementById('cname').value = ''
+    document.getElementById('ccode').value = ''
+    document.getElementById('camount').value = ''
   }
   useEffect(() => {
     const getCategory = async () => {
@@ -174,6 +187,22 @@ alert(JSON.stringify(data));
     }
     getCategory()
   }, [])
+
+
+  const clearTextBox = (textboxId) => {
+    const textbox = document.getElementById(textboxId);
+    if (textbox && textbox.value) {
+      textbox.value = "";
+    }
+  };
+
+  const clearForm = () => {
+    clearTextBox("ccode")
+    clearTextBox("cname")
+    clearTextBox("cdesc")
+    clearTextBox("camount")
+  }
+
   return (
     <div classNameName='App'>
       {/* <!-- end preloader --> */}
@@ -272,10 +301,10 @@ alert(JSON.stringify(data));
                         </label>
                         <input
                           type='text'
-                          id='code'
+                          id='ucode'
                           class='form-control border-info'
-                          name='code'
-                          defaultValue={upCode}
+                          name='ucode'
+                          value={upCode}
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setUpCode(e.target.value)}
                         />
@@ -287,9 +316,9 @@ alert(JSON.stringify(data));
                         <input
                           type='text'
                           class='form-control border-info'
-                          name='name'
-                          id='name'
-                          defaultValue={upName}
+                          name='uname'
+                          id='uname'
+                          value={upName}
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setUpName(e.target.value)}
                         />
@@ -302,10 +331,11 @@ alert(JSON.stringify(data));
                             <input
                               class='form-check-input'
                               type='radio'
-                              name='yes_no'
-                              id='yes'
-                              value='true'
-                              onChange={e => setUpCheck(e.target.value)}
+                              name='uyes_no'
+                              id='uyes'
+                              //checked = {upCheck ? true : false}
+                              onChange={e => setUpCheck(true)}
+                              
                             />
                             <label class='form-check-label text-info' for='yes'>
                               Yes
@@ -317,12 +347,12 @@ alert(JSON.stringify(data));
                             <input
                               class='form-check-input'
                               type='radio'
-                              name='yes_no'
-                              id='no'
-                              value='false'
+                              name='uyes_no'
+                              id='uno'
+                            
                               onclick='hide_project()'
-                              onChange={e => setUpCheck(e.target.value)}
-                              checked
+                              onChange={e => setUpCheck(false)}
+                              //checked = {upCheck ? true : false}
                             />
                             <label class='form-check-label text-info' for='no'>
                               No
@@ -338,9 +368,9 @@ alert(JSON.stringify(data));
                         <input
                           type='number'
                           class='form-control border-info'
-                          name='name'
-                          id='name'
-                          defaultValue={upAmount}
+                          name='uamount'
+                          id='uamount'
+                          value={upAmount}
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setUpAmount(e.target.value)}
                         />
@@ -351,8 +381,8 @@ alert(JSON.stringify(data));
                         </label>
                         <select
                           className='custom-select border-info'
-                          name='account_type_id'
-                          id='flag'
+                          name='uaccount_type_id'
+                          id='uflag'
                           onChange={e => setUpFlag(e.target.value)}
                         >
                           <option value={upFlag}>{upFlag}</option>
@@ -366,8 +396,9 @@ alert(JSON.stringify(data));
                         </label>
                         <textarea
                           className='form-control'
-                          id='desc'
-                          defaultValue={upDesc}
+                          id='udesc'
+                          name='udesc'
+                          value={upDesc}
                           //   ref={(el) => (this.description = el)}
                           onChange={e => setUpDesc(e.target.value)}
                         ></textarea>
@@ -393,9 +424,9 @@ alert(JSON.stringify(data));
                         </label>
                         <input
                           type='text'
-                          id='code'
+                          id='ccode'
                           class='form-control border-info'
-                          name='code'
+                          name='ccode'
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setCode(e.target.value)}
                         />
@@ -407,8 +438,8 @@ alert(JSON.stringify(data));
                         <input
                           type='text'
                           class='form-control border-info'
-                          name='name'
-                          id='name'
+                          name='cname'
+                          id='cname'
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setName(e.target.value)}
                         />
@@ -421,8 +452,8 @@ alert(JSON.stringify(data));
                             <input
                               class='form-check-input'
                               type='radio'
-                              name='yes_no'
-                              id='yes'
+                              name='cyes_no'
+                              id='cyes'
                               value='true'
                               onChange={e => setCheck(e.target.value)}
                             />
@@ -436,8 +467,8 @@ alert(JSON.stringify(data));
                             <input
                               class='form-check-input'
                               type='radio'
-                              name='yes_no'
-                              id='no'
+                              name='cyes_no'
+                              id='cno'
                               value='false'
                               onclick='hide_project()'
                               onChange={e => setCheck(e.target.value)}
@@ -456,8 +487,8 @@ alert(JSON.stringify(data));
                         <input
                           type='number'
                           class='form-control border-info'
-                          name='name'
-                          id='amount'
+                          name='camount'
+                          id='camount'
                           //   ref={(el) => (this.name = el)}
                           onChange={e => setAmount(e.target.value)}
                         />
@@ -468,8 +499,8 @@ alert(JSON.stringify(data));
                         </label>
                         <select
                           className='custom-select border-info'
-                          name='account_type_id'
-                          id='flag'
+                          name='caccount_type_id'
+                          id='cflag'
                           onChange={e => setFlag(e.target.value)}
                         >
                           <option></option>
@@ -483,7 +514,8 @@ alert(JSON.stringify(data));
                         </label>
                         <textarea
                           className='form-control'
-                          id='desc'
+                          id='cdesc'
+                          name='cdesc'
                           //   ref={(el) => (this.description = el)}
                           onChange={e => setDescription(e.target.value)}
                         ></textarea>

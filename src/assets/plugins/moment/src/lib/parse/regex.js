@@ -1,5 +1,4 @@
-
-
+/* eslint-disable */
 import hasOwnProp from '../utils/has-own-prop';
 export var match1 = /\d/;            //       0 - 9
 export var match2         = /\d\d/;          //      00 - 99

@@ -36,8 +36,8 @@ export default function BankInfoDialog(props) {
       date: date,
       initialAmount: initialAmount,
       initialCurrency: initialCurrency,
-      finalAmount: finalAmount,
-      finalCurrency: finalCurrency,
+      finalAmount: initialAmount,
+      finalCurrency: initialCurrency,
       remark: remark,
     };
     // console.log(jsonData);
@@ -52,7 +52,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
+        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
+        "http://localhost:9000/api/income",
         jsonData,
         config
       )
@@ -126,7 +127,7 @@ export default function BankInfoDialog(props) {
         const cash = res.data.list.filter(
           (el) =>
             el.relatedHeader.name == "Cash In Hand" &&
-            el.relatedType.name === "Asset"
+            el.relatedType.name === "Assets"
         );
         setCashList(cash);
       } catch (err) {}
@@ -153,28 +154,28 @@ export default function BankInfoDialog(props) {
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
         const medicineSale = res.data.list.filter(
-          (e) => e.relatedHeader.name == "Other Income"
+          (e) => e.relatedHeader.name == "Other Revenues"
         );
-        setInitialAmount(medicineSale[0].amount);
+       // setInitialAmount(medicineSale[0].amount);
         setMedicineSale(medicineSale);
         // setAccountingList(res.data.list)
       } catch (err) {}
     };
-    const getCurrencyLists = async () => {
-      try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/currencies"
-        );
-        setCurrencyList(res.data.list);
-        setInitialCurrency(currencyList.initialCurrency);
-        setFinalCurrency(currencyList.finalCurrency);
-      } catch (err) {}
-    };
+    // const getCurrencyLists = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/currencies"
+    //     );
+    //     setCurrencyList(res.data.list);
+    //     setInitialCurrency(currencyList.initialCurrency);
+    //     setFinalCurrency(currencyList.finalCurrency);
+    //   } catch (err) {}
+    // };
     getBankLists();
     getCashLists();
     // getHeaderLists();
     getAccountingLists();
-    getCurrencyLists();
+   // getCurrencyLists();
   }, []);
 
   return (
@@ -273,12 +274,12 @@ export default function BankInfoDialog(props) {
         )}
 
         <div className="form-group mt-3">
-          <label className="control-label">Incoming Account</label>
+          <label className="control-label">Income Account</label>
           <select
             className="form-control"
             name="exp_acc"
             onChange={(e) => setRelatedAccounting(e.target.value)}>
-            <option value="">Select Incoming Account</option>
+            <option value="">Select Income Account</option>
             {/* @foreach ($inc_account as $acc) */}
 
             {medicineSale.map((option) => (
@@ -292,7 +293,7 @@ export default function BankInfoDialog(props) {
         <div className="row">
           <div className="col-md-6">
             <div className="form-group">
-              <label className="control-label">Initial Amount</label>
+              <label className="control-label">Income Amount</label>
 
               <input
                 type="number"
@@ -305,7 +306,7 @@ export default function BankInfoDialog(props) {
           </div>
           <div className="col-md-6">
             <div className="form-group">
-              <label className="control-label">Initial Currency</label>
+              <label className="control-label">Currency</label>
 
               <select
                 name="currency"
@@ -314,14 +315,17 @@ export default function BankInfoDialog(props) {
                 onchange="convert(this.value)"
                 onChange={(e) => setInitialCurrency(e.target.value)}>
                 <option value="">Choose Currency</option>
-                {currencyList.map((option) => (
+                {/* {currencyList.map((option) => (
                   <option value={option.code}>{option.code}</option>
-                ))}
+                ))} */}
+                <option value="MMK">MMK</option>
+                  <option value="Baht">Baht</option>
+                  <option value="USD">USD</option>
               </select>
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-6">
             <div className="form-group">
               <label className="control-label">Final Amount</label>
@@ -353,7 +357,7 @@ export default function BankInfoDialog(props) {
               </select>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="form-group">
           <label className="control-label">Date</label>

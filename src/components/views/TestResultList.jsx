@@ -8,7 +8,7 @@ import {
 } from 'react-icons/ai'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import axios from 'axios'
-
+import { Link } from 'react-router-dom'
 
 
 const Top = styled.div`
@@ -205,7 +205,7 @@ const TestResultList = () => {
                                   vou.status == 'Pending' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{vou.date.split('T')[0]}</Td>
+                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
@@ -226,7 +226,14 @@ const TestResultList = () => {
                                             />
                                           </Btn>
                                         )}
+                                         <Link
+                            to={'/test/' + vou._id}
+                            className='btn btn-sm btn-primary ml-3'
+                          >
+                            Test Result
+                          </Link>
                                       </Td>
+                                      
                                     </Tr>
                                   )
                               )}
@@ -253,7 +260,7 @@ const TestResultList = () => {
                                   vou.status == 'In Progress' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{vou.date.split('T')[0]}</Td>
+                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
@@ -268,14 +275,13 @@ const TestResultList = () => {
                                         </div>
                                       </Td>
                                       <Td>
-                                        <Link to={'/test/' + vou._id}>
-                                          <Btn className='btn btn-sm btn-primary '>
-                                            Detail
-                                            <AiFillInfoCircle
-                                              style={{ marginLeft: '7px' }}
-                                            />
-                                          </Btn>
-                                        </Link>
+                                      <Link
+                            to={'/test/' + vou._id}
+                            className='btn btn-sm btn-primary ml-3'
+                          >
+                            Test Result
+                          </Link>
+                                        
                                       </Td>
                                     </Tr>
                                   )
@@ -303,25 +309,27 @@ const TestResultList = () => {
                                   vou.status == 'Finished' && (
                                     <Tr key={vou._id}>
                                       <Td>{++index}</Td>
-                                      <Td>{vou.date.split('T')[0]}</Td>
+                                      <Td>{(vou.date !== null) ? vou.date.split('T')[0] : ""}</Td>
                                       <Td>{vou.code}</Td>
                                       <Td>{vou.relatedPatient.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
                                       <Td>
                                         {vou.testSelection.map((test, i) =>
-                                          test.result != null ? ++i : i
+                                          test.result != null ? (i = parseInt(i) + 1) : i
                                         )}
                                       </Td>
                                       <Td>
                                         <Badge>{vou.status}</Badge>
                                       </Td>
                                       <Td>
-                                        <Btn className='btn btn-sm btn-primary'>
-                                          Detail
-                                          <AiFillInfoCircle
-                                            style={{ marginLeft: '7px' }}
-                                          />
-                                        </Btn>
+                                      <Link to={'/test/' + vou._id}>
+                                          <Btn className='btn btn-sm btn-primary '>
+                                            Detail
+                                            <AiFillInfoCircle
+                                              style={{ marginLeft: '7px' }}
+                                            />
+                                          </Btn>
+                                        </Link>
                                       </Td>
                                     </Tr>
                                   )

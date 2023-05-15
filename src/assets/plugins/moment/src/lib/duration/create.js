@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Duration, isDuration } from './constructor';
 import toInt from '../utils/to-int';
 import hasOwnProp from '../utils/has-own-prop';

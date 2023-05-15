@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import SideBar from '../components/views/SideBar'
 import styled from 'styled-components'
@@ -48,32 +49,39 @@ const Td = styled.td`
 
 const TestVoucher = () => {
   const [vouchers, setVouchers] = useState([])
-
+  const [filteredVouchers, setFilteredVouchers] = useState([])
   const patient_id = useLocation().pathname.split('/')[2]
-  console.log(patient_id, 'patient_id')
+  
+
+  const getVouchers = async () => {
+    try {
+      let data = {
+        relatedPatient: patient_id
+      }
+      console.log(data, 'patient_id')
+      const res = await axios.get(
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers',
+        data
+      )
+      console.log(res.data.data, 'data')
+      setVouchers(res.data.data)
+      setFilteredVouchers(
+        res.data.data.filter(
+          el =>
+            el.relatedPatient._id == patient_id
+        )
+      )
+    } catch (err) {
+      Swal.fire({
+        title: 'No Related Patient',
+        text: 'Something Wrong!',
+        icon: 'warning',
+        confirmButtonText: 'CANCEL'
+      })
+    }
+  }
 
   useEffect(() => {
-    const getVouchers = async () => {
-      try {
-        let data = {
-          relatedPatient: patient_id
-        }
-
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers',
-          data
-        )
-        console.log(data, 'data')
-        setVouchers(res.data.data)
-      } catch (err) {
-        Swal.fire({
-          title: 'No Related Patient',
-          text: 'Something Wrong!',
-          icon: 'warning',
-          confirmButtonText: 'CANCEL'
-        })
-      }
-    }
     // getPatient();
     getVouchers()
   }, [])
@@ -114,9 +122,10 @@ const TestVoucher = () => {
                       <Th>Action</Th>
                     </Tr>
                   </Thead>
-                  {vouchers.map((vou, i) => (
-                    <Tbody key={vou._id}>
-                      <Tr>
+                  <Tbody>
+                  {filteredVouchers.map((vou, i) => (
+                      
+                      <Tr key={vou._id}>
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ''}</Td>
                         <Td>{vou.date ? vou.date.split('T')[0] : ''}</Td>
@@ -133,12 +142,12 @@ const TestVoucher = () => {
                               Print
                             </button>
                           </Link> */}
-                          <Link
+                          {/* <Link
                             to={'/test/' + vou._id}
                             className='btn btn-sm btn-primary ml-3'
                           >
                             Refer Doctor
-                          </Link>
+                          </Link> */}
                           <Link
                             to={'/test/' + vou._id}
                             className='btn btn-sm btn-primary ml-3'
@@ -147,8 +156,9 @@ const TestVoucher = () => {
                           </Link>
                         </Td>
                       </Tr>
-                    </Tbody>
+                    
                   ))}
+                  </Tbody>
                 </Table>
               </Div>
             </Div>

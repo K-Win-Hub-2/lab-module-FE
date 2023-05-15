@@ -1,4 +1,5 @@
 import { configureStore,combineReducers} from "@reduxjs/toolkit";
+import accountListReducer from "../features/accountListSlice";
 import authReducer from "./authRedux"
 import {
     persistStore,
@@ -30,6 +31,7 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
+    accountList : accountListReducer
 })
 
 export let persistor = persistStore(store)

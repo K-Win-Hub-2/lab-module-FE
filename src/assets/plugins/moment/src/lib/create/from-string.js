@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { matchOffset } from '../parse/regex';
 import { configFromStringAndFormat } from './from-string-and-format';
 import { hooks } from '../utils/hooks';

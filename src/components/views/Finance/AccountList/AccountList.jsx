@@ -5,6 +5,8 @@ import Swal from 'sweetalert2'
 
 import SideBar from '../../SideBar'
 import { useEffect, useState } from 'react'
+import {useSelector,useDispatch} from 'react-redux';
+import { setList } from '../../../../features/accountListSlice'
 import CreateAccList from '../../../views/Finance/AccountList/CreateAccList'
 // import AccListUpdate from "../../../views/Finance/AccountList/AccListUpdate";
 import { ExcelExport } from '@progress/kendo-react-excel-export'
@@ -17,6 +19,8 @@ function AccountList() {
   const [open, setOpen] = useState(false)
 
   const showDialog = () => setOpen(true)
+  //const accountList = useSelector((state)=>state.accountName);
+ // const dispatch = useDispatch();
 
   const handleDelete = val => {
     const getDELETE = async () => {
@@ -77,8 +81,10 @@ function AccountList() {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
         )
-
+        
         setAccountLists(res.data.list)
+       // dispatch(setList("success"));
+      //  console.log(accountList);
       } catch (err) {}
     }
     getAccountLists()
@@ -214,8 +220,8 @@ function AccountList() {
                             <th>Sub Heading</th>
                             <th>Balance</th>
                             <th>Currency</th>
-                            <th>Flag</th>
-                            <th>Forward</th>
+                            {/* <th>Flag</th>
+                            <th>Forward</th> */}
                             <th>Action</th>
                           </tr>
                         </thead>
@@ -234,8 +240,8 @@ function AccountList() {
                               <td>{accountList.name}</td>
                               <td>{accountList.amount}</td>
                               <td>{accountList.relatedCurrency}</td>
-                              <td>{accountList.generalFlag ? 'Yes' : 'No'}</td>
-                              <td>{accountList.carryForWork ? 'Yes' : 'No'}</td>
+                              {/* <td>{accountList.generalFlag ? 'Yes' : 'No'}</td>
+                              <td>{accountList.carryForWork ? 'Yes' : 'No'}</td> */}
                               <td>
                                 <div className='row'>
                                   <div className='col-md-4'>
@@ -272,7 +278,7 @@ function AccountList() {
                 close={() => setOpen(false)}
                 setOpen={setOpen}
                 setAccountLists={setAccountLists}
-                accountLists={setAccountLists}
+                accountLists={accountLists}
               />
               {/* 
               <AccListUpdate

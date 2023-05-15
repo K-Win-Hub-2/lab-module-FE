@@ -95,7 +95,7 @@ const TestSale = () => {
         const cash = res.data.list.filter(
           (el) =>
             el.relatedHeader.name == "Cash In Hand" &&
-            el.relatedType.name === "Asset"
+            el.relatedType.name === "Assets"
         );
         setCashList(cash);
       } catch (err) {}

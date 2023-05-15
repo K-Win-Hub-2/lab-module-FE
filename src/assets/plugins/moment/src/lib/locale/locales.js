@@ -1,3 +1,4 @@
+/* eslint-disable */
 import isArray from '../utils/is-array';
 import compareArrays from '../utils/compare-arrays';
 import { Locale } from './constructor';

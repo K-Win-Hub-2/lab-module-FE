@@ -216,7 +216,7 @@ function LabServiceRegister() {
                         onChange={(e) => setValue(e.target.value)}
                       />
                     </div> */}
-                  {showRelatedDoc ? (
+                  
                     <div>
                       <div className="form-group">
                         <label className="control-label">Education</label>
@@ -239,9 +239,7 @@ function LabServiceRegister() {
                         />
                       </div>
                     </div>
-                  ) : (
-                    ""
-                  )}
+                  
                   <br />
 
                   <div className="row">

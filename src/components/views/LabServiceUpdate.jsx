@@ -31,12 +31,12 @@ function LabServiceUpdate () {
   const [to, setTo] = useState('')
   const [gender, setGender] = useState('')
   const [unit, setUnit] = useState('')
-  const [mfrom, setmFrom] = useState('')
-  const [mto, setmTo] = useState('')
+  const [mfrom, setmFrom] = useState(0)
+  const [mto, setmTo] = useState(0)
   const [mgender, setmGender] = useState('')
   const [munit, setmUnit] = useState('')
-  const [ffrom, setfFrom] = useState('')
-  const [fto, setfTo] = useState('')
+  const [ffrom, setfFrom] = useState(0)
+  const [fto, setfTo] = useState(0)
   const [fgender, setfGender] = useState('')
   const [funit, setfUnit] = useState('')
   const [specialComment, setSpecialComment] = useState('')
@@ -110,12 +110,29 @@ function LabServiceUpdate () {
   }
 
   const handleRefRange = event => {
-    let newRef = {
-      from: from,
-      to: to,
-      gender: gender,
-      unit: unit
+    
+   if(event == 0){
+    
+    var newRef = {
+      from: mfrom,
+      to: mto,
+      gender: mgender,
+      unit: munit
     }
+    
+    
+    
+  }else if(event == 1){
+      var newRef = {
+        from: ffrom,
+        to: fto,
+        gender: fgender,
+        unit: funit
+      }
+      
+      
+    }
+    
     setRefArray([...refArray, newRef])
   }
 
@@ -242,8 +259,8 @@ function LabServiceUpdate () {
     setDescription(res.data.data.description)
     setCharges(res.data.data.charges)
     setCost(res.data.data.cost)
-    setRefArray(res.data.data.referenceRange)
-    setUpdateCategory(res.data.data.relatedCategory._id)
+    //setRefArray(res.data.data.referenceRange)
+    //setUpdateCategory(res.data.data.relatedCategory._id)
     setReagentArray(res.data.data.reagentItems)
     //  console.log(res.data.data.referenceRange);
     //setFrom(res.data.data.referenceRange.from);
@@ -267,22 +284,30 @@ function LabServiceUpdate () {
         setSpecialFlag(false)
         setShowSpecialCmt(false)
         setShowRefForm(true)
-        if (refArray !== null && refArray.length > 0) {
-          setmFrom(refArray[0].from)
-          setmTo(refArray[0].to)
-          setmGender(refArray[0].gender)
-          console.log(mgender)
-          setmUnit(refArray[0].unit)
+        // if (refArray !== null && refArray.length > 0) {
+        //   setmFrom(refArray[0].from)
+        //   setmTo(refArray[0].to)
+        //   setmGender(refArray[0].gender)
+        //   console.log(mgender)
+        //   setmUnit(refArray[0].unit)
 
-          if (refArray.length > 1) {
-            setShowNextRef(true)
-            setfFrom(refArray[1].from)
-            setfTo(refArray[1].to)
-            setfGender(refArray[1].gender)
-            console.log(fgender)
-            setfUnit(refArray[1].unit)
-          }
-        }
+        //   if (refArray.length > 1) {
+        //     setShowNextRef(true)
+        //     setfFrom(refArray[1].from)
+        //     setfTo(refArray[1].to)
+        //     setfGender(refArray[1].gender)
+        //     console.log(fgender)
+        //     setfUnit(refArray[1].unit)
+        //   }
+       
+       // }
+       if(res.data.data.referenceRange !== undefined){
+       setRefArray(res.data.data.referenceRange)
+      if(res.data.data.referenceRange.length > 1){
+        setShowNextRef(true);
+      }
+      }
+       
       }
     }
   }
@@ -406,9 +431,9 @@ function LabServiceUpdate () {
                               {category.map(option => (
                                 <option
                                   value={option._id}
-                                  selected={
-                                    option._id === updateCategory ? true : false
-                                  }
+                                  // selected={
+                                  //   option._id === updateCategory ? true : false
+                                  // }
                                 >
                                   {option.name}
                                 </option>
@@ -706,8 +731,9 @@ function LabServiceUpdate () {
                                       placeholder='From'
                                       className='form-control'
                                       step={0.01}
-                                      value={mfrom}
-                                      onChange={e => setFrom(e.target.value)}
+                                     // defaultValue={(refArray > 0) ? mfrom : 0.0}
+                                     defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].from : 0}
+                                      onChange={e => setmFrom(e.target.value)}
                                     />
                                   </div>
                                   <div className='col-md-2'>
@@ -716,8 +742,9 @@ function LabServiceUpdate () {
                                       placeholder='To'
                                       step={0.01}
                                       className='form-control'
-                                      value={mto}
-                                      onChange={e => setTo(e.target.value)}
+                                      //defaultValue={(refArray > 0) ? mto : 0.0}
+                                      defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].to : 0}
+                                      onChange={e => setmTo(e.target.value)}
                                     />
                                   </div>
                                   <div className='col-md-3'>
@@ -733,7 +760,7 @@ function LabServiceUpdate () {
                                           setShowNextRef(true)
                                         if (e.target.value === 'Null')
                                           setShowNextRef(false)
-                                        setGender(e.target.value)
+                                        setmGender(e.target.value)
                                       }}
                                     >
                                       <option>Gender</option>
@@ -741,7 +768,7 @@ function LabServiceUpdate () {
                                       <option
                                         value='Male'
                                         selected={
-                                          mgender === 'Male' ? true : false
+                                          (refArray !== undefined && refArray.length > 0 &&  refArray[0].gender === 'Male') ? true : false
                                         }
                                       >
                                         Male
@@ -749,7 +776,7 @@ function LabServiceUpdate () {
                                       <option
                                         value='Female'
                                         selected={
-                                          fgender === 'Female' ? true : false
+                                          (refArray !== undefined && refArray.length > 0 && refArray[0].gender === 'Female') ? true : false
                                         }
                                       >
                                         Female
@@ -764,8 +791,8 @@ function LabServiceUpdate () {
                                       type='text'
                                       placeholder='Unit'
                                       className='form-control'
-                                      value={munit}
-                                      onChange={e => setUnit(e.target.value)}
+                                      defaultValue={(refArray !== undefined && refArray.length > 0 ) ? refArray[0].unit : ""}
+                                      onChange={e => setmUnit(e.target.value)}
                                     />
                                   </div>
                                   {/* Action button for add data to refArr */}
@@ -774,7 +801,7 @@ function LabServiceUpdate () {
                                       type='button'
                                       className='btn btn-primary'
                                       onClick={e => {
-                                        handleRefRange(e.target.value)
+                                        handleRefRange(0)
                                         handleAlert()
                                       }}
                                     >
@@ -798,8 +825,8 @@ function LabServiceUpdate () {
                                     placeholder='From'
                                     className='form-control'
                                     step={0.01}
-                                    value={ffrom}
-                                    onChange={e => setFrom(e.target.value)}
+                                    defaultValue={(refArray !== undefined && refArray.length > 1) ? refArray[1].from : 0}
+                                    onChange={e => setfFrom(e.target.value)}
                                   />
                                 </div>
                                 <div className='col-md-2'>
@@ -808,8 +835,8 @@ function LabServiceUpdate () {
                                     placeholder='To'
                                     step={0.01}
                                     className='form-control'
-                                    value={fto}
-                                    onChange={e => setTo(e.target.value)}
+                                    defaultValue={(refArray !== undefined && refArray.length > 1) ? refArray[1].to : 0}
+                                    onChange={e => setfTo(e.target.value)}
                                   />
                                 </div>
                                 <div className='col-md-3'>
@@ -817,14 +844,14 @@ function LabServiceUpdate () {
                                     class='custom-select border-info'
                                     name='account_type_id'
                                     id='flag'
-                                    onChange={e => setGender(e.target.value)}
+                                    onChange={e => setfGender(e.target.value)}
                                   >
                                     <option>Gender</option>
 
                                     <option
                                       value='Male'
                                       selected={
-                                        mgender === 'Male' ? true : false
+                                        (refArray !== undefined && refArray.length > 1 && refArray[0].gender === 'Male') ? true : false
                                       }
                                     >
                                       Male
@@ -832,7 +859,7 @@ function LabServiceUpdate () {
                                     <option
                                       value='Female'
                                       selected={
-                                        fgender === 'Female' ? true : false
+                                        (refArray !== undefined && refArray.length > 1 && refArray[0].gender === 'Female') ? true : false
                                       }
                                     >
                                       Female
@@ -845,8 +872,8 @@ function LabServiceUpdate () {
                                     type='text'
                                     placeholder='Unit'
                                     className='form-control'
-                                    value={funit}
-                                    onChange={e => setUnit(e.target.value)}
+                                    defaultValue={(refArray !== undefined && refArray.length > 1) ? refArray[1].unit : 0}
+                                    onChange={e => setfUnit(e.target.value)}
                                   />
                                 </div>
                                 <div className='col-md-2'>
@@ -854,7 +881,7 @@ function LabServiceUpdate () {
                                     type='button'
                                     className='btn btn-primary'
                                     onClick={e => {
-                                      handleRefRange(e.target.value)
+                                      handleRefRange(1)
                                       handleAlert()
                                     }}
                                   >

@@ -94,7 +94,8 @@ function LabServiceRegister() {
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection);
-        // console.log(res.data.data.testSelection);
+        
+        console.log(res.data.data.testSelection);
         // console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
         setTestID(res.data.data.testSelection[0]);
@@ -209,7 +210,7 @@ function LabServiceRegister() {
                         <tr>
                           <th>Test</th>
                           <th>Result</th>
-                          <th>Refference Range</th>
+                          <th>Reference Range</th>
                           <th>Unit</th>
                           <th>Remark</th>
                           {/* <th>States</th> */}
@@ -227,6 +228,7 @@ function LabServiceRegister() {
                                   type="text"
                                   id="result"
                                   onChange={(e) => setResult(e.target.value)}
+                                  defaultValue={(testSelect.result !== null) ? testSelect.result : ""}
                                   class="form-control"
                                   placeholder="Enter Result"
                                 />
@@ -278,6 +280,7 @@ function LabServiceRegister() {
                                   type="text"
                                   id="remark"
                                   onChange={(e) => setRemark(e.target.value)}
+                                  defaultValue={(testSelect.remark !== null) ? testSelect.remark : ""}
                                   class="form-control"
                                   placeholder="Enter Remark"
                                 />

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { hooks } from '../utils/hooks';
 import hasOwnProp from '../utils/has-own-prop';
 import getParsingFlags from '../create/parsing-flags';

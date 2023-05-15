@@ -22,6 +22,7 @@ const Left = styled.div`
   flex: 1;
 `
 
+
 const Title = styled.h5`
   font-weight: bold;
   margin-top: 10px;
@@ -49,6 +50,7 @@ const Td = styled.td`
 
 const TestVoucherList = () => {
   const [vouchers, setVouchers] = useState([])
+  const[filteredVouchers,setFilteredVouchers] = useState([]);
   const [medRelated, setMedRelated] = useState([])
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
@@ -56,6 +58,10 @@ const TestVoucherList = () => {
   const [array, setArray] = useState([])
   const [isShow, setIsShow] = useState([])
   const [vouCode, setVouCode] = useState('')
+  const [voucherType,setVoucherType] = useState('');
+  const[totalVoucher,setTotalVoucher] = useState(0);
+  const[totalCashDown,setTotalCashDown] = useState(0);
+  const[totalCredit,setTotalCredit] = useState(0);
 
   const handleRelated = val => {
     const getRelated = async () => {
@@ -92,6 +98,8 @@ const TestVoucherList = () => {
         )
         console.log(res.data.data)
         setVouchers(res.data.data)
+        setFilteredVouchers(res.data.data)
+        
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -104,18 +112,47 @@ const TestVoucherList = () => {
     getVouchers()
   }, [])
 
+  useEffect(()=>{
+    setTotalVoucher(0)
+    setTotalCashDown(0)
+    setTotalCredit(0)
+    filteredVouchers.map((vou,index)=>{
+      console.log(vou.totalCharge)
+      setTotalVoucher(totalVoucher + vou.totalCharge);
+      setTotalCredit(totalCredit + (vou.creditAmount * (-1)))
+      setTotalCashDown(totalVoucher-totalCredit)
+    })
+  },filteredVouchers);
+
   const search = async () => {
     const result = await axios.get(
       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers'
     )
+    console.log(result.data.data)
     if (name == '') {
       setVouchers(
         result.data.data.filter(
           el => el.date >= from && el.date.split('T')[0] <= to
         )
       )
-    } else {
+      setFilteredVouchers(
+        result.data.data.filter(
+          el => el.date >= from && el.date.split('T')[0] <= to
+        )
+      )
+
+    }
+    else {
+      
       setVouchers(
+        result.data.data.filter(
+          el =>
+            el.date >= from &&
+            el.date.split('T')[0] <= to &&
+            el.relatedPatient.name == name
+        )
+      )
+      setFilteredVouchers(
         result.data.data.filter(
           el =>
             el.date >= from &&
@@ -137,6 +174,26 @@ const TestVoucherList = () => {
     })
   }
 
+  const handleTypeSearch = (value)=>{
+    setVoucherType(value);
+    if(value == "cashdown"){
+      setFilteredVouchers(
+        vouchers.filter(
+          el =>
+            el.creditAmount == 0
+        )
+      )
+    }else if(value == "credit"){
+      setFilteredVouchers(
+        vouchers.filter(
+          el =>
+            el.creditAmount < 0
+        )
+      )
+    }else{
+      setFilteredVouchers(vouchers);
+    }
+  }
   return (
     <div className='wrapper'>
       <SideBar />
@@ -158,7 +215,7 @@ const TestVoucherList = () => {
                     <div className='row'>
                       <div className='col-md-6'>
                         <div className='row'>
-                          <div className='col-5'>
+                          <div className='col-4'>
                             <label htmlFor=''>From:</label>
                             <input
                               type='date'
@@ -167,7 +224,7 @@ const TestVoucherList = () => {
                               onChange={e => setFrom(e.target.value)}
                             />
                           </div>
-                          <div className='col-5'>
+                          <div className='col-4'>
                             <label htmlFor=''>To:</label>
                             <input
                               type='date'
@@ -175,6 +232,21 @@ const TestVoucherList = () => {
                               className='form-control'
                               onChange={e => setTo(e.target.value)}
                             />
+                          </div>
+
+                          <div className='col-4' style={{ marginTop: "7vh" }}>
+                          
+                          <select
+                className="form-control"
+                name="vou_type"
+                id="vou_type"
+                onChange={(e) => handleTypeSearch(e.target.value)}>
+                <option value="">Select Type</option>
+                  <option value="all">All</option>
+                  <option value="cashdown">Cash Down</option>
+                  <option value="credit">Credit</option>
+              </select>
+                          
                           </div>
                           {/* <div
                             className="col-md-2"
@@ -190,7 +262,7 @@ const TestVoucherList = () => {
 
                       <div className='col-6'>
                         <div className='row'>
-                          <div className='offset-2 col-6'>
+                          <div className='offset-2 col-3'>
                             <label htmlFor=''>Patient Name:</label>
                             <input
                               type='text'
@@ -199,6 +271,10 @@ const TestVoucherList = () => {
                               onChange={e => setName(e.target.value)}
                             />
                           </div>
+
+                          
+
+                          
                           <div className='col-4' style={{ marginTop: '35px' }}>
                             <button
                               className='btn btn-sm btn-primary'
@@ -232,7 +308,7 @@ const TestVoucherList = () => {
                     </Tr>
                   </Thead>
 
-                  {vouchers.map((vou, index) => (
+                  {filteredVouchers.map((vou, index) => (
                     <Tbody key={vou._id}>
                       <Tr>
                         <Td>{++index}</Td>
@@ -372,6 +448,51 @@ const TestVoucherList = () => {
                     </Tbody>
                   ))}
                 </Table>
+
+                <Top>
+                  <Left>
+                    <div className='row'>
+                      <div className='col-md-6'>
+                        <div className='row'>
+                          <div className='col-4'>
+                            <label htmlFor=''>Total Voucher:</label>
+                            {/* <input
+                              type='number'
+                              placeholder='Search...'
+                              disabled
+                              className='form-control'
+                              value={totalVoucher}
+                            /> */}
+                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalVoucher}</lable>
+                          </div>
+                          <div className='col-4'>
+                            <label htmlFor=''>Total Cash Down:</label>
+                            {/* <label 
+                              type='number'
+                              placeholder='Search...'
+                              disabled
+                              className='form-control'
+                              value={totalCashDown}
+                            /> */}
+                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalCashDown}</lable>
+                          </div>
+                
+                          <div className='col-4'>
+                            <label htmlFor=''>Total Credit:</label>
+                            {/* <input
+                              type='number'
+                              placeholder='Search...'
+                              disabled
+                              className='form-control'
+                              value={totalCredit}
+                            /> */}
+                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalCredit}</lable>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </Left>
+                </Top>
               </Div>
             </Div>
           </div>

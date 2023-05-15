@@ -217,12 +217,12 @@ function Sidebar () {
                     </a>
                   </li>
                   <li className='ml-3'>
-                    <li className='nav-item'>
+                    {/* <li className='nav-item'>
                       <Link to='/tvoucherList' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Voucher</p>
                       </Link>
-                    </li>
+                    </li> */}
                     <li className='nav-item'>
                       <Link to='/trial-balance' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;

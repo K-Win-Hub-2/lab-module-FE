@@ -24,7 +24,7 @@ export default function BankInfoDialog(props) {
 
   const [amount, setAmount] = useState('')
 
-  const [generalFlag, setGeneralFlag] = useState(false)
+  const [generalFlag, setGeneralFlag] = useState(true)
   // const [bankAddress, setBankAddress] = useState('');
   const [relatedCurrency, setRelatedCurrency] = useState('')
   const [carryForWork, setCarryForWork] = useState(false)
@@ -44,7 +44,7 @@ export default function BankInfoDialog(props) {
       carryForWork: carryForWork
     }
 
-    alert(JSON.stringify(data))
+    //alert(JSON.stringify(data))
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -58,17 +58,17 @@ export default function BankInfoDialog(props) {
       )
       .then(function (response) {
         // alert("success");
-
-        const index = props.accountLists.findIndex(
-          item => item._id === props.id
-        )
-        let arr = [...props.accountLists]
-        arr[index] = {
-          ...arr[index],
-          ...response.data.data
-        }
-        props.setAccountLists(arr)
-
+        console.log(response.data);
+        // const index = props.accountLists.findIndex(
+        //   item => item._id === props.id
+        // )
+        // let arr = [...props.accountLists]
+        // arr[index] = {
+        //   ...arr[index],
+        //   ...response.data.data
+        // }
+        // props.setAccountLists(arr)
+        
         Swal.fire({
           title: 'Successful!',
           text: 'You Created Account Data!',
@@ -77,7 +77,7 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: 'Close'
         })
-
+       // props.setAccountLists([...props.accountLists, response.data]);
         // props.setAccountLists([...props.accountLists, response.data.list])
       })
       .catch(function (err) {
@@ -234,7 +234,7 @@ export default function BankInfoDialog(props) {
                 onChange={e => setRelatedCurrency(e.target.value)}
               />
             </div>
-            <div class='form-group'>
+            {/* <div class='form-group'>
               <label for='name'>General Flag</label>
               <div class='row'>
                 <div class='col-md-6'>
@@ -269,9 +269,9 @@ export default function BankInfoDialog(props) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
-            <div class='form-group'>
+            {/* <div class='form-group'>
               <label for='name'>Carry Forward</label>
               <div class='row'>
                 <div class='col-md-6'>
@@ -306,13 +306,14 @@ export default function BankInfoDialog(props) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           <div class='modal-footer'>
             <button
               type='button'
               class='btn btn-secondary'
               data-dismiss='modal'
+              onClick={props.close}
             >
               Close
             </button>
