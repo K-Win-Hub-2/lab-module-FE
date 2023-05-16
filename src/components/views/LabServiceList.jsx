@@ -14,10 +14,17 @@ import LabServiceUpdate from "../views/LabServiceUpdate";
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
   const [labServiceLists, setLabServiceLists] = useState([]);
+  const[filteredList, setFilteredList] = useState([]);
   const [updateDialog, setUpdateDialog] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [multiTestLists, setMultiTestLists] = useState([]);
   const [id, setId] = useState('');
+  const[testName,setTestName] = useState('');
+
+
+  const handleInputChange = (event) => {
+    setFilteredList(labServiceLists.filter(test=> test.name.includes(event.target.value)))
+  }
 
   const handleDelete = (event) => {
     console.log(event, "event");
@@ -93,6 +100,7 @@ const LabServiceList = () => {
       );
 
       setLabServiceLists(res.data.data);
+      setFilteredList(res.data.data);
     };
     getLabServiceLists();
   }, []);
@@ -128,7 +136,7 @@ const LabServiceList = () => {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-md-6">
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="form-group col-md-5">
                       <label>From</label>
                       <input
@@ -155,24 +163,29 @@ const LabServiceList = () => {
                         Search
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
-                <div className="offset-md-1 col-md-5">
-                  <div className="input-group" style={{ marginTop: "35px" }}>
+                <div className="offset-md-2 col-md-4">
+                  <div className="input-group" style={{ marginTop: "35px",marginBottom: "10px" }}>
                     <input
                       type="search"
                       className="form-control rounded"
                       id="search_code"
-                      placeholder="Enter Account Code"
+                      placeholder="Search By Test Name"
+                      onChange={event =>
+                        handleInputChange(
+                          event
+                        )
+                      }
                     />
                     &nbsp;
-                    <button
+                    {/* <button
                       type="button"
                       className="btn btn-outline-primary"
                       style={{ height: "0.97cm", marginTop: "0.1em" }}
                       onclick="acc_code_search()">
                       Search
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
@@ -275,7 +288,7 @@ const LabServiceList = () => {
                                 </tr>
                               </thead>
 
-                              {labServiceLists.map((labService, i) => (
+                              {filteredList.map((labService, i) => (
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>

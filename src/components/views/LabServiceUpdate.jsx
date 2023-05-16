@@ -71,7 +71,7 @@ function LabServiceUpdate () {
   const handleAddRow = () => {
     setTableData([
       ...tableData,
-      { id: tableData.length + 1, name: '', range: '', unit: '' }
+      { id: tableData.length + 1, name: '', referenceRange: '', unit: '' }
     ])
   }
 
@@ -87,6 +87,7 @@ function LabServiceUpdate () {
       }
       return data
     })
+    console.log(newData);
     setTableData(newData)
   }
 
@@ -260,7 +261,7 @@ function LabServiceUpdate () {
     setCharges(res.data.data.charges)
     setCost(res.data.data.cost)
     //setRefArray(res.data.data.referenceRange)
-    //setUpdateCategory(res.data.data.relatedCategory._id)
+    setUpdateCategory((res.data.data.relatedCategory !== undefined) ? res.data.data.relatedCategory._id : '')
     setReagentArray(res.data.data.reagentItems)
     //  console.log(res.data.data.referenceRange);
     //setFrom(res.data.data.referenceRange.from);
@@ -270,6 +271,7 @@ function LabServiceUpdate () {
     //setShowMultiTest(res.data.data.subTestFlag);
     if (res.data.data.subTestFlag) {
       setShowMultiTest(true)
+      setTableData(res.data.data.subTest)
       setShowSpecialRange(false)
       setShowNextRef(false)
     } else {
@@ -431,9 +433,9 @@ function LabServiceUpdate () {
                               {category.map(option => (
                                 <option
                                   value={option._id}
-                                  // selected={
-                                  //   option._id === updateCategory ? true : false
-                                  // }
+                                  selected={
+                                    option._id === updateCategory ? true : false
+                                  }
                                 >
                                   {option.name}
                                 </option>
@@ -627,12 +629,12 @@ function LabServiceUpdate () {
                                         placeholder='Reference Range'
                                         id='subTestRR'
                                         name='subTestRR'
-                                        value={data.range}
+                                        value={data.referenceRange}
                                         onChange={event =>
                                           handleInputChange(
                                             event,
                                             data.id,
-                                            'range'
+                                            'referenceRange'
                                           )
                                         }
                                       />
