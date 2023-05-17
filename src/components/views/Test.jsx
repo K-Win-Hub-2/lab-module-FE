@@ -74,10 +74,6 @@ function LabServiceRegister() {
         voucherID: TestVou_id,
         subTest: subTest
       };
-      const config = {
-        headers: { "Content-Type": "application/json" },
-      };
-      alert(JSON.stringify(data))
       axios
         .put(
           // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,  
