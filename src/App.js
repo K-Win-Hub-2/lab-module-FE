@@ -26,6 +26,7 @@ import Income from "./components/views/Finance/Income/Income";
 import Expense from "./components/views/Finance/Expense/Expense";
 import Bank from "./components/views/Finance/Bank/Bank";
 import Repay from "./components/views/RePay.jsx";
+import DoctorUpdate from './components/views/DoctorClinicUpdate.jsx';
 // import Supplier from "./components/views/Supplier.jsx";
 
 
@@ -85,6 +86,7 @@ function App() {
         <Route path="/bank" element={<Bank />}></Route>
         <Route path='/repay/:id' element={<Repay/>}></Route>
         <Route path='/ftvl' element={<FinanceTestVouList/>}></Route>
+        <Route path='/doctorUpdate/:id' element={<DoctorUpdate/>}></Route>
        
       </Routes>
     </Router>

@@ -278,9 +278,12 @@ const LabServiceList = () => {
                                         </Link>
                                       </button>
                                       &nbsp;
-                                      <button className='btn bt-sm btn-warning text-light'>
+                                      <Link
+                                        to={'/doctorUpdate/' + doctor._id}
+                                        className='btn bt-sm btn-warning text-light'
+                                      >
                                         <FaRegEdit />
-                                      </button>
+                                      </Link>
                                       &nbsp;
                                       <button
                                         className='btn bt-sm btn-danger'
