@@ -3,7 +3,7 @@ import Sidebar from "./SideBar";
 import Swal from "sweetalert2";
 import axios from "axios";
 // const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
-const url = 'http://localhost:9000/api'
+const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
 
 export default function TrialBalance() {
     const [accountLists, setAccountLists] = useState([]);

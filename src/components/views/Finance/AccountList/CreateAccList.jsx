@@ -112,7 +112,7 @@ export default function BankInfoDialog(props) {
     // const getAccountingHeadingType = async () => {
     //   try {
     //     const res = await axios.get(
-    //       `http://localhost:9000/api/account-headers/related/${heading}`
+    //       `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${heading}`
     //     );
     //     setHeading(res.data.list);
     //   } catch (err) {}

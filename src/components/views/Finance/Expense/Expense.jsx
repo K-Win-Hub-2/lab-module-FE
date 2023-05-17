@@ -40,7 +40,7 @@ const Expense = () => {
       // };
       // await axios.post(
       //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related",
-      //  "http://localhost:9000/api/transactions/relatedtransactions",
+      //  "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedtransactions",
       //    jsonData,
       //    config
       await axios
