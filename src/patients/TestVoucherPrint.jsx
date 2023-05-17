@@ -258,9 +258,67 @@ const TestVoucherPrint = () => {
                     </tr>
                   
                   </tbody> */}
-<tbody >
+
                     {filteredVouchers.map(testSelect => (
-                      
+                      <tbody >
+                        {(testSelect.name.subTestFlag)  ? (<tr>
+                            <td>
+                            <div className="col-md-12 border-0">
+                              <p><u><b>{testSelect.name.name}</b></u></p>
+                              {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p>{test.name}</p>
+                                  ))
+                                }
+                                </div>
+                                </td>
+
+                                <td>
+                              <div className="col-md-12 border-0">
+                                <p> </p>
+                                {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p
+                                  style={{ marginBottom: '6px' }}
+                                >{(test.result !== null) ? test.result : ""}</p>
+                                  ))
+                                }
+                                
+                              </div>
+                            </td>
+                            <td>
+                             <div className="col-md-12 border-0">
+                              <p></p>
+                             {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
+                                  ))
+                                }
+                              </div>
+                              </td>
+
+                              <td>
+                            <div className="col-md-12 border-0">
+                             {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p style={{ marginTop: '18px' }}>{test.unit}</p>
+                                  ))
+                                }
+                              </div>
+                            </td>
+
+                            <td>
+                              <p></p>
+                            {
+                                  testSelect.name.subTest.map((test)=>(
+                                    <p
+                                    style={{ marginBottom: '6px' }}
+                                  >{(test.remark !== null) ? test.remark : ""}</p>
+                                  ))
+                                }
+                            </td>
+
+                                </tr>) : (
                         <tr key={testSelect._id}>
                           <td>{testSelect.name.name}</td>
                           <td>{testSelect.result}</td>
@@ -293,9 +351,10 @@ const TestVoucherPrint = () => {
 
                           <td>{testSelect.remark}</td>
                         </tr>
-                      
+                        )}
+                        </tbody>
                     ))}
-                    </tbody>
+                    
                   </table>
                 
 
@@ -303,12 +362,14 @@ const TestVoucherPrint = () => {
                   <div className='px-3 py-2'>
                     <div className='row'>
                       {filteredVouchers.map(specDecode => (
+                        
                         <div className='col-md-6' key={specDecode._id}>
                           <h6 className='text-bold text-decoration-underline'>
                             {specDecode.name.name} Reference Range
                           </h6>
                           <p>{formatString(specDecode.name.specialComment)}</p>
                         </div>
+                       
                       ))}
                     </div>
                   </div>

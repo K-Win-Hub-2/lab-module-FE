@@ -9,8 +9,6 @@ import { Base64 } from 'js-base64'
 import Swal from 'sweetalert2'
 import { useLocation } from 'react-router'
 import { useNavigate } from 'react-router'
-import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar'
-import ReactHtmlParser from 'react-html-parser'
 
 function LabServiceUpdate () {
   const [category, setCategory] = useState([])
@@ -71,7 +69,7 @@ function LabServiceUpdate () {
   const handleAddRow = () => {
     setTableData([
       ...tableData,
-      { id: tableData.length + 1, name: '', referenceRange: '', unit: '' }
+      { id: tableData.length + 1, name: '', result: '', referenceRange: '', unit: '', remark: '' }
     ])
   }
 
@@ -205,7 +203,8 @@ function LabServiceUpdate () {
     }
     axios
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
+       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
+       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
         data,
         config
       )

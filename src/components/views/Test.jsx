@@ -25,11 +25,25 @@ function LabServiceRegister() {
   const [page, setPage] = useState("");
   const [pgender, setPgender] = useState("");
   const [patientID, setPatientID] = useState([]);
+  const [subTestList,setSubTestList] = useState([]);
+  const[updateUrl,setUpdateUrl] = useState("");
+
 
   const show = (id) => {
     setVouId(id);
     setIsOpen(!isOpen);
   };
+
+  const handleInputChange = (event, id, field) => {
+    const newData = subTestList.map(data => {
+      if (data._id === id) {
+        return { ...data, [field]: event.target.value }
+      }
+      return data
+    })
+    console.log(newData);
+    setSubTestList(newData)
+  }
 
   function decodeBase64(data) {
     const decode = Base64.decode(data);
@@ -50,25 +64,28 @@ function LabServiceRegister() {
 
   const handleTestSelection = (event) => {
     console.log(event._id, "event");
+    console.log(event.name.subTestFlag);
+    if(event.name.subTestFlag){
+     
     const data = {
       testSelectionID: event._id,
       voucherID: TestVou_id,
-      result: result,
-      remark: remark,
+      subTest: subTestList
     };
     const config = {
       headers: { "Content-Type": "application/json" },
     };
     axios
       .put(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/document",
+       // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,
+       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/subtests",
         data,
         config
       )
       .then(function (response) {
         Swal.fire({
           title: "Success",
-          text: "successfully Registered!",
+          text: "successfully Updated!",
           icon: "success",
           confirmButtonText: "OK",
         })
@@ -82,6 +99,46 @@ function LabServiceRegister() {
           confirmButtonText: "CANCEL",
         })
       });
+    
+  }else{
+    const data = {
+      testSelectionID: event._id,
+      voucherID: TestVou_id,
+      result: result,
+      remark: remark,
+    };
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+    axios
+      .put(
+       // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,
+       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/document",
+        data,
+        config
+      )
+      .then(function (response) {
+        Swal.fire({
+          title: "Success",
+          text: "successfully Updated!",
+          icon: "success",
+          confirmButtonText: "OK",
+        })
+        //  setTestID([testID, response.data.data]);
+      })
+      .catch(function (err) {
+        Swal.fire({
+          title: "Error",
+          text: err.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        })
+      });
+    
+  }
+    
+   
+    
   };
 
   useEffect(() => {
@@ -102,6 +159,14 @@ function LabServiceRegister() {
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
         setVouDate(res.data.data.date.split("T")[0]);
+
+        res.data.data.testSelection.map((test)=>{
+          if(test.name.subTestFlag){
+            setSubTestList(test.name.subTest)
+            console.log(subTestList)
+          }
+        }
+        )
 
         
       } catch (err) {}
@@ -219,7 +284,94 @@ function LabServiceRegister() {
                       </thead>
 
                       {voucherLists.map((testSelect) => (
+                       
                         <tbody>
+                           {(testSelect.name.subTestFlag) ? (<tr>
+                            <td>
+                            <div className="col-md-12 border-0">
+                              <p><u><b>{testSelect.name.name}</b></u></p>
+                              {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p>{test.name}</p>
+                                  ))
+                                }
+                                </div>
+                                </td>
+                            <td>
+                              <div className="col-md-12 border-0">
+                                <p> </p>
+                                {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <input
+                                  type="text"
+                                  id="result"
+                                  onChange={event =>
+                                    handleInputChange(
+                                      event,
+                                      test._id,
+                                      'result'
+                                    )}
+                                  defaultValue={(test.result !== null) ? test.result : ""}
+                                  class="form-control"
+                                  placeholder={test.name}
+                                  style={{ marginBottom: '6px' }}
+                                />
+                                  ))
+                                }
+                                
+                              </div>
+                            </td>
+                            <td>
+                             <div className="col-md-12 border-0">
+                              <p></p>
+                             {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
+                                  ))
+                                }
+                              </div>
+                              </td>
+                            <td>
+                            <div className="col-md-12 border-0">
+                             {
+                                  testSelect.name.subTest.map((test)=>(
+                                  <p style={{ marginTop: '18px' }}>{test.unit}</p>
+                                  ))
+                                }
+                              </div>
+                            </td>
+
+                            <td>
+                              <p></p>
+                            {
+                                  testSelect.name.subTest.map((test)=>(
+                                    <input
+                                    type="text"
+                                    id="remark"
+                                    onChange={event =>
+                                      handleInputChange(
+                                        event,
+                                        test._id,
+                                        'remark'
+                                      )}
+                                    defaultValue={(test.remark !== null) ? test.remark : ""}
+                                    class="form-control"
+                                    placeholder="Enter Remark"
+                                    style={{ marginBottom: '6px' }}
+                                  />
+                                  ))
+                                }
+                            </td>
+                            <td>
+                              <p></p>
+                              <button
+                                type="button"
+                                onClick={(e) => handleTestSelection(testSelect)}
+                                className="btn btn-sm btn-info ml-2">
+                                <FaSave />
+                              </button>
+                            </td>
+                          </tr>) : (
                           <tr>
                             <td>{testSelect.name.name}</td>
                             <td>
@@ -295,6 +447,7 @@ function LabServiceRegister() {
                               </button>
                             </td>
                           </tr>
+                           )}
                         </tbody>
                       ))}
                     </table>
