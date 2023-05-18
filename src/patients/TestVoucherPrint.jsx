@@ -331,6 +331,7 @@ const TestVoucherPrint = () => {
                               <div>
                                 {testSelect.name.referenceRange.map(refer => (
                                   <p key={refer._id}>
+                                     {refer.gender} &nbsp;
                                     {refer.from}-{refer.to} &nbsp;
                                   </p>
                                 ))}
@@ -379,14 +380,9 @@ const TestVoucherPrint = () => {
                     ))}
                   </div>
                 </div>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
+             
+               
+                
                 <p className='text-white'>''</p>
                 <p className='text-white'>''</p>
                 <p className='text-white'>''</p>

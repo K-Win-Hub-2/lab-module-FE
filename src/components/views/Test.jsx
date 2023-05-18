@@ -407,14 +407,12 @@ function LabServiceRegister() {
                                       {testSelect.name.referenceRange.map(
                                         (refer) => (
                                           <p>
-                                            {refer.gender ? (
+                                          
                                               <div>
-                                                {refer.gender}: &nbsp;
+                                                {refer.gender} &nbsp;
                                                 {refer.from}-{refer.to} &nbsp;
                                               </div>
-                                            ) : (
-                                              ""
-                                            )}
+                                          
                                           </p>
                                         )
                                       )}
