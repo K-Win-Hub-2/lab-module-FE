@@ -6,9 +6,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useLocation } from 'react-router-dom'
 import ReactToPrint from 'react-to-print'
-import { bounce } from 'react-animation';
-
-
+import { bounce } from 'react-animation'
 
 const Top = styled.div`
   display: flex;
@@ -28,8 +26,7 @@ const Title = styled.h5`
 
 const Div = styled.div``
 
-const Table = styled.table`
-`
+const Table = styled.table``
 const Thead = styled.thead``
 const Tbody = styled.tbody``
 const Tr = styled.tr`
@@ -41,13 +38,11 @@ const Th = styled.th`
 `
 const Td = styled.td`
   font-size: 14px;
-  
 `
 
 const Hr = styled.hr`
   border-style: solid;
   width: 50%;
-
 `
 
 const TestVoucherSlip = () => {
@@ -61,7 +56,7 @@ const TestVoucherSlip = () => {
   const [creditAmount, serCreditAmount] = useState('')
   const [phone, setPhone] = useState('')
   const [gender, setGender] = useState('')
-  const [doctor,setDoctor ]=useState('')
+  const [doctor, setDoctor] = useState('')
 
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
@@ -76,7 +71,7 @@ const TestVoucherSlip = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-          vouid
+            vouid
         )
         console.log(res.data.data)
         setGender(res.data.data.relatedPatient.gender)
@@ -93,7 +88,6 @@ const TestVoucherSlip = () => {
         setAge(res.data.data.relatedPatient.age)
         serCreditAmount(res.data.data.creditAmount)
         setDoctor(res.data.data.referDoctor)
-
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -127,23 +121,65 @@ const TestVoucherSlip = () => {
                   <Div className='card-body' id='print'>
                     <h5 style={{ textAlign: 'center' }}>Central Laboratory</h5>
                     <h6 style={{ textAlign: 'center' }}>
-                      NO.51 A,Min Ye Kyaw Swar Road{' '},Ahlone Township
+                      NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
                     </h6>
-                    <div className='text-center'><b>09400400650</b></div>
-                    <div className='text-center'><h5><b>Invoice</b></h5></div>
+                    <div className='text-center'>
+                      <b>09400400650</b>
+                    </div>
+                    <div className='text-center'>
+                      <h5>
+                        <b>Invoice</b>
+                      </h5>
+                    </div>
                     <br></br>
                     <div className='row'>
                       <div className='col-6'>
-                        <h6>Name : <span className='float-right'>{name} / {age}yrs</span></h6>
-                        <h6>Phone No : <span className='float-right'>{phone}</span></h6>
-                        <h6>Age :<span className='float-right'> {age}</span></h6>
-                        <h6>Gender : <span className='float-right'>{gender}</span></h6>
+                        <h6>
+                          Name :{' '}
+                          <span className='float-right'>
+                            {name} / {age}yrs
+                          </span>
+                        </h6>
+                        <h6>
+                          Phone No :
+                          <span className='float-right'>{phone}</span>
+                        </h6>
+                        <h6>
+                          Age :<span className='float-right'> {age}</span>
+                        </h6>
+                        <h6>
+                          Gender : <span className='float-right'>{gender}</span>
+                        </h6>
                       </div>
                       <div className='col-6'>
+<<<<<<< HEAD
                         <h6>Inv. No : <span className='float-right'>{code?code:''}</span></h6>
                         <h6>Date : <span className='float-right'>{date ? date.split('T')[0]:''}</span></h6>
                         <h6>Printed : <span className='float-right'>{today.split('T')[0]}</span></h6>
                         <h6>Doctor : <span className='float-right'>{doctor ? doctor: '-'}</span></h6>
+=======
+                        <h6>
+                          Inv. No : <span className='float-right'>{code}</span>
+                        </h6>
+                        <h6>
+                          Date :{' '}
+                          <span className='float-right'>
+                            {date ? date.split('T')[0] : ''}
+                          </span>
+                        </h6>
+                        <h6>
+                          Printed :{' '}
+                          <span className='float-right'>
+                            {today ? today.split('T')[0] : ''}
+                          </span>
+                        </h6>
+                        <h6>
+                          Doctor :{' '}
+                          <span className='float-right'>
+                            {doctor ? doctor : '-'}
+                          </span>
+                        </h6>
+>>>>>>> 1cdf856 (lab_mod)
                       </div>
                     </div>
                     {/* <br/>
@@ -167,10 +203,26 @@ const TestVoucherSlip = () => {
                       <Thead>
                         <Tr>
                           <Th>#</Th>
-                          <Th style={{ marginLeft: '50px', textAlign:'right' }}>Name</Th>
-                          <Th style={{ marginLeft: '50px', textAlign:'right' }}>Qty</Th>
-                          <Th style={{ marginLeft: '50px', textAlign:'right' }}>Price</Th>
-                          <Th style={{ marginLeft: '50px', textAlign:'right' }}>Amt</Th>
+                          <Th
+                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                          >
+                            Name
+                          </Th>
+                          <Th
+                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                          >
+                            Qty
+                          </Th>
+                          <Th
+                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                          >
+                            Price
+                          </Th>
+                          <Th
+                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                          >
+                            Amt
+                          </Th>
                         </Tr>
                       </Thead>
                       <Hr></Hr>
@@ -179,22 +231,22 @@ const TestVoucherSlip = () => {
                           <Tr key={vou._id}>
                             <Td>{++index}</Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign:'right' }}
+                              style={{ marginLeft: '50px', textAlign: 'right' }}
                             >
                               {vou.name.name}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign:'right' }}
+                              style={{ marginLeft: '50px', textAlign: 'right' }}
                             >
                               {vou.qty}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign:'right' }}
+                              style={{ marginLeft: '50px', textAlign: 'right' }}
                             >
                               {vou.unitCharge}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px',textAlign:'right' }}
+                              style={{ marginLeft: '50px', textAlign: 'right' }}
                             >
                               {vou.subCharge}
                             </Td>
@@ -234,7 +286,7 @@ const TestVoucherSlip = () => {
                             {pay}
                           </td>
                         </tr>
-                        <tr >
+                        <tr>
                           <td colSpan={4} style={{ textAlign: 'right' }}>
                             Credit Amount
                           </td>
@@ -243,7 +295,7 @@ const TestVoucherSlip = () => {
                           </td>
                         </tr>
 
-                        {creditAmount == 0 && (
+                        {/* {creditAmount == 0 && (
                           <>
                             <tr>
                               <td colSpan={4} style={{ textAlign: 'right' }}>
@@ -253,16 +305,22 @@ const TestVoucherSlip = () => {
                                 0
                               </td>
                             </tr>
-
                           </>
-                        )}
+                        )} */}
                         <Hr></Hr>
                         <tr>
-                          <td colSpan={5} style={{ textAlign: 'center', borderStyle: 'hidden' }}>
-                            <b>အ‌‌ဖြေလာရွေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်</b>
+                          <td
+                            colSpan={5}
+                            style={{
+                              textAlign: 'center',
+                              borderStyle: 'hidden'
+                            }}
+                          >
+                            <b>
+                              အ‌‌ဖြေလာရွေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်
+                            </b>
                           </td>
                         </tr>
-
                       </tfoot>
                     </Table>
                     {/* {
@@ -274,7 +332,6 @@ const TestVoucherSlip = () => {
 
   )
 } */}
-
                   </Div>
                 </Div>
                 <ReactToPrint

@@ -82,6 +82,7 @@ function Category() {
       amount: upAmount,
       description: upDesc
     }
+    
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -131,7 +132,7 @@ function Category() {
 
   const CategoryCreate = () => {
     const data = {
-      code: code,
+      // code: code,
       name: name,
       amount: amount,
       flag: flag,
@@ -139,6 +140,11 @@ function Category() {
       description: description
     }
     //alert(JSON.stringify(data));
+    if(code){
+      data.code=code;
+    }else{
+      data.code=uniqueId
+    }
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -173,6 +179,8 @@ function Category() {
     document.getElementById('ccode').value = ''
     document.getElementById('camount').value = ''
   }
+  const uniqueId = parseInt(Date.now() * Math.random())
+
   useEffect(() => {
     const getCategory = async () => {
       try {

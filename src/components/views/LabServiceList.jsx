@@ -300,7 +300,7 @@ const LabServiceList = () => {
                                       {labService.name ? labService.name : ""}
                                     </td>
 
-                                    <td>Test Cat</td>
+                                    <td>{labService.relatedCategory ? labService.relatedCategory.name : ''}</td>
 
                                     <td>
                                       {labService.referAmount

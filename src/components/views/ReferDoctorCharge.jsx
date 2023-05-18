@@ -3,7 +3,7 @@
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function CatRegister() {
@@ -80,7 +80,7 @@ function CatRegister() {
                 <div className="col-sm-12">
                   <ol className="breadcrumb">
                     <li className="breadcrumb-item">
-                      <a href="/">Home</a>
+                      <Link to="/doctorClinic">Back</Link>
                     </li>
                     <li className="breadcrumb-item active">
                       Refer Doctor Charges List
