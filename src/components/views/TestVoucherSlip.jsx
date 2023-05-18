@@ -152,34 +152,10 @@ const TestVoucherSlip = () => {
                         </h6>
                       </div>
                       <div className='col-6'>
-<<<<<<< HEAD
                         <h6>Inv. No : <span className='float-right'>{code?code:''}</span></h6>
                         <h6>Date : <span className='float-right'>{date ? date.split('T')[0]:''}</span></h6>
                         <h6>Printed : <span className='float-right'>{today.split('T')[0]}</span></h6>
                         <h6>Doctor : <span className='float-right'>{doctor ? doctor: '-'}</span></h6>
-=======
-                        <h6>
-                          Inv. No : <span className='float-right'>{code}</span>
-                        </h6>
-                        <h6>
-                          Date :{' '}
-                          <span className='float-right'>
-                            {date ? date.split('T')[0] : ''}
-                          </span>
-                        </h6>
-                        <h6>
-                          Printed :{' '}
-                          <span className='float-right'>
-                            {today ? today.split('T')[0] : ''}
-                          </span>
-                        </h6>
-                        <h6>
-                          Doctor :{' '}
-                          <span className='float-right'>
-                            {doctor ? doctor : '-'}
-                          </span>
-                        </h6>
->>>>>>> 1cdf856 (lab_mod)
                       </div>
                     </div>
                     {/* <br/>
