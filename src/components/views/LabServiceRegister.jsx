@@ -36,18 +36,38 @@ function LabServiceRegister() {
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
   const [tableData, setTableData] = useState([]);
-const[referAmount,setReferAmount]=useState('');
+  const [refData, setRefData] = useState([]);
+  const [referAmount, setReferAmount] = useState('');
 
-    
-     const handleAlert =()=>{
-       Swal.fire({
-         title: "Success",
-         text: "successfully Registered!",
-         icon: "success",
-         confirmButtonText: "OK",
-       });
-     }
-  
+
+  const handleAlert = () => {
+    Swal.fire({
+      title: "Success",
+      text: "successfully Registered!",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  }
+  const handleAddRefRow = () => {
+    setRefData([...refData, { id: refData.length + 1, from: "", to: "", gender: "", unit: "" }]);
+  };
+
+  const handleDeleteRefRow = (id) => {
+    const filteredData = refData.filter((data) => data.id !== id);
+    setRefData(filteredData);
+  };
+
+  const handleRefInputChange = (event, id, field) => {
+    const newData = refData.map((data) => {
+      if (data.id === id) {
+        return { ...data, [field]: event.target.value };
+      }
+      return data;
+    });
+    setRefData(newData);
+  };
+
+  // end of refData
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, name: "", referenceRange: "", unit: "" }]);
@@ -128,16 +148,16 @@ const[referAmount,setReferAmount]=useState('');
 
     const myString = specialCommentEncode;
     const encodedString = Base64.encode(myString);
-
+    console.log(refData,'refData')
     let data = {
       code: code,
       name: name,
-      referAmount:referAmount,
+      referAmount: referAmount,
       leadTime: leadTime,
       charges: charges,
       cost: cost,
       reagentItems: reagentArray,
-      referenceRange: refArray,
+      referenceRange: refData,
       description: description,
       specialComment: encodedString,
       subTest: tableData
@@ -599,68 +619,100 @@ const[referAmount,setReferAmount]=useState('');
 
                               {showRefForm && (
                                 <div className="row mt-3">
-                                  <label>Reference Range</label>
-                                  <div className="col-md-2">
-                                    <input
-                                      type="number"
-                                      placeholder="From"
-                                      className="form-control"
-                                      step={0.01}
-                                      onChange={(e) => setFrom(e.target.value)}
-                                    />
+                                  <div className="row">
+                                    <div className="col-1">
+                                      <label>Reference Range</label>
+                                    </div>
+                                    <div className="col-1">
+                                      <button
+                                        className="btn btn-primary ml-3"
+                                        type="button"
+                                        onClick={handleAddRefRow}>
+                                        Add
+                                      </button>
+                                    </div>
                                   </div>
-                                  <div className="col-md-2">
-                                    <input
-                                      type="number"
-                                      placeholder="To"
-                                      step={0.01}
-                                      className="form-control"
-                                      onChange={(e) => setTo(e.target.value)}
-                                    />
-                                  </div>
-                                  <div className="col-md-3">
-                                    <select
-                                      class="custom-select border-info"
-                                      name="account_type_id"
-                                      id="flag"
-                                      onChange={(e) => {
-                                        if (
-                                          e.target.value === "Male" ||
-                                          "Female"
-                                        )
-                                          setShowNextRef(true);
-                                        if (e.target.value === "Null")
-                                          setShowNextRef(false);
-                                        setGender(e.target.value);
-                                      }}>
-                                      <option>Gender</option>
-                                      <option value="Male">Male</option>
-                                      <option value="Female">Female</option>
-                                      <option value="Null">Neutral</option>
-                                    </select>
-                                  </div>
+                                  {refData.map((data) => (
+                                    <div className='row'>
+                                      <div className="col-md-2">
+                                        <input
+                                          type="number"
+                                          placeholder="From"
+                                          className="form-control"
+                                          step={0.01}
+                                          value={data.from}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "from"
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                      <div className="col-md-2">
+                                        <input
+                                          type="number"
+                                          placeholder="To"
+                                          step={0.01}
+                                          className="form-control"
+                                          value={data.to}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "to"
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                      <div className="col-md-3">
+                                      <input
+                                          type="text"
+                                          placeholder="Gender"
+                                          step={0.01}
+                                          className="form-control"
+                                          value={data.gender}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "gender"
+                                            )
+                                          }
+                                        />
+                                      </div>
 
-                                  <div className="col-md-2">
-                                    <input
-                                      type="text"
-                                      placeholder="Unit"
-                                      className="form-control"
-                                      onChange={(e) => setUnit(e.target.value)}
-                                    />
-                                  </div>
-                                  {/* Action button for add data to refArr */}
-                                  <div className="col-md-2">
-                                    <button
-                                      type="button"
-                                      className="btn btn-success"
-                                      onClick={(e) => {
-                                        handleRefRange(e.target.value);
-                                        handleAlert();
-                                      }}>
-                                      <i class="fa fa-save"></i>
-                                    </button>
-                                  </div>
-                                  {/* End */}
+                                      <div className="col-md-2">
+                                        <input
+                                          type="text"
+                                          placeholder="Unit"
+                                          className="form-control"
+                                          value={data.unit}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "unit"
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                      {/* Action button for add data to refArr */}
+                                      <div className="col-md-2">
+                                      <button
+                                        type="button"
+                                        className="btn btn-sm btn-danger rounded-circle"
+                                        id="removeRowFromMultiTests"
+                                        onClick={() =>
+                                          handleDeleteRefRow(data.id)
+                                        }>
+                                        <FaMinus />
+                                      </button>
+                                      </div>
+                                      {/* End */}
+                                    </div>
+                                  ))}
                                 </div>
                               )}
                             </div>
@@ -761,25 +813,25 @@ const[referAmount,setReferAmount]=useState('');
             </div>
           </section>
           {/* <!-- /.content --> */}
-        </div>
+        </div >
 
         {/* <!-- /.content-wrapper --> */}
-        <footer className="main-footer">
+        <footer footer className="main-footer" >
           <strong>
             Copyright &copy; 2017-2020{" "}
             <a href="http://www.kwintechnologies.com">K-win Technology</a>.
           </strong>
           All rights reserved.
-        </footer>
+        </footer >
 
         {/* <!-- Control Sidebar --> */}
-        <aside className="control-sidebar control-sidebar-dark">
+        <aside aside className="control-sidebar control-sidebar-dark" >
           {/* <!-- Control sidebar content goes here --> */}
-        </aside>
+        </aside >
         {/* <!-- /.control-sidebar --> */}
-      </div>
+      </div >
       {/* <!-- ./wrapper --> */}
-    </div>
+    </div >
   );
 }
 export default LabServiceRegister;
