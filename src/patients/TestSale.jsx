@@ -7,7 +7,7 @@ import axios from "axios";
 import { RxCross2 } from "react-icons/rx";
 import { MdDiscount } from "react-icons/md";
 import Swal from "sweetalert2";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 
 const Top = styled.div`
   display: flex;
@@ -82,6 +82,8 @@ const TestSale = () => {
   const [relatedBankAcc, setRelatedBankAcc] = useState("");
   const [relatedCashAcc, setRelatedCashAcc] = useState("");
   const [account, setAccount] = useState("");
+  const [voucherObjectID, setVoucherObjectID] = useState('');
+  const [showPrint, setShowPrint] = useState(false);
   const patient_id = useLocation().pathname.split("/")[2];
   const navigate = useNavigate();
 
@@ -98,7 +100,7 @@ const TestSale = () => {
             el.relatedType.name === "Assets"
         );
         setCashList(cash);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getBankLists = async () => {
@@ -113,7 +115,7 @@ const TestSale = () => {
             el.relatedType.name === "Assets"
         );
         setBankList(bank);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getAccountingLists = async () => {
@@ -126,30 +128,30 @@ const TestSale = () => {
         );
 
         setAccountingList(acc);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getVoucherCode = async () => {
       try {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
-            patient_id
+          patient_id
         );
 
         console.log(res.data.data);
         setVoucherCode(res.data.data.voucherID);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getPatient = async () => {
       try {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
-            patient_id
+          patient_id
         );
         setPname(res.data.data.name);
         setPcode(res.data.data.patientID);
-      } catch (err) {}
+      } catch (err) { }
     };
     const getServs = async () => {
       try {
@@ -158,7 +160,7 @@ const TestSale = () => {
         );
         // console.log("good");
         setServs(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     const getDoctors = async () => {
       try {
@@ -166,7 +168,7 @@ const TestSale = () => {
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
         );
         setDoctors(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getPatient();
     getServs();
@@ -180,7 +182,7 @@ const TestSale = () => {
   const addService = async () => {
     const res = await axios.get(
       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-        serId
+      serId
     );
     console.log(res.data.data, "res.data.data");
     setArr((arr) => [...arr, res.data.data]);
@@ -202,10 +204,21 @@ const TestSale = () => {
     setArr(arr.filter((el) => el._id != id));
     setArray(array.filter((el) => el.name != id));
   };
+
+  const testSaveTest = () => {
+    Swal.fire({
+      title: "Success",
+      text: "successfully Registered!",
+      icon: "success",
+      confirmButtonText: 'OK',
+    }).then(result => {
+
+    });
+  }
   const saveTest = () => {
     const data = {
       code: voucherCode,
-      relatedAccounting: account,
+      relatedAccounting: '64659ac6c69c2b2f847c3b20',
       date: date,
       relatedPatient: patient_id,
       // referDoctor: did,
@@ -230,15 +243,16 @@ const TestSale = () => {
 
     const res = axios
       .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
-      .then(function () {
+      .then(function (response) {
+        console.log(response.data.data._id, 'here')
+        setVoucherObjectID(response.data.data._id)
+        setShowPrint(true);
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
           icon: "success",
           confirmButtonText: "OK",
         });
-
-        navigate(-1);
       })
 
       .catch(function () {
@@ -425,20 +439,20 @@ const TestSale = () => {
                       </div>
                     )}
                   </div>
-                  <div className="row">
+                  {/* <div className="row">
                     <div className="col-md-6"></div>
                     <div className="col-6 mt-3">
                       <label className="ml-2">Income Account</label>
                       <select
                         className="form-control"
                         onChange={(e) => setAccount(e.target.value)}>
-                        <option>Choose Account</option>
+                        <option>Lab Test Sales</option>
                         {accountingList.map((doc, index) => (
                           <option value={doc._id}>{doc.name}</option>
                         ))}
                       </select>
                     </div>
-                  </div>
+                  </div> */}
 
                   <Div className="col-10 mt-5">
                     <Select
@@ -607,9 +621,14 @@ const TestSale = () => {
                       Save
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button className="btn btn-sm btn-primary" onClick={print}>
-                      Print
-                    </button>
+                    {showPrint ? (
+                      <Link to={`/testslip/` + voucherObjectID}>
+                        <button className="btn btn-sm btn-primary">
+                          Print
+                        </button>
+                      </Link>
+                    ) : <></>}
+
                   </div>
                 </div>
               </Div>

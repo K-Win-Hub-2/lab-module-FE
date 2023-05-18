@@ -140,8 +140,8 @@ const TestVoucherSlip = () => {
                         <h6>Gender : <span className='float-right'>{gender}</span></h6>
                       </div>
                       <div className='col-6'>
-                        <h6>Inv. No : <span className='float-right'>{code}</span></h6>
-                        <h6>Date : <span className='float-right'>{date.split('T')[0]}</span></h6>
+                        <h6>Inv. No : <span className='float-right'>{code?code:''}</span></h6>
+                        <h6>Date : <span className='float-right'>{date ? date.split('T')[0]:''}</span></h6>
                         <h6>Printed : <span className='float-right'>{today.split('T')[0]}</span></h6>
                         <h6>Doctor : <span className='float-right'>{doctor ? doctor: '-'}</span></h6>
                       </div>
