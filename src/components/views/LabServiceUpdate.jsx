@@ -68,7 +68,7 @@ function LabServiceUpdate () {
   //  }
 
   const handleAddRefRow = () => {
-    setRefData([...refData, { id: refData.length + 1, from: "", to: "", gender: "", unit: "" }]);
+    setRefData([...refData, { id: refData.length + 1, refRange: "", unit: "" }]);
   };
 
   const handleDeleteRefRow = (id) => {
@@ -83,6 +83,7 @@ function LabServiceUpdate () {
       }
       return data;
     });
+    console.log(newData);
     setRefData(newData);
   };
 
@@ -223,15 +224,15 @@ function LabServiceUpdate () {
     }
     axios
       .put(
-       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
+       //'http://localhost:9000/api/service',
         data,
         config
       )
       .then(function (response) {
         Swal.fire({
           title: 'Success',
-          text: 'successfully Registered!',
+          text: 'successfully Updated!',
           icon: 'success',
           confirmButtonText: 'OK'
         })
@@ -269,7 +270,8 @@ function LabServiceUpdate () {
 
   const getUpdate = async () => {
     const res = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' +
+     'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' +
+     // 'http://localhost:9000/api/service/' +
         labid
     )
     //console.log("success");
@@ -772,23 +774,23 @@ function LabServiceUpdate () {
                                 </div>
                                 {refData.map((data) => (
                                   <div className='row'>
-                                    <div className="col-md-2">
+                                    <div className="col-md-6">
                                       <input
-                                        type="number"
+                                        type="text"
                                         placeholder="From"
                                         className="form-control"
                                         step={0.01}
-                                        value={data.from}
+                                        value={data.refRange}
                                         onChange={(event) =>
                                           handleRefInputChange(
                                             event,
                                             data.id,
-                                            "from"
+                                            "refRange"
                                           )
                                         }
                                       />
                                     </div>
-                                    <div className="col-md-2">
+                                    {/* <div className="col-md-2">
                                       <input
                                         type="number"
                                         placeholder="To"
@@ -819,7 +821,7 @@ function LabServiceUpdate () {
                                           )
                                         }
                                       />
-                                    </div>
+                                    </div> */}
 
                                     <div className="col-md-2">
                                       <input

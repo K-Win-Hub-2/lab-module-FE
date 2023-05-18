@@ -49,7 +49,7 @@ function LabServiceRegister() {
     });
   }
   const handleAddRefRow = () => {
-    setRefData([...refData, { id: refData.length + 1, from: "", to: "", gender: "", unit: "" }]);
+    setRefData([...refData, { id: refData.length + 1, refRange: "", unit: "" }]);
   };
 
   const handleDeleteRefRow = (id) => {
@@ -64,7 +64,9 @@ function LabServiceRegister() {
       }
       return data;
     });
+    console.log(newData);
     setRefData(newData);
+
   };
 
   // end of refData
@@ -172,6 +174,7 @@ function LabServiceRegister() {
     axios
       .post(
         "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+       //"http://localhost:9000/api/service",
         data,
         config
       )
@@ -634,23 +637,23 @@ function LabServiceRegister() {
                                   </div>
                                   {refData.map((data) => (
                                     <div className='row'>
-                                      <div className="col-md-2">
+                                      <div className="col-md-4">
                                         <input
-                                          type="number"
-                                          placeholder="From"
+                                          type="text"
+                                          placeholder="Value"
                                           className="form-control"
                                           step={0.01}
-                                          value={data.from}
+                                          value={data.refRange}
                                           onChange={(event) =>
                                             handleRefInputChange(
                                               event,
                                               data.id,
-                                              "from"
+                                              "refRange"
                                             )
                                           }
                                         />
                                       </div>
-                                      <div className="col-md-2">
+                                      {/* <div className="col-md-2">
                                         <input
                                           type="number"
                                           placeholder="To"
@@ -681,7 +684,7 @@ function LabServiceRegister() {
                                             )
                                           }
                                         />
-                                      </div>
+                                      </div> */}
 
                                       <div className="col-md-2">
                                         <input

@@ -409,8 +409,9 @@ function LabServiceRegister() {
                                           <p>
                                           
                                               <div>
-                                                {refer.gender} &nbsp;
-                                                {refer.from}-{refer.to} &nbsp;
+                                                {/* {refer.gender} &nbsp;
+                                                {refer.from}-{refer.to} &nbsp; */}
+                                                {refer.refRange}
                                               </div>
                                           
                                           </p>
