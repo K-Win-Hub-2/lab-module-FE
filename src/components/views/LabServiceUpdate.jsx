@@ -48,6 +48,7 @@ function LabServiceUpdate () {
   const [subTest, setSubTest] = useState([])
   const [showSpecialRange, setShowSpecialRange] = useState(false)
   const [tableData, setTableData] = useState([])
+  const [refData, setRefData] = useState([]);
   const labid = useLocation().pathname.split('/')[2]
   const navigate = useNavigate()
 
@@ -65,6 +66,25 @@ function LabServiceUpdate () {
 
   //    return reactElements;
   //  }
+
+  const handleAddRefRow = () => {
+    setRefData([...refData, { id: refData.length + 1, from: "", to: "", gender: "", unit: "" }]);
+  };
+
+  const handleDeleteRefRow = (id) => {
+    const filteredData = refData.filter((data) => data.id !== id);
+    setRefData(filteredData);
+  };
+
+  const handleRefInputChange = (event, id, field) => {
+    const newData = refData.map((data) => {
+      if (data.id === id) {
+        return { ...data, [field]: event.target.value };
+      }
+      return data;
+    });
+    setRefData(newData);
+  };
 
   const handleAddRow = () => {
     setTableData([
@@ -185,7 +205,7 @@ function LabServiceUpdate () {
       cost: cost,
       relatedCategories: relatedCategory,
       reagentItems: reagentArray,
-      referenceRange: refArray,
+      referenceRange: refData,
       description: description,
       specialFlag: showSpecialCmt,
       specialComment: encodedString,
@@ -303,7 +323,13 @@ function LabServiceUpdate () {
        
        // }
        if(res.data.data.referenceRange !== undefined){
-       setRefArray(res.data.data.referenceRange)
+
+        let newArray = []
+        res.data.data.referenceRange.map(function(e,i){
+          e = {...e, id:i+1}
+          newArray.push(e)
+        })
+       setRefData(newArray)
       if(res.data.data.referenceRange.length > 1){
         setShowNextRef(true);
       }
@@ -725,99 +751,109 @@ function LabServiceUpdate () {
                               )}
 
                               {showRefForm && (
-                                <div className='row mt-3'>
-                                  <div className='col-md-2'>
-                                    <input
-                                      type='number'
-                                      placeholder='From'
-                                      className='form-control'
-                                      step={0.01}
-                                     // defaultValue={(refArray > 0) ? mfrom : 0.0}
-                                     defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].from : 0}
-                                      onChange={e => setmFrom(e.target.value)}
-                                    />
+                                <div className="row mt-3">
+                                <div className="row">
+                                  <div className="col-1">
+                                    <label>Reference Range</label>
                                   </div>
-                                  <div className='col-md-2'>
-                                    <input
-                                      type='number'
-                                      placeholder='To'
-                                      step={0.01}
-                                      className='form-control'
-                                      //defaultValue={(refArray > 0) ? mto : 0.0}
-                                      defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].to : 0}
-                                      onChange={e => setmTo(e.target.value)}
-                                    />
-                                  </div>
-                                  <div className='col-md-3'>
-                                    <select
-                                      class='custom-select border-info'
-                                      name='account_type_id'
-                                      id='flag'
-                                      onChange={e => {
-                                        if (
-                                          e.target.value === 'Male' ||
-                                          'Female'
-                                        )
-                                          setShowNextRef(true)
-                                        if (e.target.value === 'Null')
-                                          setShowNextRef(false)
-                                        setmGender(e.target.value)
-                                      }}
-                                    >
-                                      <option>Gender</option>
-
-                                      <option
-                                        value='Male'
-                                        selected={
-                                          (refArray !== undefined && refArray.length > 0 &&  refArray[0].gender === 'Male') ? true : false
-                                        }
-                                      >
-                                        Male
-                                      </option>
-                                      <option
-                                        value='Female'
-                                        selected={
-                                          (refArray !== undefined && refArray.length > 0 && refArray[0].gender === 'Female') ? true : false
-                                        }
-                                      >
-                                        Female
-                                      </option>
-
-                                      <option value='Null'>Neutral</option>
-                                    </select>
-                                  </div>
-
-                                  <div className='col-md-2'>
-                                    <input
-                                      type='text'
-                                      placeholder='Unit'
-                                      className='form-control'
-                                      defaultValue={(refArray !== undefined && refArray.length > 0 ) ? refArray[0].unit : ""}
-                                      onChange={e => setmUnit(e.target.value)}
-                                    />
-                                  </div>
-                                  {/* Action button for add data to refArr */}
-                                  <div className='col-md-2'>
+                                  <div className="col-1">
                                     <button
-                                      type='button'
-                                      className='btn btn-primary'
-                                      onClick={e => {
-                                        handleRefRange(0)
-                                        handleAlert()
-                                      }}
-                                    >
-                                      <i class='fa fa-save'></i>
+                                      className="btn btn-primary ml-3"
+                                      type="button"
+                                      onClick={handleAddRefRow}>
+                                      Add
                                     </button>
                                   </div>
-                                  {/* End */}
                                 </div>
+                                {refData.map((data) => (
+                                  <div className='row'>
+                                    <div className="col-md-2">
+                                      <input
+                                        type="number"
+                                        placeholder="From"
+                                        className="form-control"
+                                        step={0.01}
+                                        value={data.from}
+                                        onChange={(event) =>
+                                          handleRefInputChange(
+                                            event,
+                                            data.id,
+                                            "from"
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                    <div className="col-md-2">
+                                      <input
+                                        type="number"
+                                        placeholder="To"
+                                        step={0.01}
+                                        className="form-control"
+                                        value={data.to}
+                                        onChange={(event) =>
+                                          handleRefInputChange(
+                                            event,
+                                            data.id,
+                                            "to"
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                    <div className="col-md-3">
+                                    <input
+                                        type="text"
+                                        placeholder="Gender"
+                                        step={0.01}
+                                        className="form-control"
+                                        value={data.gender}
+                                        onChange={(event) =>
+                                          handleRefInputChange(
+                                            event,
+                                            data.id,
+                                            "gender"
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    <div className="col-md-2">
+                                      <input
+                                        type="text"
+                                        placeholder="Unit"
+                                        className="form-control"
+                                        value={data.unit}
+                                        onChange={(event) =>
+                                          handleRefInputChange(
+                                            event,
+                                            data.id,
+                                            "unit"
+                                          )
+                                        }
+                                      />
+                                    </div>
+                                    {/* Action button for add data to refArr */}
+                                    <div className="col-md-2">
+                                    <button
+                                      type="button"
+                                      className="btn btn-sm btn-danger rounded-circle"
+                                      id="removeRowFromMultiTests"
+                                      onClick={() =>
+                                        handleDeleteRefRow(data.id)
+                                      }>
+                                      <FaMinus />
+                                    </button>
+                                    </div>
+                                    {/* End */}
+                                  </div>
+                                ))}
+                              </div>
                               )}
                             </div>
                           ) : (
                             ''
                           )}
                           {/* Action to add data in text box  */}
-                          {showNextRef ? (
+                          {/* {showNextRef ? (
                             <div>
                               <div className='row mt-3'>
                                 <div className='col-md-2'>
@@ -893,7 +929,7 @@ function LabServiceUpdate () {
                             </div>
                           ) : (
                             ''
-                          )}
+                          )} */}
                           {/* End */}
 
                           <div className='form-actions mt-3'>
