@@ -379,7 +379,23 @@ const TestVoucherPrint = () => {
                     ))}
                   </div>
                 </div>
-
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                <p className='text-white'>''</p>
+                
                 <div className='row' style={{ marginTop: '50px' }}>
                   <div className='col-6'>
                     <span>Laboratory Technician</span>

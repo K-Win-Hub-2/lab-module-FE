@@ -2,20 +2,24 @@
 
 import React from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link,useLocation } from 'react-router-dom'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
 import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
 
-function LabServiceRegister() {
+function ReagentUpdate() {
   const [stockUnitTemp, setStockUnitTemp] = useState('')
   const [stockLists, setStockLists] = useState([])
   const [supplier, setSupplier] = useState('')
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
   const [tableData, setTableData] = useState([]);
+  const reagID = useLocation().pathname.split('/')[2]
+  const [updateCode, setUpdateCode] = useState('')
+  const [updateName, setUpdateName] = useState('')
+  const [updateSupplier, setUpdateSupplier] = useState('')
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, stockQty: "", reorderQty: "", purchasePrice: "", unitName: "" }]);
@@ -60,22 +64,27 @@ function LabServiceRegister() {
 
   const ReagentCreate = () => {
     const data = {
-      code: code,
-      name: name,
+      code: updateCode,
+      name: updateName,
       stockUnit: tableData,
-      supplier:supplier
+      supplier:updateSupplier,
+      id:reagID
     }
+    if (supplier) data.supplier = supplier
+    if (name) data.name = name
+    if (code) data.code = code
     // alert(JSON.stringify(data));
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
     axios
-      .post(
+      .put(
         'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent',
         data,
         config
       )
       .then(function (response) {
+        console.log(response)
         setTableData([]) // clear form
         Swal.fire({
           title: 'Success',
@@ -100,16 +109,26 @@ function LabServiceRegister() {
   }
 
   useEffect(() => {
-    const getSupplier = async () => {
+    const getReagentUpdate = async () => {
       try {
         const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/suppliers?limit=30'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent/'+reagID
         )
-
-        setSupplierLists(res.data.data)
+        setUpdateCode(res.data.data.code)
+        setUpdateName(res.data.data.name)
+        setUpdateSupplier(res.data.data.supplier)
+        let newArr=[];
+        if (res.data.data.stockUnit) {
+            res.data.data.stockUnit.map(function(e,i){
+                e={...e,id:i+1}
+                newArr.push(e)
+            })
+            setTableData(newArr)
+        }
+        console.log(res.data.data,'here')
       } catch (err) { }
     }
-    getSupplier()
+    getReagentUpdate()
   }, [])
   return (
     <div classNameName='App'>
@@ -152,7 +171,8 @@ function LabServiceRegister() {
                       id='code'
                       className='form-control'
                       name='company_name'
-                      onChange={e => setCode(e.target.value)}
+                      defaultValue={updateCode}
+                      onChange={e => setUpdateCode(e.target.value)}
                     />
                   </div>
 
@@ -163,7 +183,8 @@ function LabServiceRegister() {
                       id='name'
                       className='form-control'
                       name='company_address'
-                      onChange={e => setName(e.target.value)}
+                      defaultValue={updateName}
+                      onChange={e => setUpdateName(e.target.value)}
                     />
                   </div>
 
@@ -176,7 +197,8 @@ function LabServiceRegister() {
                       placeholder=''
                       name='md_name'
                       id='supplier'
-                      onChange={(e) => setSupplier(e.target.value)}
+                      defaultValue={updateSupplier}
+                      onChange={(e) => setUpdateSupplier(e.target.value)}
                     />
                   </div>
                   <div className='form-group mt-3 row gap-3'>
@@ -335,4 +357,4 @@ function LabServiceRegister() {
     </div>
   )
 }
-export default LabServiceRegister
+export default ReagentUpdate

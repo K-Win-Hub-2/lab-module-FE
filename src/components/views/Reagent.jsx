@@ -91,10 +91,10 @@ function CatRegister() {
                             <button
                               type="button"
                               className="btn btn-success"
-                              // onClick={excelExport}
+                            // onClick={excelExport}
                             >
                               <FaFileExcel
-/>&nbsp;Export
+                              />&nbsp;Export
                             </button>
                           </span>
                         </label>
@@ -119,6 +119,7 @@ function CatRegister() {
 
                         {reagent.map((reag, i) => (
                           <tbody className="">
+                            {console.log(reag, 'supplier')}
                             <tr>
                               <td>{++i}</td>
                               <td>{reag.code}</td>
@@ -126,7 +127,7 @@ function CatRegister() {
                               {/* 
                               <td>{reag.stockUnit[0].unitName}</td> */}
 
-                              <td>{reag.supplier.name}</td>
+                              <td>{reag.supplier}</td>
 
                               <td className="text-center">
                                 <a
@@ -135,10 +136,12 @@ function CatRegister() {
                                   onClick={() => handleDelete(reag._id)}>
                                   Delete
                                 </a>
-                                {/* &nbsp;
-                                <a href="" className="btn btn-sm btn-danger">
-                                  Delete
-                                </a> */}
+                                &nbsp;
+                                <Link to={'/reagent-update/'+reag._id} >
+                                  <a className="btn btn-sm btn-warning" role="button">
+                                    Update
+                                  </a>
+                                </Link>
                               </td>
                             </tr>
                           </tbody>
@@ -146,7 +149,7 @@ function CatRegister() {
                       </table>
                     </div>
                   </div>
-            
+
                 </div>
               </div>
 

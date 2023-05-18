@@ -1,3 +1,5 @@
+
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LabServiceList from './components/views/LabServiceList';
 import LabServiceRegister from './components/views/LabServiceRegister';
@@ -27,13 +29,15 @@ import Expense from "./components/views/Finance/Expense/Expense";
 import Bank from "./components/views/Finance/Bank/Bank";
 import Repay from "./components/views/RePay.jsx";
 import DoctorUpdate from './components/views/DoctorClinicUpdate.jsx';
+import FinanceTestVouList from "./components/views/Finance/FinanceTVL.jsx";
+import TrialBalance from './components/views/TrialBalance';
+import ReagentUpdate from './components/views/ReagentUpdate';
 // import Supplier from "./components/views/Supplier.jsx";
 
 
-import TrialBalance from './components/views/TrialBalance';
-import React from 'react';
 
-import FinanceTestVouList from "./components/views/Finance/FinanceTVL.jsx";
+
+
 
 
 import './App.css';
@@ -56,6 +60,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/lab-test" element={<LabServiceList />}></Route>
+        <Route path="/reagent-update/:id" element={<ReagentUpdate />}></Route>
         <Route path="/trial-balance" element={<TrialBalance />}></Route>
         <Route path="/lab-test/:id" element={<LabServiceUpdate />}></Route>
         <Route path="/lab-register" element={<LabServiceRegister />}></Route>
