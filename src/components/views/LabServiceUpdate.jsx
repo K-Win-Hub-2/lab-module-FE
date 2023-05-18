@@ -290,7 +290,12 @@ function LabServiceUpdate () {
     //setShowMultiTest(res.data.data.subTestFlag);
     if (res.data.data.subTestFlag) {
       setShowMultiTest(true)
-      setTableData(res.data.data.subTest)
+      let newArr = []
+      res.data.data.subTest.map(function (e,i){
+        e = {...e, id:i+1}
+        newArr.push(e)
+      })
+      setTableData(newArr)
       setShowSpecialRange(false)
       setShowNextRef(false)
     } else {

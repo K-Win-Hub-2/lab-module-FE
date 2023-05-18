@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
 
-function Sidebar () {
+function Sidebar() {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -103,7 +103,7 @@ function Sidebar () {
                         <p>Reagent</p>
                       </Link>
                     </li>
-{/*                     
+                    {/*                     
                     <li className='nav-item'>
                       <Link to='/supplier' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -135,7 +135,26 @@ function Sidebar () {
                       </p>
                     </a>
                   </li>
+
                   <li className='ml-3'>
+                    <li className='nav-item'>
+                      <Link to='/income' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Income</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/expense' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Expense</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/doctorClinic' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Doctor/Clinic</p>
+                      </Link>
+                    </li>
                     <li className='nav-item'>
                       <Link to='/patient/list' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -171,6 +190,13 @@ function Sidebar () {
                       <Link to='/tvoucherList' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Test Voucher List</p>
+                      </Link>
+                    </li>
+
+                    <li className='nav-item'>
+                      <Link to='/ftvl' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Cashier Report</p>
                       </Link>
                     </li>
                   </li>
@@ -263,7 +289,7 @@ function Sidebar () {
                     <li className='nav-item'>
                       <Link to='/ftvl' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
-                        <p>Test Voucher List</p>
+                        <p>Cashier Report</p>
                       </Link>
                     </li>
                   </li>

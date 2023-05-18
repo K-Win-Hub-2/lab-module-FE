@@ -28,6 +28,11 @@ function LabServiceRegister() {
   const [subTestList, setSubTestList] = useState([]);
   const [subTest, setSubTest] = useState([]);
   const [updateUrl, setUpdateUrl] = useState("");
+  const [stextArea, setsTextArea] = useState('');
+  const [textArea, settextArea] = useState("");
+  const TestVou_id = useLocation().pathname.split('/')[2]
+
+  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
 
 
   const show = (id) => {
@@ -36,14 +41,13 @@ function LabServiceRegister() {
   };
 
   const handleInputChange = (event, id, field) => {
-    console.log(event.target.value)
+
     const newData = subTestList.map(data => {
       if (data._id === id) {
         return { ...data, [field]: event.target.value }
       }
       return data
     })
-    console.log(newData);
     setSubTest(newData)
   }
 
@@ -54,6 +58,16 @@ function LabServiceRegister() {
   }
   // end
 
+  const updateTextArea = async (event) => {
+    let data = {
+      id:TestVou_id,
+      comment:textArea
+    }
+    axios.put(url+'/voucher',data).then((response)=>{
+      console.log(response.data.data)
+    })
+  }
+
   // change /br to line brake format
   function formatString(data) {
     const base64String = decodeBase64(data);
@@ -62,11 +76,9 @@ function LabServiceRegister() {
     return reactElements;
   }
   // end
-  const TestVou_id = useLocation().pathname.split("/")[2];
 
-  const handleTestSelection = (event,id) => {
-    console.log(event, "event");
-    console.log(event.name.subTestFlag);
+  const handleTestSelection = (event, id) => {
+
     if (event.name.subTestFlag) {
 
       const data = {
@@ -149,8 +161,7 @@ function LabServiceRegister() {
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection);
-
-        console.log(res.data.data.testSelection);
+          setsTextArea(res.data.data.comment)
         // console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
         setTestID(res.data.data.testSelection[0]);
@@ -165,7 +176,6 @@ function LabServiceRegister() {
             //   return rest;
             // });
             setSubTestList(test.name.subTest)
-            console.log(subTestList)
           }
         }
         )
@@ -183,7 +193,6 @@ function LabServiceRegister() {
 
         setPatientLists(res.data.data.relatedPatient);
         setPatientID(res.data.data.relatedPatient);
-        console.log(res.data.data._id);
       } catch (err) { }
     };
 
@@ -443,7 +452,7 @@ function LabServiceRegister() {
                               <td>
                                 <button
                                   type="button"
-                                  onClick={(e) => handleTestSelection(testSelect,testSelect.name._id)}
+                                  onClick={(e) => handleTestSelection(testSelect, testSelect.name._id)}
                                   className="btn btn-sm btn-info ml-2">
                                   <FaSave />
                                 </button>
@@ -456,22 +465,32 @@ function LabServiceRegister() {
                   </div>
                   <div className="px-3 py-3 card">
                     <div className="row">
+
                       {voucherLists.map((specDecode) => (
                         <div className="col-md-6 px-3 py-3">
                           <h6 className="text-bold text-decoration-underline">
-                            {specDecode.name.name} Reference Range
+                            {specDecode.name.specialFlag ? `${specDecode.name.name} Reference Range` : ""}
                           </h6>
                           <p>{formatString(specDecode.name.specialComment)}</p>
                         </div>
                       ))}
                     </div>
                   </div>
-                  <div className="d-flex justify-content-center">
+                  <div className="row">
+                      <label>Comment</label>
+                      <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => settextArea(e.target.value)}>
+                      </textarea>
+                      {console.log(textArea)}
+                  </div>
+                  <div className="d-flex justify-content-center mt-3">
+                    <button className="btn btn-primary mt-8" onClick={updateTextArea}>Save Comment</button>
+                    <br></br>
                     <Link
                       to={"/test_voucher/" + patient_id + "/" + TestVou_id}
                       name={pname}
                       age={page}
                       gender={pgender}>
+                        &nbsp;
                       <button className="btn btn-success">Print</button>
                     </Link>
                   </div>

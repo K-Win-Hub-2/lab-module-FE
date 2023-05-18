@@ -3,7 +3,7 @@
 import React from 'react'
 
 import { Link } from 'react-router-dom'
-import { FaArrowLeft } from 'react-icons/fa'
+import { FaArrowLeft, FaMinus } from 'react-icons/fa'
 import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -15,7 +15,26 @@ function LabServiceRegister() {
   const [supplier, setSupplier] = useState('')
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
- 
+  const [tableData, setTableData] = useState([]);
+
+  const handleAddRow = () => {
+    setTableData([...tableData, { id: tableData.length + 1, stockQty: "", reorderQty: "", purchasePrice: "", unitName: "" }]);
+  };
+
+  const handleDeleteRow = (id) => {
+    const filteredData = tableData.filter((data) => data.id !== id);
+    setTableData(filteredData);
+  };
+
+  const handleInputChange = (event, id, field) => {
+    const newData = tableData.map((data) => {
+      if (data.id === id) {
+        return { ...data, [field]: event.target.value };
+      }
+      return data;
+    });
+    setTableData(newData);
+  };
 
   const handleBox = event => {
     let newStock = {
@@ -43,8 +62,7 @@ function LabServiceRegister() {
     const data = {
       code: code,
       name: name,
-      // stockUnit: stockLists,
-      supplier: supplier
+      stockUnit: tableData,
     }
     // alert(JSON.stringify(data));
     const config = {
@@ -87,7 +105,7 @@ function LabServiceRegister() {
         )
 
         setSupplierLists(res.data.data)
-      } catch (err) {}
+      } catch (err) { }
     }
     getSupplier()
   }, [])
@@ -149,16 +167,108 @@ function LabServiceRegister() {
 
                   <div className='form-group mt-3'>
                     <label className='control-label'>Supplier</label>
-                    
+
                     <input
                       type='text'
                       className='form-control'
                       placeholder=''
                       name='md_name'
                       id='supplier'
-                      onChange={(e)=>setSupplier(e.target.value)}
+                      onChange={(e) => setSupplier(e.target.value)}
                     />
                   </div>
+                  <div className='form-group mt-3 row gap-3'>
+                    <span>
+                      <label className='control-label'>StockUnit</label>
+                      <span> </span>
+                      <button className='btn btn-sm btn-primary fa fa-plus-circle' onClick={handleAddRow}></button>
+                    </span>
+                    {tableData.map((data) => (
+
+                      <div className='row mt-3'>
+                        <div className='col-md-2'>
+                          <input
+                            type='text'
+                            className='form-control'
+                            placeholder='Unit Name'
+                            name='md_name'
+                            id='purchase'
+                            value={data.unitName}
+                            onChange={(event) =>
+                              handleInputChange(
+                                event,
+                                data.id,
+                                "unitName"
+                              )
+                            }
+                          />
+                        </div>
+                        <div className='col-md-3'>
+                          <input
+                            type='number'
+                            className='form-control'
+                            placeholder='Stock Qty'
+                            name='md_name'
+                            id='stockQty'
+                            value={data.stockQty}
+                            onChange={(event) =>
+                              handleInputChange(
+                                event,
+                                data.id,
+                                "stockQty"
+                              )
+                            }
+                          />
+                        </div>
+                        <div className='col-md-3'>
+                          <input
+                            type='number'
+                            className='form-control'
+                            placeholder='Reorder Qty'
+                            name='md_name'
+                            id='reorderQty'
+                            value={data.reorderQty}
+                            onChange={(event) =>
+                              handleInputChange(
+                                event,
+                                data.id,
+                                "reorderQty"
+                              )
+                            }
+                          />
+                        </div>
+                        <div className='col-md-3'>
+                          <input
+                            type='number'
+                            className='form-control'
+                            placeholder='Purchase Price'
+                            name='md_name'
+                            id='purchase'
+                            value={data.purchasePrice}
+                            onChange={(event) =>
+                              handleInputChange(
+                                event,
+                                data.id,
+                                "purchasePrice"
+                              )
+                            }
+                          />
+                        </div>
+                        <div className="col-md-1">
+                          <button
+                            type="button"
+                            className="btn btn-sm btn-danger rounded-circle"
+                            id="removeRowFromMultiTests"
+                            onClick={() =>
+                              handleDeleteRow(data.id)
+                            }>
+                            <FaMinus />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
 
                   {/* <div className="form-group">
                     <label className="control-label">Purchase Price</label>
