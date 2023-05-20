@@ -117,6 +117,7 @@ const TestVoucher = () => {
                       <Th>#</Th>
                       <Th>Code</Th>
                       <Th>Date</Th>
+                      <Th>Branch</Th>
                       <Th>Discount</Th>
                       <Th>Total Charges</Th>
                       <Th>Action</Th>
@@ -128,10 +129,12 @@ const TestVoucher = () => {
                       <Tr key={vou._id}>
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ''}</Td>
-                        <Td>{vou.date ? vou.date.split('T')[0] : ''}</Td>
+                        <Td>{vou.date ? vou.date.split('T')[0] : '-'}</Td>
                         {/* <Td>{vou.netDiscount}</Td> */}
-                        <Td>{vou.discount ? vou.discount : ''}</Td>
-                        <Td>{vou.totalCharge ? vou.totalCharge : ''}</Td>
+                        <Td>{vou.branch ? vou.branch : '-'}</Td>
+                        <Td>{vou.discount ? vou.discount : '-'}</Td>
+                        
+                        <Td>{vou.totalCharge ? vou.totalCharge : '-'}</Td>
                         <Td>
                           {/* <Link
                             to={"/test_voucher/" + patient_id + "/" + vou._id}

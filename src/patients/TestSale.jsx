@@ -65,6 +65,7 @@ const TestSale = () => {
   const [pay, setPay] = useState(0);
   const [change, setChange] = useState(0);
   const [option, setOption] = useState("Collect");
+  const [branch, setBranch] = useState("AL");
   const [servs, setServs] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [did, setDid] = useState("");
@@ -182,6 +183,7 @@ const TestSale = () => {
   const addService = async () => {
     const res = await axios.get(
       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
+       //"http://localhost:9000/api/service/" +
       serId
     );
     console.log(res.data.data, "res.data.data");
@@ -193,6 +195,8 @@ const TestSale = () => {
       qty: 1,
       unitCharge: res.data.data.charges,
       subCharge: res.data.data.charges,
+      subTestFlag: res.data.data.subTestFlag,
+      subTest: res.data.data.subTest
     };
     setArray((array) => [...array, obj]);
   };
@@ -223,6 +227,7 @@ const TestSale = () => {
       relatedPatient: patient_id,
       // referDoctor: did,
       options: option,
+      branch: branch,
       email: email,
       testSelection: array,
       totalCharge: total,
@@ -247,6 +252,7 @@ const TestSale = () => {
         console.log(response.data.data._id, 'here')
         setVoucherObjectID(response.data.data._id)
         setShowPrint(true);
+        //console.log(res.data.data);
         Swal.fire({
           title: "Success",
           text: "successfully Registered!",
@@ -438,6 +444,34 @@ const TestSale = () => {
                         </select>
                       </div>
                     )}
+                  </div>
+
+                  <div className="row">
+                    <div className="col-md-6 mt-4">
+                    
+                                    <select
+                              name="branch"
+                              id="branch"
+                              className="form-control"
+                            //  onchange="convert(this.value)"
+                              onChange={(event) =>
+                               setBranch(event.target.value)
+
+                              }>
+                              <option value="none">Choose Branch</option>
+                              
+                                <option value="AL">
+                                  Alone
+                                </option>
+                                <option value="NOK">
+                                  North Okkalapa
+                                </option>
+                                
+                              
+                            </select>
+                    </div>
+
+                    
                   </div>
                   {/* <div className="row">
                     <div className="col-md-6"></div>

@@ -72,7 +72,7 @@ function LabServiceRegister() {
   // end of refData
 
   const handleAddRow = () => {
-    setTableData([...tableData, { id: tableData.length + 1, name: "", referenceRange: "", unit: "",type: ""}]);
+    setTableData([...tableData, { id: tableData.length + 1, name: "", result: "", defaultResult: "", referenceRange: "", unit: "",type: "",remark:""}]);
   };
 
   const handleDeleteRow = (id) => {
@@ -175,8 +175,8 @@ function LabServiceRegister() {
     };
     axios
       .post(
-        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
-       "http://localhost:9000/api/service",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+      // "http://localhost:9000/api/service",
         data,
         config
       )
@@ -502,7 +502,7 @@ function LabServiceRegister() {
                                 </button>
                                 {tableData.map((data) => (
                                   <div className="row mt-3">
-                                    <div className="col-md-3">
+                                    <div className="col-md-2">
                                       <input
                                         type="text"
                                         className="form-control"
@@ -519,7 +519,26 @@ function LabServiceRegister() {
                                         }
                                       />
                                     </div>
-                                    <div className="col-md-3">
+
+                                    <div className="col-md-2">
+                                      <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Default"
+                                        id="subTestDresult"
+                                        name="subTestDresult"
+                                        value={data.defaultResult}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "defaultResult"
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    <div className="col-md-2">
                                       <input
                                         type="text"
                                         className="form-control"
@@ -553,7 +572,7 @@ function LabServiceRegister() {
                                         }
                                       />
                                     </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-2">
                                     <select
                               name="type"
                               id="type"
@@ -563,7 +582,7 @@ function LabServiceRegister() {
                                handleInputChange(event,data.id,"type")
 
                               }>
-                              <option>Choose Type</option>
+                              <option value="none">Choose Type</option>
                               
                                 <option value="underline">
                                   Underline

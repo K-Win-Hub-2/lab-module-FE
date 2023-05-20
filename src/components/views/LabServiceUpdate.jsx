@@ -90,7 +90,7 @@ function LabServiceUpdate () {
   const handleAddRow = () => {
     setTableData([
       ...tableData,
-      { id: tableData.length + 1, name: '', result: '', referenceRange: '', unit: '', remark: '' }
+      { id: tableData.length + 1, name: '', result: '',defaultResult: "", referenceRange: '', unit: '', type: "", remark: '' }
     ])
   }
 
@@ -225,7 +225,7 @@ function LabServiceUpdate () {
     axios
       .put(
        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
-       //'http://localhost:9000/api/service',
+      // 'http://localhost:9000/api/service',
         data,
         config
       )
@@ -637,7 +637,7 @@ function LabServiceUpdate () {
                                 </button>
                                 {tableData.map(data => (
                                   <div className='row mt-3'>
-                                    <div className='col-md-3'>
+                                    <div className='col-md-2'>
                                       <input
                                         type='text'
                                         className='form-control'
@@ -654,7 +654,26 @@ function LabServiceUpdate () {
                                         }
                                       />
                                     </div>
-                                    <div className='col-md-3'>
+
+                                    <div className='col-md-2'>
+                                      <input
+                                        type='text'
+                                        className='form-control'
+                                        placeholder='Name'
+                                        id='subTestDresult'
+                                        name='subTestDresult'
+                                        value={data.defaultResult}
+                                        onChange={event =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            'defaultResult'
+                                          )
+                                        }
+                                      />
+                                    </div>
+
+                                    <div className='col-md-2'>
                                       <input
                                         type='text'
                                         className='form-control'
@@ -671,7 +690,7 @@ function LabServiceUpdate () {
                                         }
                                       />
                                     </div>
-                                    <div className='col-md-3'>
+                                    <div className='col-md-2'>
                                       <input
                                         type='text'
                                         className='form-control'
@@ -688,7 +707,33 @@ function LabServiceUpdate () {
                                         }
                                       />
                                     </div>
-                                    <div className='col-md-3'>
+
+                                    <div className="col-md-2">
+                                    <select
+                              name="type"
+                              id="type"
+                              className="form-control"
+                            //  onchange="convert(this.value)"
+                              onChange={(event) =>
+                               handleInputChange(event,data.id,"type")
+
+                              }>
+                              <option value="none">Choose Type</option>
+                              
+                                <option value="underline" selected={data.type === "underline" ? true : false}>
+                                  Underline
+                                </option>
+                                <option value="highlight" selected={data.type === "highlight" ? true : false}>
+                                  Highlight
+                                </option>
+                                <option value="both" selected={data.type === "both" ? true : false}>
+                                  Underline and Highlight
+                                </option>
+                              
+                            </select>
+                                    </div>
+
+                                    <div className='col-md-1'>
                                       <button
                                         type='button'
                                         className='btn btn-sm btn-danger rounded-circle'
