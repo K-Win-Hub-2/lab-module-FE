@@ -72,7 +72,7 @@ function LabServiceRegister() {
   // end of refData
 
   const handleAddRow = () => {
-    setTableData([...tableData, { id: tableData.length + 1, name: "", referenceRange: "", unit: "" }]);
+    setTableData([...tableData, { id: tableData.length + 1, name: "", referenceRange: "", unit: "",type: ""}]);
   };
 
   const handleDeleteRow = (id) => {
@@ -87,6 +87,7 @@ function LabServiceRegister() {
       }
       return data;
     });
+    console.log(newData);
     setTableData(newData);
   };
 
@@ -162,7 +163,8 @@ function LabServiceRegister() {
       referenceRange: refData,
       description: description,
       specialComment: encodedString,
-      subTest: tableData
+      subTest: tableData,
+      subTestFlag: showMultiTest
     };
 
     // if (doctor) data= {...data, referDoctor:doctor}
@@ -173,8 +175,8 @@ function LabServiceRegister() {
     };
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
-       //"http://localhost:9000/api/service",
+        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+       "http://localhost:9000/api/service",
         data,
         config
       )
@@ -529,12 +531,12 @@ function LabServiceRegister() {
                                           handleInputChange(
                                             event,
                                             data.id,
-                                            "range"
+                                            "referenceRange"
                                           )
                                         }
                                       />
                                     </div>
-                                    <div className="col-md-3">
+                                    <div className="col-md-2">
                                       <input
                                         type="text"
                                         className="form-control"
@@ -552,6 +554,30 @@ function LabServiceRegister() {
                                       />
                                     </div>
                                     <div className="col-md-3">
+                                    <select
+                              name="type"
+                              id="type"
+                              className="form-control"
+                            //  onchange="convert(this.value)"
+                              onChange={(event) =>
+                               handleInputChange(event,data.id,"type")
+
+                              }>
+                              <option>Choose Type</option>
+                              
+                                <option value="underline">
+                                  Underline
+                                </option>
+                                <option value="highlight">
+                                  Highlight
+                                </option>
+                                <option value="both">
+                                  Underline and Highlight
+                                </option>
+                              
+                            </select>
+                                    </div>
+                                    <div className="col-md-1">
                                       <button
                                         type="button"
                                         className="btn btn-sm btn-danger rounded-circle"
@@ -562,6 +588,7 @@ function LabServiceRegister() {
                                         <FaMinus />
                                       </button>
                                     </div>
+                                    
                                   </div>
                                 ))}
                               </div>

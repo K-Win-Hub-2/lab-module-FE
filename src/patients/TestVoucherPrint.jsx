@@ -11,6 +11,7 @@ import ReactHtmlParser from 'react-html-parser'
 import ReactToPrint from 'react-to-print'
 // import Printer from "@eyelly/react-printer";
 
+
 const TestVoucherPrint = () => {
   const [referDoctorLists, setReferDoctorLists] = useState([])
   const [selectedPatho, setSelectedPatho] = useState("");
@@ -27,6 +28,13 @@ const TestVoucherPrint = () => {
   // const [headerOff, setHeaderOff] = useState(false);
 
   let componentRef = useRef()
+
+  // const getContentSize = () => {
+  //   const contentElement = componentRef.current;
+  //   const contentRect = contentElement.getBoundingClientRect();
+  //   const { width, height } = contentRect;
+  //   return { width, height };
+  // };
 
   const handleOnCheck = () => {
     setHeaderOn(true)
@@ -163,94 +171,95 @@ const TestVoucherPrint = () => {
         <div className='content-header'>
           <div className='container-fluid'>
             <div
-              // calssName='card content'
-              // style={{ maxWidth: "700px", marginLeft: "170px" }}
-              id='print'
-              ref={el => (componentRef = el)}
+            // calssName='card content'
+            // style={{ maxWidth: "700px", marginLeft: "170px" }}
+
             >
-              <div
-                // calssName='card-body'
-                style={{ border: '1px solid black', padding: '14px 14px' }}
-              >
+              <div className='card' id='print'
+                ref={el => (componentRef = el)}>
+                <div
+                  calssName='card-body shadow vh-200'
+                // style={{ border: '1px solid black', padding: '14px 14px' }}
+                >
 
-                <div className='row' style={{ visibility: headerOn ? 'visible' : 'hidden' }}>
-                  <div className='col-3'>
-                    <img src={require('../logo.png')} alt='' />
+                  <div className='row' style={{ visibility: headerOn ? 'visible' : 'hidden' }}>
+                    <div className='col-3'>
+                      <img src={require('../logo.png')} alt='' />
+                    </div>
+                    <div className='offset-1 col-md-5'>
+                      Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
+                      <br />
+                      Yangon, Myanmar.
+                      <br />
+                      Tel : 09 400 662 (Clinic), 09 400 400 650 (Lab)
+                      <br />
+                      Clinic 2 - 435, May Dawi Road, North Okkalapa Township,
+                      <br />
+                      Yangon, Myanamr.
+                      <br />
+                      Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
+                    </div>
+                    <div className='col-md-3'>
+                      <img
+                        src={require('../logo1.png')}
+                        alt=''
+                        style={{ marginLeft: '120px' }}
+                      />
+                    </div>
                   </div>
-                  <div className='offset-1 col-md-5'>
-                    Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
-                    <br />
-                    Yangon, Myanmar.
-                    <br />
-                    Tel : 09 400 662 (Clinic), 09 400 400 650 (Lab)
-                    <br />
-                    Clinic 2 - 435, May Dawi Road, North Okkalapa Township,
-                    <br />
-                    Yangon, Myanamr.
-                    <br />
-                    Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
-                  </div>
-                  <div className='col-md-3'>
-                    <img
-                      src={require('../logo1.png')}
-                      alt=''
-                      style={{ marginLeft: '120px' }}
-                    />
-                  </div>
-                </div>
 
 
-                <p style={{ textAlign: 'center' }} className='mt-5'>
-                  <b>
-                    <u>LABORATORY REPORT</u>
-                  </b>
-                </p>
-                <table className='table table-hover mt-4'>
-                  <thead>
-                    <tr>
-                      <th>Patient Name:</th>
-                      <td colSpan='2'>{patientLists.name}</td>
-                      <th>Laboratory Id:</th>
-                      <td colSpan='2'>{labID_VouCode.code}</td>
-                    </tr>
-                    <tr>
-                      <th>Age & Gender:</th>
-                      <td colSpan='2'>
-                        {patientLists.age}yrs&nbsp;/ &nbsp;
-                        {patientLists.gender}
-                      </td>
-                      <th>Registration Date:</th>
-                      <td colSpan='2'>
-                        {labID_VouCode.date
-                          ? labID_VouCode.date.split('T')[0]
-                          : ''}
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Referring Doctor:</th>
-                      <td colSpan='2'>
-                        {referDoctorLists.referDoctor
-                          ? referDoctorLists.referDoctor.name
-                          : ''}
-                      </td>
-                      <th>Clinic:</th>
-                      <td colSpan='2'>Central Clinic</td>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
+                  <p style={{ textAlign: 'center' }} className='mt-5'>
+                    <b>
+                      <u>LABORATORY REPORT</u>
+                    </b>
+                  </p>
+                  <table className='table table-hover mt-4'>
+                    <thead>
+                      <tr>
+                        <th>Patient Name:</th>
+                        <td colSpan='2'>{patientLists.name}</td>
+                        <th>Laboratory Id:</th>
+                        <td colSpan='2'>{labID_VouCode.code}</td>
+                      </tr>
+                      <tr>
+                        <th>Age & Gender:</th>
+                        <td colSpan='2'>
+                          {patientLists.age}yrs&nbsp;/ &nbsp;
+                          {patientLists.gender}
+                        </td>
+                        <th>Registration Date:</th>
+                        <td colSpan='2'>
+                          {labID_VouCode.date
+                            ? labID_VouCode.date.split('T')[0]
+                            : ''}
+                        </td>
+                      </tr>
+                      <tr>
+                        <th>Referring Doctor:</th>
+                        <td colSpan='2'>
+                          {referDoctorLists.referDoctor
+                            ? referDoctorLists.referDoctor.name
+                            : ''}
+                        </td>
+                        <th>Clinic:</th>
+                        <td colSpan='2'>Central Clinic</td>
+                      </tr>
+                    </thead>
+                    <tbody></tbody>
+                  </table>
 
-                <table className='table table-hover mt-4'>
-                  <thead >
-                    <tr>
-                      <th>Test</th>
-                      <th>Result</th>
-                      <th>Reference Range</th>
-                      <th>Unit</th>
-                      <th>Remark</th>
-                    </tr>
-                  </thead>
-                  {/* <tbody>
+                  <table className='table table-hover mt-4'>
+                    <thead >
+                      <tr>
+                        <th>Test</th>
+                        <th>Result</th>
+                        <th>Reference Range</th>
+                        <th>Unit</th>
+                        <th>Remark</th>
+                      </tr>
+                    </thead>
+                    {/* <tbody>
                     <tr>
                       <td>Vitamin D (25 – OH)</td>
                       <td></td>
@@ -260,161 +269,153 @@ const TestVoucherPrint = () => {
                   
                   </tbody> */}
 
-                  {filteredVouchers.map(testSelect => (
-                    <tbody >
-                      {(testSelect.name.subTestFlag) ? (<tr>
-                        <td>
-                          <div className="col-md-12 border-0">
-                            <p><u><b>{testSelect.name.name}</b></u></p>
-                            {
-                              testSelect.name.subTest.map((test) => (
-                                <p>{test.name}</p>
-                              ))
-                            }
-                          </div>
-                        </td>
+                    {filteredVouchers.map(testSelect => (
+                      <tbody >
+                        {(testSelect.name.subTestFlag) ? (<tr>
+                          <td>
+                            <div className="col-md-12 border-0">
+                              <p><u><b>{testSelect.name.name}</b></u></p>
+                              {
+                                testSelect.name.subTest.map((test) => (
+                                  <p>{test.name}</p>
+                                ))
+                              }
+                            </div>
+                          </td>
 
-                        <td>
-                          <div className="col-md-12 border-0">
-                            <p> </p>
+                          <td>
+                            <div className="col-md-12 border-0">
+                              <p> </p>
+                              {
+                                testSelect.name.subTest.map((test) => (
+                                  <p
+                                    style={{ marginBottom: '6px' }}
+                                  >{(test.result !== null) ? test.result : ""}</p>
+                                ))
+                              }
+
+                            </div>
+                          </td>
+                          <td>
+                            <div className="col-md-12 border-0">
+                              <p></p>
+                              {
+                                testSelect.name.subTest.map((test) => (
+                                  <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
+                                ))
+                              }
+                            </div>
+                          </td>
+
+                          <td>
+                            <div className="col-md-12 border-0">
+                              {
+                                testSelect.name.subTest.map((test) => (
+                                  <p style={{ marginTop: '18px' }}>{test.unit}</p>
+                                ))
+                              }
+                            </div>
+                          </td>
+
+                          <td>
+                            <p></p>
                             {
                               testSelect.name.subTest.map((test) => (
                                 <p
                                   style={{ marginBottom: '6px' }}
-                                >{(test.result !== null) ? test.result : ""}</p>
+                                >{(test.remark !== null) ? test.remark : ""}</p>
                               ))
                             }
+                          </td>
 
-                          </div>
-                        </td>
-                        <td>
-                          <div className="col-md-12 border-0">
-                            <p></p>
-                            {
-                              testSelect.name.subTest.map((test) => (
-                                <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
-                              ))
-                            }
-                          </div>
-                        </td>
+                        </tr>) : (
+                          <tr key={testSelect._id}>
+                            <td>{testSelect.name.name}</td>
+                            <td>{testSelect.result}</td>
 
-                        <td>
-                          <div className="col-md-12 border-0">
-                            {
-                              testSelect.name.subTest.map((test) => (
-                                <p style={{ marginTop: '18px' }}>{test.unit}</p>
-                              ))
-                            }
-                          </div>
-                        </td>
-
-                        <td>
-                          <p></p>
-                          {
-                            testSelect.name.subTest.map((test) => (
-                              <p
-                                style={{ marginBottom: '6px' }}
-                              >{(test.remark !== null) ? test.remark : ""}</p>
-                            ))
-                          }
-                        </td>
-
-                      </tr>) : (
-                        <tr key={testSelect._id}>
-                          <td>{testSelect.name.name}</td>
-                          <td>{testSelect.result}</td>
-
-                          <td>
-                            {testSelect.name.specialComment ? (
-                              "See Below"
-                            ) : (
-                              <div>
-                                {testSelect.name.referenceRange.map(refer => (
-                                  <p key={refer._id}>
-                                     {/* {refer.gender} &nbsp;
+                            <td>
+                              {testSelect.name.specialComment ? (
+                                "See Below"
+                              ) : (
+                                <div>
+                                  {testSelect.name.referenceRange.map(refer => (
+                                    <p key={refer._id}>
+                                      {/* {refer.gender} &nbsp;
                                     {refer.from}-{refer.to} &nbsp; */}
-                                    {refer.refRange}
-                                  </p>
-                                ))}
-                              </div>
-                            )}
-                          </td>
+                                      {refer.refRange}
+                                    </p>
+                                  ))}
+                                </div>
+                              )}
+                            </td>
 
-                          <td>
-                            {testSelect.name.specialComment ? (
-                              "See Below"
-                            ) : (
-                              <div>
-                                {testSelect.name.referenceRange.map(refer => (
-                                  <p key={refer._id}>{refer.unit}</p>
-                                ))}
-                              </div>
-                            )}
-                          </td>
+                            <td>
+                              {testSelect.name.specialComment ? (
+                                "See Below"
+                              ) : (
+                                <div>
+                                  {testSelect.name.referenceRange.map(refer => (
+                                    <p key={refer._id}>{refer.unit}</p>
+                                  ))}
+                                </div>
+                              )}
+                            </td>
 
-                          <td>{testSelect.remark}</td>
-                        </tr>
-                      )}
-                    </tbody>
-                  ))}
-
-                </table>
-                {textArea ? (<div className="row">
-                  <label>Comment</label>
-                  <p>{textArea}</p>
-                </div>) : ""}
-
-
-
-
-                <div className='px-3 py-2'>
-                  <div className='row'>
-                    {filteredVouchers.map(specDecode => (
-
-                      <div className='col-md-6' key={specDecode._id}>
-                        <h6 className='text-bold text-decoration-underline'>
-                          {specDecode.name.specialFlag ? `${specDecode.name.name} Reference Range` : ""}
-                        </h6>
-                        <p>{formatString(specDecode.name.specialComment)}</p>
-                      </div>
-
+                            <td>{testSelect.remark}</td>
+                          </tr>
+                        )}
+                      </tbody>
                     ))}
+
+                  </table>
+                  {textArea ? (<div className="row">
+                    <label>Comment</label>
+                    <p>{textArea}</p>
+                  </div>) : ""}
+
+
+
+
+                  <div className='px-3 py-2'>
+                    <div className='row'>
+                      {filteredVouchers.map(specDecode => (
+
+                        <div className='col-md-6' key={specDecode._id}>
+                          <h6 className='text-bold text-decoration-underline'>
+                            {specDecode.name.specialFlag ? `${specDecode.name.name} Reference Range` : ""}
+                          </h6>
+                          <p>{formatString(specDecode.name.specialComment)}</p>
+                        </div>
+
+                      ))}
+                    </div>
                   </div>
-                </div>
-             
-               
-                
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                <p className='text-white'>''</p>
-                
-                <div className='row' style={{ marginTop: '50px' }}>
-                  <div className='col-6'>
-                    <span>Laboratory Technician</span>
+
+                  <div className='row' style={{ margin: '50px' }}>
+                    <div className='col-6'>
+                      <span>Laboratory Technician</span>
+                    </div>
+                    <div className='col-6' style={{ textAlign: 'right' }}>
+                      <span>
+                        {
+                          selectedPatho.name}
+                      </span>
+                      <br></br>
+                      <span>
+                        {selectedPatho.position
+                        }
+                      </span>
+                      <br></br>
+                      <span>
+                        {selectedPatho.education
+                        }
+                      </span>
+                      <br></br>
+                      <span>Central Lab, Ahlone, Yangon</span>
+                    </div>
                   </div>
-                  <div className='col-6' style={{ textAlign: 'right' }}>
-                    <span>
-                      {
-                        selectedPatho.name}
-                    </span>
-                    <br></br>
-                    <span>
-                      {selectedPatho.position
-                      }
-                    </span>
-                    <br></br>
-                    <span>
-                      {selectedPatho.education
-                      }
-                    </span>
-                    <br></br>
-                    <span>Central Lab, Ahlone, Yangon</span>
-                  </div>
+
+
                 </div>
               </div>
             </div>
@@ -486,12 +487,13 @@ const TestVoucherPrint = () => {
               onChange={handleOffCheck}
             />
           </div>
-          <div className='offset-md-3'>
+          <div className='d-flex justify-content-center'>
             <ReactToPrint
               trigger={() => (
                 <button className='btn btn-success mt-3 mb-4'>Print</button>
               )}
               content={() => componentRef}
+              // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
             />
           </div>
         </div>
