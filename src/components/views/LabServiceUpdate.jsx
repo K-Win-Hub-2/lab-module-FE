@@ -659,7 +659,7 @@ function LabServiceUpdate () {
                                       <input
                                         type='text'
                                         className='form-control'
-                                        placeholder='Name'
+                                        placeholder='Default Result'
                                         id='subTestDresult'
                                         name='subTestDresult'
                                         value={data.defaultResult}

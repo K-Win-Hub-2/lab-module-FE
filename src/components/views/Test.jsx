@@ -315,7 +315,7 @@ function LabServiceRegister() {
                                 <p><u><b>{testSelect.name.name}</b></u></p>
                                 {
                                   testSelect.name.subTest.map((test) => (
-                                    <span>{(test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{color:'red'}}><b>{test.name}</b></p>) :  (test.type === "both") ? (<p style={{color:'red'}}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)} </span>
+                                    <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{color:'red'}}><b>{test.name}</b></p>) :  (test.type === "both") ? (<p style={{color:'red'}}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
                                     // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
                                      
                                   ))
@@ -328,7 +328,7 @@ function LabServiceRegister() {
                                 {
                                   testSelect.subTest.map((test) => (
                                     
-                                  <span>  {(test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (<input
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (<input
                                       type="text"
                                       id="result"
                                       onChange={event =>
@@ -337,11 +337,11 @@ function LabServiceRegister() {
                                           test._id,
                                           'result'
                                         )}
-                                      defaultValue={(test.result !== "") ? test.result : (test.defaultResult !== "") ? test.defaultResult : "" }
+                                      defaultValue={( test !== null && test.result !== "") ? test.result : (test !== null && test.defaultResult !== "") ? test.defaultResult : "" }
                                       class="form-control"
                                       placeholder={test.name}
                                       style={{ marginBottom: '6px' }}
-                                    />)}
+                                    />)) : ("") }
                                     </span>
                                   ))
                                 }
@@ -353,8 +353,9 @@ function LabServiceRegister() {
                                 <p></p>
                                 {
                                   testSelect.name.subTest.map((test) => (
-                                    <span>  {(test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)}
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
+                                    <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)): (
+                                      <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)}
                                     </span>
                                   ))
                                 }
@@ -364,9 +365,12 @@ function LabServiceRegister() {
                               <div className="col-md-12 border-0">
                                 {
                                   testSelect.name.subTest.map((test) => (
-                                    <span>  {(test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p style={{ marginTop: '36px' }}>{test.unit}</p>)}
+                                  
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
+                                    <p style={{ marginTop: '36px' }}>{test.unit}</p>)) : (
+                                      <p style={{ marginTop: '36px' }}>{test.unit}</p>)}
                                     </span>
+                                 
                                   ))
                                 }
                               </div>
@@ -376,7 +380,7 @@ function LabServiceRegister() {
                               <p></p>
                               {
                                 testSelect.subTest.map((test) => (
-                                  <span>  {(test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
+                                  <span>  { (test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
                                   <input
                                     type="text"
                                     id="remark"
@@ -391,7 +395,9 @@ function LabServiceRegister() {
                                     placeholder="Enter Remark"
                                     style={{ marginBottom: '6px' }}
                                   />
-                                  )}
+                                  )): (
+                                    ""
+                                    )}
                                     </span>
                                 ))
                               }
