@@ -71,7 +71,7 @@ const TestVoucherSlip = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            vouid
+          vouid
         )
         console.log(res.data.data)
         setGender(res.data.data.relatedPatient.gender)
@@ -108,7 +108,7 @@ const TestVoucherSlip = () => {
       <div className='content-wrapper'>
         {/* <!-- Content Header (Page header) --> */}
         <div className='content-header'>
-          <div className='container-fluid'>
+          <div className='container-sm'>
             <Top>
               <Left>
                 <Title>Test Voucher</Title>
@@ -116,8 +116,8 @@ const TestVoucherSlip = () => {
             </Top>
 
             <div className='row'>
-              <div className='offset-3 col-6'>
-                <Div className='card' ref={el => (componentRef = el)}>
+              <div className='col-12'>
+                <Div className='card' style={{ padding: "0 200px" }} ref={el => (componentRef = el)}>
                   <Div className='card-body' id='print'>
                     <h5 style={{ textAlign: 'center' }}>Central Laboratory</h5>
                     <h6 style={{ textAlign: 'center' }}>
@@ -152,10 +152,10 @@ const TestVoucherSlip = () => {
                         </h6>
                       </div>
                       <div className='col-6'>
-                        <h6>Inv. No : <span className='float-right'>{code?code:''}</span></h6>
-                        <h6>Date : <span className='float-right'>{date ? date.split('T')[0]:''}</span></h6>
+                        <h6>Inv. No : <span className='float-right'>{code ? code : ''}</span></h6>
+                        <h6>Date : <span className='float-right'>{date ? date.split('T')[0] : ''}</span></h6>
                         <h6>Printed : <span className='float-right'>{today.split('T')[0]}</span></h6>
-                        <h6>Doctor : <span className='float-right'>{doctor ? doctor: '-'}</span></h6>
+                        <h6>Doctor : <span className='float-right'>{doctor ? doctor : '-'}</span></h6>
                       </div>
                     </div>
                     {/* <br/>
@@ -293,7 +293,11 @@ const TestVoucherSlip = () => {
                             }}
                           >
                             <b>
-                              အ‌‌ဖြေလာရွေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်
+                              အ‌ဖြေလာရွှေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်နှင့်
+                            </b>
+                            <br/>
+                            <b>
+                              ၃လကျော်သည့် အ‌ဖြေများကို ထုတ်ပေးနိုင်မည်မဟုတ်‌ကြောင်း မေတ္တာရပ်ခံပန်ကြားအပ်ပါသည်
                             </b>
                           </td>
                         </tr>
