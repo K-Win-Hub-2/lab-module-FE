@@ -34,15 +34,20 @@ const Tr = styled.tr`
   border-style: hidden;
 `
 const Th = styled.th`
-  font-size: 15px;
+  font-size: 24px;
 `
 const Td = styled.td`
-  font-size: 14px;
+  font-size: 22px;
+  margin-top: 20px;
 `
 
 const Hr = styled.hr`
   border-style: solid;
   width: 50%;
+`
+const H6 = styled.h6`
+  font-size: 22px;
+  margin-top: 25px;
 `
 
 const TestVoucherSlip = () => {
@@ -115,47 +120,47 @@ const TestVoucherSlip = () => {
               </Left>
             </Top>
 
-            <div className='row'>
-              <div className='col-12'>
-                <Div className='card' style={{ padding: "0 200px" }} ref={el => (componentRef = el)}>
+            <div className='row d-flex justify-content-center'>
+              <div className='col-6'>
+                <Div className='card' style={{ padding: "" }} ref={el => (componentRef = el)}>
                   <Div className='card-body' id='print'>
-                    <h5 style={{ textAlign: 'center' }}>Central Laboratory</h5>
-                    <h6 style={{ textAlign: 'center' }}>
+                    <h5 style={{ textAlign: 'center', fontSize:"35px" }}>Central Laboratory</h5>
+                    <h6 style={{ textAlign: 'center', fontSize:"25px", marginTop: "15px" }}>
                       NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
                     </h6>
                     <div className='text-center'>
-                      <b>09400400650</b>
+                      <b style={{fontSize:"25px", marginTop: "15px" }}>09400400650</b>
                     </div>
                     <div className='text-center'>
                       <h5>
-                        <b>Invoice</b>
+                        <b style={{fontSize:"25px" , marginTop: "15px" }}>Invoice</b>
                       </h5>
                     </div>
                     <br></br>
                     <div className='row'>
                       <div className='col-6'>
-                        <h6>
+                        <h6 style={{fontSize:"22px" }}>
                           Name :{' '}
                           <span className='float-right'>
                             {name} / {age}yrs
                           </span>
                         </h6>
-                        <h6>
+                        <H6>
                           Phone No :
                           <span className='float-right'>{phone}</span>
-                        </h6>
-                        <h6>
+                        </H6>
+                        <H6>
                           Age :<span className='float-right'> {age}</span>
-                        </h6>
-                        <h6>
+                        </H6>
+                        <H6>
                           Gender : <span className='float-right'>{gender}</span>
-                        </h6>
+                        </H6>
                       </div>
                       <div className='col-6'>
-                        <h6>Inv. No : <span className='float-right'>{code ? code : ''}</span></h6>
-                        <h6>Date : <span className='float-right'>{date ? date.split('T')[0] : ''}</span></h6>
-                        <h6>Printed : <span className='float-right'>{today.split('T')[0]}</span></h6>
-                        <h6>Doctor : <span className='float-right'>{doctor ? doctor : '-'}</span></h6>
+                        <h6 style={{fontSize:"20px" }}>Inv. No : <span className='float-right'>{code ? code : ''}</span></h6>
+                        <H6>Date : <span className='float-right'>{date ? date.split('T')[0] : ''}</span></H6>
+                        <H6>Printed : <span className='float-right'>{today.split('T')[0]}</span></H6>
+                        <H6>Doctor : <span className='float-right'>{doctor ? doctor : '-'}</span></H6>
                       </div>
                     </div>
                     {/* <br/>
@@ -231,42 +236,42 @@ const TestVoucherSlip = () => {
                       </Tbody>
                       <tfoot>
                         <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Total
                           </td>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             {total}
                           </td>
                         </tr>
                         <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Discount
                           </td>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
                             {discount}
                           </td>
                         </tr>
                         <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Net
                           </td>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             {net}
                           </td>
                         </tr>
                         <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Pay
                           </td>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
                             {pay}
                           </td>
                         </tr>
                         <tr>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
                             Credit Amount
                           </td>
-                          <td colSpan={4} style={{ textAlign: 'right' }}>
+                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             {change}
                           </td>
                         </tr>
@@ -292,11 +297,11 @@ const TestVoucherSlip = () => {
                               borderStyle: 'hidden'
                             }}
                           >
-                            <b>
+                            <b style={{ fontSize: '24px', marginTop: '20px' }}>
                               အ‌ဖြေလာရွှေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်နှင့်
                             </b>
                             <br/>
-                            <b>
+                            <b style={{ fontSize: '24px', marginTop: '20px' }}>
                               ၃လကျော်သည့် အ‌ဖြေများကို ထုတ်ပေးနိုင်မည်မဟုတ်‌ကြောင်း မေတ္တာရပ်ခံပန်ကြားအပ်ပါသည်
                             </b>
                           </td>
