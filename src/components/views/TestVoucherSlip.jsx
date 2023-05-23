@@ -81,6 +81,7 @@ const TestVoucherSlip = () => {
         console.log(res.data.data)
         setGender(res.data.data.relatedPatient.gender)
         setPhone(res.data.data.relatedPatient.phone)
+        
         setVouchers(res.data.data.testSelection)
         setTotal(res.data.data.totalCharge)
         setDiscount(res.data.data.discount)
@@ -214,7 +215,7 @@ const TestVoucherSlip = () => {
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
-                              {vou.name.name}
+                              {(vou.name.name.includes("NS")) ? vou.name.name.replace("NS","") : vou.name.name}
                             </Td>
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}

@@ -194,7 +194,7 @@ const TestVoucherPrint = () => {
                 // style={{ border: '1px solid black', padding: '14px 14px' }}
                 >
 
-                  <div className='row' style={{ visibility: headerOn ? 'visible' : 'hidden' }}>
+                  <div className='row' style={{ height: "200px", visibility: headerOn ? 'visible' : 'hidden' }}>
                     <div className='col-3'>
                       <img src={require('../logo.png')} alt='' />
                     </div>
@@ -286,7 +286,7 @@ const TestVoucherPrint = () => {
                         {(testSelect.name.subTestFlag) ? (<tr>
                           <td>
                             <div className="col-md-12 border-0">
-                              <p><u><b>{testSelect.name.name}</b></u></p>
+                              <p><u><b>{(testSelect.name.name.includes("NS")) ? testSelect.name.name.replace("NS","") : testSelect.name.name}</b></u></p>
                               {/* {
                                 testSelect.name.subTest.map((test) => (
                                   <p>{test.name}</p>
@@ -326,7 +326,7 @@ const TestVoucherPrint = () => {
                                 testSelect.name.subTest.map((test) => (
                                   // <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
                                   <span>  {(test!== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)) : ("")}
+                                    <p style={{ marginTop: '25px' }}><input type="text" id="subRefRange" style={{borderStyle:"hidden"}} defaultValue={test.referenceRange}/></p>)) : ("")}
                                     </span>
                                   ))
                               }
@@ -364,7 +364,7 @@ const TestVoucherPrint = () => {
 
                         </tr>) : (
                           <tr key={testSelect._id}>
-                            <td>{testSelect.name.name}</td>
+                            <td>{(testSelect.name.name.includes("NS") ? testSelect.name.name.replace("NS","") : testSelect.name.name )}</td>
                             <td>{testSelect.result}</td>
 
                             <td>
@@ -376,7 +376,14 @@ const TestVoucherPrint = () => {
                                     <p key={refer._id}>
                                       {/* {refer.gender} &nbsp;
                                     {refer.from}-{refer.to} &nbsp; */}
-                                      {refer.refRange}
+                                      {/* {refer.refRange} */}
+                                    <input
+                                      type="text"
+                                      id="refRange"
+                                      name="refRange"
+                                      defaultValue={refer.refRange}
+                                      style={{borderStyle: "hidden"}}
+                                    />
                                     </p>
                                   ))}
                                 </div>
