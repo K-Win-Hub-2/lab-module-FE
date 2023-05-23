@@ -121,7 +121,7 @@ const TestVoucherSlip = () => {
             </Top>
 
             <div className='row d-flex justify-content-center'>
-              <div className='col-6'>
+              <div className='col-5'>
                 <Div className='card' style={{ padding: "" }} ref={el => (componentRef = el)}>
                   <Div className='card-body' id='print'>
                     <h5 style={{ textAlign: 'center', fontSize:"35px" }}>Central Laboratory</h5>
@@ -138,7 +138,7 @@ const TestVoucherSlip = () => {
                     </div>
                     <br></br>
                     <div className='row'>
-                      <div className='col-6'>
+                      <div className='col-5'>
                         <h6 style={{fontSize:"22px" }}>
                           Name :{' '}
                           <span className='float-right'>
@@ -185,22 +185,22 @@ const TestVoucherSlip = () => {
                         <Tr>
                           <Th>#</Th>
                           <Th
-                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                            style={{ marginLeft: '5px', textAlign: 'center' }}
                           >
                             Name
                           </Th>
                           <Th
-                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                            style={{ marginLeft: '10px', textAlign: 'right' }}
                           >
                             Qty
                           </Th>
                           <Th
-                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                            style={{ marginLeft: '10px', textAlign: 'right' }}
                           >
                             Price
                           </Th>
                           <Th
-                            style={{ marginLeft: '50px', textAlign: 'right' }}
+                            style={{ marginLeft: '10px', textAlign: 'right' }}
                           >
                             Amt
                           </Th>
@@ -212,22 +212,22 @@ const TestVoucherSlip = () => {
                           <Tr key={vou._id}>
                             <Td>{++index}</Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign: 'right' }}
+                              style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
                               {vou.name.name}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign: 'right' }}
+                              style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
                               {vou.qty}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign: 'right' }}
+                              style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
                               {vou.unitCharge}
                             </Td>
                             <Td
-                              style={{ marginLeft: '50px', textAlign: 'right' }}
+                              style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
                               {vou.subCharge}
                             </Td>

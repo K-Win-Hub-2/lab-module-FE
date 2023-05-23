@@ -9,6 +9,7 @@ import { useLocation, Link } from 'react-router-dom'
 import { Base64 } from 'js-base64'
 import ReactHtmlParser from 'react-html-parser'
 import ReactToPrint from 'react-to-print'
+import styled, { keyframes } from 'styled-components'
 // import Printer from "@eyelly/react-printer";
 
 
@@ -25,7 +26,14 @@ const TestVoucherPrint = () => {
   const [refOn, setRefOn] = useState(true)
   const [resOn, setResOn] = useState(true)
   const [textArea, settextArea] = useState("");
+  const[showBottom,setShowBottom] = useState(false);
   // const [headerOff, setHeaderOff] = useState(false);
+
+  const TR = styled.tr`
+  font-size: 22px;
+  margin-top: 20px;
+  border-style: hidden;
+`
 
   let componentRef = useRef()
 
@@ -61,6 +69,10 @@ const TestVoucherPrint = () => {
     const decode = Base64.decode(data)
 
     return decode
+  }
+
+  const handleBottomChange = event =>{
+    setShowBottom(!showBottom)
   }
 
   const handleChange = event => {
@@ -413,7 +425,29 @@ const TestVoucherPrint = () => {
                     </div>
                   </div>
 
-                  <div className='row' style={{ margin: '50px' }}>
+                  {showBottom ? (<div className='row' style={{ margin: '50px' }}>
+                    <div class="fixed-bottom" className='col-6'>
+                      <span>Laboratory Technician</span>
+                    </div>
+                    <div class="fixed-bottom" className='col-6' style={{ textAlign: 'right' }}>
+                      <span>
+                        {
+                          selectedPatho.name}
+                      </span>
+                      <br></br>
+                      <span>
+                        {selectedPatho.position
+                        }
+                      </span>
+                      <br></br>
+                      <span>
+                        {selectedPatho.education
+                        }
+                      </span>
+                      <br></br>
+                      <span>Central Lab, Ahlone, Yangon</span>
+                    </div>
+                  </div>) : (<div className='row' style={{ margin: '50px' }}>
                     <div className='col-6'>
                       <span>Laboratory Technician</span>
                     </div>
@@ -435,7 +469,7 @@ const TestVoucherPrint = () => {
                       <br></br>
                       <span>Central Lab, Ahlone, Yangon</span>
                     </div>
-                  </div>
+                  </div>)}
 
 
                 </div>
@@ -512,7 +546,7 @@ const TestVoucherPrint = () => {
           <div className='d-flex justify-content-center'>
             <ReactToPrint
               trigger={() => (
-                <button className='btn btn-success mt-3 mb-4'>Print</button>
+                <button className='btn btn-success mt-3 mb-4' onClick={handleBottomChange}>Print</button>
               )}
               content={() => componentRef}
               // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
