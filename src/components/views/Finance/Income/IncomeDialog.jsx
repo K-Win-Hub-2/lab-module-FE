@@ -154,7 +154,7 @@ export default function BankInfoDialog(props) {
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
         );
         const medicineSale = res.data.list.filter(
-          (e) => e.relatedHeader.name == "Other Revenues"
+          (e) => e.relatedType.name == "Revenues"
         );
        // setInitialAmount(medicineSale[0].amount);
         setMedicineSale(medicineSale);

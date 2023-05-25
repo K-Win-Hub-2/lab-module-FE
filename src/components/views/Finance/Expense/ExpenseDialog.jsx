@@ -54,7 +54,7 @@ export default function BankInfoDialog(props) {
     if (relatedBankAcc){ jsonData.relatedBankAccount = relatedBankAcc;
       jsonData.bankFlag = bankFlag;
     }
-    alert(JSON.stringify(jsonData));
+    // alert(JSON.stringify(jsonData));
     const config = {
       headers: { "Content-Type": "application/json" },
     };

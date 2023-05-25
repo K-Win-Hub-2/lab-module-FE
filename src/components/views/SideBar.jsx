@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
 
-function Sidebar() {
+function Sidebar () {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -261,7 +261,18 @@ function Sidebar() {
                         <p>Account Lists</p>
                       </Link>
                     </li>
-
+                    <li className='nav-item'>
+                      <Link to='/account_type' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Type</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/account_head' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Heading</p>
+                      </Link>
+                    </li>
                     <li className='nav-item'>
                       <Link to='/income' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -278,6 +289,19 @@ function Sidebar() {
                       <Link to='/bank' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Bank</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/transfer' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Transfer Lists</p>
+                      </Link>
+                    </li>
+                    
+                    <li className='nav-item'>
+                      <Link to='/transaction' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Transaction Lists</p>
                       </Link>
                     </li>
                     <li className='nav-item'>

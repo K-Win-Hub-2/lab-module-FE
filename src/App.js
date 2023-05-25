@@ -33,9 +33,10 @@ import FinanceTestVouList from "./components/views/Finance/FinanceTVL.jsx";
 import TrialBalance from './components/views/TrialBalance';
 import ReagentUpdate from './components/views/ReagentUpdate';
 // import Supplier from "./components/views/Supplier.jsx";
-
-
-
+import Transfer from './components/views/Finance/Transfer/TransferList.jsx'
+import AccountHead from './components/views/Finance/Heding.jsx'
+import AccountType from './components/views/Finance/AccountType.jsx'
+import Transaction from './components/views/Finance/AllTransaction.jsx'
 
 
 
@@ -92,6 +93,12 @@ function App() {
         <Route path='/repay/:id' element={<Repay/>}></Route>
         <Route path='/ftvl' element={<FinanceTestVouList/>}></Route>
         <Route path='/doctorUpdate/:id' element={<DoctorUpdate/>}></Route>
+        <Route path='/transfer' element={<Transfer/>}></Route>
+        <Route path='/account_type' element={<AccountType />}></Route>
+        <Route path='/account_head' element={<AccountHead />}></Route>
+        <Route path='/transaction' element={<Transaction/>}></Route>
+
+
        
       </Routes>
     </Router>

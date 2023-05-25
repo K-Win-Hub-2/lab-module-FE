@@ -198,8 +198,7 @@ const Expense = () => {
                               <FaFileExcel />&nbsp;
                               Export
 
-                              <FaFileExcel />
-                              &nbsp; Export
+                             
 
                             </button>
                           </span>
