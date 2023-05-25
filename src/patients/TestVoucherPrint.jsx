@@ -26,8 +26,8 @@ const TestVoucherPrint = () => {
   const [refOn, setRefOn] = useState(true)
   const [resOn, setResOn] = useState(true)
   const [textArea, settextArea] = useState("");
-  const[showBottom,setShowBottom] = useState(false);
-  const[subTest,setSubTest] = useState([])
+  const [showBottom, setShowBottom] = useState(false);
+  const [subTest, setSubTest] = useState([])
   // const [headerOff, setHeaderOff] = useState(false);
 
   const TR = styled.tr`
@@ -35,11 +35,18 @@ const TestVoucherPrint = () => {
   margin-top: 20px;
   border-style: hidden;
 `
-  const TH1= styled.th`
+  const TH1 = styled.th`
     font-size: 19px;
   `
-  const TD1= styled.td`
+  const TD1 = styled.td`
   font-size: 19px;
+`
+
+const SPAN = styled.span`
+  font-size:19px;
+`
+const P = styled.p`
+  color: white;
 `
   let componentRef = useRef()
 
@@ -77,7 +84,7 @@ const TestVoucherPrint = () => {
     return decode
   }
 
-  const handleBottomChange = event =>{
+  const handleBottomChange = event => {
     setShowBottom(!showBottom)
   }
 
@@ -130,7 +137,7 @@ const TestVoucherPrint = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-       // 'http://localhost:9000/api/voucher/' +
+          // 'http://localhost:9000/api/voucher/' +
           TestVou_id
         )
 
@@ -139,8 +146,8 @@ const TestVoucherPrint = () => {
         //setFilteredVouchers(res.data.data.testSelection)
         settextArea(res.data.data.comment)
         setLabID_VouCode(res.data.data)
-        console.log(res.data.data,"resultPrint")
-        
+        console.log(res.data.data, "resultPrint")
+
 
         // console.log(res.data.data.testSelection[0].name.specialComment);
 
@@ -273,11 +280,11 @@ const TestVoucherPrint = () => {
                   <table className='table table-hover mt-4'>
                     <thead >
                       <tr>
-                        <th>Test</th>
-                        <th>Result</th>
-                        <th>Reference Range</th>
-                        <th>Unit</th>
-                        <th>Remark</th>
+                        <TH1>Test</TH1>
+                        <TH1>Result</TH1>
+                        <TH1>Reference Range</TH1>
+                        <TH1>Unit</TH1>
+                        <TH1>Remark</TH1>
                       </tr>
                     </thead>
                     {/* <tbody>
@@ -293,95 +300,95 @@ const TestVoucherPrint = () => {
                     {filteredVouchers.map(testSelect => (
                       <tbody >
                         {(testSelect.name.subTestFlag) ? (<tr>
-                          <td>
+                          <TD1>
                             <div className="col-md-12 border-0">
-                              <p><u><b>{(testSelect.name.name.includes("NS")) ? testSelect.name.name.replace("NS","") : testSelect.name.name}</b></u></p>
+                              <p><u><b>{(testSelect.name.name.includes("NS")) ? testSelect.name.name.replace("NS", "") : testSelect.name.name}</b></u></p>
                               {/* {
                                 testSelect.name.subTest.map((test) => (
                                   <p>{test.name}</p>
                                 ))
                               } */}
-                               {
-                                  testSelect.subTest.map((test) => (
-                                    <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{color:'red'}}><b>{test.name}</b></p>) :  (test.type === "both") ? (<p style={{color:'red'}}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
-                                    // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
-                                     
-                                  ))
-                                }
-                            </div>
-                          </td>
+                              {
+                                testSelect.subTest.map((test) => (
+                                  <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{ color: 'red' }}><b>{test.name}</b></p>) : (test.type === "both") ? (<p style={{ color: 'red' }}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
+                                  // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
 
-                          <td>
+                                ))
+                              }
+                            </div>
+                          </TD1>
+
+                          <TD1>
                             <div className="col-md-12 border-0">
-                            <div style={{ height: '40px' }}></div>
+                              <div style={{ height: '40px' }}></div>
                               {
                                 testSelect.subTest.map((test) => (
                                   // <p
                                   //   style={{ marginBottom: '6px' }}
                                   // >{(test.result !== null) ? test.result : ""}</p>
-                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                   <p> {(test.result !== "") ? test.result : (test.defaultResult !== "") ? test.defaultResult : "-" }</p>
-                                  )) : ("")}
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <p> {(test.result !== "") ? test.result : (test.defaultResult !== "") ? test.defaultResult : <P>-</P>}</p>
+                                  )) : ""}
                                   </span>
-                                  ))
+                                ))
                               }
 
                             </div>
-                          </td>
-                          <td>
+                          </TD1>
+                          <TD1>
                             <div className="col-md-12 border-0">
-                              <p style={{marginBottom: "40px"}}></p>
-                            {/* <div style={{ height: '40px' }}></div> */}
+                              <p style={{ height: "24px" }}></p>
+                              {/* <div style={{ height: '40px' }}></div> */}
                               {
                                 testSelect.subTest.map((test) => (
                                   // <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
-                                  <span>  {(test!== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p><input className="border-0" type="text" id="subRefRange" defaultValue={test.referenceRange}/></p>)) : ("-")}
-                                    </span>
-                                  ))
-                              }
-                            </div>
-                          </td>
-
-                          <td>
-                            <div className="col-md-12 border-0">
-                            <div style={{ height: '40px' }}></div>
-                              {
-                                testSelect.subTest.map((test) => (
-                                  // <p style={{ marginTop: '18px' }}>{test.unit}</p>
-                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p >{test.unit === "" ? "-" : test.unit}</p>)) : ("")}
-                                    </span>
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <p><input className="border-0" type="text" id="subRefRange" defaultValue={test.referenceRange} style={{ height: '24px' }} /></p>)) : <P>-</P>}
+                                  </span>
                                 ))
                               }
                             </div>
-                          </td>
+                          </TD1>
 
-                          <td>
-                          <div className="col-md-12 border-0">
-                          <div style={{ height: '40px' }}></div>
-                            {
-                              testSelect.subTest.map((test) => (
-                                
-                                // <p
-                                //   style={{ marginBottom: '6px' }}
-                                // >{(test.remark !== null) ? test.remark : ""}</p>
-                                <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                <p>{(test.remark === "") ? "-"  :test.remark}
-                                   </p>
-                                  )) : ("")}
-                                    </span>
-                              ))
-                            }
+                          <TD1>
+                            <div className="col-md-12 border-0">
+                              <div style={{ height: '40px' }}></div>
+                              {
+                                testSelect.subTest.map((test) => (
+                                  // <p style={{ marginTop: '18px' }}>{test.unit}</p>
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <p >{test.unit === "" ? <P>-</P> : test.unit}</p>)) : <P>-</P>}
+                                  </span>
+                                ))
+                              }
                             </div>
-                          </td>
+                          </TD1>
+
+                          <TD1>
+                            <div className="col-md-12 border-0">
+                              <div style={{ height: '40px' }}></div>
+                              {
+                                testSelect.subTest.map((test) => (
+
+                                  // <p
+                                  //   style={{ marginBottom: '6px' }}
+                                  // >{(test.remark !== null) ? test.remark : ""}</p>
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <p>{(test.remark === "") ? <P>-</P>: test.remark}
+                                    </p>
+                                  )) : ("")}
+                                  </span>
+                                ))
+                              }
+                            </div>
+                          </TD1>
 
                         </tr>) : (
                           <tr key={testSelect._id}>
-                            <td>{(testSelect.name.name.includes("NS") ? testSelect.name.name.replace("NS","") : testSelect.name.name )}</td>
-                            <td>{testSelect.result}</td>
+                            <TD1>{(testSelect.name.name.includes("NS") ? testSelect.name.name.replace("NS", "") : testSelect.name.name)}</TD1>
+                            <TD1>{testSelect.result}</TD1>
 
-                            <td>
+                            <TD1>
                               {testSelect.name.specialComment ? (
                                 "See Below"
                               ) : (
@@ -391,20 +398,20 @@ const TestVoucherPrint = () => {
                                       {/* {refer.gender} &nbsp;
                                     {refer.from}-{refer.to} &nbsp; */}
                                       {/* {refer.refRange} */}
-                                    <input
-                                      type="text"
-                                      id="refRange"
-                                      name="refRange"
-                                      defaultValue={refer.refRange}
-                                      style={{borderStyle: "hidden"}}
-                                    />
+                                      <input
+                                        type="text"
+                                        id="refRange"
+                                        name="refRange"
+                                        defaultValue={refer.refRange}
+                                        style={{ borderStyle: "hidden" }}
+                                      />
                                     </p>
                                   ))}
                                 </div>
                               )}
-                            </td>
+                            </TD1>
 
-                            <td>
+                            <TD1>
                               {testSelect.name.specialComment ? (
                                 "See Below"
                               ) : (
@@ -414,9 +421,9 @@ const TestVoucherPrint = () => {
                                   ))}
                                 </div>
                               )}
-                            </td>
+                            </TD1>
 
-                            <td>{testSelect.remark}</td>
+                            <TD1>{testSelect.remark}</TD1>
                           </tr>
                         )}
                       </tbody>
@@ -448,47 +455,47 @@ const TestVoucherPrint = () => {
 
                   {showBottom ? (<div className='row' style={{ margin: '50px' }}>
                     <div class="fixed-bottom" className='col-6'>
-                      <span>Laboratory Technician</span>
+                      <SPAN>Laboratory Technician</SPAN>
                     </div>
                     <div class="fixed-bottom" className='col-6' style={{ textAlign: 'right' }}>
-                      <span>
+                      <SPAN>
                         {
                           selectedPatho.name}
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>
+                      <SPAN>
                         {selectedPatho.position
                         }
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>
+                      <SPAN>
                         {selectedPatho.education
                         }
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>Central Lab, Ahlone, Yangon</span>
+                      <SPAN>Central Lab, Ahlone, Yangon</SPAN>
                     </div>
                   </div>) : (<div className='row' style={{ margin: '50px' }}>
                     <div className='col-6'>
-                      <span>Laboratory Technician</span>
+                      <SPAN>Laboratory Technician</SPAN>
                     </div>
                     <div className='col-6' style={{ textAlign: 'right' }}>
-                      <span>
+                      <SPAN>
                         {
                           selectedPatho.name}
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>
+                      <SPAN>
                         {selectedPatho.position
                         }
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>
+                      <SPAN>
                         {selectedPatho.education
                         }
-                      </span>
+                      </SPAN>
                       <br></br>
-                      <span>Central Lab, Ahlone, Yangon</span>
+                      <SPAN>Central Lab, Ahlone, Yangon</SPAN>
                     </div>
                   </div>)}
 
@@ -570,7 +577,7 @@ const TestVoucherPrint = () => {
                 <button className='btn btn-success mt-3 mb-4' onClick={handleBottomChange}>Print</button>
               )}
               content={() => componentRef}
-              // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
+            // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
             />
           </div>
         </div>

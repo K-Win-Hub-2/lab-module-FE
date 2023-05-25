@@ -14,6 +14,10 @@ const Top = styled.div`
   margin: 10px 0;
 `
 
+const TR = styled.tr`
+  border-style: hidden;
+`
+
 const Left = styled.div`
   font-weight: normal;
   flex: 1;
@@ -37,7 +41,7 @@ const Th = styled.th`
   font-size: 24px;
 `
 const Td = styled.td`
-  font-size: 22px;
+  font-size: 24px;
   margin-top: 20px;
 `
 
@@ -46,7 +50,7 @@ const Hr = styled.hr`
   width: 50%;
 `
 const H6 = styled.h6`
-  font-size: 22px;
+  font-size: 26px;
   margin-top: 25px;
 `
 
@@ -93,7 +97,7 @@ const TestVoucherSlip = () => {
         setName(res.data.data.relatedPatient.name)
         setAge(res.data.data.relatedPatient.age)
         serCreditAmount(res.data.data.creditAmount)
-        setDoctor(res.data.data.referDoctor)
+        setDoctor(res.data.data.referDoctor.name)
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -140,48 +144,34 @@ const TestVoucherSlip = () => {
                     <br></br>
                     <div className='row'>
                       <div className='col-5'>
-                        <h6 style={{fontSize:"22px" }}>
+                        <H6>
                           Name :{' '}
                           <span className='float-right'>
-                            {name} / {age}yrs
+                            {name ? name : ''} / {age ? age : ''}yrs
                           </span>
-                        </h6>
+                        </H6>
                         <H6>
                           Phone No :
-                          <span className='float-right'>{phone}</span>
+                          <span className='float-right'>{phone ? phone : ''}</span>
                         </H6>
                         <H6>
-                          Age :<span className='float-right'> {age}</span>
+                          Age :<span className='float-right'> {age ? age : ''}</span>
                         </H6>
                         <H6>
-                          Gender : <span className='float-right'>{gender}</span>
+                          Gender : <span className='float-right'>{gender ? gender : ''}</span>
                         </H6>
                       </div>
                       <div className='col-6'>
-                        <h6 style={{fontSize:"20px" }}>Inv. No : <span className='float-right'>{code ? code : ''}</span></h6>
+                        <H6>Inv. No : <span className='float-right'>{code ? code : ''}</span></H6>
                         <H6>Date : <span className='float-right'>{date ? date.split('T')[0] : ''}</span></H6>
                         <H6>Printed : <span className='float-right'>{today.split('T')[0]}</span></H6>
                         <H6>Doctor : <span className='float-right'>{doctor ? doctor : '-'}</span></H6>
                       </div>
                     </div>
-                    {/* <br/>
-                    <div className='row'>
-                      <div className='col-6 text-bold'>Name</div>
-                      <div className='col-2 text-bold'>Qty</div>
-                      <div className='col-2 text-bold'>Price</div>
-                      <div className='col-2 text-bold'>Amt</div>
-                    </div>
-                    <hr></hr>
-                    {vouchers.map((vou, index) => (
-                      <div className='row' key={vou._id}>
-                        <div className='col-6'>{vou.name.name}</div>
-                        <div className='col-2'>{vou.qty}</div>
-                        <div className='col-2'>{vou.unitCharge}</div>
-                        <div className='col-2'>{vou.subCharge}</div>
-                      </div>
-                    ))} */}
+                    <br></br>
+                    <br></br>
 
-                    <Table className='table table-hover text-right'>
+                    <Table className='table table-hover table-xsm'>
                       <Thead>
                         <Tr>
                           <Th>#</Th>
@@ -220,75 +210,63 @@ const TestVoucherSlip = () => {
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
-                              {vou.qty}
+                              {vou.qty ? vou.qty : ''}
                             </Td>
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
-                              {vou.unitCharge}
+                              {vou.unitCharge ? vou.unitCharge : ''}
                             </Td>
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
-                              {vou.subCharge}
+                              {vou.subCharge ? vou.subCharge : ''}
                             </Td>
                           </Tr>
                         ))}
                       </Tbody>
+                      <br></br>
                       <tfoot>
-                        <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                        <TR >
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Total
-                          </td>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
-                            {total}
-                          </td>
-                        </tr>
-                        <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          </Td>
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                            {total ? total : ''}
+                          </Td>
+                        </TR>
+                        <TR >
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Discount
-                          </td>
-                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
-                            {discount}
-                          </td>
-                        </tr>
-                        <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          </Td>
+                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
+                            {discount ? discount : ''}
+                          </Td>
+                        </TR>
+                        <TR >
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Net
-                          </td>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
-                            {net}
-                          </td>
-                        </tr>
-                        <tr style={{ borderStyle: 'hidden' }}>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          </Td>
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                            {net ? net : ''}
+                          </Td>
+                        </TR>
+                        <TR >
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
                             Pay
-                          </td>
-                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
-                            {pay}
-                          </td>
-                        </tr>
+                          </Td>
+                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
+                            {pay ? pay :''}
+                          </Td>
+                        </TR>
                         <tr>
-                          <td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
+                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
                             Credit Amount
-                          </td>
-                          <td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
-                            {change}
-                          </td>
+                          </Td>
+                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                            {change ? change : ''}
+                          </Td>
                         </tr>
-
-                        {/* {creditAmount == 0 && (
-                          <>
-                            <tr>
-                              <td colSpan={4} style={{ textAlign: 'right' }}>
-                                Credit Amount
-                              </td>
-                              <td colSpan={4} style={{ textAlign: 'right' }}>
-                                0
-                              </td>
-                            </tr>
-                          </>
-                        )} */}
                         <Hr></Hr>
                         <tr>
                           <td
@@ -309,15 +287,6 @@ const TestVoucherSlip = () => {
                         </tr>
                       </tfoot>
                     </Table>
-                    {/* {
-  creditAmount == 0 && (
-
-      <h5 style={{ textAlign: 'center' }} className='mt-3'>
-        You paid your credit amount!
-      </h5>
-
-  )
-} */}
                   </Div>
                 </Div>
                 <ReactToPrint
