@@ -444,7 +444,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
-                                <div style={{ height: '40px' }}></div>
+                                {/* <div style={{ height: '40px' }}></div> */}
                                 <div>
                                   {testSelect.name.specialComment ? (
                                     "See below"
@@ -469,7 +469,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
-                                <div style={{ height: '40px' }}></div>
+                                {/* <div style={{ height: '40px' }}></div> */}
                                 {testSelect.name.specialComment ? (
                                   "See Below"
                                 ) : (
@@ -484,7 +484,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
-                                <div style={{ height: '40px' }}></div>
+                                {/* <div style={{ height: '40px' }}></div> */}
                                 <div className="col-md-12 border-0">
                                   <input
                                     type="text"

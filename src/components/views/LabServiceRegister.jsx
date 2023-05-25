@@ -539,6 +539,20 @@ function LabServiceRegister() {
                                     </div>
 
                                     <div className="col-md-2">
+                                    {/* <textarea
+                                      rows="3"
+                                      cols="10"
+                                      className="form-control"
+                                      id="subTestRR"
+                                      name="subTestRR"
+                                      value={data.range}
+                                      onChange={(event) =>
+                                        handleInputChange(
+                                          event,
+                                          data.id,
+                                          "referenceRange"
+                                        )
+                                      }></textarea> */}
                                       <input
                                         type="text"
                                         className="form-control"

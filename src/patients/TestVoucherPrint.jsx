@@ -339,11 +339,12 @@ const P = styled.p`
                             <div className="col-md-12 border-0">
                               <p style={{ height: "24px" }}></p>
                               {/* <div style={{ height: '40px' }}></div> */}
+                              {/* {console.log(testSelect.subTest,'subtest')} */}
                               {
                                 testSelect.subTest.map((test) => (
                                   // <p style={{ marginTop: '22px' }}>{test.referenceRange}</p>
                                   <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                    <p><input className="border-0" type="text" id="subRefRange" defaultValue={test.referenceRange} style={{ height: '24px' }} /></p>)) : <P>-</P>}
+                                    <p><input className="border-0" type="text" id="subRefRange" defaultValue={test.referenceRange} style={{ height: '24px' }} /></p>)) : ('')}
                                   </span>
                                 ))
                               }

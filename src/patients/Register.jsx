@@ -171,7 +171,7 @@ const Register = () => {
                       Age<Span>*</Span>
                     </Label>
                     <Input
-                      type="number"
+                      type="text"
                       className="form-control"
                       onChange={(e) => setAge(e.target.value)}
                     />

@@ -674,6 +674,20 @@ function LabServiceUpdate () {
                                     </div>
 
                                     <div className='col-md-2'>
+                                    {/* <textarea
+                                      rows="3"
+                                      cols="20"
+                                      className="form-control"
+                                      id="subTestRR"
+                                      name="subTestRR"
+                                      value={data.referenceRange}
+                                      onChange={(event) =>
+                                        handleInputChange(
+                                          event,
+                                          data.id,
+                                          "referenceRange"
+                                        )
+                                      }></textarea> */}
                                       <input
                                         type='text'
                                         className='form-control'
