@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
-import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+import { FaCashRegister, FaFileMedical, FaFileExcel, FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 
 import Swal from "sweetalert2";
 import LabServiceUpdate from "../views/LabServiceUpdate";
@@ -324,23 +324,23 @@ const LabServiceList = () => {
                                         Check
                                       </button>
                                     </td> */}
-                                    <td className="text-center">
+                                    <td className='d-flex justify-content-between'>
                                       <Link to={"/lab-test/" + labService._id}>
                                         <a
                                           className="btn btn-sm btn-warning text-white"
                                           role="button">
-                                          Update
+                                         <FaRegEdit/>
                                         </a>
                                       </Link>
                                       &nbsp;
-                                      <a
+                                      <button
                                         className="btn btn-sm btn-danger text-white"
-                                        role="button"
+                               
                                         onClick={(e) =>
                                           handleDelete(labService._id)
                                         }>
-                                        Delete
-                                      </a>
+                                        <FaRegTrashAlt/>
+                                      </button>
                                     </td>
                                   </tr>
 

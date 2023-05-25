@@ -80,12 +80,12 @@ const TestVoucherSlip = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-          vouid
+            vouid
         )
         console.log(res.data.data)
         setGender(res.data.data.relatedPatient.gender)
         setPhone(res.data.data.relatedPatient.phone)
-        
+
         setVouchers(res.data.data.testSelection)
         setTotal(res.data.data.totalCharge)
         setDiscount(res.data.data.discount)
@@ -127,18 +127,34 @@ const TestVoucherSlip = () => {
 
             <div className='row d-flex justify-content-center'>
               <div className='col-5'>
-                <Div className='card' style={{ padding: "" }} ref={el => (componentRef = el)}>
+                <Div
+                  className='card'
+                  style={{ padding: '' }}
+                  ref={el => (componentRef = el)}
+                >
                   <Div className='card-body' id='print'>
-                    <h5 style={{ textAlign: 'center', fontSize:"35px" }}>Central Laboratory</h5>
-                    <h6 style={{ textAlign: 'center', fontSize:"25px", marginTop: "15px" }}>
+                    <h5 style={{ textAlign: 'center', fontSize: '35px' }}>
+                      Central Laboratory
+                    </h5>
+                    <h6
+                      style={{
+                        textAlign: 'center',
+                        fontSize: '25px',
+                        marginTop: '15px'
+                      }}
+                    >
                       NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
                     </h6>
                     <div className='text-center'>
-                      <b style={{fontSize:"25px", marginTop: "15px" }}>09400400650</b>
+                      <b style={{ fontSize: '25px', marginTop: '15px' }}>
+                        09400400650
+                      </b>
                     </div>
                     <div className='text-center'>
                       <h5>
-                        <b style={{fontSize:"25px" , marginTop: "15px" }}>Invoice</b>
+                        <b style={{ fontSize: '25px', marginTop: '15px' }}>
+                          Invoice
+                        </b>
                       </h5>
                     </div>
                     <br></br>
@@ -152,20 +168,46 @@ const TestVoucherSlip = () => {
                         </H6>
                         <H6>
                           Phone No :
-                          <span className='float-right'>{phone ? phone : ''}</span>
+                          <span className='float-right'>
+                            {phone ? phone : ''}
+                          </span>
                         </H6>
                         <H6>
-                          Age :<span className='float-right'> {age ? age : ''}</span>
+                          Age :
+                          <span className='float-right'> {age ? age : ''}</span>
                         </H6>
                         <H6>
-                          Gender : <span className='float-right'>{gender ? gender : ''}</span>
+                          Gender :{' '}
+                          <span className='float-right'>
+                            {gender ? gender : ''}
+                          </span>
                         </H6>
                       </div>
                       <div className='col-6'>
-                        <H6>Inv. No : <span className='float-right'>{code ? code : ''}</span></H6>
-                        <H6>Date : <span className='float-right'>{date ? date.split('T')[0] : ''}</span></H6>
-                        <H6>Printed : <span className='float-right'>{today.split('T')[0]}</span></H6>
-                        <H6>Doctor : <span className='float-right'>{doctor ? doctor : '-'}</span></H6>
+                        <H6>
+                          Inv. No :{' '}
+                          <span className='float-right'>
+                            {code ? code : ''}
+                          </span>
+                        </H6>
+                        <H6>
+                          Date :{' '}
+                          <span className='float-right'>
+                            {date ? date.split('T')[0] : ''}
+                          </span>
+                        </H6>
+                        <H6>
+                          Printed :{' '}
+                          <span className='float-right'>
+                            {today.split('T')[0]}
+                          </span>
+                        </H6>
+                        <H6>
+                          Doctor :{' '}
+                          <span className='float-right'>
+                            {doctor ? doctor : '-'}
+                          </span>
+                        </H6>
                       </div>
                     </div>
                     <br></br>
@@ -205,7 +247,9 @@ const TestVoucherSlip = () => {
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
-                              {(vou.name.name.includes("NS")) ? vou.name.name.replace("NS","") : vou.name.name}
+                              {vou.name.name.includes('NS')
+                                ? vou.name.name.replace('NS', '')
+                                : vou.name.name}
                             </Td>
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
@@ -227,43 +271,113 @@ const TestVoucherSlip = () => {
                       </Tbody>
                       <br></br>
                       <tfoot>
-                        <TR >
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                        <TR>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             Total
                           </Td>
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             {total ? total : ''}
                           </Td>
                         </TR>
-                        <TR >
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                        <TR>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             Discount
                           </Td>
-                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             {discount ? discount : ''}
                           </Td>
                         </TR>
-                        <TR >
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                        <TR>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             Net
                           </Td>
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             {net ? net : ''}
                           </Td>
                         </TR>
-                        <TR >
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                        <TR>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             Pay
                           </Td>
-                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
-                            {pay ? pay :''}
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
+                            {pay ? pay : ''}
                           </Td>
                         </TR>
                         <tr>
-                          <Td colSpan={4} style={{ textAlign: 'right', fontSize: '24px', marginTop: '20px' }}>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             Credit Amount
                           </Td>
-                          <Td colSpan={4} style={{ textAlign: 'right' , fontSize: '24px', marginTop: '20px' }}>
+                          <Td
+                            colSpan={4}
+                            style={{
+                              textAlign: 'right',
+                              fontSize: '24px',
+                              marginTop: '20px'
+                            }}
+                          >
                             {change ? change : ''}
                           </Td>
                         </tr>
@@ -277,11 +391,14 @@ const TestVoucherSlip = () => {
                             }}
                           >
                             <b style={{ fontSize: '24px', marginTop: '20px' }}>
-                              အ‌ဖြေလာရွှေးလျှင် ငွေရှင်းပြေစာ ယူဆောင်လာပေးပါရန်နှင့်
+                              အ‌ဖြေလာရွှေးလျှင် ငွေရှင်းပြေစာ
+                              ယူဆောင်လာပေးပါရန်နှင့်
                             </b>
-                            <br/>
+                            <br />
                             <b style={{ fontSize: '24px', marginTop: '20px' }}>
-                              ၃လကျော်သည့် အ‌ဖြေများကို ထုတ်ပေးနိုင်မည်မဟုတ်‌ကြောင်း မေတ္တာရပ်ခံပန်ကြားအပ်ပါသည်
+                              ၃လကျော်သည့် အ‌ဖြေများကို
+                              ထုတ်ပေးနိုင်မည်မဟုတ်‌ကြောင်း
+                              မေတ္တာရပ်ခံပန်ကြားအပ်ပါသည်
                             </b>
                           </td>
                         </tr>
