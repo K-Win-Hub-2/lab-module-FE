@@ -28,7 +28,9 @@ function MedicineSale() {
   const [credit, setCredit] = useState([])
   const [debit, setDebit] = useState([])
   const [type, setType] = useState([])
+  const [dateFilterList, setDateFilterList] = useState([])
   const [showType, setShowType] = useState(false)
+  const [dateFilter, setDateFilter] = useState(false)
 
   const paymentFilter = event => {
     setStatus(event)
@@ -83,12 +85,16 @@ function MedicineSale() {
     setOrigin(false)
     setShow(true)
     setType(false)
+    setDateFilter(false)
   }
 
   const search = async () => {
     const result = await axios.get(uri + 'transactions')
+    console.log(startDate, 'start Date')
+    console.log(endDate, 'end Date')
+
     if (startDate && endDate) {
-      setTranList(
+      setDateFilterList(
         result.data.list.filter(
           el =>
             (el.date ? el.date.split('T')[0] : '') >= startDate &&
@@ -96,8 +102,10 @@ function MedicineSale() {
         )
       )
       console.log(tranList, 'date filter')
+      setOrigin(false)
       setShow(false)
-      setOrigin(true)
+      setType(false)
+      setDateFilter(true)
     }
   }
 
@@ -129,19 +137,20 @@ function MedicineSale() {
     setOrigin(false)
     setShow(false)
     setShowType(true)
+    setDateFilter(false)
   }
   const handleDebit = event => {
     setDebit(tranList.filter(el => el.type === 'Debit'))
     setOrigin(false)
     setShow(false)
-    setShowType(false)
+    setShowType(true)
+    setDateFilter(false)
   }
 
   useEffect(() => {
     const getTransaction = async () => {
-      axios.get(uri + 'transactions?limit=100').then(response => {
+      axios.get(uri + 'transactions').then(response => {
         setTranList(response.data.list)
-        console.log(response.data.list, 'tran list')
       })
     }
 
@@ -307,6 +316,29 @@ function MedicineSale() {
                       </tr>
                     </thead>
 
+                    {dateFilter &&
+                      dateFilterList.map((tSale, i) => (
+                        <tbody key={tSale._id}>
+                          <tr>
+                            <td>{++i}</td>
+                            <td>
+                              {tSale.date ? tSale.date.split('T')[0] : ''}
+                            </td>
+                            <td>
+                              {tSale.relatedBank
+                                ? tSale.relatedBank.name
+                                : '' || tSale.relatedAccounting
+                                ? tSale.relatedAccounting.name
+                                : '' || tSale.relatedCash
+                                ? tSale.relatedCash.name
+                                : ''}
+                            </td>
+                            <td>{tSale.type}</td>
+                            <td>{tSale.amount}</td>
+                            <td>{tSale.remark}</td>
+                          </tr>
+                        </tbody>
+                      ))}
                     {origin &&
                       tranList.map((tSale, i) => (
                         <tbody key={tSale._id}>
@@ -363,6 +395,7 @@ function MedicineSale() {
                                 <td>
                                   {tSale.date ? tSale.date.split('T')[0] : ''}
                                 </td>
+
                                 <td>
                                   {tSale.relatedBank
                                     ? tSale.relatedBank.name
@@ -372,7 +405,6 @@ function MedicineSale() {
                                     ? tSale.relatedCash.name
                                     : ''}
                                 </td>
-
                                 <td>{tSale.type}</td>
                                 <td>{tSale.amount}</td>
                                 <td>{tSale.remark}</td>
@@ -388,6 +420,7 @@ function MedicineSale() {
                             <td>
                               {tSale.date ? tSale.date.split('T')[0] : ''}
                             </td>
+
                             <td>
                               {tSale.relatedBank
                                 ? tSale.relatedBank.name
@@ -397,7 +430,6 @@ function MedicineSale() {
                                 ? tSale.relatedCash.name
                                 : ''}
                             </td>
-
                             <td>{tSale.type}</td>
                             <td>{tSale.amount}</td>
                             <td>{tSale.remark}</td>

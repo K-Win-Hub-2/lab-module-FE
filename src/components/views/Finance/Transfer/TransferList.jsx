@@ -186,7 +186,7 @@ export default function TransferList () {
                     </div>
                   </div>
                 </div>
-                <div className='card-body'>
+                <div className='card-body px-3'>
                   <table id='example1' className='table'>
                     <thead className=' bg-info'>
                       <tr>
