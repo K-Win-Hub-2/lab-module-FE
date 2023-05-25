@@ -61,10 +61,10 @@ function LabServiceRegister() {
 
   const updateTextArea = async (event) => {
     let data = {
-      id:TestVou_id,
-      comment:textArea
+      id: TestVou_id,
+      comment: textArea
     }
-    axios.put(url+'/voucher',data).then((response)=>{
+    axios.put(url + '/voucher', data).then((response) => {
       console.log(response.data.data)
     })
   }
@@ -97,7 +97,7 @@ function LabServiceRegister() {
         .put(
           // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,  
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/subtests",
-        //"http://localhost:9000/api/vouchers/subtests",
+         // "http://localhost:9000/api/vouchers/subtests",
           data
         )
         .then(function (response) {
@@ -164,14 +164,14 @@ function LabServiceRegister() {
       try {
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
-         // "http://localhost:9000/api/voucher/" +
+          // "http://localhost:9000/api/voucher/" +
           TestVou_id
         );
 
         // console.log(vouDate);
         console.log(res.data.data);
         setVoucherLists(res.data.data.testSelection);
-          setsTextArea(res.data.data.comment)
+        setsTextArea(res.data.data.comment)
         // console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
         setTestID(res.data.data.testSelection[0]);
@@ -181,13 +181,27 @@ function LabServiceRegister() {
 
         res.data.data.testSelection.map((test) => {
           if (test.name.subTestFlag) {
-            const newData = test.subTest.map(data => {
-             
-                 return { ...data, tsid : test._id }
-            
+            var newData = [];
+           // let sameFlag = false;
+            test.name.subTest.map(refdata => {     
+              test.subTest.map(realdata=>{
+                if(realdata._id === refdata._id){
+                  newData.push( {...realdata, "name" : refdata.name, "defaultResult" : refdata.defaultResult,"referenceRange": refdata.referenceRange,"unit": refdata.unit,"type": refdata.type ,"tsid": test._id})
+              //  sameFlag = true;
+                }
+              })
+              // if(!sameFlag){
+              //   newData.push({...refdata, tsid: test._id})
+              //   sameFlag= false;
+              // } 
+              // console.log(newData);
             })
-            console.log(newData);
+            if(test.name.subTest.length > newData.length){
+              newData.push({...test.name.subTest[test.name.subTest.length-1], tsid: test._id})
+            }
+           console.log(newData);
             setSubTest(newData)
+            //console.log(subTest)
           }
         }
         )
@@ -314,21 +328,21 @@ function LabServiceRegister() {
                               <div className="col-md-12 border-0">
                                 <p><u><b>{testSelect.name.name}</b></u></p>
                                 {
-                                  testSelect.name.subTest.map((test) => (
-                                    <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{color:'red'}}><b>{test.name}</b></p>) :  (test.type === "both") ? (<p style={{color:'red'}}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
+                                  subTest.map((test) => (
+                                    <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{ color: 'red' }}><b>{test.name}</b></p>) : (test.type === "both") ? (<p style={{ color: 'red' }}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
                                     // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
-                                     
+
                                   ))
                                 }
                               </div>
                             </td>
                             <td>
                               <div className="col-md-12 border-0">
-                                <p> </p>
+                                <div style={{ height: '40px' }}></div>
                                 {
-                                  testSelect.subTest.map((test) => (
-                                    
-                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (<input
+                                  subTest.map((test) => (
+
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (<input
                                       type="text"
                                       id="result"
                                       onChange={event =>
@@ -337,11 +351,11 @@ function LabServiceRegister() {
                                           test._id,
                                           'result'
                                         )}
-                                      defaultValue={( test !== null && test.result !== "") ? test.result : (test !== null && test.defaultResult !== "") ? test.defaultResult : "" }
+                                      defaultValue={(test !== null && test.result !== "") ? test.result : (test !== null && test.defaultResult !== "") ? test.defaultResult : ""}
                                       class="form-control"
                                       placeholder={test.name}
-                                      style={{ marginBottom: '6px' }}
-                                    />)) : ("") }
+                                      style={{ marginBottom: '2px' }}
+                                    />)) : ("")}
                                     </span>
                                   ))
                                 }
@@ -350,12 +364,12 @@ function LabServiceRegister() {
                             </td>
                             <td>
                               <div className="col-md-12 border-0">
-                                <p></p>
+                                <div style={{ height: '40px' }}></div>
                                 {
-                                  testSelect.name.subTest.map((test) => (
-                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)): (
-                                      <p style={{ marginTop: '25px' }}>{test.referenceRange}</p>)}
+                                  subTest.map((test) => (
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                      <p >{test.referenceRange === "" ? "-" : test.referenceRange} </p>)) : (
+                                      <p >{test.referenceRange}</p>)}
                                     </span>
                                   ))
                                 }
@@ -363,48 +377,49 @@ function LabServiceRegister() {
                             </td>
                             <td>
                               <div className="col-md-12 border-0">
+                                <div style={{ height: '40px' }}></div>
                                 {
-                                  testSelect.name.subTest.map((test) => (
-                                  
-                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                    <p style={{ marginTop: '36px' }}>{test.unit}</p>)) : (
-                                      <p style={{ marginTop: '36px' }}>{test.unit}</p>)}
+                                  subTest.map((test) => (
+
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                      <p>{test.unit === "" ? "-" : test.unit}</p>)) : (
+                                      <p>{test.unit}</p>)}
                                     </span>
-                                 
+
                                   ))
                                 }
                               </div>
                             </td>
 
                             <td>
-                              <p></p>
+                              <div style={{ height: '40px' }}></div>
                               {
-                                testSelect.subTest.map((test) => (
-                                  <span>  { (test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{color:'white'}}>""</p>) : (
-                                  <input
-                                    type="text"
-                                    id="remark"
-                                    onChange={event =>
-                                      handleInputChange(
-                                        event,
-                                        test._id,
-                                        'remark'
-                                      )}
-                                    defaultValue={(test.remark !== null) ? test.remark : ""}
-                                    class="form-control"
-                                    placeholder="Enter Remark"
-                                    style={{ marginBottom: '6px' }}
-                                  />
-                                  )): (
+                                subTest.map((test) => (
+                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <input
+                                      type="text"
+                                      id="remark"
+                                      onChange={event =>
+                                        handleInputChange(
+                                          event,
+                                          test._id,
+                                          'remark'
+                                        )}
+                                      defaultValue={(test.remark !== null) ? test.remark : ""}
+                                      class="form-control"
+                                      placeholder="Enter Remark"
+                                      style={{ marginBottom: '2px' }}
+                                    />
+                                  )) : (
                                     ""
-                                    )}
-                                    </span>
+                                  )}
+                                  </span>
                                 ))
                               }
                             </td>
                             <td>
-                            <p style={{color:'white'}}>""</p>
-                          
+                              <p style={{ color: 'white' }}>""</p>
+
                               <button
                                 type="button"
                                 onClick={(e) => handleTestSelection(testSelect, testSelect._id)}
@@ -429,6 +444,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
+                                <div style={{ height: '40px' }}></div>
                                 <div>
                                   {testSelect.name.specialComment ? (
                                     "See below"
@@ -437,13 +453,13 @@ function LabServiceRegister() {
                                       {testSelect.name.referenceRange.map(
                                         (refer) => (
                                           <p>
-                                          
-                                              <div>
-                                                {/* {refer.gender} &nbsp;
+
+                                            <div>
+                                              {/* {refer.gender} &nbsp;
                                                 {refer.from}-{refer.to} &nbsp; */}
-                                                {refer.refRange}
-                                              </div>
-                                          
+                                              {refer.refRange}
+                                            </div>
+
                                           </p>
                                         )
                                       )}
@@ -453,6 +469,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
+                                <div style={{ height: '40px' }}></div>
                                 {testSelect.name.specialComment ? (
                                   "See Below"
                                 ) : (
@@ -467,6 +484,7 @@ function LabServiceRegister() {
                               </td>
 
                               <td>
+                                <div style={{ height: '40px' }}></div>
                                 <div className="col-md-12 border-0">
                                   <input
                                     type="text"
@@ -506,10 +524,10 @@ function LabServiceRegister() {
                     </div>
                   </div>
                   <div className="row">
-                      <label>Comment</label>
-                      <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => settextArea(e.target.value)}>
-                      </textarea>
-                      {console.log(textArea)}
+                    <label>Comment</label>
+                    <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => settextArea(e.target.value)}>
+                    </textarea>
+                    {console.log(textArea)}
                   </div>
                   <div className="d-flex justify-content-center mt-3">
                     <button className="btn btn-primary mt-8" onClick={updateTextArea}>Save Comment</button>
@@ -519,7 +537,7 @@ function LabServiceRegister() {
                       name={pname}
                       age={page}
                       gender={pgender}>
-                        &nbsp;
+                      &nbsp;
                       <button className="btn btn-success">Print</button>
                     </Link>
                   </div>
