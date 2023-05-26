@@ -57,7 +57,7 @@ export default function BankInfoDialog(props) {
     if (fromType) data.fromAccType = fromType
     if (toType) data.toAccType = toType
 
-    alert(JSON.stringify(data))
+    // alert(JSON.stringify(data))
     // console.log(jsonData);
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -65,8 +65,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
-        'http://localhost:9000/api/journal',
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal",
+        // 'http://localhost:9000/api/journal',
         data,
         config
       )
@@ -139,7 +139,7 @@ export default function BankInfoDialog(props) {
 
     setRelatedDebitHeader(event)
     console.log(event, 'acc iD')
-    const url = `http://localhost:9000/api/accounting-lists/related/${event}`
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists/related/${event}`
     console.log(url)
     const res = await axios.get(url)
     console.log(res.data.data, 'res.data.data')
@@ -260,8 +260,8 @@ export default function BankInfoDialog(props) {
 '
     >
       <DialogTitle>
-        <div className='modal-header'>
-          <h4 className='modal-title'>Incoming</h4>
+        <div className='modal-header bg-info'>
+          <h4 className='modal-title'>Journal Entry Create</h4>
           <button
             type='button'
             className='close'
