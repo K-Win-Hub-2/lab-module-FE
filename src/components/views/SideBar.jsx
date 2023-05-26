@@ -297,11 +297,17 @@ function Sidebar () {
                         <p>Transfer Lists</p>
                       </Link>
                     </li>
-                    
                     <li className='nav-item'>
                       <Link to='/transaction' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Transaction Lists</p>
+                      </Link>
+                    </li>
+                    
+                    <li className='nav-item'>
+                      <Link to='/journal' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Journal Entry</p>
                       </Link>
                     </li>
                     <li className='nav-item'>
