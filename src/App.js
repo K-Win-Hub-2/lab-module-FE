@@ -37,7 +37,7 @@ import Transfer from './components/views/Finance/Transfer/TransferList.jsx'
 import AccountHead from './components/views/Finance/Heding.jsx'
 import AccountType from './components/views/Finance/AccountType.jsx'
 import Transaction from './components/views/Finance/AllTransaction.jsx'
-
+import JournalEntry from './components/views/Finance/Journal-Entry/JournalEntryList.jsx'
 
 
 
@@ -97,6 +97,7 @@ function App() {
         <Route path='/account_type' element={<AccountType />}></Route>
         <Route path='/account_head' element={<AccountHead />}></Route>
         <Route path='/transaction' element={<Transaction/>}></Route>
+        <Route path='/journal' element={<JournalEntry/>}></Route>
 
 
        
