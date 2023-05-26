@@ -276,9 +276,9 @@ export default function BankInfoDialog(props) {
       <DialogContent style={{ width: '500px' }}>
         <DialogContentText></DialogContentText>
         <div>
-          <h5 className=''>Credit</h5>
+          <label className=''>From Account</label>
           <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='control-label'>Type</label>
+            <label className='text-gray'>Type</label>
 
             <select
               className='form-control'
@@ -293,7 +293,7 @@ export default function BankInfoDialog(props) {
             </select>
           </div>
           <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='control-label'>Account Type</label>
+            <label className='text-gray'>Account Type</label>
 
             <select
               className='form-control'
@@ -310,7 +310,7 @@ export default function BankInfoDialog(props) {
           </div>
           {flag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='control-label'>Heading</label>
+              <label className='text-gray'>Heading</label>
 
               <select
                 className='form-control'
@@ -328,7 +328,7 @@ export default function BankInfoDialog(props) {
           )}
           {accFlag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='control-label'>Account</label>
+              <label className='text-gray'>Account</label>
 
               <select
                 className='form-control'
@@ -347,9 +347,9 @@ export default function BankInfoDialog(props) {
         </div>
 
         <div>
-          <h5 className=''>Debit</h5>
+          <label className=''>To Account</label>
           <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='control-label'>Type</label>
+            <label className='text-gray'>Type</label>
 
             <select
               className='form-control'
@@ -364,7 +364,7 @@ export default function BankInfoDialog(props) {
             </select>
           </div>
           <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='control-label'>Account Type</label>
+            <label className='text-gray'>Account Type</label>
 
             <select
               className='form-control'
@@ -381,7 +381,7 @@ export default function BankInfoDialog(props) {
           </div>
           {debitFlag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='control-label'>Heading</label>
+              <label className='text-gray'>Heading</label>
 
               <select
                 className='form-control'
@@ -399,7 +399,7 @@ export default function BankInfoDialog(props) {
           )}
           {debitAccFlag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='control-label'>Account</label>
+              <label className='text-gray'>Account</label>
 
               <select
                 className='form-control'
