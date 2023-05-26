@@ -41,10 +41,10 @@ function LabServiceRegister() {
     setIsOpen(!isOpen);
   };
 
-  const handleInputChange = (event, id, field) => {
+  const handleInputChange = (event, testSelectId,testId, field) => {
 
     const newData = subTest.map(data => {
-      if (data._id === id) {
+      if (data.tsid === testSelectId && data._id === testId ) {
         return { ...data, [field]: event.target.value }
       }
       return data
@@ -81,11 +81,12 @@ function LabServiceRegister() {
 
   const handleTestSelection = (event, id) => {
 
+    let newData = [];
     if (event.name.subTestFlag) {
 
-      const newData = subTest.map(data => {
+      subTest.map(data => {
         if (data.tsid === id) {
-          return data
+          newData.push(data)
         }
       })
       console.log(newData);
@@ -164,6 +165,7 @@ function LabServiceRegister() {
     const getVoucherList = async () => {
       try {
         const newList = []
+        var newData = [];
         const res = await axios.get(
           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
           // "http://localhost:9000/api/voucher/" +
@@ -181,26 +183,28 @@ function LabServiceRegister() {
 
         setVouDate(res.data.data.date.split("T")[0]);
 
+
+
         res.data.data.testSelection.map((test) => {
           if (test.name.subTestFlag) {
-            var newData = [];
+           
             test.name.subTest.map(refdata => {
               test.subTest.map((realdata, i) => {
                 if (realdata._id === refdata._id) {
-                  let prep = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type, "tsid": test._id }
-                  test.subTest[i] = prep
+                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type}
+                  //test.subTest[i] = prep
+                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
                 }
               })
             })
             let diff = test.name.subTest.length - test.subTest.length
-            
+            let subTestLength = test.subTest.length;
             if (diff > 0) {
               console.log(diff,'diff')
               for (let i = 0; i < diff; i++) {
-                let index = test.name.subTest.length + i
-                console.log('index',index)
-                console.log('hi There',test.name.subTest[index])
-                test.subTest.push(test.name.subTest[test.name.subTest.length + i])
+               // console.log('new sub test',test.name.subTest[test.subTest.length+i])
+               test.subTest.push(test.name.subTest[subTestLength + i])
+               newData.push({...test.name.subTest[subTestLength + i],"tsid" : test._id})
               }
             }
             // if (test.name.subTest.length > test.subTest.length) {
@@ -210,11 +214,16 @@ function LabServiceRegister() {
             // }
             // console.log(newData, 'newData');
             // newList.push(newData)
+            console.log(newData)
+            setSubTest(newData)
+            console.log(test.subTest)
           }
         }
         )
-        setSubTest(newList)
-        console.log(subTest, 'subTest')
+       // setSubTest(newList)
+       // console.log(subTest, 'subTest')
+      //  console.log(newData);
+      //  setSubTest(newData);
         setVoucherLists(res.data.data.testSelection);
       } catch (err) { }
 
@@ -339,7 +348,7 @@ function LabServiceRegister() {
                               <div className="col-md-12 border-0">
                                 <p><u><b>{testSelect.name.name}</b></u></p>
                                 {
-                                  testSelect.name.subTest.map((test) => (
+                                  testSelect.subTest.map((test) => (
                                     <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{ color: 'red' }}><b>{test.name}</b></p>) : (test.type === "both") ? (<p style={{ color: 'red' }}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
                                     // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
 
@@ -359,6 +368,7 @@ function LabServiceRegister() {
                                       onChange={event =>
                                         handleInputChange(
                                           event,
+                                          testSelect._id,
                                           test._id,
                                           'result'
                                         )}
@@ -378,7 +388,7 @@ function LabServiceRegister() {
                                 <div style={{ height: '40px' }}></div>
                                 {
                                   testSelect.subTest.map((test) => (
-                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <span>  {(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
                                       <p >{test.referenceRange === "" ? "-" : test.referenceRange} </p>)) : (
                                       <p >{test.referenceRange}</p>)}
                                     </span>
@@ -392,7 +402,7 @@ function LabServiceRegister() {
                                 {
                                   testSelect.subTest.map((test) => (
 
-                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                    <span>  {(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
                                       <p>{test.unit === "" ? "-" : test.unit}</p>)) : (
                                       <p>{test.unit}</p>)}
                                     </span>
@@ -413,6 +423,7 @@ function LabServiceRegister() {
                                       onChange={event =>
                                         handleInputChange(
                                           event,
+                                          testSelect._id,
                                           test._id,
                                           'remark'
                                         )}
