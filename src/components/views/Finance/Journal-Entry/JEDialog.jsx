@@ -105,7 +105,7 @@ export default function BankInfoDialog(props) {
 
     setRelatedCreditHeader(event)
     console.log(event, 'acc iD')
-    const url = `http://localhost:9000/api/accounting-lists/related/${event}`
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists/related/${event}`
     console.log(url)
     const res = await axios.get(url)
     console.log(res.data.data, 'res.data.data')
