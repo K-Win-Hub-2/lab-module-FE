@@ -92,6 +92,7 @@ const TestVoucherPrint = () => {
       window.print();
       document.body.innerHTML = originalContents; 
     }, 500);  
+    clearInterval(interval);
     window.close();
   }
 

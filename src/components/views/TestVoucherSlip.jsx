@@ -38,11 +38,22 @@ const Tr = styled.tr`
   border-style: hidden;
 `
 const Th = styled.th`
-  font-size: 24px;
+  font-size: 40px;
 `
+
+const Thi = styled.th`
+  font-size: 40px;
+  width: 2px;
+`
+
 const Td = styled.td`
-  font-size: 24px;
+  font-size: 40px;
   margin-top: 20px;
+`
+const Tdi = styled.td`
+  font-size: 40px;
+  margin-top: 20px;
+  width: 2px;
 `
 
 const Hr = styled.hr`
@@ -50,7 +61,7 @@ const Hr = styled.hr`
   width: 50%;
 `
 const H6 = styled.h6`
-  font-size: 26px;
+  font-size: 40px;
   margin-top: 25px;
 `
 
@@ -139,26 +150,26 @@ const TestVoucherSlip = () => {
                   ref={el => (componentRef = el)}
                 >
                   <Div className='card-body' id='print'>
-                    <h5 style={{ textAlign: 'center', fontSize: '35px' }}>
+                    <h5 style={{ textAlign: 'center', fontSize: '50px' }}>
                       Central Laboratory
                     </h5>
                     <h6
                       style={{
                         textAlign: 'center',
-                        fontSize: '25px',
+                        fontSize: '40px',
                         marginTop: '15px'
                       }}
                     >
                       NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
                     </h6>
                     <div className='text-center'>
-                      <b style={{ fontSize: '25px', marginTop: '15px' }}>
+                      <b style={{ fontSize: '40px', marginTop: '15px' }}>
                         09400400650
                       </b>
                     </div>
                     <div className='text-center'>
                       <h5>
-                        <b style={{ fontSize: '25px', marginTop: '15px' }}>
+                        <b style={{ fontSize: '40px', marginTop: '15px' }}>
                           Invoice
                         </b>
                       </h5>
@@ -169,7 +180,8 @@ const TestVoucherSlip = () => {
                         <H6>
                           Name :{' '}
                           <span className='float-right'>
-                            {name ? name : ''} / {age ? age : ''}yrs
+                            {/* {name ? name : ''} / {age ? age : ''}yrs */}
+                            {name ? name : ''}
                           </span>
                         </H6>
                         <H6>
@@ -179,6 +191,22 @@ const TestVoucherSlip = () => {
                           </span>
                         </H6>
                         <H6>
+                          Date :{' '}
+                          <span className='float-right'>
+                            {date ? date.split('T')[0] : ''}
+                          </span>
+                        </H6>
+                        
+                        <H6>
+                          Doctor :{' '}
+                          <span className='float-right'>
+                            {doctor ? doctor : '-'}
+                          </span>
+                        </H6>
+                        
+                      </div>
+                      <div className='col-6'>
+                      <H6>
                           Age :
                           <span className='float-right'> {age ? age : ''}</span>
                         </H6>
@@ -188,41 +216,34 @@ const TestVoucherSlip = () => {
                             {gender ? gender : ''}
                           </span>
                         </H6>
-                      </div>
-                      <div className='col-6'>
-                        <H6>
-                          Inv. No :{' '}
-                          <span className='float-right'>
-                            {code ? code : ''}
-                          </span>
-                        </H6>
-                        <H6>
-                          Date :{' '}
-                          <span className='float-right'>
-                            {date ? date.split('T')[0] : ''}
-                          </span>
-                        </H6>
+                        
+                        
                         <H6>
                           Printed :{' '}
                           <span className='float-right'>
                             {today.split('T')[0]}
                           </span>
                         </H6>
-                        <H6>
-                          Doctor :{' '}
-                          <span className='float-right'>
-                            {doctor ? doctor : '-'}
-                          </span>
-                        </H6>
+                       
                       </div>
                     </div>
+                      <div className="row">
+                      <div className='col-8'>
+                      <H6>
+                          Inv. No :{' '}
+                          <span className='float-right'>
+                            {code ? code : ''}
+                          </span>
+                        </H6>
+                        </div>
+                      </div>
                     <br></br>
                     <br></br>
 
                     <Table className='table table-hover table-xsm'>
                       <Thead>
                         <Tr>
-                          <Th>#</Th>
+                          <Thi>#</Thi>
                           <Th
                             style={{ marginLeft: '5px', textAlign: 'center' }}
                           >
@@ -249,7 +270,7 @@ const TestVoucherSlip = () => {
                       <Tbody>
                         {vouchers.map((vou, index) => (
                           <Tr key={vou._id}>
-                            <Td>{++index}</Td>
+                            <Tdi >{++index}</Tdi>
                             <Td
                               style={{ marginLeft: '10px', textAlign: 'right' }}
                             >
@@ -282,7 +303,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -292,7 +313,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -304,7 +325,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -314,7 +335,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -326,7 +347,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -336,7 +357,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -348,7 +369,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -358,7 +379,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -370,7 +391,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -380,7 +401,7 @@ const TestVoucherSlip = () => {
                             colSpan={4}
                             style={{
                               textAlign: 'right',
-                              fontSize: '24px',
+                              fontSize: '40px',
                               marginTop: '20px'
                             }}
                           >
@@ -396,12 +417,12 @@ const TestVoucherSlip = () => {
                               borderStyle: 'hidden'
                             }}
                           >
-                            <b style={{ fontSize: '24px', marginTop: '20px' }}>
+                            <b style={{ fontSize: '40px', marginTop: '20px' }}>
                               အ‌ဖြေလာရွှေးလျှင် ငွေရှင်းပြေစာ
                               ယူဆောင်လာပေးပါရန်နှင့်
                             </b>
                             <br />
-                            <b style={{ fontSize: '24px', marginTop: '20px' }}>
+                            <b style={{ fontSize: '40px', marginTop: '20px' }}>
                               ၃လကျော်သည့် အ‌ဖြေများကို
                               ထုတ်ပေးနိုင်မည်မဟုတ်‌ကြောင်း
                               မေတ္တာရပ်ခံပန်ကြားအပ်ပါသည်
