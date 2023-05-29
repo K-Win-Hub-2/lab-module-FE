@@ -84,15 +84,15 @@ const TestVoucherPrint = () => {
   }
 
   const handleBottomChange = event => {
-    setShowBottom(false);
-    const interval = setInterval(() => {
+    // setShowBottom(false);
+    document.getElementById("printtop").style.marginTop = "800px";
       let printContents = document.getElementById('print').innerHTML;
       let originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
       window.print();
-      document.body.innerHTML = originalContents; 
-    }, 500);  
-    window.close();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); 
+
   }
 
   const handleChange = event => {
@@ -554,8 +554,8 @@ const TestVoucherPrint = () => {
                     </div>
                   </div>
 
-                  {showBottom ? (
-                    <div className='row' style={{ margin: '50px' }}>
+                  {/* {showBottom ? ( */}
+                    <div className='row' id='printtop' style={{ margin: '50px' }}>
                       <div class='fixed-bottom' className='col-6'>
                         <SPAN>Laboratory Technician</SPAN>
                       </div>
@@ -573,22 +573,7 @@ const TestVoucherPrint = () => {
                         <SPAN>Central Lab, Ahlone, Yangon</SPAN>
                       </div>
                     </div>
-                  ) : (
-                    <div className='row' style={{ marginTop: '800px' }}>
-                      <div className='col-6'>
-                        <SPAN>Laboratory Technician</SPAN>
-                      </div>
-                      <div className='col-6' style={{ textAlign: 'right' }}>
-                        <SPAN>{selectedPatho.name}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.position}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.education}</SPAN>
-                        <br></br>
-                        <SPAN>Central Lab, Ahlone, Yangon</SPAN>
-                      </div>
-                    </div>
-                  )}
+                 
                 </div>
               </div>
             </div>
