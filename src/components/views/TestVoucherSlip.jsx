@@ -110,11 +110,17 @@ const TestVoucherSlip = () => {
     getVouchers()
   }, [])
   const print = () => {
-      let printContents = document.getElementById('print').innerHTML;
+    let printContents = document.getElementById('print').innerHTML;
     let originalContents = document.body.innerHTML;
     document.body.innerHTML = printContents;
     window.print();
-   document.body.innerHTML = originalContents; 
+    document.body.innerHTML = originalContents;
+    window.location.reload();
+    // let printContents = document.getElementById('print').innerHTML;
+    // let originalContents = document.body.innerHTML;
+    // document.body.innerHTML = printContents;
+    // window.print();
+    // document.body.innerHTML = originalContents; 
   }
   return (
     <div className='wrapper'>
@@ -139,20 +145,20 @@ const TestVoucherSlip = () => {
                   ref={el => (componentRef = el)}
                 >
                   <Div className='card-body' id='print'>
-                    <h5 style={{ textAlign: 'center', fontSize: '35px' }}>
+                    <h5 style={{ textAlign: 'center', fontSize: '50px' }}>
                       Central Laboratory
                     </h5>
                     <h6
                       style={{
                         textAlign: 'center',
-                        fontSize: '25px',
+                        fontSize: '40px',
                         marginTop: '15px'
                       }}
                     >
                       NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
                     </h6>
                     <div className='text-center'>
-                      <b style={{ fontSize: '25px', marginTop: '15px' }}>
+                      <b style={{ fontSize: '40px', marginTop: '15px' }}>
                         09400400650
                       </b>
                     </div>
@@ -168,7 +174,7 @@ const TestVoucherSlip = () => {
                       <div className='col-5'>
                         <H6>
                           Name :{' '}
-                          <span className='float-right'>
+                          <span className='float-right' style={{ fontSize: '50px'}}>
                             {name ? name : ''} / {age ? age : ''}yrs
                           </span>
                         </H6>
