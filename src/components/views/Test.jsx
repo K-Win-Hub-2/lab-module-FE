@@ -204,9 +204,9 @@ function LabServiceRegister() {
             test.name.subTest.map(refdata => {
               test.subTest.map((realdata, i) => {
                 if (realdata._id === refdata._id) {
-                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": formatString(refdata.referenceRange), "unit": refdata.unit, "type": refdata.type}
+                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type}
                   //test.subTest[i] = prep
-                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
+                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
                 }
               })
             })
@@ -402,7 +402,7 @@ function LabServiceRegister() {
                                 {
                                   testSelect.subTest.map((test) => (
                                     <span>  {(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                      <p >{test.referenceRange === "" ? "-" : test.referenceRange} </p>)) : (
+                                      <p >{(test.type === "multiline") ? formatString(test.referenceRange) : (test.referenceRange === "") ? "-" : test.referenceRange} </p>)) : (
                                       <p >{test.referenceRange}</p>)}
                                     </span>
                                   ))

@@ -82,15 +82,19 @@ function LabServiceRegister() {
   };
 
   const handleInputChange = (event, id, field) => {
-    let value = "";
-    if(field === "referenceRange"){
-      value = Base64.encode(event.target.value);
-    }else{
-      value = event.target.value;
-    }
+    // let value = "";
+    // if(field === "referenceRange"){
+    //   value = Base64.encode(event.target.value);
+    // }else{
+    //   value = event.target.value;
+    // }
     const newData = tableData.map((data) => {
       if (data.id === id) {
-        return { ...data, [field]: value };
+        if(field === "referenceRange" && data.type === "multiline"){
+          return { ...data, [field]: Base64.encode(event.target.value) }
+        }else{
+        return { ...data, [field]: event.target.value }
+        }
       }
       return data;
     });
@@ -613,6 +617,9 @@ function LabServiceRegister() {
                                 </option>
                                 <option value="both">
                                   Underline and Highlight
+                                </option>
+                                <option value="multiline">
+                                  Multi-Line 
                                 </option>
                               
                             </select>

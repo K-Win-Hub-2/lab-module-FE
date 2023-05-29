@@ -101,16 +101,21 @@ function LabServiceUpdate () {
   }
 
   const handleInputChange = (event, id, field) => {
-    let value = "";
-    if(field === "referenceRange"){
-      value = Base64.encode(event.target.value);
-      console.log(value)
-    }else{
-      value = event.target.value;
-    }
+    // let value = "";
+    // if(field === "referenceRange"){
+    //   value = Base64.encode(event.target.value);
+    //   console.log(value)
+    // }else{
+    //   value = event.target.value;
+    // }
+
     const newData = tableData.map(data => {
       if (data.id === id) {
-        return { ...data, [field]: value }
+        if(field === "referenceRange" && data.type === "multiline"){
+          return { ...data, [field]: Base64.encode(event.target.value) }
+        }else{
+        return { ...data, [field]: event.target.value }
+        }
       }
       return data
     })
@@ -302,7 +307,8 @@ function LabServiceUpdate () {
       setShowMultiTest(true)
       let newArr = []
       res.data.data.subTest.map(function (e,i){
-        e = {...e, id:i+1, referenceRange: decodeBase64(e.referenceRange)}
+       // e = {...e, id:i+1, referenceRange: (e.type === "multiline") ? decodeBase64(e.referenceRange) : e.referenceRange}
+       e = {...e, id:i+1}
         newArr.push(e)
       })
       setTableData(newArr)
@@ -688,7 +694,8 @@ function LabServiceUpdate () {
                                       className="form-control"
                                       id="subTestRR"
                                       name="subTestRR"
-                                      defaultValue={data.referenceRange}
+                                      defaultValue={(data.type === "multiline") ? decodeBase64(data.referenceRange) : data.referenceRange}
+                                      //defaultValue={data.referenceRange}
                                       onChange={(event) =>
                                         handleInputChange(
                                           event,
@@ -750,6 +757,9 @@ function LabServiceUpdate () {
                                 </option>
                                 <option value="both" selected={data.type === "both" ? true : false}>
                                   Underline and Highlight
+                                </option>
+                                <option value="multiline" selected={data.type === "multiline" ? true : false}>
+                                  Multiple Line
                                 </option>
                               
                             </select>

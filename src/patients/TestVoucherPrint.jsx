@@ -32,6 +32,7 @@ const TestVoucherPrint = () => {
   const TR = styled.tr`
     font-size: 22px;
     margin-top: 20px;
+
     border-style: hidden;
   `
   const TH1 = styled.th`
@@ -84,16 +85,19 @@ const TestVoucherPrint = () => {
   }
 
   const handleBottomChange = event => {
-    setShowBottom(false);
-    const interval = setInterval(() => {
+    // setShowBottom(false);
+    document.getElementById("printtop").style.marginTop = "100px";
+   
+   document.getElementById("printtop").style.position = "running(footer)";
+   //document.getElementById("printtop").classList.add("fixed-bottom");
+   //document.getElementById("printtop").style.bottom= "0";
       let printContents = document.getElementById('print').innerHTML;
       let originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
       window.print();
-      document.body.innerHTML = originalContents; 
-    }, 500);  
-    clearInterval(interval);
-    window.close();
+      document.body.innerHTML = originalContents;
+      window.location.reload(); 
+
   }
 
   const handleChange = event => {
@@ -215,7 +219,7 @@ const TestVoucherPrint = () => {
                   <div
                     className='row'
                     style={{
-                      height: '200px',
+                      height: '190px',
                       visibility: headerOn ? 'visible' : 'hidden'
                     }}
                   >
@@ -244,12 +248,12 @@ const TestVoucherPrint = () => {
                     </div>
                   </div>
 
-                  <p style={{ textAlign: 'center' }} className='mt-5'>
+                  <p style={{ textAlign: 'center', height: "5px", maxHeight: "5px" }} className='mt-5'>
                     <b>
                       <u>LABORATORY REPORT</u>
                     </b>
                   </p>
-                  <table className='table table-hover mt-4'>
+                  <table className='table table-hover mt-4' >
                     <thead>
                       <tr>
                         <TH1>Patient Name:</TH1>
@@ -284,9 +288,9 @@ const TestVoucherPrint = () => {
                     <tbody></tbody>
                   </table>
 
-                  <table className='table table-hover mt-4'>
+                  <table className='table table-hover mt-4' style={{height: "400px", maxHeight:"400px", pageBreakAfter: "auto"}}>
                     <thead>
-                      <tr>
+                      <tr style={{pageBreakInside: "auto", pageBreakAfter:"auto"}}>
                         <TH1>Test</TH1>
                         <TH1>Result</TH1>
                         <TH1>Reference Range</TH1>
@@ -307,7 +311,7 @@ const TestVoucherPrint = () => {
                     {filteredVouchers.map(testSelect => (
                       <tbody>
                         {testSelect.name.subTestFlag ? (
-                          <tr>
+                          <tr style={{pageBreakInside: "auto", pageBreakAfter:"auto"}}>
                             <TD1>
                               <div className='col-md-12 border-0'>
                                 <p>
@@ -399,22 +403,23 @@ const TestVoucherPrint = () => {
                                     {test !== null ? (
                                       test.type === 'underline' ||
                                       test.type === 'highlight' ||
-                                      test.type === 'both' ? (
+                                      test.type === 'both' ? 
                                         <p style={{ color: 'white' }}>""</p>
-                                      ) : (
-                                        <p>
-                                          {/* <input
-                                            className='border-0'
-                                            type='text'
-                                            id='subRefRange'
-                                            defaultValue={formatString(test.referenceRange)}
-                                            style={{ height: '24px' }}
-                                          /> */}
-                                          {formatString(test.referenceRange)}
-                                        </p>
-                                      )
-                                    ) : (
-                                      <P>-</P>
+                                       : ( (test.referenceRange !== "") ?
+                                        ((test.type === "multiline") ? <p>{formatString(test.referenceRange)}</p> : 
+                                      //   <input
+                                      //   className='border-0'
+                                      //   type='text'
+                                      //   id='subRefRange'
+                                      //   defaultValue={test.referenceRange}
+                                      //   style={{ height: '24px' }}
+                                      // />
+                                      <p>{test.referenceRange}</p>
+                                        ) :  <P>-</P>)
+                                        
+                                      
+                                    )  : (
+                                      <p>-</p>
                                     )}
                                   </span>
                                 ))}
@@ -482,7 +487,7 @@ const TestVoucherPrint = () => {
                             </TD1>
                           </tr>
                         ) : (
-                          <tr key={testSelect._id}>
+                          <tr key={testSelect._id} style={{pageBreakInside: "auto", pageBreakAfter:"auto"}}>
                             <TD1>
                               {testSelect.name.name.includes('NS')
                                 ? testSelect.name.name.replace('NS', '')
@@ -555,8 +560,8 @@ const TestVoucherPrint = () => {
                     </div>
                   </div>
 
-                  {showBottom ? (
-                    <div className='row' style={{ margin: '50px' }}>
+                  {/* {showBottom ? ( */}
+                    <div className='row' id='printtop' >
                       <div class='fixed-bottom' className='col-6'>
                         <SPAN>Laboratory Technician</SPAN>
                       </div>
@@ -574,22 +579,7 @@ const TestVoucherPrint = () => {
                         <SPAN>Central Lab, Ahlone, Yangon</SPAN>
                       </div>
                     </div>
-                  ) : (
-                    <div className='row' style={{ marginTop: '800px' }}>
-                      <div className='col-6'>
-                        <SPAN>Laboratory Technician</SPAN>
-                      </div>
-                      <div className='col-6' style={{ textAlign: 'right' }}>
-                        <SPAN>{selectedPatho.name}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.position}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.education}</SPAN>
-                        <br></br>
-                        <SPAN>Central Lab, Ahlone, Yangon</SPAN>
-                      </div>
-                    </div>
-                  )}
+                 
                 </div>
               </div>
             </div>
