@@ -394,13 +394,14 @@ const TestVoucherPrint = () => {
                                         <p style={{ color: 'white' }}>""</p>
                                       ) : (
                                         <p>
-                                          <input
+                                          {/* <input
                                             className='border-0'
                                             type='text'
                                             id='subRefRange'
-                                            defaultValue={test.referenceRange}
+                                            defaultValue={formatString(test.referenceRange)}
                                             style={{ height: '24px' }}
-                                          />
+                                          /> */}
+                                          {formatString(test.referenceRange)}
                                         </p>
                                       )
                                     ) : (

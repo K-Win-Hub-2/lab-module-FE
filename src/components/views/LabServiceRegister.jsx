@@ -58,9 +58,10 @@ function LabServiceRegister() {
   };
 
   const handleRefInputChange = (event, id, field) => {
+    
     const newData = refData.map((data) => {
       if (data.id === id) {
-        return { ...data, [field]: event.target.value };
+        return { ...data, [field]: event.target.value};
       }
       return data;
     });
@@ -81,9 +82,15 @@ function LabServiceRegister() {
   };
 
   const handleInputChange = (event, id, field) => {
+    let value = "";
+    if(field === "referenceRange"){
+      value = Base64.encode(event.target.value);
+    }else{
+      value = event.target.value;
+    }
     const newData = tableData.map((data) => {
       if (data.id === id) {
-        return { ...data, [field]: event.target.value };
+        return { ...data, [field]: value };
       }
       return data;
     });
@@ -539,21 +546,21 @@ function LabServiceRegister() {
                                     </div>
 
                                     <div className="col-md-2">
-                                    {/* <textarea
-                                      rows="3"
+                                    <textarea
+                                      rows="2"
                                       cols="10"
                                       className="form-control"
                                       id="subTestRR"
                                       name="subTestRR"
-                                      value={data.range}
+                                      value={data.referenceRange}
                                       onChange={(event) =>
                                         handleInputChange(
                                           event,
                                           data.id,
                                           "referenceRange"
                                         )
-                                      }></textarea> */}
-                                      <input
+                                      }></textarea>
+                                      {/* <input
                                         type="text"
                                         className="form-control"
                                         placeholder="Reference Range"
@@ -567,7 +574,7 @@ function LabServiceRegister() {
                                             "referenceRange"
                                           )
                                         }
-                                      />
+                                      /> */}
                                     </div>
                                     <div className="col-md-2">
                                       <input

@@ -10,6 +10,7 @@ import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
 import Swal from "sweetalert2";
 
+
 function LabServiceRegister() {
   const [vouDate, setVouDate] = useState("");
   const [referDoctorLists, setReferDoctorLists] = useState([]);
@@ -41,6 +42,15 @@ function LabServiceRegister() {
     setIsOpen(!isOpen);
   };
 
+  const handleAlert = () => {
+    Swal.fire({
+      title: "Success",
+      text: "successfully Registered!",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  }
+
   const handleInputChange = (event, testSelectId,testId, field) => {
 
     const newData = subTest.map(data => {
@@ -67,6 +77,7 @@ function LabServiceRegister() {
     }
     axios.put(url + '/voucher', data).then((response) => {
       console.log(response.data.data)
+      handleAlert();
     })
   }
 
@@ -161,6 +172,8 @@ function LabServiceRegister() {
 
   };
 
+  
+
   useEffect(() => {
     const getVoucherList = async () => {
       try {
@@ -191,9 +204,9 @@ function LabServiceRegister() {
             test.name.subTest.map(refdata => {
               test.subTest.map((realdata, i) => {
                 if (realdata._id === refdata._id) {
-                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type}
+                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": formatString(refdata.referenceRange), "unit": refdata.unit, "type": refdata.type}
                   //test.subTest[i] = prep
-                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
+                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
                 }
               })
             })
@@ -547,7 +560,7 @@ function LabServiceRegister() {
                   </div>
                   <div className="row">
                     <label>Comment</label>
-                    <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => settextArea(e.target.value)}>
+                    <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => {settextArea(e.target.value); }}>
                     </textarea>
                     {console.log(textArea)}
                   </div>

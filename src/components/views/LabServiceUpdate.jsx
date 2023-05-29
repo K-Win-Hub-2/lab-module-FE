@@ -77,6 +77,7 @@ function LabServiceUpdate () {
   };
 
   const handleRefInputChange = (event, id, field) => {
+    
     const newData = refData.map((data) => {
       if (data.id === id) {
         return { ...data, [field]: event.target.value };
@@ -100,9 +101,16 @@ function LabServiceUpdate () {
   }
 
   const handleInputChange = (event, id, field) => {
+    let value = "";
+    if(field === "referenceRange"){
+      value = Base64.encode(event.target.value);
+      console.log(value)
+    }else{
+      value = event.target.value;
+    }
     const newData = tableData.map(data => {
       if (data.id === id) {
-        return { ...data, [field]: event.target.value }
+        return { ...data, [field]: value }
       }
       return data
     })
@@ -294,7 +302,7 @@ function LabServiceUpdate () {
       setShowMultiTest(true)
       let newArr = []
       res.data.data.subTest.map(function (e,i){
-        e = {...e, id:i+1}
+        e = {...e, id:i+1, referenceRange: decodeBase64(e.referenceRange)}
         newArr.push(e)
       })
       setTableData(newArr)
@@ -674,21 +682,21 @@ function LabServiceUpdate () {
                                     </div>
 
                                     <div className='col-md-2'>
-                                    {/* <textarea
-                                      rows="3"
+                                    <textarea
+                                      rows="2"
                                       cols="20"
                                       className="form-control"
                                       id="subTestRR"
                                       name="subTestRR"
-                                      value={data.referenceRange}
+                                      defaultValue={data.referenceRange}
                                       onChange={(event) =>
                                         handleInputChange(
                                           event,
                                           data.id,
                                           "referenceRange"
                                         )
-                                      }></textarea> */}
-                                      <input
+                                      }></textarea>
+                                      {/* <input
                                         type='text'
                                         className='form-control'
                                         placeholder='Reference Range'
@@ -702,7 +710,7 @@ function LabServiceUpdate () {
                                             'referenceRange'
                                           )
                                         }
-                                      />
+                                      /> */}
                                     </div>
                                     <div className='col-md-2'>
                                       <input
