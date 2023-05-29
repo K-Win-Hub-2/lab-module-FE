@@ -25,7 +25,7 @@ const TestVoucherPrint = () => {
   const [refOn, setRefOn] = useState(true)
   const [resOn, setResOn] = useState(true)
   const [textArea, settextArea] = useState('')
-  const [showBottom, setShowBottom] = useState(false)
+  const [showBottom, setShowBottom] = useState(true)
   const [subTest, setSubTest] = useState([])
   // const [headerOff, setHeaderOff] = useState(false);
 
@@ -84,7 +84,15 @@ const TestVoucherPrint = () => {
   }
 
   const handleBottomChange = event => {
-    setShowBottom(!showBottom)
+    setShowBottom(false);
+    const interval = setInterval(() => {
+      let printContents = document.getElementById('print').innerHTML;
+      let originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents; 
+    }, 500);  
+    window.close();
   }
 
   const handleChange = event => {
@@ -566,7 +574,7 @@ const TestVoucherPrint = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className='row' style={{ margin: '50px' }}>
+                    <div className='row' style={{ marginTop: '800px' }}>
                       <div className='col-6'>
                         <SPAN>Laboratory Technician</SPAN>
                       </div>
@@ -657,18 +665,18 @@ const TestVoucherPrint = () => {
             />
           </div>
           <div className='d-flex justify-content-center'>
-            <ReactToPrint
-              trigger={() => (
+            {/* <ReactToPrint
+              trigger={() => ( */}
                 <button
                   className='btn btn-success mt-3 mb-4'
                   onClick={handleBottomChange}
                 >
                   Print
                 </button>
-              )}
+              {/* )}
               content={() => componentRef}
               // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
-            />
+            /> */}
           </div>
         </div>
       </div>

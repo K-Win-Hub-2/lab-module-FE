@@ -109,7 +109,13 @@ const TestVoucherSlip = () => {
     }
     getVouchers()
   }, [])
-
+  const print = () => {
+      let printContents = document.getElementById('print').innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+   document.body.innerHTML = originalContents; 
+  }
   return (
     <div className='wrapper'>
       <SideBar />
@@ -406,17 +412,18 @@ const TestVoucherSlip = () => {
                     </Table>
                   </Div>
                 </Div>
-                <ReactToPrint
-                  trigger={() => (
+                {/* <ReactToPrint
+                  trigger={() => ( */}
                     <button
                       className='btn btn-m btn-primary'
                       style={{ marginLeft: '240px' }}
+                      onClick={print}
                     >
                       Print
                     </button>
-                  )}
+                  {/* )}
                   content={() => componentRef}
-                />
+                /> */}
               </div>
             </div>
           </div>
