@@ -117,7 +117,7 @@ const Income = () => {
     const getIncomeLists = async () => {
       try {
         const res = await axios.get(
-          'http://localhost:centralclinicbackend.kwintechnologykw11.com:3000/api/journals?limit=50'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journals?limit=50'
         )
 
         // const result = res.data.list.filter((e) => e.relatedCashAccount.name == 'Cash in Hand-MMK');

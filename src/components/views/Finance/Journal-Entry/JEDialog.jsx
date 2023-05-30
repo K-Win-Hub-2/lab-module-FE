@@ -17,10 +17,10 @@ export default function BankInfoDialog(props) {
   const [creditAccount, setCreditAccount] = useState([])
   const [debitAccount, setDebitAccount] = useState([])
   const [relatedCreditType, setRelatedCreditType] = useState([])
-  const [relatedCreditAccount, setRelatedCreditAccount] = useState([])
+  const [relatedCreditAccount, setRelatedCreditAccount] = useState('')
   const [relatedCreditHeader, setRelatedCreditHeader] = useState([])
   const [relatedDebitType, setRelatedDebitType] = useState([])
-  const [relatedDebitAccount, setRelatedDebitAccount] = useState([])
+  const [relatedDebitAccount, setRelatedDebitAccount] = useState('')
   const [relatedDebitHeader, setRelatedDebitHeader] = useState([])
   const [fromType, setFromType] = useState('')
   const [toType, setToType] = useState('')
@@ -115,7 +115,11 @@ export default function BankInfoDialog(props) {
     console.log(setCreditAccount, 'Acc')
   }
   const handleInputAcc = event => {
+    
     setRelatedCreditAccount(event)
+    console.log(event, 'Credit Account ID')
+
+
   }
 
   //End For Credit
