@@ -85,7 +85,7 @@ export default function TransferList () {
       axios
         .get(uri + 'transfers?limit=50')
         .then(response => {
-          console.log(response.data.data)
+          console.log(response.data.data,'transfer list')
           setTransferList(response.data.data)
         })
         .catch(error => {

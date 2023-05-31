@@ -273,6 +273,13 @@ function Sidebar () {
                         <p>Heading</p>
                       </Link>
                     </li>
+                    
+                    <li className='nav-item'>
+                      <Link to='/fix-ass' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Fixed Asset</p>
+                      </Link>
+                    </li>
                     <li className='nav-item'>
                       <Link to='/income' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -303,7 +310,6 @@ function Sidebar () {
                         <p>Transaction Lists</p>
                       </Link>
                     </li>
-                    
                     <li className='nav-item'>
                       <Link to='/journal' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
