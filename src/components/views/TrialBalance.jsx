@@ -1,41 +1,40 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
 import Sidebar from "./SideBar";
 import Swal from "sweetalert2";
 import axios from "axios";
-// const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+
 const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+//const url = 'http://localhost:9000/api'
 
 export default function TrialBalance() {
     const [accountLists, setAccountLists] = useState([]);
+    const [trailAccs, setTrailAccs] = useState([]);
+    const [start, setStart] = useState("");
 
-    const calculation = async (data) => {
-        data.map((element) => {
-            axios.get(url + '/transactions/trial-balance/' + element._id).then((response)=> {
-                console.log(response.data.data,'response')
-            }).catch( (error) => {
-                console.log(error)
+    const fetchTrialAndBalance = async (event) => {
+        try {
+            Swal.fire({
+                title: 'Loading',
+                text: 'Please wait...',
+                allowOutsideClick: false,
+            });
+            await axios.get(url + `/transactions/trial-balance`, {params:{start:start, end:event.target.value}}).then((res) => {
+                setAccountLists(res.data.data)
+            }).catch((error)=> {
+                console.log('error',error)
             })
-        })
+            Swal.close();
+
+            // Process the response data
+            console.log(data);
+        } catch (error) {
+            Swal.close();
+            console.error('Error occurred while fetching data.', error);
+        }
     }
 
     useEffect(() => {
-
-        const fetchAccountLists = async () => {
-            try {
-                const res = await axios.get(url+'/accounting-lists');
-                setAccountLists(res.data.list);
-                calculation(res.data.list);
-            } catch (error) {
-                Swal.fire({
-                    title: "Data Not Found!",
-                    text: error,
-                    icon: "warning",
-                    confirmButtonText: "CANCEL",
-                });
-            }
-        }
-        fetchAccountLists();
-
     }, [])
 
     return (
@@ -72,8 +71,26 @@ export default function TrialBalance() {
                                     <div className="card">
                                         <div className="card-header">
                                             <h1 className="card-title font-weight-bold offset-4 ph-3 py-3 center-text">Trail Balnace as at End of the 2022</h1>
-
-
+                                            <div className='row'>
+                                                <div className='col-4'>
+                                                    <label htmlFor=''>From:</label>
+                                                    <input
+                                                        type='date'
+                                                        placeholder='Search...'
+                                                        className='form-control'
+                                                        onChange={e => setStart(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className='col-4'>
+                                                    <label htmlFor=''>To:</label>
+                                                    <input
+                                                        type='date'
+                                                        placeholder='Search...'
+                                                        className='form-control'
+                                                        onChange={e => fetchTrialAndBalance(e)}
+                                                    />
+                                                </div>
+                                            </div>
                                             <div className="card-body">
 
                                                 <table id="example1" className="table">
@@ -88,13 +105,14 @@ export default function TrialBalance() {
                                                         </tr>
                                                     </thead>
                                                     <tbody className="text-center">
+                                                        {console.log(accountLists)}
                                                         {accountLists.map((element, index) => (
                                                             <tr key={element._id}>
                                                                 <td>{++index}</td>
-                                                                <td>{element.relatedType ? element.relatedType.name : ""}</td>
-                                                                <td>{element.name ? element.name : ""}</td>
-                                                                <td>Debit(MMK)</td>
-                                                                <td>Credit(MMK)</td>
+                                                                <td>{element.type.name ? element.type.name : ""}</td>
+                                                                <td>{element.accName ? element.accName : ""}</td>
+                                                                <td>{element.netType === "Debit" ? element.netAmount : ""}</td>
+                                                                <td>{element.netType === "Credit" ? element.netAmount : ""}</td>
                                                             </tr>
                                                         ))}
                                                     </tbody>
