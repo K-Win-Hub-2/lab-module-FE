@@ -62,7 +62,7 @@ const Td = styled.td`
 
 const TestVoucherList = () => {
   const [vouchers, setVouchers] = useState([])
-  const[filteredVouchers,setFilteredVouchers] = useState([]);
+  const [filteredVouchers, setFilteredVouchers] = useState([]);
   const [medRelated, setMedRelated] = useState([])
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
@@ -70,17 +70,17 @@ const TestVoucherList = () => {
   const [array, setArray] = useState([])
   const [isShow, setIsShow] = useState([])
   const [vouCode, setVouCode] = useState('')
-  const [voucherType,setVoucherType] = useState('');
-  const[totalVoucher,setTotalVoucher] = useState(0);
-  const[totalCashDown,setTotalCashDown] = useState(0);
-  const[totalCredit,setTotalCredit] = useState(0);
+  const [voucherType, setVoucherType] = useState('');
+  const [totalVoucher, setTotalVoucher] = useState(0);
+  const [totalCashDown, setTotalCashDown] = useState(0);
+  const [totalCredit, setTotalCredit] = useState(0);
 
   const handleRelated = val => {
     const getRelated = async () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            val
+          val
         )
 
         console.log(res.data.data, 'related')
@@ -111,7 +111,7 @@ const TestVoucherList = () => {
         console.log(res.data.data)
         setVouchers(res.data.data)
         setFilteredVouchers(res.data.data)
-        
+
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -124,17 +124,17 @@ const TestVoucherList = () => {
     getVouchers()
   }, [])
 
-  useEffect(()=>{
+  useEffect(() => {
     setTotalVoucher(0)
     setTotalCashDown(0)
     setTotalCredit(0)
-    filteredVouchers.map((vou,index)=>{
+    filteredVouchers.map((vou, index) => {
       console.log(vou.totalCharge)
       setTotalVoucher(totalVoucher + vou.totalCharge);
       setTotalCredit(totalCredit + (vou.creditAmount * (-1)))
-      setTotalCashDown(totalVoucher-totalCredit)
+      setTotalCashDown(totalVoucher - totalCredit)
     })
-  },filteredVouchers);
+  }, filteredVouchers);
 
   const search = async () => {
     const result = await axios.get(
@@ -155,7 +155,7 @@ const TestVoucherList = () => {
 
     }
     else {
-      
+
       setVouchers(
         result.data.data.filter(
           el =>
@@ -186,23 +186,23 @@ const TestVoucherList = () => {
     })
   }
 
-  const handleTypeSearch = (value)=>{
+  const handleTypeSearch = (value) => {
     setVoucherType(value);
-    if(value == "cashdown"){
+    if (value == "cashdown") {
       setFilteredVouchers(
         vouchers.filter(
           el =>
             el.creditAmount == 0
         )
       )
-    }else if(value == "credit"){
+    } else if (value == "credit") {
       setFilteredVouchers(
         vouchers.filter(
           el =>
             el.creditAmount < 0
         )
       )
-    }else{
+    } else {
       setFilteredVouchers(vouchers);
     }
   }
@@ -247,18 +247,18 @@ const TestVoucherList = () => {
                           </div>
 
                           <div className='col-4' style={{ marginTop: "7vh" }}>
-                          
-                          <select
-                className="form-control"
-                name="vou_type"
-                id="vou_type"
-                onChange={(e) => handleTypeSearch(e.target.value)}>
-                <option value="">Select Type</option>
-                  <option value="all">All</option>
-                  <option value="cashdown">Cash Down</option>
-                  <option value="credit">Credit</option>
-              </select>
-                          
+
+                            <select
+                              className="form-control"
+                              name="vou_type"
+                              id="vou_type"
+                              onChange={(e) => handleTypeSearch(e.target.value)}>
+                              <option value="">Select Type</option>
+                              <option value="all">All</option>
+                              <option value="cashdown">Cash Down</option>
+                              <option value="credit">Credit</option>
+                            </select>
+
                           </div>
                           {/* <div
                             className="col-md-2"
@@ -285,9 +285,9 @@ const TestVoucherList = () => {
                             />
                           </div>
 
-                          
 
-                          
+
+
                           <div className='col-4' style={{ marginTop: '35px' }}>
                             <button
                               className='btn btn-sm btn-primary'
@@ -295,13 +295,13 @@ const TestVoucherList = () => {
                             >
                               Search
                             </button>
-                            
+
                             <ExportVoucher
                               excelData={array}
-                              
+
                               fileName={'Excel Export'}
                             />
-                          
+
                           </div>
                         </div>
                       </div>
@@ -427,11 +427,11 @@ const TestVoucherList = () => {
                                     <div style={{ fontSize: '15px' }}>
                                       {tran.type === 'Credit' && (
                                         <div>
-                                        {vouCode.relatedTransaction ? vouCode.relatedTransaction.code : ''
-}
+                                          {vouCode.relatedTransaction ? vouCode.relatedTransaction.code : ''
+                                          }
                                         </div>
-                                      
-)}
+
+                                      )}
 
                                       {tran.type === 'Debit' &&
                                         (tran.relatedBank ? 'Bank' : 'Cash')}
@@ -441,7 +441,7 @@ const TestVoucherList = () => {
                                   <div class='col-md-2'>
                                     <div style={{ fontSize: '15px' }}>
                                       {tran.date ? tran.date.split('T')[0]
- : ''}
+                                        : ''}
                                     </div>
                                   </div>
                                   <div class='col-md-2'>
@@ -479,7 +479,7 @@ const TestVoucherList = () => {
                               className='form-control'
                               value={totalVoucher}
                             /> */}
-                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalVoucher}</lable>
+                            <lable htmlFor='' style={{ fontSize: '17px', marginLeft: '3px' }}>{totalVoucher}</lable>
                           </div>
                           <div className='col-4'>
                             <label htmlFor=''>Total Cash Down:</label>
@@ -490,9 +490,9 @@ const TestVoucherList = () => {
                               className='form-control'
                               value={totalCashDown}
                             /> */}
-                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalCashDown}</lable>
+                            <lable htmlFor='' style={{ fontSize: '17px', marginLeft: '3px' }}>{totalCashDown}</lable>
                           </div>
-                
+
                           <div className='col-4'>
                             <label htmlFor=''>Total Credit:</label>
                             {/* <input
@@ -502,7 +502,7 @@ const TestVoucherList = () => {
                               className='form-control'
                               value={totalCredit}
                             /> */}
-                            <lable htmlFor='' style={{ fontSize: '17px',marginLeft: '3px' }}>{totalCredit}</lable>
+                            <lable htmlFor='' style={{ fontSize: '17px', marginLeft: '3px' }}>{totalCredit}</lable>
                           </div>
                         </div>
                       </div>
