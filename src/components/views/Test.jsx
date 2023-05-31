@@ -401,9 +401,9 @@ function LabServiceRegister() {
                                 <div style={{ height: '40px' }}></div>
                                 {
                                   testSelect.subTest.map((test) => (
-                                    <span>  {(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                      <p >{(test.type === "multiline") ? formatString(test.referenceRange) : (test.referenceRange === "") ? "-" : test.referenceRange} </p>)) : (
-                                      <p >{test.referenceRange}</p>)}
+                                    <span >{(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                      <p style={{height: "20px", marginBottom: "20px"}}>{(test.type === "multiline") ? formatString(test.referenceRange) : (test.referenceRange === "") ? "-" : test.referenceRange} </p>)) : (
+                                      <p style={{height: "10px"}}>{test.referenceRange}</p>)}
                                     </span>
                                   ))
                                 }

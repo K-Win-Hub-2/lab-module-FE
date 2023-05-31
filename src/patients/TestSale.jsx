@@ -248,6 +248,7 @@ const TestSale = () => {
 
     const res = axios
       .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
+    // .post("http://localhost:9000/api/voucher", data)
       .then(function (response) {
         console.log(response.data.data._id, 'here')
         setVoucherObjectID(response.data.data._id)
