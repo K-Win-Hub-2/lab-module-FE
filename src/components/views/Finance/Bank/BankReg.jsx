@@ -126,11 +126,14 @@ export default function BankTran(props) {
      const getHeaderLists = async () => {
        try {
          const res = await axios.get(
-           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers"
+           "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/64269ba7122dbb7ab32f4e1c"
          );
 
-         const header = res.data.list.filter((el) => el.name == "Cash At Bank");
-         setHeaderList(header);
+
+      
+         setHeaderList(res.data.data.filter(el=>el.name == 'Cash At Bank'))
+         
+
        } catch (err) {}
      };
 
