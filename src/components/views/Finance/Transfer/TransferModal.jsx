@@ -6,7 +6,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-const uri = 'http:///api/'
+const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
 
 export default function TransferModal(props) {
   const [fromList, setFromList] = useState([])
@@ -46,7 +46,7 @@ export default function TransferModal(props) {
     let data = {
       date: date,
       //   fromAcc: from,
-    //   toAcc: to,
+      //   toAcc: to,
       amount: amount,
       remark: remark
     }
@@ -117,7 +117,7 @@ export default function TransferModal(props) {
         )
         setFromCashList(cash)
         setToCashList(cash)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getBankLists = async () => {
@@ -133,7 +133,7 @@ export default function TransferModal(props) {
         // )
         setFromBankList(res.data.list)
         setToBankList(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getBankLists()
@@ -218,8 +218,11 @@ export default function TransferModal(props) {
                     onChange={e => setFromBank(e.target.value)}
                   >
                     <option value=''>Select From Account </option>
-                    {fromBankList.map(option => (
-                      <option value={option._id}>{option.bankName}</option>
+                    {fromBankList.map(option => (<>
+                      {console.log(fromBank)}
+                      <option value={option.relatedAccounting._id}>{option.bankName}</option>
+                    </>
+
                     ))}
                   </select>
                 </div>
@@ -234,7 +237,7 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select From Account</option>
                     {fromCashList.map(option => (
-                      <option value={option._id}>{option.name}</option>
+                      <option value={option.relatedAccounting._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
@@ -299,7 +302,11 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select To Account</option>
                     {toBankList.map(option => (
-                      <option value={option._id}>{option.bankName}</option>
+                      <>
+                        {console.log(toBank)}
+                        <option value={option.relatedAccounting._id}>{option.bankName}</option>
+                      </>
+
                     ))}
                   </select>
                 </div>
@@ -314,7 +321,7 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select To Account</option>
                     {toCashList.map(option => (
-                      <option value={option._id}>{option.name}</option>
+                      <option value={option.relatedAccounting._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
