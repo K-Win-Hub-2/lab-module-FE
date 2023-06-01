@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import styled from 'styled-components'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
+import Swal from 'sweetalert2'
 
 
 import { useState, useEffect } from 'react'
@@ -68,7 +69,7 @@ export default function BankInfoDialog(props) {
       .then(function (response) {
         Swal.fire({
           title: 'Success',
-          text: 'Successfully Deleted!',
+          text: 'Successfully Updated!',
           icon: 'success',
           confirmButtonText: 'OK'
         })
@@ -340,13 +341,8 @@ export default function BankInfoDialog(props) {
                   </div> */}
                 </div>
                 <div class='modal-footer'>
-                  <button
-                    type='button'
-                    class='btn btn-secondary'
-                    data-dismiss='modal'
-                  >
-                    Close
-                  </button>
+                  <Link to='/account_list' className='btn btn-secondary' type='button'> Close</Link>
+                  
                   <Button class='btn btn-primary' onClick={AccountCreate}>
                     Update
                   </Button>

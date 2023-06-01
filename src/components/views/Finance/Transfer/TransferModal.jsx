@@ -60,8 +60,6 @@ export default function TransferModal(props) {
     } else {
       data.toAcc = toCash
     }
-
-    alert(JSON.stringify(data))
     axios.post(uri + 'transfer', data).then(response => {
       console.log(response.data)
       Swal.fire({
@@ -86,6 +84,7 @@ export default function TransferModal(props) {
     setShowFromBank(false)
     setShowFromCash(true)
     setShowFromOrigin(false)
+    console.log('done')
   }
 
   //end
@@ -115,6 +114,7 @@ export default function TransferModal(props) {
             el.relatedHeader.name == 'Cash In Hand' &&
             el.relatedType.name === 'Assets'
         )
+        console.log('cash',cash)
         setFromCashList(cash)
         setToCashList(cash)
       } catch (err) { }
@@ -237,7 +237,7 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select From Account</option>
                     {fromCashList.map(option => (
-                      <option value={option.relatedAccounting._id}>{option.name}</option>
+                      <option value={option._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
@@ -321,7 +321,7 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select To Account</option>
                     {toCashList.map(option => (
-                      <option value={option.relatedAccounting._id}>{option.name}</option>
+                      <option value={option._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
