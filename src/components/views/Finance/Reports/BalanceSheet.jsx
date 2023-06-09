@@ -1,42 +1,42 @@
 /* eslint-disable */
-import React, { useState, useEffect } from "react";
-import Sidebar from "../../SideBar";
-import Swal from "sweetalert2";
-import axios from "axios";
-import { set } from "../../../../assets/plugins/moment/src/lib/moment/get-set";
+import React, { useState, useEffect } from 'react'
+import Sidebar from '../../SideBar'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+import { set } from '../../../../assets/plugins/moment/src/lib/moment/get-set'
 
 const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
 //const url = 'http://localhost:9000/api'
 
 export default function BalanceSheet() {
-    const [accountLists, setAccountLists] = useState([]);
-   // const[transactionLists,setTransactionLists] = useState([]);
-    const [trailAccs, setTrailAccs] = useState([]);
-    const [start, setStart] = useState("");
-    const [isShow, setIsShow] = useState(false)
-    const[ffamount,setffamount] = useState(0);
-    const[ffdamount,setffdamount] = useState(0);
-    const[mamount,setmamount] = useState(0);
-    const[mdamount,setmdamount] = useState(0);
-    const[oeamount,setoeamount] = useState(0);
-    const[oedamount,setoedamount] = useState(0);
-    const[fatotal,setfatotal] = useState(0);
-    const[bankTotal,setBankTotal] = useState(0);
-    const[cashTotal,setCashTotal] = useState(0);
-    const[inventoryTotal,setInventoryTotal] = useState(0);
-    const[reagentTotal,setReagentTotal] = useState(0);
-    const[testkitTotal,setTestkitTotal] = useState(0);
-    const[receivableTotal,setReceivableTotal] = useState(0);
-    const[prepaidTotal,setPrepaidTotal] = useState(0);
-    const[catotal,setcatotal] = useState(0);
-    const[assetTotal,setAssetTotal] = useState(0);
-    const[cltotal,setcltotal] = useState(0)
-    const[lltotal,setlltotal] = useState(0)
-    const[liabilitiesTotal,setLiabilitiesTotal] = useState(0)
+  const [accountLists, setAccountLists] = useState([])
+  // const[transactionLists,setTransactionLists] = useState([]);
+  const [trailAccs, setTrailAccs] = useState([])
+  const [start, setStart] = useState('')
+  const [isShow, setIsShow] = useState(false)
+  const [ffamount, setffamount] = useState(0)
+  const [ffdamount, setffdamount] = useState(0)
+  const [mamount, setmamount] = useState(0)
+  const [mdamount, setmdamount] = useState(0)
+  const [oeamount, setoeamount] = useState(0)
+  const [oedamount, setoedamount] = useState(0)
+  const [fatotal, setfatotal] = useState(0)
+  const [bankTotal, setBankTotal] = useState(0)
+  const [cashTotal, setCashTotal] = useState(0)
+  const [inventoryTotal, setInventoryTotal] = useState(0)
+  const [reagentTotal, setReagentTotal] = useState(0)
+  const [testkitTotal, setTestkitTotal] = useState(0)
+  const [receivableTotal, setReceivableTotal] = useState(0)
+  const [prepaidTotal, setPrepaidTotal] = useState(0)
+  const [catotal, setcatotal] = useState(0)
+  const [assetTotal, setAssetTotal] = useState(0)
+  const [cltotal, setcltotal] = useState(0)
+  const [lltotal, setlltotal] = useState(0)
+  const [liabilitiesTotal, setLiabilitiesTotal] = useState(0)
 
-    const[captialtotal,setCapitaltotal] = useState(0)
-    const[reservetotal,setReservetotal] = useState(0)
-    const[equitytotal,setEquitytotal] = useState(0)
+  const [captialtotal, setCapitaltotal] = useState(0)
+  const [reservetotal, setReservetotal] = useState(0)
+  const [equitytotal, setEquitytotal] = useState(0)
 
     const handleRelatedShow = (id) => {
     
@@ -195,46 +195,256 @@ export default function BalanceSheet() {
             console.error('Error occurred while fetching data.', error);
         }
     }
+    setIsShow(!isShow)
+  }
 
-    useEffect(() => {
-      fetchTrialAndBalance()
-    }, [])
+  const fetchTrialAndBalance = async () => {
+    try {
+      Swal.fire({
+        title: 'Loading',
+        text: 'Please wait...',
+        allowOutsideClick: false
+      })
+      // await axios.get(url + `/transactions/trial-balance`, {params:{start:"2023-01-01", end:"2023-12-31"}}).then((res) => {
+      //   console.log(res.data.data);
+      //   res.data.data.map(element=> {
+      //     if(element.type.name === "Assets" && element.accName === "Furniture and Fitting"){
+      //       setffamount(element.netAmount)
+      //     }
+      //     if(element.type.name === "Assets" && element.accName === "Furniture and Fitting Accumulated Depreciation"){
+      //       setffdamount(element.netAmount)
+      //     }
+      //   })
+      //   setAccountLists(res.data.data)
+      //     setTransactionLists(res.data.transaction)
+      //     console.log(res.data.data)
+      //    console.log(res.data.transaction)
+      // }).catch((error)=> {
+      //     console.log('error',error)
+      // })
 
-    return (
+      try {
+        const res = await axios.get(
+          //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        )
 
-        <>
-            <div className="wrapper">
-                {/* <!-- Content Wrapper. Contains page content --> */}
-                <Sidebar />
-                <div className="content-wrapper">
-                    {/* <!-- Content Header (Page header) --> */}
-                    <div className="content-header">
-                        <div className="container-fluid">
-                            <div className="row mb-2">
-                                <div className="col-sm-12">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <a href="/">Home</a>
-                                        </li>
-                                        <li className="breadcrumb-item active">
-                                            Balance Sheet
-                                        </li>
-                                    </ol>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        setAccountLists(res.data.list)
+        let fixedassettotal = 0
+        let bankAccTotal = 0
+        let cashAccTotal = 0
+        let invAccTotal = 0
+        let reagentTotal = 0
+        let testkitTotal = 0
+        let recevTotal = 0
+        let prepTotal = 0
+        let culaTotal = 0
+        let ltlaTotal = 0
+        let capTotal = 0
+        let resrvTotal = 0
 
-                    {/* <!-- Main content --> */}
+        res.data.list.map(account => {
+          if (account.name === 'Furniture and Fitting') {
+            setffamount(account.amount)
+            fixedassettotal += account.amount
+          }
+          if (
+            account.name === 'Furniture and Fitting Accumulated Depreciation'
+          ) {
+            setffdamount(account.amount)
+            fixedassettotal -= account.amount
+          }
 
-                    <section className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-12">
-                  <div className="card">
-                    <div className="card-header">
-                      <h1 className="card-title font-weight-bold px-3 py-3">
-                        Statement of Finiancial Position as at 31st December 2023
+          if (account.name === 'Machinery') {
+            setmamount(account.amount)
+            fixedassettotal += account.amount
+          }
+          if (account.name === 'Machinery Accumulated Depreciation') {
+            setmdamount(account.amount)
+            fixedassettotal -= account.amount
+          }
+
+          if (account.name === 'Office Equipment') {
+            setoeamount(account.amount)
+            fixedassettotal += account.amount
+          }
+          if (account.name === 'Office Equipment Accumulated Depreciation') {
+            setoedamount(account.amount)
+            fixedassettotal -= account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Bank'
+          ) {
+            bankAccTotal += account.amount
+          }
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Cash'
+          ) {
+            cashAccTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Inventory'
+          ) {
+            invAccTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Reagent'
+          ) {
+            reagentTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Test Kit'
+          ) {
+            testkitTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Receivable'
+          ) {
+            recevTotal += account.amount
+          }
+          if (
+            account.relatedType.name === 'Assets' &&
+            account.relatedHeader.name === 'Current Asset' &&
+            account.relatedSubHeader.name === 'Prepaid'
+          ) {
+            prepTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Liabilities' &&
+            account.relatedHeader.name === 'Current Liabilities' &&
+            account.relatedSubHeader.name === 'Current Liabilities'
+          ) {
+            culaTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Liabilities' &&
+            account.relatedHeader.name === 'Long Term Liabilities' &&
+            account.relatedSubHeader.name === 'Long Term Liabilities'
+          ) {
+            ltlaTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Equity' &&
+            account.relatedHeader.name === 'Capital' &&
+            account.relatedSubHeader.name === 'Capital'
+          ) {
+            capTotal += account.amount
+          }
+
+          if (
+            account.relatedType.name === 'Equity' &&
+            account.relatedHeader.name === 'Reserve' &&
+            account.relatedSubHeader.name === 'Reserve'
+          ) {
+            resrvTotal += account.amount
+          }
+        })
+        setBankTotal(bankAccTotal)
+        setCashTotal(cashAccTotal)
+        setInventoryTotal(invAccTotal)
+        setReagentTotal(reagentTotal)
+        setTestkitTotal(testkitTotal)
+        setReceivableTotal(recevTotal)
+        setPrepaidTotal(prepTotal)
+        setcatotal(
+          bankAccTotal +
+            cashAccTotal +
+            invAccTotal +
+            reagentTotal +
+            testkitTotal +
+            recevTotal +
+            prepTotal
+        )
+        setfatotal(fixedassettotal)
+        setAssetTotal(
+          bankAccTotal +
+            cashAccTotal +
+            invAccTotal +
+            reagentTotal +
+            testkitTotal +
+            recevTotal +
+            prepTotal +
+            fixedassettotal
+        )
+
+        setcltotal(culaTotal)
+        setlltotal(ltlaTotal)
+        setLiabilitiesTotal(culaTotal + ltlaTotal)
+
+        setCapitaltotal(capTotal)
+        setReservetotal(resrvTotal)
+        setEquitytotal(capTotal + resrvTotal)
+        // dispatch(setList("success"));
+        console.log(res.data.list)
+      } catch (err) {}
+
+      Swal.close()
+
+      // Process the response data
+      //console.log(data);
+    } catch (error) {
+      Swal.close()
+      console.error('Error occurred while fetching data.', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchTrialAndBalance()
+  }, [])
+
+  return (
+    <>
+      <div className='wrapper'>
+        {/* <!-- Content Wrapper. Contains page content --> */}
+        <Sidebar />
+        <div className='content-wrapper'>
+          {/* <!-- Content Header (Page header) --> */}
+          <div className='content-header'>
+            <div className='container-fluid'>
+              <div className='row mb-2'>
+                <div className='col-sm-12'>
+                  <ol className='breadcrumb'>
+                    <li className='breadcrumb-item'>
+                      <a href='/'>Home</a>
+                    </li>
+                    <li className='breadcrumb-item active'>Balance Sheet</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* <!-- Main content --> */}
+
+          <section className='content'>
+            <div className='container-fluid'>
+              <div className='row'>
+                <div className='col-12'>
+                  <div className='card'>
+                    <div className='card-header'>
+                      <h1 className='card-title font-weight-bold px-3 py-3'>
+                        Statement of Finiancial Position as at 31st December
+                        2023
                       </h1>
 
                       {/* {{-- <button id="" class="btn btn-primary float-right" data-toggle="modal" data-target="#new_account" onclick="hide_proj()"> <i class="fa fa-plus"></i> Create Accounting</button> --}} */}
@@ -329,9 +539,9 @@ export default function BalanceSheet() {
                 </div> --}} */}
                     </div>
                     {/* <!-- /.card-header --> */}
-                    <div class="card-body">
-                      <table id="example1" class="table">
-                        <thead class="text-center bg-info">
+                    <div class='card-body'>
+                      <table id='example1' class='table'>
+                        <thead class='text-center bg-info'>
                           <tr>
                             <th>No</th>
                             <th>Account Name</th>
@@ -340,7 +550,7 @@ export default function BalanceSheet() {
                           </tr>
                         </thead>
 
-                        <tbody class="text-center">
+                        <tbody class='text-center'>
                           <tr>
                             <td>1</td>
                             <td>
@@ -357,70 +567,55 @@ export default function BalanceSheet() {
                             <td></td>
                             <td></td>
                           </tr>
-                         
+
                           <tr>
                             <td></td>
                             <td>Furniture and Fitting - at Cost</td>
-                           <td>{ffamount}</td>
+                            <td>{ffamount}</td>
                             <td></td>
-                            
                           </tr>
                           <tr>
                             <td></td>
-                            <td>Furniture and Fitting - Accumulated Depreciation</td>
-                           <td>{ffdamount}</td>
+                            <td>
+                              Furniture and Fitting - Accumulated Depreciation
+                            </td>
+                            <td>{ffdamount}</td>
                             <td></td>
-                            
-                            
                           </tr>
 
                           <tr>
                             <td></td>
                             <td>Machinery - at Cost</td>
-                           <td>{mamount}</td>
+                            <td>{mamount}</td>
                             <td></td>
-                            
                           </tr>
                           <tr>
                             <td></td>
                             <td>Machinery - Accumulated Depreciation</td>
-                           <td>{mdamount}</td>
+                            <td>{mdamount}</td>
                             <td></td>
-                            
-                            
                           </tr>
-
 
                           <tr>
                             <td></td>
                             <td>Office Equipment - at Cost</td>
-                           <td>{oeamount}</td>
+                            <td>{oeamount}</td>
                             <td></td>
-                            
                           </tr>
                           <tr>
                             <td></td>
                             <td>Office Equipment - Accumulated Depreciation</td>
-                           <td>{oedamount}</td>
+                            <td>{oedamount}</td>
                             <td></td>
-                            
-                            
                           </tr>
-
-                          
-
-
-                        
 
                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{fatotal}</td>
-                            
                           </tr>
 
-                         
                           <tr>
                             <td>1.2</td>
                             <td>
@@ -439,27 +634,28 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Bank") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Bank' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{bankTotal}</td>
-                            
                           </tr>
 
-<tr>
+                          <tr>
                             <td></td>
                             <td>
                               <u>Cash</u>
@@ -468,24 +664,25 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Cash") ? 
-<tr>
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Cash' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
+                          <tr>
                             <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
-                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
                             <td>{cashTotal}</td>
-                            
                           </tr>
 
                           <tr>
@@ -497,28 +694,29 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Inventory") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Inventory' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{inventoryTotal}</td>
-                            
                           </tr>
 
-<tr>
+                          <tr>
                             <td></td>
                             <td>
                               <u>Reagent</u>
@@ -527,28 +725,29 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Reagent") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Reagent' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{reagentTotal}</td>
-                            
                           </tr>
 
-<tr>
+                          <tr>
                             <td></td>
                             <td>
                               <u>Test Kit</u>
@@ -557,25 +756,26 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Test Kit") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Test Kit' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{testkitTotal}</td>
-                            
                           </tr>
 
                           <tr>
@@ -587,25 +787,26 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Receivable") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Receivable' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{receivableTotal}</td>
-                            
                           </tr>
 
                           <tr>
@@ -617,33 +818,33 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Prepaid") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Assets' &&
+                            account.relatedHeader.name === 'Current Asset' &&
+                            account.relatedSubHeader.name === 'Prepaid' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{prepaidTotal}</td>
-                            
                           </tr>
 
                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{assetTotal}</td>
-                            
                           </tr>
 
                           <tr>
@@ -664,25 +865,28 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Liabilities" && account.relatedHeader.name === "Current Liabilities" && account.relatedSubHeader.name === "Current Liabilities") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Liabilities' &&
+                            account.relatedHeader.name ===
+                              'Current Liabilities' &&
+                            account.relatedSubHeader.name ===
+                              'Current Liabilities' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{cltotal}</td>
-                            
                           </tr>
 
                           <tr>
@@ -694,35 +898,36 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Liabilities" && account.relatedHeader.name === "Long Term Liabilities" && account.relatedSubHeader.name === "Long Term Liabilities") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Liabilities' &&
+                            account.relatedHeader.name ===
+                              'Long Term Liabilities' &&
+                            account.relatedSubHeader.name ===
+                              'Long Term Liabilities' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{lltotal}</td>
-                            
                           </tr>
 
                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{liabilitiesTotal}</td>
-                            
                           </tr>
-
 
                           <tr>
                             <td>3</td>
@@ -742,27 +947,27 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Equity" && account.relatedHeader.name === "Capital" && account.relatedSubHeader.name === "Capital") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Equity' &&
+                            account.relatedHeader.name === 'Capital' &&
+                            account.relatedSubHeader.name === 'Capital' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{captialtotal}</td>
-                            
                           </tr>
-
 
                           <tr>
                             <td>3.2</td>
@@ -773,33 +978,33 @@ export default function BalanceSheet() {
                             <td></td>
                           </tr>
 
-                          {accountLists.map(account => (
-                            (account.relatedType.name === "Equity" && account.relatedHeader.name === "Reserve" && account.relatedSubHeader.name === "Reserve") ? 
-<tr>
-                            <td></td>
-                            <td>
-                              {account.name}
-                            </td>
-                            <td>{account.amount}</td>
-                            <td></td>
-                          </tr>
-                             : ""))
-                          }
+                          {accountLists.map(account =>
+                            account.relatedType.name === 'Equity' &&
+                            account.relatedHeader.name === 'Reserve' &&
+                            account.relatedSubHeader.name === 'Reserve' ? (
+                              <tr>
+                                <td></td>
+                                <td>{account.name}</td>
+                                <td>{account.amount}</td>
+                                <td></td>
+                              </tr>
+                            ) : (
+                              ''
+                            )
+                          )}
 
-<tr>
+                          <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{reservetotal}</td>
-                            
                           </tr>
 
                           <tr>
                             <td></td>
                             <td></td>
-                           <td></td>
+                            <td></td>
                             <td>{equitytotal}</td>
-                            
                           </tr>
 
                           {/* <?php
@@ -807,7 +1012,6 @@ export default function BalanceSheet() {
                     ?>
 
                     @endforeach */}
-                        
                         </tbody>
                       </table>
                       {/* <?php
@@ -817,39 +1021,38 @@ export default function BalanceSheet() {
                            ';
 
                 ?> */}
-                      <a href="/profit_loss" class="float-left mt-3">
+                      <a href='/profit_loss' class='float-left mt-3'>
                         Profit & Loss
                       </a>
-                      <a href="/balance_sheet" class="float-right mt-3">
+                      <a href='/balance_sheet' class='float-right mt-3'>
                         Trial Balance
                       </a>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>{" "}
+            </div>{' '}
             {/*<!-- /.container-fluid --> */}
           </section>
+        </div>
+      </div>
 
-                </div>
-            </div>
+      {/* <!-- /.content-wrapper --> */}
+      <footer className='main-footer'>
+        <strong>
+          Copyright &copy; 2017-2020{' '}
+          <a href='http://www.kwintechnologies.com'>K-win Technology</a>.
+        </strong>
+        All rights reserved.
+      </footer>
 
-            {/* <!-- /.content-wrapper --> */}
-            <footer className="main-footer">
-                <strong>
-                    Copyright &copy; 2017-2020{" "}
-                    <a href="http://www.kwintechnologies.com">K-win Technology</a>.
-                </strong>
-                All rights reserved.
-            </footer>
+      {/* <!-- Control Sidebar --> */}
+      <aside className='control-sidebar control-sidebar-dark'>
+        {/* <!-- Control sidebar content goes here --> */}
+      </aside>
+      {/* <!-- /.control-sidebar --> */}
 
-            {/* <!-- Control Sidebar --> */}
-            <aside className="control-sidebar control-sidebar-dark">
-                {/* <!-- Control sidebar content goes here --> */}
-            </aside>
-            {/* <!-- /.control-sidebar --> */}
-
-            {/* <!-- ./wrapper --> */}
-        </>
-    )
+      {/* <!-- ./wrapper --> */}
+    </>
+  )
 }

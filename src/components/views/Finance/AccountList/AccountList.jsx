@@ -4,7 +4,6 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
 
-
 import SideBar from '../../SideBar'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
@@ -36,15 +35,13 @@ function AccountList() {
         )
         .then(response => {
           Swal.fire({
+            title: 'Success',
+            text: 'Successfully Deleted!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+          })
 
-            title: "Success",
-            text: "Successfully Deleted!",
-            icon: "success",
-            confirmButtonText: "OK",
-          });
-         
-          setAccountLists(accountLists.filter(item => item._id !== val)
-);
+          setAccountLists(accountLists.filter(item => item._id !== val))
         })
 
         .catch(error => {
@@ -179,7 +176,8 @@ function AccountList() {
 
                               <FaFileExcel />
                               &nbsp; Export
-
+                              <FaFileExcel />
+                              &nbsp; Export
                             </button>
                           </span>
                         </div>

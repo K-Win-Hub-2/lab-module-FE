@@ -1,40 +1,39 @@
-
 /* eslint-disable */
-import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import axios from "axios";
-import Swal from "sweetalert2";
+import * as React from 'react'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import styled from 'styled-components'
+import { useState, useEffect } from 'react'
+import { Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default function BankInfoDialog(props) {
-  const [bankList, setBankList] = useState([]);
-  const [cashList, setCashList] = useState([]);
-  const [accountingList, setAccountingList] = useState([]);
-  const [currencyList, setCurrencyList] = useState([]);
-  const [showBank, setShowBank] = useState(false);
-  const [showCash, setShowCash] = useState(false);
-  const [medicineSale, setMedicineSale] = useState([]);
+  const [bankList, setBankList] = useState([])
+  const [cashList, setCashList] = useState([])
+  const [accountingList, setAccountingList] = useState([])
+  const [currencyList, setCurrencyList] = useState([])
+  const [showBank, setShowBank] = useState(false)
+  const [showCash, setShowCash] = useState(false)
+  const [medicineSale, setMedicineSale] = useState([])
 
-  const [initialAmount, setInitialAmount] = useState("");
-  const [relatedBankAcc, setRelatedBankAcc] = useState("");
-  const [relatedCashAcc, setRelatedCashAcc] = useState("");
-  const [relatedAccounting, setRelatedAccounting] = useState("");
-  const [initialCurrency, setInitialCurrency] = useState("");
-  const [bankFlag, setBankFlag] = useState(false);
-  const[cashFlag,setCashFlag] = useState(false);
-  const [date, setDate] = useState("");
-  const [remark, setRemark] = useState("");
-  const [finalAmount, setFinalAmount] = useState("");
-  const [finalCurrency, setFinalCurrency] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [initialAmount, setInitialAmount] = useState('')
+  const [relatedBankAcc, setRelatedBankAcc] = useState('')
+  const [relatedCashAcc, setRelatedCashAcc] = useState('')
+  const [relatedAccounting, setRelatedAccounting] = useState('')
+  const [initialCurrency, setInitialCurrency] = useState('')
+  const [bankFlag, setBankFlag] = useState(false)
+  const [cashFlag, setCashFlag] = useState(false)
+  const [date, setDate] = useState('')
+  const [remark, setRemark] = useState('')
+  const [finalAmount, setFinalAmount] = useState('')
+  const [finalCurrency, setFinalCurrency] = useState('')
+  const [currency, setCurrency] = useState('')
 
   const expenseCreate = () => {
     //  event.preventDefault();
@@ -45,19 +44,22 @@ export default function BankInfoDialog(props) {
       initialCurrency: initialCurrency,
       finalAmount: initialAmount,
       finalCurrency: initialCurrency,
-      remark: remark,
+      remark: remark
       //finalCurrency: finalCurrency,
-    };
+    }
 
-    if (relatedCashAcc) {jsonData.relatedCashAccount = relatedCashAcc;
-    jsonData.cashFlag = cashFlag;}
-    if (relatedBankAcc){ jsonData.relatedBankAccount = relatedBankAcc;
-      jsonData.bankFlag = bankFlag;
+    if (relatedCashAcc) {
+      jsonData.relatedCashAccount = relatedCashAcc
+      jsonData.cashFlag = cashFlag
+    }
+    if (relatedBankAcc) {
+      jsonData.relatedBankAccount = relatedBankAcc
+      jsonData.bankFlag = bankFlag
     }
     // alert(JSON.stringify(jsonData));
     const config = {
-      headers: { "Content-Type": "application/json" },
-    };
+      headers: { 'Content-Type': 'application/json' }
+    }
 
     axios
       .post(
@@ -68,74 +70,73 @@ export default function BankInfoDialog(props) {
       )
       .then(function (response) {
         // alert("success");
-        setFinalAmount("");
+        setFinalAmount('')
         Swal.fire({
-          title: "Successful!",
-          text: "You Created Expense Data!",
-          icon: "success",
+          title: 'Successful!',
+          text: 'You Created Expense Data!',
+          icon: 'success',
           // showCancelButton: true,
 
-          cancelButtonText: "Close",
-        });
+          cancelButtonText: 'Close'
+        })
 
         // console.log(
         //   response.data.data
         // );
 
-        props.setExpenseLists([...props.expenseLists, response.data.data[0]]);
+        props.setExpenseLists([...props.expenseLists, response.data.data[0]])
       })
       .catch(function (err) {
         Swal.fire({
-          title: "Something Wrong!",
-          text: "Try again, Please.",
-          icon: "warning",
+          title: 'Something Wrong!',
+          text: 'Try again, Please.',
+          icon: 'warning',
           // showCancelButton: true,
 
-          cancelButtonText: "Close",
-        });
-      });
+          cancelButtonText: 'Close'
+        })
+      })
 
-    props.close();
-  };
+    props.close()
+  }
 
-  const handleBankRadioChange = (test) => {
-    setShowBank(true);
-    setBankFlag(true);
-    setCashFlag(false);
-    setShowCash(false);
-  };
+  const handleBankRadioChange = test => {
+    setShowBank(true)
+    setBankFlag(true)
+    setCashFlag(false)
+    setShowCash(false)
+  }
 
   const handleCashRadioChange = () => {
-    setShowBank(false);
-    setBankFlag(false);
-    setCashFlag(true);
-    setShowCash(true);
-  };
+    setShowBank(false)
+    setBankFlag(false)
+    setCashFlag(true)
+    setShowCash(true)
+  }
 
-  const handleCalculation = (event) => {
-    console.log(event);
-    if (initialCurrency === "MMK") {
-      let current = currencyList.filter(
-        (currency) => currency.code === event
-      )[0].exchangeRate;
-      let ans = initialAmount / current;
-      console.log(ans);
-      setFinalAmount(ans.toFixed(2));
+  const handleCalculation = event => {
+    console.log(event)
+    if (initialCurrency === 'MMK') {
+      let current = currencyList.filter(currency => currency.code === event)[0]
+        .exchangeRate
+      let ans = initialAmount / current
+      console.log(ans)
+      setFinalAmount(ans.toFixed(2))
     } else {
       let current = currencyList.filter(
-        (currency) => currency.code === initialCurrency
-      )[0].exchangeRate;
-      console.log(initialAmount);
-      console.log(current);
-      let ans = initialAmount * current;
-      setFinalAmount(ans.toFixed(2));
-      console.log(finalAmount);
+        currency => currency.code === initialCurrency
+      )[0].exchangeRate
+      console.log(initialAmount)
+      console.log(current)
+      let ans = initialAmount * current
+      setFinalAmount(ans.toFixed(2))
+      console.log(finalAmount)
     }
-    setFinalCurrency(event);
+    setFinalCurrency(event)
 
-    console.log(initialAmount, "Thate chit mi thwr p");
-    if (initialCurrency == event) setFinalAmount(initialAmount);
-  };
+    console.log(initialAmount, 'Thate chit mi thwr p')
+    if (initialCurrency == event) setFinalAmount(initialAmount)
+  }
 
   useEffect(() => {
     const getCashLists = async () => {
@@ -146,14 +147,14 @@ export default function BankInfoDialog(props) {
         );
 
         const cash = res.data.list.filter(
-          (el) =>
-          el.relatedSubHeader.name == "Cash" &&
-            el.relatedHeader.name == "Current Asset" &&
-            el.relatedType.name === "Assets"
-        );
-        setCashList(cash);
+          el =>
+            el.relatedSubHeader.name == 'Cash' &&
+            el.relatedHeader.name == 'Current Asset' &&
+            el.relatedType.name === 'Assets'
+        )
+        setCashList(cash)
       } catch (err) {}
-    };
+    }
 
     const getBankLists = async () => {
       try {
@@ -163,24 +164,24 @@ export default function BankInfoDialog(props) {
         );
 
         const bank = res.data.list.filter(
-          (el) =>
-          el.relatedSubHeader.name == "Bank" &&
-            el.relatedHeader.name == "Current Asset" &&
-            el.relatedType.name === "Assets"
-        );
-        setBankList(bank);
+          el =>
+            el.relatedSubHeader.name == 'Bank' &&
+            el.relatedHeader.name == 'Current Asset' &&
+            el.relatedType.name === 'Assets'
+        )
+        setBankList(bank)
       } catch (err) {}
-    };
+    }
 
     const getInitialCurrency = async () => {
       try {
         const res = await axios.get(
           `http://centralclinicbackend.kwintechnologykw11.com:3000/api/currency/${initialCurrency}`
-        );
-        console.log(res);
-        setCurrency(res.data.list);
+        )
+        console.log(res)
+        setCurrency(res.data.list)
       } catch (err) {}
-    };
+    }
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
@@ -188,19 +189,20 @@ export default function BankInfoDialog(props) {
          // "http://localhost:9000/api/accounting-lists"
         );
         const medicineSale = res.data.list.filter(
-          (el) => el.relatedSubHeader.name == "Other Expense" &&
-          el.relatedHeader.name == "Other Expense" &&
-          el.relatedType.name === "Expenses"
-        );
+          el =>
+            el.relatedSubHeader.name == 'Other Expense' &&
+            el.relatedHeader.name == 'Other Expense' &&
+            el.relatedType.name === 'Expenses'
+        )
         //setInitialAmount(medicineSale[0].amount);
         // setFinalAmount(medicineSale[0].amount);
-        setMedicineSale(medicineSale);
+        setMedicineSale(medicineSale)
         // setAccountingList(res.data.list);
         // setBankList(
         //   res.data.list.filter((e) => e.accountingTypes == "Current Assets")
         // );
       } catch (err) {}
-    };
+    }
     // const getCurrencyLists = async () => {
     //   try {
     //     const res = await axios.get(
@@ -213,27 +215,28 @@ export default function BankInfoDialog(props) {
     //   } catch (err) {}
     // };
 
-    getCashLists();
-    getAccountingLists();
+    getCashLists()
+    getAccountingLists()
     //getInitialCurrency();
     //getCurrencyLists();
-    getBankLists();
-  }, []);
+    getBankLists()
+  }, [])
 
   return (
     <div>
       <Dialog open={props.open} onClose={props.close}>
         <DialogTitle>
-          {" "}
-          <div className="modal-header">
-            <h4 className="modal-title">Expense</h4>
+          {' '}
+          <div className='modal-header'>
+            <h4 className='modal-title'>Expense</h4>
             <button
-              type="button"
-              className="close"
-              data-dismiss="modal"
-              aria-label="Close"
-              onClick={props.close}>
-              <span aria-hidden="true">&times;</span>
+              type='button'
+              className='close'
+              data-dismiss='modal'
+              aria-label='Close'
+              onClick={props.close}
+            >
+              <span aria-hidden='true'>&times;</span>
             </button>
           </div>
         </DialogTitle>
@@ -241,34 +244,34 @@ export default function BankInfoDialog(props) {
           <DialogContentText></DialogContentText>
 
           {/* @csrf */}
-          <div className="row offset-md-4">
-            <div className="col-md-2">
-              <div className="form-check form-check-inline mt-2 ">
+          <div className='row offset-md-4'>
+            <div className='col-md-2'>
+              <div className='form-check form-check-inline mt-2 '>
                 <input
-                  className="form-check-input"
-                  type="radio"
-                  name="bank_cash"
-                  id="bank"
-                  value="1"
+                  className='form-check-input'
+                  type='radio'
+                  name='bank_cash'
+                  id='bank'
+                  value='1'
                   onClick={handleBankRadioChange}
                 />
                 &nbsp;
-                <label className="form-check-label text-success" for="bank">
+                <label className='form-check-label text-success' for='bank'>
                   Bank
                 </label>
               </div>
             </div>
-            <div className="col-md-2">
-              <div className="form-check form-check-inline mt-2 px-4">
+            <div className='col-md-2'>
+              <div className='form-check form-check-inline mt-2 px-4'>
                 <input
-                  className="form-check-input"
-                  type="radio"
-                  name="bank_cash"
-                  id="cash"
-                  value="2"
+                  className='form-check-input'
+                  type='radio'
+                  name='bank_cash'
+                  id='cash'
+                  value='2'
                   onClick={handleCashRadioChange}
                 />
-                <label className="form-check-label text-success" for="cash">
+                <label className='form-check-label text-success' for='cash'>
                   Cash
                 </label>
               </div>
@@ -276,17 +279,18 @@ export default function BankInfoDialog(props) {
           </div>
 
           {showBank && (
-            <div className="form-group mt-3" id="bankkk">
-              <label className="control-label">Bank Account</label>
+            <div className='form-group mt-3' id='bankkk'>
+              <label className='control-label'>Bank Account</label>
 
               <select
-                className="form-control"
-                name="bank_acc"
-                id="bank_acc"
-                onChange={(e) => setRelatedBankAcc(e.target.value)}>
-                <option value="">Select Bank Account</option>
+                className='form-control'
+                name='bank_acc'
+                id='bank_acc'
+                onChange={e => setRelatedBankAcc(e.target.value)}
+              >
+                <option value=''>Select Bank Account</option>
 
-                {bankList.map((option) => (
+                {bankList.map(option => (
                   <option value={option._id}>{option.name}</option>
                 ))}
               </select>
@@ -294,17 +298,18 @@ export default function BankInfoDialog(props) {
           )}
 
           {showCash && (
-            <div className="form-group mt-3" id="cashhh">
-              <label className="control-label">Cash Account</label>
+            <div className='form-group mt-3' id='cashhh'>
+              <label className='control-label'>Cash Account</label>
 
               <select
-                className="form-control"
-                name="cash_acc"
-                id="cash_acc"
-                onChange={(e) => setRelatedCashAcc(e.target.value)}>
-                <option value="">Select Cash Account</option>
+                className='form-control'
+                name='cash_acc'
+                id='cash_acc'
+                onChange={e => setRelatedCashAcc(e.target.value)}
+              >
+                <option value=''>Select Cash Account</option>
                 {/* @foreach ($cash_account as $acc) */}
-                {cashList.map((option) => (
+                {cashList.map(option => (
                   <option value={option._id}>{option.name}</option>
                 ))}
 
@@ -313,16 +318,17 @@ export default function BankInfoDialog(props) {
             </div>
           )}
 
-          <div className="form-group mt-3">
-            <label className="control-label">Expense Account</label>
+          <div className='form-group mt-3'>
+            <label className='control-label'>Expense Account</label>
             <select
-              className="form-control"
-              name="exp_acc"
-              onChange={(e) => setRelatedAccounting(e.target.value)}>
-              <option value="">Select Expense Account</option>
+              className='form-control'
+              name='exp_acc'
+              onChange={e => setRelatedAccounting(e.target.value)}
+            >
+              <option value=''>Select Expense Account</option>
               {/* @foreach ($inc_account as $acc) */}
 
-              {medicineSale.map((option) => (
+              {medicineSale.map(option => (
                 <option value={option._id}>{option.name}</option>
               ))}
 
@@ -330,34 +336,35 @@ export default function BankInfoDialog(props) {
             </select>
           </div>
 
-          <div className="row">
-            <div className="col-md-6">
-              <div className="form-group">
-                <label className="control-label">Expense Amount</label>
+          <div className='row'>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label className='control-label'>Expense Amount</label>
 
                 <input
-                  type="number"
-                  className="form-control"
-                  name="amount"
-                  id="convert_amount"
-                  onChange={(e) => setInitialAmount(e.target.value)}
+                  type='number'
+                  className='form-control'
+                  name='amount'
+                  id='convert_amount'
+                  onChange={e => setInitialAmount(e.target.value)}
                 />
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="form-group">
-                <label className="control-label">Currency</label>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label className='control-label'>Currency</label>
 
                 <select
-                  name="currency"
-                  id=""
-                  className="form-control mt-1"
-                  onchange="convert(this.value)"
-                  onChange={(e) => setInitialCurrency(e.target.value)}>
-                  <option value="">Choose Currency</option>
-                  <option value="MMK">MMK</option>
-                  <option value="Baht">Baht</option>
-                  <option value="USD">USD</option>
+                  name='currency'
+                  id=''
+                  className='form-control mt-1'
+                  onchange='convert(this.value)'
+                  onChange={e => setInitialCurrency(e.target.value)}
+                >
+                  <option value=''>Choose Currency</option>
+                  <option value='MMK'>MMK</option>
+                  <option value='Baht'>Baht</option>
+                  <option value='USD'>USD</option>
 
                   {/* {currencyList.map((option) => (
                     <option value={option.code}>{option.code}</option>
@@ -400,13 +407,13 @@ export default function BankInfoDialog(props) {
             </div>
           </div> */}
 
-          <div className="form-group">
-            <label className="control-label">Date</label>
+          <div className='form-group'>
+            <label className='control-label'>Date</label>
             <input
-              type="date"
-              className="form-control"
-              name="date"
-              onChange={(e) => setDate(e.target.value)}
+              type='date'
+              className='form-control'
+              name='date'
+              onChange={e => setDate(e.target.value)}
             />
           </div>
 
@@ -415,29 +422,31 @@ export default function BankInfoDialog(props) {
                                 <input type="text" className="form-control" name="voucher_id"/>
                             </div> */}
 
-          <div className="form-group">
-            <label className="control-label">Remark</label>
+          <div className='form-group'>
+            <label className='control-label'>Remark</label>
             <input
-              type="text"
-              className="form-control"
-              name="remark"
-              onChange={(e) => setRemark(e.target.value)}
+              type='text'
+              className='form-control'
+              name='remark'
+              onChange={e => setRemark(e.target.value)}
             />
           </div>
 
-          <div className="row">
-            <div className="col-md-9 mt-4">
+          <div className='row'>
+            <div className='col-md-9 mt-4'>
               <button
-                type="submit"
-                className="btn btn-success"
-                onClick={expenseCreate}>
+                type='submit'
+                className='btn btn-success'
+                onClick={expenseCreate}
+              >
                 Submit
               </button>
               <button
-                type="button"
-                className="btn btn-inverse btn-dismiss"
-                data-dismiss="modal"
-                onClick={props.close}>
+                type='button'
+                className='btn btn-inverse btn-dismiss'
+                data-dismiss='modal'
+                onClick={props.close}
+              >
                 Cancel
               </button>
             </div>
@@ -445,7 +454,7 @@ export default function BankInfoDialog(props) {
         </DialogContent>
       </Dialog>
     </div>
-  );
+  )
 }
 // phyo
 //maymyat

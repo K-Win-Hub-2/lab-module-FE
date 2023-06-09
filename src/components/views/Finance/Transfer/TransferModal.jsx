@@ -112,14 +112,14 @@ export default function TransferModal(props) {
 
         const cash = res.data.list.filter(
           el =>
-          el.relatedSubHeader.name == 'Cash' &&
+            el.relatedSubHeader.name == 'Cash' &&
             el.relatedHeader.name == 'Current Asset' &&
             el.relatedType.name === 'Assets'
         )
-        console.log('cash',cash)
+        console.log('cash', cash)
         setFromCashList(cash)
         setToCashList(cash)
-      } catch (err) { }
+      } catch (err) {}
     }
 
     const getBankLists = async () => {
@@ -310,10 +310,8 @@ export default function TransferModal(props) {
                         {console.log(toBank)}
                         <option value={option._id}>{option.name}</option>
                       </>
-
                     ))}
                   </select>
-                  
                 </div>
               )}
 
