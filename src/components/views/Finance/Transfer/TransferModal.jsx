@@ -6,11 +6,7 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-<<<<<<< HEAD
-const uri = 'http://localhost:9000/api/'
-=======
 const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
->>>>>>> c5635e07246bdc5a8db7dd9f2bcea0dced520a75
 
 export default function TransferModal(props) {
   const [fromList, setFromList] = useState([])
@@ -138,21 +134,9 @@ export default function TransferModal(props) {
         //     el.relatedHeader.name == 'Cash At Bank' &&
         //     el.relatedType.name === 'Assets'
         // )
-<<<<<<< HEAD
-        const bank = res.data.list.filter(
-          el =>
-          el.relatedSubHeader.name == 'Bank' &&
-            el.relatedHeader.name == 'Current Asset' &&
-            el.relatedType.name === 'Assets'
-        )
-        setFromBankList(bank)
-        setToBankList(bank)
-      } catch (err) {}
-=======
         setFromBankList(res.data.list)
         setToBankList(res.data.list)
       } catch (err) { }
->>>>>>> c5635e07246bdc5a8db7dd9f2bcea0dced520a75
     }
 
     getBankLists()
@@ -237,16 +221,11 @@ export default function TransferModal(props) {
                     onChange={e => setFromBank(e.target.value)}
                   >
                     <option value=''>Select From Account </option>
-<<<<<<< HEAD
-                    {fromBankList.map(option => (
-                      <option value={option._id}>{option.name}</option>
-=======
                     {fromBankList.map(option => (<>
                       {console.log(fromBank)}
                       <option value={option.relatedAccounting._id}>{option.bankName}</option>
                     </>
 
->>>>>>> c5635e07246bdc5a8db7dd9f2bcea0dced520a75
                     ))}
                   </select>
                 </div>
@@ -326,15 +305,11 @@ export default function TransferModal(props) {
                   >
                     <option value=''>Select To Account</option>
                     {toBankList.map(option => (
-<<<<<<< HEAD
-                      <option value={option._id}>{option.name}</option>
-=======
                       <>
                         {console.log(toBank)}
                         <option value={option.relatedAccounting._id}>{option.bankName}</option>
                       </>
 
->>>>>>> c5635e07246bdc5a8db7dd9f2bcea0dced520a75
                     ))}
                   </select>
                   

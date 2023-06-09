@@ -372,20 +372,9 @@ export default function BankInfoDialog(props) {
                   </div> */}
                 </div>
                 <div class='modal-footer'>
-<<<<<<< HEAD
-                  <button
-                    type='button'
-                    class='btn btn-secondary'
-                    data-dismiss='modal'
-                  >
-                    Close
-                  </button>
-                  <Button class='btn btn-primary' onClick={AccountUpdate}>
-=======
                   <Link to='/account_list' className='btn btn-secondary' type='button'> Close</Link>
                   
                   <Button class='btn btn-primary' onClick={AccountCreate}>
->>>>>>> c5635e07246bdc5a8db7dd9f2bcea0dced520a75
                     Update
                   </Button>
                 </div>

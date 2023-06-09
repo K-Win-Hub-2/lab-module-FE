@@ -182,12 +182,12 @@ const TestVoucherSlip = () => {
                     </div>
                     <br></br>
                     <div className='row'>
-                      <div className='col-5'>
+                      <div className='col-8'>
                         <H6>
                           Name :{' '}
                           <span className='float-right'>
                             {/* {name ? name : ''} / {age ? age : ''}yrs */}
-                            {name ? name : ''}
+                            {name ? name + "(" + gender + ")" + "/" + 32  : ''}
                           </span>
                         </H6>
                         <H6>
@@ -209,9 +209,23 @@ const TestVoucherSlip = () => {
                             {doctor ? doctor : '-'}
                           </span>
                         </H6>
+
+                        <H6>
+                          Printed :{' '}
+                          <span className='float-right'>
+                            {today.split('T')[0]}
+                          </span>
+                        </H6>
+
+                        <H6>
+                          Inv. No :{' '}
+                          <span className='float-right'>
+                            {code ? code : ''}
+                          </span>
+                        </H6>
                         
                       </div>
-                      <div className='col-6'>
+                      {/* <div className='col-6'>
                       <H6>
                           Age :
                           <span className='float-right'> {age ? age : ''}</span>
@@ -231,9 +245,9 @@ const TestVoucherSlip = () => {
                           </span>
                         </H6>
                        
-                      </div>
+                      </div> */}
                     </div>
-                      <div className="row">
+                      {/* <div className="row">
                       <div className='col-8'>
                       <H6>
                           Inv. No :{' '}
@@ -242,7 +256,7 @@ const TestVoucherSlip = () => {
                           </span>
                         </H6>
                         </div>
-                      </div>
+                      </div> */}
                     <br></br>
                     <br></br>
 
