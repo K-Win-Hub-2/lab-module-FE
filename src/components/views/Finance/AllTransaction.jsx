@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 function MedicineSale() {
   const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
-  //const uri = 'http://localhost:9000/api/';
+  //const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/';
   const [tranList, setTranList] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')

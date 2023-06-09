@@ -21,7 +21,7 @@ export default function BankInfoDialog(props) {
   const [subHeadingList, setSubHeadingList] = useState([])
   const [heading, setHeading] = useState('')
   const [subHeading, setSubHeading] = useState('')
-  const[accName,setAccName] = useState('')
+  const [accName, setAccName] = useState('')
 
   const [accType, setAccType] = useState([])
 
@@ -57,8 +57,8 @@ export default function BankInfoDialog(props) {
 
     axios
       .post(
-       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-       'http://localhost:9000/api/accounting-list',
+        // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
         data,
         config
       )
@@ -93,15 +93,15 @@ export default function BankInfoDialog(props) {
     setHeading(event)
     console.log(heading, headingList)
     // const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
-    const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
     console.log(url)
     const res = await axios.get(url)
     console.log(res.data.data, 'res.data.data')
     setSubHeadingList(res.data.data)
     setSubFlag(true)
-   // console.log(headingList, 'heading')
+    // console.log(headingList, 'heading')
   }
-  
+
   const handleSubHeading = async event => {
     setSubHeading(event)
   }
@@ -118,7 +118,6 @@ export default function BankInfoDialog(props) {
     console.log(headingList, 'heading')
   }
 
-  
   useEffect(() => {
     const getAccountingType = async () => {
       try {
@@ -126,7 +125,7 @@ export default function BankInfoDialog(props) {
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
         )
         setAccType(res.data.list)
-      } catch (err) { }
+      } catch (err) {}
     }
 
     // const getAccountingHeadingType = async () => {
@@ -214,7 +213,7 @@ export default function BankInfoDialog(props) {
                 </select>
               </div>
             ) : null}
-             {subFlag ? (
+            {subFlag ? (
               <div class='form-group'>
                 <label for='name'>Sub Heading</label>
                 <select

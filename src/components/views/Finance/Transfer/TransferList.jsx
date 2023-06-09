@@ -6,8 +6,8 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import SideBar from '../../SideBar'
 const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
-//const uri = 'http://localhost:9000/api/';
-export default function TransferList () {
+//const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/';
+export default function TransferList() {
   const [transferList, setTransferList] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
@@ -85,7 +85,7 @@ export default function TransferList () {
       axios
         .get(uri + 'transfers?limit=50')
         .then(response => {
-          console.log(response.data.data,'transfer list')
+          console.log(response.data.data, 'transfer list')
           setTransferList(response.data.data)
         })
         .catch(error => {
@@ -109,7 +109,7 @@ export default function TransferList () {
 
       <div className='wrapper'>
         {/* <!-- Navbar --> */}
-      
+
         {/* <!-- Main Sidebar Container --> */}
         <SideBar />
 

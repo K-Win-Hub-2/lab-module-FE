@@ -107,26 +107,26 @@ export default function TransferModal(props) {
       try {
         const res = await axios.get(
           //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-          'http://localhost:9000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
         )
 
         const cash = res.data.list.filter(
           el =>
-          el.relatedSubHeader.name == 'Cash' &&
+            el.relatedSubHeader.name == 'Cash' &&
             el.relatedHeader.name == 'Current Asset' &&
             el.relatedType.name === 'Assets'
         )
-        console.log('cash',cash)
+        console.log('cash', cash)
         setFromCashList(cash)
         setToCashList(cash)
-      } catch (err) { }
+      } catch (err) {}
     }
 
     const getBankLists = async () => {
       try {
         const res = await axios.get(
           //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/banks'
-          'http://localhost:9000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
         )
 
         // const bank = res.data.list.filter(
@@ -136,7 +136,7 @@ export default function TransferModal(props) {
         // )
         setFromBankList(res.data.list)
         setToBankList(res.data.list)
-      } catch (err) { }
+      } catch (err) {}
     }
 
     getBankLists()
@@ -221,11 +221,13 @@ export default function TransferModal(props) {
                     onChange={e => setFromBank(e.target.value)}
                   >
                     <option value=''>Select From Account </option>
-                    {fromBankList.map(option => (<>
-                      {console.log(fromBank)}
-                      <option value={option.relatedAccounting._id}>{option.bankName}</option>
-                    </>
-
+                    {fromBankList.map(option => (
+                      <>
+                        {console.log(fromBank)}
+                        <option value={option.relatedAccounting._id}>
+                          {option.bankName}
+                        </option>
+                      </>
                     ))}
                   </select>
                 </div>
@@ -307,12 +309,12 @@ export default function TransferModal(props) {
                     {toBankList.map(option => (
                       <>
                         {console.log(toBank)}
-                        <option value={option.relatedAccounting._id}>{option.bankName}</option>
+                        <option value={option.relatedAccounting._id}>
+                          {option.bankName}
+                        </option>
                       </>
-
                     ))}
                   </select>
-                  
                 </div>
               )}
 

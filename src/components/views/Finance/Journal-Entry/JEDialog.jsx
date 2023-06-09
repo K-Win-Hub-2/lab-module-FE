@@ -65,8 +65,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal",
-        // 'http://localhost:9000/api/journal',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+        // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
         data,
         config
       )
@@ -115,11 +115,8 @@ export default function BankInfoDialog(props) {
     console.log(setCreditAccount, 'Acc')
   }
   const handleInputAcc = event => {
-    
     setRelatedCreditAccount(event)
     console.log(event, 'Credit Account ID')
-
-
   }
 
   //End For Credit

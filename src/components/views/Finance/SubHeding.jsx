@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SideBar from '../SideBar'
-import { FaRegEdit,FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 
-function SubHeading () {
+function SubHeading() {
   const [subHeading, setSubHeading] = useState([])
 
-  const[accType,setAccType] = useState('')
+  const [accType, setAccType] = useState('')
   const [accHead, setAccHead] = useState('')
   const [accTypeList, setAccTypeList] = useState([])
   const [accHeaderList, setAccHeaderList] = useState([])
@@ -18,17 +18,17 @@ function SubHeading () {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [upAccType, setUpAccType] = useState('')
-  const [upAccHead,setUpAccHead] = useState('')
+  const [upAccHead, setUpAccHead] = useState('')
   const [upName, setUpName] = useState('')
   const [upDesc, setUpDesc] = useState('')
-  const [id, setId] = useState("");
+  const [id, setId] = useState('')
   const [showUpdate, setShowUpdate] = useState(false)
   const [flag, setFlag] = useState(false)
   const handleDelete = event => {
     axios
       .delete(
         //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-        'http://localhost:9000/api/account-subheader/' +
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
           event
       )
       .then(response => {
@@ -44,7 +44,7 @@ function SubHeading () {
       .catch(error => {
         Swal.fire({
           title: 'Error',
-          text: "Something Wrong",
+          text: 'Something Wrong',
           icon: 'error',
           confirmButtonText: 'CANCEL'
         })
@@ -56,20 +56,20 @@ function SubHeading () {
     const getSubHeadingUpdate = async () => {
       try {
         const res = await axios.get(
-         // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-         'http://localhost:9000/api/account-subheader/' +
+          // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
             event
         )
         console.log(res.data)
-       
-         setUpName(res.data.data[0].name)
-         setUpDesc(res.data.data[0].description)
-         setUpAccType(res.data.data[0].relatedAccountType._id)
-         setUpAccHead(res.data.data[0].relatedAccountHeader._id)
+
+        setUpName(res.data.data[0].name)
+        setUpDesc(res.data.data[0].description)
+        setUpAccType(res.data.data[0].relatedAccountType._id)
+        setUpAccHead(res.data.data[0].relatedAccountHeader._id)
       } catch (err) {}
     }
     getSubHeadingUpdate()
-   setShowUpdate(true)
+    setShowUpdate(true)
     setId(event)
   }
 
@@ -87,8 +87,8 @@ function SubHeading () {
     }
     axios
       .put(
-       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
-       'http://localhost:9000/api/account-subheader',
+        // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
         data,
         config
       )
@@ -122,8 +122,8 @@ function SubHeading () {
           cancelButtonText: 'Close'
         })
       })
-      document.getElementById('upacc_type').value = ''
-      document.getElementById('upacc_head').value = ''
+    document.getElementById('upacc_type').value = ''
+    document.getElementById('upacc_head').value = ''
     document.getElementById('updesc').value = ''
     document.getElementById('upname').value = ''
     setShowUpdate(false)
@@ -144,7 +144,7 @@ function SubHeading () {
     axios
       .post(
         //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
-        'http://localhost:9000/api/account-subheader',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
         data,
         config
       )
@@ -158,8 +158,7 @@ function SubHeading () {
           cancelButtonText: 'Close'
         })
 
-      window.location.reload()
-
+        window.location.reload()
       })
       .catch(function (err) {
         alert(err.message)
@@ -175,7 +174,7 @@ function SubHeading () {
       try {
         const res = await axios.get(
           //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders?limit=50'
-          'http://localhost:9000/api/account-subheaders?limit=50'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders?limit=50'
         )
 
         setSubHeading(res.data.list)
@@ -195,37 +194,36 @@ function SubHeading () {
   }, [])
 
   const handleAccountHeader = async event => {
-   setAccType(event)
-    
+    setAccType(event)
+
     const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
-    
+
     const res = await axios.get(url)
-    
+
     setAccHeaderList(res.data.data)
     setFlag(true)
-    
   }
 
   const handleUpAccountHeader = async event => {
     setUpAccType(event)
-     //console.log(accountingTypes)
-     const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
-     console.log(url)
-     const res = await axios.get(url)
-     console.log(res.data.data, 'res.data.data')
-     setAccHeaderList(res.data.data)
-     setFlag(true)
-     //console.log(headingList, 'heading')
-   }
+    //console.log(accountingTypes)
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
+    console.log(url)
+    const res = await axios.get(url)
+    console.log(res.data.data, 'res.data.data')
+    setAccHeaderList(res.data.data)
+    setFlag(true)
+    //console.log(headingList, 'heading')
+  }
 
   const handleHeading = async event => {
     setAccHead(event)
-   // console.log(heading, headingList)
+    // console.log(heading, headingList)
   }
 
   const handleUpHeading = async event => {
     setUpAccHead(event)
-   // console.log(heading, headingList)
+    // console.log(heading, headingList)
   }
 
   return (
@@ -235,7 +233,6 @@ function SubHeading () {
 
       <div className='wrapper'>
         {/* <!-- Navbar --> */}
-       
 
         {/* <!-- Main Sidebar Container --> */}
         <SideBar />
@@ -286,14 +283,20 @@ function SubHeading () {
                           <tbody className=''>
                             <tr>
                               <td>{++i}</td>
-                              <td>{head.relatedAccountType ? head.relatedAccountType.name
- : ''}</td>
-                              <td>{head.relatedAccountHeader ? head.relatedAccountHeader.name
- : ''}</td>
+                              <td>
+                                {head.relatedAccountType
+                                  ? head.relatedAccountType.name
+                                  : ''}
+                              </td>
+                              <td>
+                                {head.relatedAccountHeader
+                                  ? head.relatedAccountHeader.name
+                                  : ''}
+                              </td>
                               <td>{head.name}</td>
                               <td>{head.description}</td>
                               <td className='text-center'>
-                              <button
+                                <button
                                   className='btn btn-sm btn-warning'
                                   onClick={e => handleUpdate(head._id)}
                                 >
@@ -315,148 +318,161 @@ function SubHeading () {
                   </div>
                 </div>
 
-                {showUpdate ? (<div className='col-md-3'>
-                  <div className='card px-3 py-3'>
-                    <h5 className='card-header mb-4 fw-5 text-secondary'>
-                      Update Sub Heading
-                    </h5>
+                {showUpdate ? (
+                  <div className='col-md-3'>
+                    <div className='card px-3 py-3'>
+                      <h5 className='card-header mb-4 fw-5 text-secondary'>
+                        Update Sub Heading
+                      </h5>
 
-                    <div class='form-group'>
-                      <label for='name'>Account Type</label>
-                      <select
-                        class='custom-select border-info'
-                        name='account_type_id'
-                        id='upacc_type'
-                        onChange={e => handleUpAccountHeader(e.target.value)}
+                      <div class='form-group'>
+                        <label for='name'>Account Type</label>
+                        <select
+                          class='custom-select border-info'
+                          name='account_type_id'
+                          id='upacc_type'
+                          onChange={e => handleUpAccountHeader(e.target.value)}
+                        >
+                          <option>Choose Account Type</option>
+                          {accTypeList.map(option => (
+                            <option
+                              value={option._id}
+                              selected={option._id === upAccType}
+                            >
+                              {option.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {flag ? (
+                        <div class='form-group'>
+                          <label for='name'>Heading</label>
+                          <select
+                            class='custom-select border-info'
+                            name='account_type_id'
+                            id='upacc_head'
+                            onChange={e => handleUpHeading(e.target.value)}
+                          >
+                            <option>Choose Account Heading </option>
+                            {accHeaderList.map(option => (
+                              <option
+                                value={option._id}
+                                selected={option._id === upAccHead}
+                              >
+                                {option.name}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      ) : null}
+
+                      <div class='form-group'>
+                        <label for='name' className='text-secondary'>
+                          Name
+                        </label>
+                        <input
+                          type='text'
+                          class='form-control border-info'
+                          name='name'
+                          id='upname'
+                          defaultValue={upName}
+                          //   ref={(el) => (this.name = el)}
+                          onChange={e => setUpName(e.target.value)}
+                        />
+                      </div>
+                      <div class='form-group'>
+                        <label for='name' className='text-secondary'>
+                          Description
+                        </label>
+                        <textarea
+                          className='form-control'
+                          id='updesc'
+                          defaultValue={upDesc}
+                          //   ref={(el) => (this.description = el)}
+                          onChange={e => setUpDesc(e.target.value)}
+                        ></textarea>
+                      </div>
+                      <button
+                        className='btn btn-primary form-control text-center fw-5'
+                        onClick={SubHeadingUpdate}
                       >
-                        <option>Choose Account Type</option>
-                        {accTypeList.map(option => (
-                          <option value={option._id} selected={option._id === upAccType}>{option.name}</option>
-                        ))}
-                      </select>
+                        Update
+                      </button>
                     </div>
-
-                    {flag ? (
-              <div class='form-group'>
-                <label for='name'>Heading</label>
-                <select
-                  class='custom-select border-info'
-                  name='account_type_id'
-                  id='upacc_head'
-                  onChange={e => handleUpHeading(e.target.value)}
-                >
-                  <option>Choose Account Heading </option>
-                  {accHeaderList.map(option => (
-                    <option value={option._id} selected={option._id === upAccHead}>{option.name}</option>
-                  ))}
-                </select>
-              </div>
-            ) : null}
-
-                    <div class='form-group'>
-                      <label for='name' className='text-secondary'>
-                        Name
-                      </label>
-                      <input
-                        type='text'
-                        class='form-control border-info'
-                        name='name'
-                        id='upname'
-                        defaultValue={upName}
-                        //   ref={(el) => (this.name = el)}
-                        onChange={e => setUpName(e.target.value)}
-                      />
-                    </div>
-                    <div class='form-group'>
-                      <label for='name' className='text-secondary'>
-                        Description
-                      </label>
-                      <textarea
-                        className='form-control'
-                        id='updesc'
-                        defaultValue={upDesc}
-                        //   ref={(el) => (this.description = el)}
-                        onChange={e => setUpDesc(e.target.value)}
-                      ></textarea>
-                    </div>
-                    <button
-                      className='btn btn-primary form-control text-center fw-5'
-                      onClick={SubHeadingUpdate}
-                    >
-                      Update
-                    </button>
                   </div>
-                </div>): (<div className='col-md-3'>
-                  <div className='card px-3 py-3'>
-                    <h5 className='card-header mb-4 fw-5 text-secondary'>
-                      Create Sub Heading
-                    </h5>
+                ) : (
+                  <div className='col-md-3'>
+                    <div className='card px-3 py-3'>
+                      <h5 className='card-header mb-4 fw-5 text-secondary'>
+                        Create Sub Heading
+                      </h5>
 
-                    <div class='form-group'>
-                      <label for='name'>Account Type</label>
-                      <select
-                        class='custom-select border-info'
-                        name='account_type_id'
-                        id='acc_type'
-                       // onChange={e => setAccType(e.target.value)}
-                       onChange={e => handleAccountHeader(e.target.value)}
+                      <div class='form-group'>
+                        <label for='name'>Account Type</label>
+                        <select
+                          class='custom-select border-info'
+                          name='account_type_id'
+                          id='acc_type'
+                          // onChange={e => setAccType(e.target.value)}
+                          onChange={e => handleAccountHeader(e.target.value)}
+                        >
+                          <option>Choose Account Type</option>
+                          {accTypeList.map(option => (
+                            <option value={option._id}>{option.name}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      {flag ? (
+                        <div class='form-group'>
+                          <label for='name'>Heading</label>
+                          <select
+                            class='custom-select border-info'
+                            name='account_type_id'
+                            id='acc_head'
+                            onChange={e => handleHeading(e.target.value)}
+                          >
+                            <option>Choose Heading Account</option>
+                            {accHeaderList.map(option => (
+                              <option value={option._id}>{option.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                      ) : null}
+
+                      <div class='form-group'>
+                        <label for='name' className='text-secondary'>
+                          Name
+                        </label>
+                        <input
+                          type='text'
+                          class='form-control border-info'
+                          name='name'
+                          id='name'
+                          //   ref={(el) => (this.name = el)}
+                          onChange={e => setName(e.target.value)}
+                        />
+                      </div>
+                      <div class='form-group'>
+                        <label for='name' className='text-secondary'>
+                          Description
+                        </label>
+                        <textarea
+                          className='form-control'
+                          id='desc'
+                          //   ref={(el) => (this.description = el)}
+                          onChange={e => setDescription(e.target.value)}
+                        ></textarea>
+                      </div>
+                      <button
+                        className='btn btn-primary form-control text-center fw-5'
+                        onClick={SubHeadingCreate}
                       >
-                        <option>Choose Account Type</option>
-                        {accTypeList.map(option => (
-                          <option value={option._id}>{option.name}</option>
-                        ))}
-                      </select>
+                        Save
+                      </button>
                     </div>
-
-                    {flag ? (
-              <div class='form-group'>
-                <label for='name'>Heading</label>
-                <select
-                  class='custom-select border-info'
-                  name='account_type_id'
-                  id='acc_head'
-                  onChange={e => handleHeading(e.target.value)}
-                >
-                  <option>Choose Heading Account</option>
-                  {accHeaderList.map(option => (
-                    <option value={option._id}>{option.name}</option>
-                  ))}
-                </select>
-              </div>
-            ) : null}
-
-                    <div class='form-group'>
-                      <label for='name' className='text-secondary'>
-                        Name
-                      </label>
-                      <input
-                        type='text'
-                        class='form-control border-info'
-                        name='name'
-                        id='name'
-                        //   ref={(el) => (this.name = el)}
-                        onChange={e => setName(e.target.value)}
-                      />
-                    </div>
-                    <div class='form-group'>
-                      <label for='name' className='text-secondary'>
-                        Description
-                      </label>
-                      <textarea
-                        className='form-control'
-                        id='desc'
-                        //   ref={(el) => (this.description = el)}
-                        onChange={e => setDescription(e.target.value)}
-                      ></textarea>
-                    </div>
-                    <button
-                      className='btn btn-primary form-control text-center fw-5'
-                      onClick={SubHeadingCreate}
-                    >
-                      Save
-                    </button>
                   </div>
-                </div>
                 )}
               </div>
             </div>
