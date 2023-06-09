@@ -72,8 +72,6 @@ export default function BankTran(props) {
   const BankReg = () => {
     const data = {
       bankName: bankName,
-      relatedType: type,
-      relatedHeader: header,
       accountName: accountName,
       accountNumber: accountNumber,
       accountHolderName: accountHolderName,
@@ -81,7 +79,6 @@ export default function BankTran(props) {
       openingDate: openingDate,
       balance: balance,
       bankAddress: bankAddress,
-      subHeading:subHeading
     };
     // alert(JSON.stringify(data));
     const config = {
@@ -89,7 +86,8 @@ export default function BankTran(props) {
     };
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank",
+        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank",
+        "http://localhost:9000/api/bank",
         data,
         config
       )
@@ -138,8 +136,8 @@ export default function BankTran(props) {
      };
 
 
-     getTypeLists();
-     getHeaderLists();
+     //getTypeLists();
+     //getHeaderLists();
 
    }, []);
   
@@ -269,7 +267,7 @@ export default function BankTran(props) {
                 </div>
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-6">
                 <div className="form-group">
                   <label className="control-label">Types</label>
@@ -318,7 +316,7 @@ export default function BankTran(props) {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             <div className="form-actions">
               <div className="row">
                 <div className="col-md-6">

@@ -93,7 +93,7 @@ const TestVoucherPrint = () => {
     document.getElementById("printtop").style.marginTop = "100px";
    
    document.getElementById("printtop").style.position = "running(footer)";
-   //document.getElementById("printtop").classList.add("fixed-bottom");
+   document.getElementById("printtop").classList.add("fixed-bottom");
    //document.getElementById("printtop").style.bottom= "0";
       let printContents = document.getElementById('print').innerHTML;
       let originalContents = document.body.innerHTML;

@@ -4,15 +4,28 @@ import Sidebar from "./SideBar";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
-//const url = 'http://localhost:9000/api'
+//const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+const url = 'http://localhost:9000/api'
 
 export default function TrialBalance() {
     const [accountLists, setAccountLists] = useState([]);
+    const[transactionLists,setTransactionLists] = useState([]);
     const [trailAccs, setTrailAccs] = useState([]);
     const [start, setStart] = useState("");
+    const [isShow, setIsShow] = useState(false)
+
+    const handleRelatedShow = (id) => {
+    
+        if (isShow) {
+          document.getElementById('toggle' + id).removeAttribute('hidden')
+        } else {
+          document.getElementById('toggle' + id).setAttribute('hidden', 'hidden')
+        }
+        setIsShow(!isShow)
+      }
 
     const fetchTrialAndBalance = async (event) => {
+        console.log(event.target.value)
         try {
             Swal.fire({
                 title: 'Loading',
@@ -21,13 +34,16 @@ export default function TrialBalance() {
             });
             await axios.get(url + `/transactions/trial-balance`, {params:{start:start, end:event.target.value}}).then((res) => {
                 setAccountLists(res.data.data)
+                setTransactionLists(res.data.transaction)
+                console.log(res.data.data)
+               console.log(res.data.transaction)
             }).catch((error)=> {
                 console.log('error',error)
             })
             Swal.close();
 
             // Process the response data
-            console.log(data);
+            //console.log(data);
         } catch (error) {
             Swal.close();
             console.error('Error occurred while fetching data.', error);
@@ -101,21 +117,154 @@ export default function TrialBalance() {
                                                             <th>Account Name</th>
                                                             <th>Debit(MMK)</th>
                                                             <th>Credit(MMK)</th>
-
+                                                            <th>Transaction</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody className="text-center">
+                                                   
                                                         {console.log(accountLists)}
                                                         {accountLists.map((element, index) => (
+                                                             <tbody className="text-center">
                                                             <tr key={element._id}>
                                                                 <td>{++index}</td>
                                                                 <td>{element.type.name ? element.type.name : ""}</td>
                                                                 <td>{element.accName ? element.accName : ""}</td>
                                                                 <td>{element.netType === "Debit" ? element.netAmount : ""}</td>
                                                                 <td>{element.netType === "Credit" ? element.netAmount : ""}</td>
+                                                                <td className='text-center'>
+                                      <button
+                                        type='button'
+                                        className='btn btn-sm btn-primary ml-2'
+                                        onClick={() =>
+                                          handleRelatedShow(
+                                           element.relatedAccountingId
+                                          )
+                                        }
+                                      >
+                                        Transaction
+                                      </button>
+                                    </td>
                                                             </tr>
+                                                        <tr
+                                                        className='bg-light'
+                                                        id={'toggle' + element.relatedAccountingId}
+                                                        hidden
+                                                      >
+                                                        <td colspan='12'>
+                                                          <div>
+                                                            <div class='row'>
+                                                              {/* <div class='col-md-1'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  No
+                                                                </label>
+                                                              </div> */}
+                                                              {/* <div class='col-md-3'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  Account
+                                                                </label>
+                                                              </div> */}
+                                                              <div class='col-md-2'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  Type
+                                                                </label>
+                                                              </div>
+                                                              <div class='col-md-3'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  Date
+                                                                </label>
+                                                              </div>
+                                                              <div class='col-md-3'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  Amount
+                                                                </label>
+                                                              </div>
+                                                              <div class='col-md-3'>
+                                                                <label
+                                                                  style={{ fontSize: '15px' }}
+                                                                  class='text-dark'
+                                                                >
+                                                                  Remark
+                                                                </label>
+                                                              </div>
+                                                            </div>
+                    
+                                                           {transactionLists.map((tList, i) => (
+                                                                (tList.relatedAccounting === element.relatedAccountingId) ?(
+                                                                    <div class='row'>
+                                                                    {/* <div class='col-md-1'>
+                                                                      <label
+                                                                        style={{ fontSize: '14px' }}
+                                                                        
+                                                                      >
+                                                                        {++i}
+                                                                      </label>
+                                                                    </div> */}
+                                                                    {/* <div class='col-md-3'>
+                                                                      <label
+                                                                        style={{ fontSize: '15px' }}
+                                                                        class='text-dark'
+                                                                      >
+                                                                        Account
+                                                                      </label>
+                                                                    </div> */}
+                                                                    <div class='col-md-2'>
+                                                                      <label
+                                                                        style={{ fontSize: '14px' }}
+                                                                        
+                                                                      >
+                                                                       {tList.type}
+                                                                      </label>
+                                                                    </div>
+                                                                    <div class='col-md-3'>
+                                                                      <label
+                                                                        style={{ fontSize: '14px' }}
+                                                                        
+                                                                      >
+                                                                        {tList.date.split('T')[0]}
+                                                                      </label>
+                                                                    </div>
+                                                                    <div class='col-md-3'>
+                                                                      <label
+                                                                        style={{ fontSize: '14px' }}
+                                                                        
+                                                                      >
+                                                                        {tList.amount}
+                                                                      </label>
+                                                                    </div>
+                                                                    <div class='col-md-3'>
+                                                                      <label
+                                                                        style={{ fontSize: '14px' }}
+                                                                        
+                                                                      >
+                                                                        {tList.remark}
+                                                                      </label>
+                                                                    </div>
+                                                                  </div>
+
+                                                                  ): ("")
+                                                                ))
+                                                                    }
+                                                          </div>
+                                                        </td>
+                                                      </tr>
+                                                      </tbody>
+
                                                         ))}
-                                                    </tbody>
+                                                   
                                                 </table>
                                                 <br /><a href="balancesheet_acc_list" className="float-left">Balance Sheet</a>;
                                             </div>

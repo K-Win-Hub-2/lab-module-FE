@@ -83,7 +83,8 @@ function AccountList() {
     const getAccountLists = async () => {
       try {
         const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        'http://localhost:9000/api/accounting-lists'
         )
 
         setAccountLists(res.data.list)
@@ -227,7 +228,8 @@ function AccountList() {
 
                             <th>Type</th>
                             <th>Header</th>
-                            <th>Sub Heading</th>
+                            <th>SubHeader</th>
+                            <th>Name</th>
                             <th>Balance</th>
                             <th>Currency</th>
                             {/* <th>Flag</th>
@@ -245,6 +247,11 @@ function AccountList() {
                               <td>
                                 {accountList.relatedHeader
                                   ? accountList.relatedHeader.name
+                                  : ''}
+                              </td>
+                              <td>
+                                {accountList.relatedSubHeader
+                                  ? accountList.relatedSubHeader.name
                                   : ''}
                               </td>
                               <td>{accountList.name}</td>

@@ -273,6 +273,13 @@ function Sidebar () {
                         <p>Heading</p>
                       </Link>
                     </li>
+
+                    <li className='nav-item'>
+                      <Link to='/account_subhead' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Sub Heading</p>
+                      </Link>
+                    </li>
                     
                     <li className='nav-item'>
                       <Link to='/fix-ass' className='nav-link'>
@@ -314,6 +321,24 @@ function Sidebar () {
                       <Link to='/journal' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Journal Entry</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/balance_sheet' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Balance Sheet</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/balance_sheet' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Balance Sheet</p>
+                      </Link>
+                    </li>
+                    <li className='nav-item'>
+                      <Link to='/profit_loss_statement' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>P&L Statement</p>
                       </Link>
                     </li>
                     <li className='nav-item'>

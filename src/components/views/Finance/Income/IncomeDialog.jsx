@@ -13,7 +13,7 @@ import Swal  from 'sweetalert2';
 export default function BankInfoDialog(props) {
   const [bankList, setBankList] = useState([]);
   const [cashList, setCashList] = useState([]);
-  const [medicineSale, setMedicineSale] = useState([]);
+  const [incomeAccountList, setIncomeAccountList] = useState([]);
   const [currencyList, setCurrencyList] = useState([]);
   const [showBank, setShowBank] = useState(false);
   const [showCash, setShowCash] = useState(false);
@@ -53,7 +53,7 @@ export default function BankInfoDialog(props) {
     axios
       .post(
         //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
+        "http://localhost:9000/api/income",
         jsonData,
         config
       )
@@ -121,12 +121,14 @@ export default function BankInfoDialog(props) {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          "http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash In Hand" &&
+          el.relatedSubHeader.name == "Cash" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setCashList(cash);
@@ -136,12 +138,14 @@ export default function BankInfoDialog(props) {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"'
+         "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash At Bank" &&
+          el.relatedSubHeader.name == "Bank" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setBankList(bank);
@@ -151,13 +155,17 @@ export default function BankInfoDialog(props) {
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          "http://localhost:9000/api/accounting-lists"
         );
-        const medicineSale = res.data.list.filter(
-          (e) => e.relatedType.name == "Revenues"
+        const incomeAccounts = res.data.list.filter(
+          (el) =>  el.relatedSubHeader.name == "Other Income" &&
+          el.relatedHeader.name == "Other Income" &&
+          el.relatedType.name === "Income"
         );
+        console.log(incomeAccounts)
        // setInitialAmount(medicineSale[0].amount);
-        setMedicineSale(medicineSale);
+        setIncomeAccountList(incomeAccounts);
         // setAccountingList(res.data.list)
       } catch (err) {}
     };
@@ -282,7 +290,7 @@ export default function BankInfoDialog(props) {
             <option value="">Select Income Account</option>
             {/* @foreach ($inc_account as $acc) */}
 
-            {medicineSale.map((option) => (
+            {incomeAccountList.map((option) => (
               <option value={option._id}>{option.name}</option>
             ))}
 
@@ -312,7 +320,7 @@ export default function BankInfoDialog(props) {
                 name="currency"
                 id=""
                 className="form-control mt-1"
-                onchange="convert(this.value)"
+               
                 onChange={(e) => setInitialCurrency(e.target.value)}>
                 <option value="">Choose Currency</option>
                 {/* {currencyList.map((option) => (

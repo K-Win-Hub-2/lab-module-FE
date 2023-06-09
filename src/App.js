@@ -34,12 +34,15 @@ import ReagentUpdate from './components/views/ReagentUpdate'
 // import Supplier from "./components/views/Supplier.jsx";
 import Transfer from './components/views/Finance/Transfer/TransferList.jsx'
 import AccountHead from './components/views/Finance/Heding.jsx'
+import AccountSubHead from './components/views/Finance/SubHeding.jsx'
 import AccountType from './components/views/Finance/AccountType.jsx'
 import Transaction from './components/views/Finance/AllTransaction.jsx'
 import JournalEntry from './components/views/Finance/Journal-Entry/JournalEntryList.jsx'
 import FixedAsset from './components/views/Finance/FixedAsset/FixAsset.jsx'
 import AddAsset from './components/views/Finance/FixedAsset/AddAsset.jsx'
 import SellEndDialog from './components/views/Finance/FixedAsset/SellEndDialog.jsx'
+import BalanceSheet from './components/views/Finance/Reports/BalanceSheet.jsx'
+import ProfitandLossStatement from './components/views/Finance/Reports/ProfitandLoss.jsx'
 
 import './App.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -99,11 +102,14 @@ function App () {
         <Route path='/transfer' element={<Transfer />}></Route>
         <Route path='/account_type' element={<AccountType />}></Route>
         <Route path='/account_head' element={<AccountHead />}></Route>
+        <Route path='/account_subhead' element={<AccountSubHead />}></Route>
         <Route path='/transaction' element={<Transaction />}></Route>
         <Route path='/journal' element={<JournalEntry />}></Route>
         <Route path='/fix-ass' element={<FixedAsset />}></Route>
         <Route path='/add-asset' element={<AddAsset />}></Route>;
         <Route path='/sellEnd/:id' element={<SellEndDialog />}></Route>
+        <Route path='/balance_sheet' element={<BalanceSheet />}></Route>;
+        <Route path='/profit_loss_statement' element={<ProfitandLossStatement />}></Route>;
       </Routes>
     </Router>
   )

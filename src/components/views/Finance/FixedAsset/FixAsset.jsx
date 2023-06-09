@@ -144,7 +144,7 @@ function FixedAsset() {
                               className="btn btn-sm btn-primary ml-2"
                               onClick={() =>
                                 handleTransactionShow(
-                                  fixedAsset.relatedAccount._id
+                                  fixedAsset.relatedAssetAccount._id
                                 )
                               }>
                               Transaction
@@ -154,7 +154,7 @@ function FixedAsset() {
 
                         <tr
                           className="bg-light"
-                          id={"toggle" + fixedAsset.relatedAccount._id}
+                          id={"toggle" + fixedAsset.relatedAssetAccount._id}
                           hidden>
                           <td colspan="12">
                             <div>

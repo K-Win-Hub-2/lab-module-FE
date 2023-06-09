@@ -141,12 +141,14 @@ export default function BankInfoDialog(props) {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         "http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash In Hand" &&
+          el.relatedSubHeader.name == "Cash" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setCashList(cash);
@@ -156,12 +158,14 @@ export default function BankInfoDialog(props) {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash At Bank" &&
+          el.relatedSubHeader.name == "Bank" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setBankList(bank);
@@ -180,10 +184,13 @@ export default function BankInfoDialog(props) {
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          "http://localhost:9000/api/accounting-lists"
         );
         const medicineSale = res.data.list.filter(
-          (e) => e.relatedType.name == "Expenses"
+          (el) => el.relatedSubHeader.name == "Other Expense" &&
+          el.relatedHeader.name == "Other Expense" &&
+          el.relatedType.name === "Expenses"
         );
         //setInitialAmount(medicineSale[0].amount);
         // setFinalAmount(medicineSale[0].amount);

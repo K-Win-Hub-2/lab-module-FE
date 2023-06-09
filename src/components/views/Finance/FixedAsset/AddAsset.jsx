@@ -7,10 +7,12 @@ import { Link } from "react-router-dom";
 import { FaCashRegister, FaFileMedical, FaArrowLeft } from "react-icons/fa";
 
 function AddAsset() {
-  const [accountingLists, setAccountingLists] = useState([]);
+  const [fixedAccountLists, setFixedAccountLists] = useState([]);
+  const [depreAccountLists, setDepreAccountLists] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [relatedAccount, setRelatedAccount] = useState("");
+  const [relatedAssetAccount, setRelatedAssetAccount] = useState("");
+  const [relatedDepreAccount, setRelatedDepreAccount] = useState("");
   const [existingAsset, setExistingAsset] = useState(false);
   const [initialPrice, setInitialPrice] = useState("");
   const [usedYear, setUsedYear] = useState("");
@@ -72,7 +74,8 @@ function AddAsset() {
     const data = {
       name: name,
       description: description,
-      relatedAccount: relatedAccount,
+      relatedAssetAccount: relatedAssetAccount,
+      relatedDepreciationAccount: relatedDepreAccount,
       existingAsset: existingAsset,
       initialPrice: initialPrice,
       salvageValue: salvageValue,
@@ -107,7 +110,8 @@ function AddAsset() {
     // alert(JSON.stringify(data));
     axios
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset",
+       // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset",
+       "http://localhost:9000/api/fixed-asset",
         data,
         config
       )
@@ -128,9 +132,21 @@ function AddAsset() {
     const getAccountingList = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         "http://localhost:9000/api/accounting-lists"
         );
-        setAccountingLists(res.data.list);
+        const fixedAccounts = res.data.list.filter(
+          (el) => el.relatedSubHeader.name == "Fixed Assets" &&
+          el.relatedHeader.name == "Non Current Asset" &&
+          el.relatedType.name === "Assets"
+        );
+        setFixedAccountLists(fixedAccounts);
+        const depreAccounts = res.data.list.filter(
+          (el) => el.relatedSubHeader.name == "Fixed Assets Depreciation" &&
+          el.relatedHeader.name == "Non Current Asset" &&
+          el.relatedType.name === "Assets"
+        );
+        setDepreAccountLists(depreAccounts);
       } catch (err) {}
     };
 
@@ -286,16 +302,31 @@ function AddAsset() {
                       </div>
                       <div className="col-md-6">
                         <div className="form-group">
-                          <label className="control-label">Account</label>
+                          <label className="control-label">Control Asset Account</label>
 
                           <select
                             name="acc"
                             id=""
                             className="form-control mt-1"
-                            onChange={(e) => setRelatedAccount(e.target.value)}>
+                            onChange={(e) => setRelatedAssetAccount(e.target.value)}>
                             <option value="">Choose Account</option>
 
-                            {accountingLists.map((option) => (
+                            {fixedAccountLists.map((option) => (
+                              <option value={option._id}>{option.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div className="form-group">
+                          <label className="control-label">Control Depreciation Account</label>
+
+                          <select
+                            name="acc"
+                            id=""
+                            className="form-control mt-1"
+                            onChange={(e) => setRelatedDepreAccount(e.target.value)}>
+                            <option value="">Choose Account</option>
+
+                            {depreAccountLists.map((option) => (
                               <option value={option._id}>{option.name}</option>
                             ))}
                           </select>

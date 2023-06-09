@@ -89,7 +89,8 @@ function Category() {
     }
     axios
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
+        //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
+        'http://localhost:9000/api/category',
         data,
         config
       )
@@ -151,7 +152,8 @@ function Category() {
     }
     axios
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
+       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
+       'http://localhost:9000/api/category',
         data,
         config
       )

@@ -18,8 +18,11 @@ export default function BankInfoDialog(props) {
   const [code, setCode] = useState('')
   const [accountingTypes, setAccountingTypes] = useState('')
   const [headingList, setHeadingList] = useState([])
+  const [subHeadingList, setSubHeadingList] = useState([])
   const [heading, setHeading] = useState('')
   const [subHeading, setSubHeading] = useState('')
+  const[accName,setAccName] = useState('')
+
   const [accType, setAccType] = useState([])
 
   const [amount, setAmount] = useState('')
@@ -29,6 +32,7 @@ export default function BankInfoDialog(props) {
   const [relatedCurrency, setRelatedCurrency] = useState('')
   const [carryForWork, setCarryForWork] = useState(false)
   const [flag, setFlag] = useState(false)
+  const [subFlag, setSubFlag] = useState(false)
 
   const AccountCreate = () => {
     const data = {
@@ -36,7 +40,8 @@ export default function BankInfoDialog(props) {
       name: subHeading,
       relatedType: accountingTypes,
       relatedHeader: heading,
-      subHeader: subHeading,
+      relatedSubHeader: subHeading,
+      name: accName,
       amount: amount,
       openingBalance: amount,
       generalFlag: generalFlag,
@@ -52,7 +57,8 @@ export default function BankInfoDialog(props) {
 
     axios
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+       'http://localhost:9000/api/accounting-list',
         data,
         config
       )
@@ -60,7 +66,7 @@ export default function BankInfoDialog(props) {
         // alert("success");
         Swal.fire({
           title: 'Successful!',
-          text: 'You Created Income Data!',
+          text: 'Successfully created!',
           icon: 'success',
           // showCancelButton: true,
 
@@ -86,6 +92,18 @@ export default function BankInfoDialog(props) {
   const handleHeading = async event => {
     setHeading(event)
     console.log(heading, headingList)
+    // const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
+    const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+    console.log(url)
+    const res = await axios.get(url)
+    console.log(res.data.data, 'res.data.data')
+    setSubHeadingList(res.data.data)
+    setSubFlag(true)
+   // console.log(headingList, 'heading')
+  }
+  
+  const handleSubHeading = async event => {
+    setSubHeading(event)
   }
 
   const handleAccountHeader = async event => {
@@ -99,6 +117,8 @@ export default function BankInfoDialog(props) {
     setFlag(true)
     console.log(headingList, 'heading')
   }
+
+  
   useEffect(() => {
     const getAccountingType = async () => {
       try {
@@ -194,15 +214,30 @@ export default function BankInfoDialog(props) {
                 </select>
               </div>
             ) : null}
+             {subFlag ? (
+              <div class='form-group'>
+                <label for='name'>Sub Heading</label>
+                <select
+                  class='custom-select border-info'
+                  name='account_subheader'
+                  onChange={e => handleSubHeading(e.target.value)}
+                >
+                  <option>Choose Account Sub Heading</option>
+                  {subHeadingList.map(option => (
+                    <option value={option._id}>{option.name}</option>
+                  ))}
+                </select>
+              </div>
+            ) : null}
             <div class='form-group'>
-              <label for='name'>Sub Heading</label>
+              <label for='name'>Account Name</label>
 
               <input
                 type='text'
                 name='sub_head'
                 className='form-control border-info'
                 id=''
-                onChange={e => setSubHeading(e.target.value)}
+                onChange={e => setAccName(e.target.value)}
               />
             </div>
 
@@ -215,6 +250,7 @@ export default function BankInfoDialog(props) {
                 onChange={e => setAmount(e.target.value)}
               />
             </div>
+
             <div class='form-group'>
               <label for='name'>Currency</label>
               <input
@@ -224,6 +260,7 @@ export default function BankInfoDialog(props) {
                 onChange={e => setRelatedCurrency(e.target.value)}
               />
             </div>
+
             {/* <div class='form-group'>
               <label for='name'>General Flag</label>
               <div class='row'>

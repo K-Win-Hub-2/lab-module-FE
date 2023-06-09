@@ -59,13 +59,13 @@ function MedicineSale() {
     // const bankArray = accList.filter(
     //   el => el.relatedHeader.name === 'Cash At Bank'
     // )
-    setBank(accList.filter(el => el.relatedHeader.name === 'Cash At Bank'))
+    setBank(accList.filter(el => el.relatedSubHeader.name === 'Bank'))
   }
   const handleCash = event => {
     // const cashArray = accList.filter(
     //   el => el.relatedHeader.name === 'Cash In Hand'
     // )
-    setCash(accList.filter(el => el.relatedHeader.name === 'Cash In Hand'))
+    setCash(accList.filter(el => el.relatedSubHeader.name === 'Hand'))
   }
 
   const handleOther = event => {

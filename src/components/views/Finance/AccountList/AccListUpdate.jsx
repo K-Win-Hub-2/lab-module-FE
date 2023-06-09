@@ -9,6 +9,7 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
 import styled from 'styled-components'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
+import Swal from 'sweetalert2'
 
 
 import { useState, useEffect } from 'react'
@@ -21,15 +22,11 @@ import { valueOf } from '../../../../assets/plugins/moment/src/lib/moment/to-typ
 
 export default function BankInfoDialog(props) {
   const [code, setCode] = useState('')
-  const [accountingTypes, setAccountingTypes] = useState('')
+  
   const [headingList, setHeadingList] = useState([])
-  const [heading, setHeading] = useState('')
-  const [subHeading, setSubHeading] = useState('')
   const [accType, setAccType] = useState([])
+  const [subHeadingList, setSubHeadingList] = useState([])
 
-  const [amount, setAmount] = useState('')
-
-  const [relatedCurrency, setRelatedCurrency] = useState('')
   const [upWork, setUpWork] = useState(false)
   const [flag, setFlag] = useState(false)
   const [upFlag, setUpFlag] = useState(true)
@@ -38,16 +35,18 @@ export default function BankInfoDialog(props) {
   const [upBal, setUpBal] = useState('')
   const [upCur, setUpCur] = useState('')
   const [reHead, setReHead] = useState('')
+  const [reSubHead, setReSubHead] = useState('')
   const [reType, setReType] = useState('')
   const Id = useLocation().pathname.split('/')[2]
 
-  const AccountCreate = () => {
+  const AccountUpdate = () => {
     const data = {
       id: Id,
       code: upCode,
       name: upSub,
       relatedType: reType,
       relatedHeader: reHead,
+      relatedSubHeader: reSubHead,
       subHeader: upSub,
       amount: upBal,
       openingBalance: upBal,
@@ -61,14 +60,15 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(data))
     axios
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+       'http://localhost:9000/api/accounting-list',
         data,
         config
       )
       .then(function (response) {
         Swal.fire({
           title: 'Success',
-          text: 'Successfully Deleted!',
+          text: 'Successfully Updated!',
           icon: 'success',
           confirmButtonText: 'OK'
         })
@@ -95,13 +95,22 @@ export default function BankInfoDialog(props) {
   }
 
   const handleHeading = async event => {
-    setHeading(event)
+   // setHeading(event)
+   setReHead(event)
     // console.log(heading, headingList)
+    const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+    console.log(url)
+    const res = await axios.get(url)
+    console.log(res.data.data, 'res.data.data')
+    setSubHeadingList(res.data.data)
+
   }
 
+  
+
   const handleAccountHeader = async event => {
-    setAccountingTypes(event)
-    // setReType(event)
+    //setAccountingTypes(event)
+    setReType(event)
     // console.log(accountingTypes)
     const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
     console.log(url)
@@ -125,10 +134,11 @@ export default function BankInfoDialog(props) {
       try {
         console.log(Id, 'Id')
         const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
+          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
+          'http://localhost:9000/api/accounting-list/' +
             Id
         )
-        // console.log(res.data.data)
+        console.log(res.data.data)
         setUpCode(res.data.data[0].code)
         // console.log(res.data.data[0].code)
 
@@ -138,6 +148,9 @@ export default function BankInfoDialog(props) {
 
         setReHead(res.data.data[0].relatedHeader)
         setReType(res.data.data[0].relatedType)
+        setReSubHead(res.data.data[0].relatedSubHeader)
+        console.log(reSubHead)
+        
       } catch (err) {}
     }
     getAccountingType()
@@ -236,8 +249,27 @@ export default function BankInfoDialog(props) {
                   ) : (
                     ''
                   )}
+
+                  {reSubHead.name ? (
+                    <div class='form-group'>
+                      <label for='name'>Sub Heading</label>
+                      <select
+                        class='custom-select border-info'
+                        name='account_subhead'
+                        onChange={e => setReSubHead(e.target.value)}
+                      >
+                        <option value={reSubHead._id}>{reSubHead.name}</option>
+                        {subHeadingList.map(option => (
+                          <option value={option._id}>{option.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  ) : (
+                    ''
+                  )}
+
                   <div class='form-group'>
-                    <label for='name'>Sub Heading</label>
+                    <label for='name'>Account Name</label>
 
                     <input
                       type='text'
@@ -347,7 +379,7 @@ export default function BankInfoDialog(props) {
                   >
                     Close
                   </button>
-                  <Button class='btn btn-primary' onClick={AccountCreate}>
+                  <Button class='btn btn-primary' onClick={AccountUpdate}>
                     Update
                   </Button>
                 </div>

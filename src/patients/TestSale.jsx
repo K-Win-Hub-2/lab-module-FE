@@ -92,12 +92,14 @@ const TestSale = () => {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         "http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash In Hand" &&
+          el.relatedSubHeader.name == "Cash" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setCashList(cash);
@@ -107,12 +109,14 @@ const TestSale = () => {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
           (el) =>
-            el.relatedHeader.name == "Cash At Bank" &&
+          el.relatedSubHeader.name == "Bank" &&
+            el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
         setBankList(bank);
@@ -238,8 +242,8 @@ const TestSale = () => {
       amount: 0,
       seq: 2,
     };
-    if (relatedCashAcc) data.relatedCashAccount = relatedCashAcc;
-    if (relatedBankAcc) data.relatedBankAccount = relatedBankAcc;
+    if (relatedCashAcc) data.relatedCash = relatedCashAcc;
+    if (relatedBankAcc) data.relatedBank = relatedBankAcc;
     if (did) data.referDoctor = did;
 
     if (change < 0) {
@@ -247,8 +251,8 @@ const TestSale = () => {
     }
 
     const res = axios
-      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
-    // .post("http://localhost:9000/api/voucher", data)
+   //   .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
+     .post("http://localhost:9000/api/voucher", data)
       .then(function (response) {
         console.log(response.data.data._id, 'here')
         setVoucherObjectID(response.data.data._id)
