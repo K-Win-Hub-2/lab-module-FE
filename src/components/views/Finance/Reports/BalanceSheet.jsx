@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { set } from "../../../../assets/plugins/moment/src/lib/moment/get-set";
 
-//const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
-const url = 'http://localhost:9000/api'
+const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+//const url = 'http://localhost:9000/api'
 
 export default function BalanceSheet() {
     const [accountLists, setAccountLists] = useState([]);
@@ -75,8 +75,8 @@ export default function BalanceSheet() {
            
               try {
                 const res = await axios.get(
-                //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-                'http://localhost:9000/api/accounting-lists'
+                'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+                //'http://localhost:9000/api/accounting-lists'
                 )
         
                 setAccountLists(res.data.list)

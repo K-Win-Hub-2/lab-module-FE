@@ -110,8 +110,8 @@ function AddAsset() {
     // alert(JSON.stringify(data));
     axios
       .post(
-       // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset",
-       "http://localhost:9000/api/fixed-asset",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset",
+       //"http://localhost:9000/api/fixed-asset",
         data,
         config
       )
@@ -132,8 +132,8 @@ function AddAsset() {
     const getAccountingList = async () => {
       try {
         const res = await axios.get(
-         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-         "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+       //  "http://localhost:9000/api/accounting-lists"
         );
         const fixedAccounts = res.data.list.filter(
           (el) => el.relatedSubHeader.name == "Fixed Assets" &&

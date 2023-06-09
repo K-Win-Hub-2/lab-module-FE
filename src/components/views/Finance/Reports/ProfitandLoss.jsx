@@ -5,8 +5,8 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { set } from "../../../../assets/plugins/moment/src/lib/moment/get-set";
 
-//const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
-const url = 'http://localhost:9000/api'
+const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+//const url = 'http://localhost:9000/api'
 
 export default function ProfitandLossStatement() {
     const [accountLists, setAccountLists] = useState([]);

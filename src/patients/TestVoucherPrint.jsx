@@ -30,24 +30,24 @@ const TestVoucherPrint = () => {
   // const [headerOff, setHeaderOff] = useState(false);
 
   const TR = styled.tr`
-    font-size: 22px;
-    margin-top: 20px;
+    font-size: 20px;
+    margin-top: 16px;
 
     border-style: hidden;
   `
   const TH1 = styled.th`
-    font-size: 17px;
+    font-size: 15px;
     margin-bottom: 1px;
     padding: 0px;
   `
   const TD1 = styled.td`
-    font-size: 17px;
+    font-size: 14px;
     margin-bottom: 1px;
     padding: 0px;
   `
 
   const SPAN = styled.span`
-    font-size: 17px;
+    font-size: 15px;
   `
   const P = styled.p`
     color: white;
@@ -292,7 +292,7 @@ const TestVoucherPrint = () => {
                     <tbody></tbody>
                   </table>
 
-                  <table className='table table-hover mt-4' style={{height: "300px", maxHeight:"300px", pageBreakInside: "auto"}}>
+                  <table className='table table-hover mt-4' style={{height: "200px", maxHeight:"200px", pageBreakInside: "auto"}}>
                     <thead style={{height: "10px"}}>
                       <tr style={{pageBreakInside: "avoid", pageBreakAfter:"auto", marginBottom: "1px"}} >
                         <TH1>Test</TH1>

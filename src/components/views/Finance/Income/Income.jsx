@@ -54,17 +54,20 @@ const Income = () => {
     }
   }
 
-  const handleRelatedShow = (id, val) => {
+  const handleRelatedShow = (id) => {
     const getRelated = async () => {
       try {
-        console.log(val)
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/' +
-            val
-        )
+       
+        await axios.get(
+         // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedIncome/' +
+         'http://localhost:9000/api/transactions/relatedIncome/' +
+           id
+        ).then(function(response){
+          console.log(response.data.data)
+          setRelatedLists(response.data.data)
+        })
 
-        console.log(res.data.data)
-        setRelatedLists(res.data.data)
+       
       } catch (err) {}
     }
 
@@ -82,7 +85,8 @@ const Income = () => {
     const getIncomeLists = async () => {
       try {
         const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/incomes?limit=50'
+          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/incomes?limit=50'
+          'http://localhost:9000/api/incomes?limit=50'
         )
 
         // const result = res.data.list.filter((e) => e.relatedCashAccount.name == 'Cash in Hand-MMK');

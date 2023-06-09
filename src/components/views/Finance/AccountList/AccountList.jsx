@@ -18,6 +18,7 @@ import { calendar } from '../../../../assets/plugins/moment/src/lib/moment/calen
 
 function AccountList() {
   const [accountLists, setAccountLists] = useState([])
+  const[filteredLists,setFilteredLists] = useState([])
   const [open, setOpen] = useState(false)
 
   const showDialog = () => setOpen(true)
@@ -79,15 +80,20 @@ function AccountList() {
   //     setAccData(!isAccData);
   //   };
 
+  const handleInputChange = (event) => {
+    setFilteredLists(accountLists.filter(account=> account.name.includes(event.target.value) || account.relatedSubHeader.name.includes(event.target.value) ))
+  }
+
   useEffect(() => {
     const getAccountLists = async () => {
       try {
         const res = await axios.get(
-        //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-        'http://localhost:9000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+       // 'http://localhost:9000/api/accounting-lists'
         )
 
         setAccountLists(res.data.list)
+        setFilteredLists(res.data.list)
         // dispatch(setList("success"));
         //  console.log(accountList);
       } catch (err) {}
@@ -132,9 +138,24 @@ function AccountList() {
                   <div class='card'>
                     <div class='card-header'>
                       {/* <h3 class="card-title">Account List</h3> */}
-                      <div className='row justify-content-between py-3'>
+                      <div className='row justify-content-between py-4'>
+
+                      
+
                         <div>
+                       
                           <span className='float-right'>
+                          <input
+                      type="search"
+                      className="form-control rounded"
+                      id="search_code"
+                      placeholder="Search By Test Name"
+                      onChange={event =>
+                        handleInputChange(
+                          event
+                        )
+                      }
+                    />
                             <button
                               type='button'
                               id=''
@@ -154,8 +175,7 @@ function AccountList() {
                               onClick={excelExport}
                             >
 
-                             <FaFileExcel
-/>&nbsp; Export
+                            
 
                               <FaFileExcel />
                               &nbsp; Export
@@ -238,7 +258,7 @@ function AccountList() {
                           </tr>
                         </thead>
                         <tbody className=''>
-                          {accountLists.map((accountList, i) => (
+                          {filteredLists.map((accountList, i) => (
                             <tr key={accountList._id}>
                               <td>{++i}</td>
                               <td>{accountList.code}</td>

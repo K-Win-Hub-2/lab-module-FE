@@ -323,12 +323,7 @@ function Sidebar () {
                         <p>Journal Entry</p>
                       </Link>
                     </li>
-                    <li className='nav-item'>
-                      <Link to='/balance_sheet' className='nav-link'>
-                        <i className='nav-icon fas fa-circle'></i>&nbsp;
-                        <p>Balance Sheet</p>
-                      </Link>
-                    </li>
+                    
                     <li className='nav-item'>
                       <Link to='/balance_sheet' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -338,7 +333,7 @@ function Sidebar () {
                     <li className='nav-item'>
                       <Link to='/profit_loss_statement' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
-                        <p>P&L Statement</p>
+                        <p>Income Statement</p>
                       </Link>
                     </li>
                     <li className='nav-item'>

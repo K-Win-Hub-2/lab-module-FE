@@ -57,8 +57,8 @@ export default function BankInfoDialog(props) {
 
     axios
       .post(
-       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-       'http://localhost:9000/api/accounting-list',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+      // 'http://localhost:9000/api/accounting-list',
         data,
         config
       )
@@ -92,8 +92,8 @@ export default function BankInfoDialog(props) {
   const handleHeading = async event => {
     setHeading(event)
     console.log(heading, headingList)
-    // const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
-    const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+     const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
+    //const url = `http://localhost:9000/api/account-subheaders/related/${event}`
     console.log(url)
     const res = await axios.get(url)
     console.log(res.data.data, 'res.data.data')

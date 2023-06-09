@@ -52,8 +52,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
-        "http://localhost:9000/api/income",
+        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
+       // "http://localhost:9000/api/income",
         jsonData,
         config
       )
@@ -121,8 +121,8 @@ export default function BankInfoDialog(props) {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-          "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
@@ -138,8 +138,8 @@ export default function BankInfoDialog(props) {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"'
-         "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        // "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
@@ -155,8 +155,8 @@ export default function BankInfoDialog(props) {
     const getAccountingLists = async () => {
       try {
         const res = await axios.get(
-          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-          "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+          //"http://localhost:9000/api/accounting-lists"
         );
         const incomeAccounts = res.data.list.filter(
           (el) =>  el.relatedSubHeader.name == "Other Income" &&

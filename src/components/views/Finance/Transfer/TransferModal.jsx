@@ -106,8 +106,8 @@ export default function TransferModal(props) {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-          'http://localhost:9000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+         // 'http://localhost:9000/api/accounting-lists'
         )
 
         const cash = res.data.list.filter(
@@ -126,16 +126,17 @@ export default function TransferModal(props) {
       try {
         const res = await axios.get(
           //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/banks'
-          'http://localhost:9000/api/accounting-lists'
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
         )
 
-        // const bank = res.data.list.filter(
-        //   el =>
-        //     el.relatedHeader.name == 'Cash At Bank' &&
-        //     el.relatedType.name === 'Assets'
-        // )
-        setFromBankList(res.data.list)
-        setToBankList(res.data.list)
+        const bank = res.data.list.filter(
+          el =>
+          el.relatedSubHeader.name == 'Bank' &&
+            el.relatedHeader.name == 'Current Asset' &&
+            el.relatedType.name === 'Assets'
+        )
+        setFromBankList(bank)
+        setToBankList(bank)
       } catch (err) { }
     }
 
@@ -223,7 +224,7 @@ export default function TransferModal(props) {
                     <option value=''>Select From Account </option>
                     {fromBankList.map(option => (<>
                       {console.log(fromBank)}
-                      <option value={option.relatedAccounting._id}>{option.bankName}</option>
+                      <option value={option._id}>{option.name}</option>
                     </>
 
                     ))}
@@ -307,7 +308,7 @@ export default function TransferModal(props) {
                     {toBankList.map(option => (
                       <>
                         {console.log(toBank)}
-                        <option value={option.relatedAccounting._id}>{option.bankName}</option>
+                        <option value={option._id}>{option.name}</option>
                       </>
 
                     ))}

@@ -60,8 +60,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(data))
     axios
       .put(
-       // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-       'http://localhost:9000/api/accounting-list',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+      // 'http://localhost:9000/api/accounting-list',
         data,
         config
       )
@@ -98,7 +98,8 @@ export default function BankInfoDialog(props) {
    // setHeading(event)
    setReHead(event)
     // console.log(heading, headingList)
-    const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+    //const url = `http://localhost:9000/api/account-subheaders/related/${event}`
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
     console.log(url)
     const res = await axios.get(url)
     console.log(res.data.data, 'res.data.data')
@@ -134,8 +135,8 @@ export default function BankInfoDialog(props) {
       try {
         console.log(Id, 'Id')
         const res = await axios.get(
-          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
-          'http://localhost:9000/api/accounting-list/' +
+          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
+          //'http://localhost:9000/api/accounting-list/' +
             Id
         )
         console.log(res.data.data)
@@ -374,7 +375,7 @@ export default function BankInfoDialog(props) {
                 <div class='modal-footer'>
                   <Link to='/account_list' className='btn btn-secondary' type='button'> Close</Link>
                   
-                  <Button class='btn btn-primary' onClick={AccountCreate}>
+                  <Button class='btn btn-primary' onClick={AccountUpdate}>
                     Update
                   </Button>
                 </div>
