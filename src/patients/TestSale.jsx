@@ -92,8 +92,8 @@ const TestSale = () => {
     const getCashLists = async () => {
       try {
         const res = await axios.get(
-         // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-         "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        // "http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
@@ -109,8 +109,8 @@ const TestSale = () => {
     const getBankLists = async () => {
       try {
         const res = await axios.get(
-          //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-          "http://localhost:9000/api/accounting-lists"
+          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+         // "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
@@ -251,8 +251,8 @@ const TestSale = () => {
     }
 
     const res = axios
-   //   .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
-     .post("http://localhost:9000/api/voucher", data)
+      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
+   //  .post("http://localhost:9000/api/voucher", data)
       .then(function (response) {
         console.log(response.data.data._id, 'here')
         setVoucherObjectID(response.data.data._id)

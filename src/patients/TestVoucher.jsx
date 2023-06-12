@@ -59,8 +59,9 @@ const TestVoucher = () => {
         relatedPatient: patient_id
       }
       console.log(data, 'patient_id')
-      const res = await axios.get(
+      const res = await axios.post(
         'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers',
+      //'http://localhost:9000/api/vouchers/related-vouchers',
         data
       )
       console.log(res.data.data, 'data')

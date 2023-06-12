@@ -88,9 +88,17 @@ const TestVoucherPrint = () => {
     return decode
   }
 
+  const clickHandler = (event) => {
+		if(event.detail == 2){
+      document.getElementById(event.target.value).tagName.name = "input";
+			console.log("Double Clicked")
+		}
+	}
+
   const handleBottomChange = event => {
     // setShowBottom(false);
     document.getElementById("printtop").style.marginTop = "100px";
+    
    
    document.getElementById("printtop").style.position = "running(footer)";
    document.getElementById("printtop").classList.add("fixed-bottom");
@@ -377,7 +385,7 @@ const TestVoucherPrint = () => {
                                       test.type === 'highlight' ||
                                       test.type === 'both' ? (
                                         <p style={{ color: 'white' }}>""</p>
-                                      ) : test.type === "multiline" ? (<p style={{marginBottom: "45px"}}>
+                                      ) : test.type === "multiline" ? (<p style={{marginBottom: "45px"}} >
                                          {' '}
                                           {test.result !== '' ? (
                                             test.result
@@ -387,7 +395,7 @@ const TestVoucherPrint = () => {
                                             <P>-</P>
                                           )}
                                       </p>) : (
-                                        <p>
+                                        <p >
                                           {' '}
                                           {test.result !== '' ? (
                                             test.result
@@ -419,7 +427,7 @@ const TestVoucherPrint = () => {
                                       test.type === 'both' ? 
                                         <p style={{ color: 'white' }}>""</p>
                                        : ( (test.referenceRange !== "") ?
-                                        ((test.type === "multiline") ? <p>{formatString(test.referenceRange)}</p> : 
+                                        ((test.type === "multiline") ? <p contentEditable="true">{formatString(test.referenceRange)}</p> : 
                                       //   <input
                                       //   className='border-0'
                                       //   type='text'
@@ -427,7 +435,7 @@ const TestVoucherPrint = () => {
                                       //   defaultValue={test.referenceRange}
                                       //   style={{ height: '24px' }}
                                       // />
-                                      <p>{test.referenceRange}</p>
+                                      <p contentEditable="true">{test.referenceRange}</p>
                                         ) :  <P>-</P>)
                                         
                                       

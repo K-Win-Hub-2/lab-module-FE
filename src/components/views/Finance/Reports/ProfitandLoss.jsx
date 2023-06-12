@@ -44,6 +44,9 @@ export default function ProfitandLossStatement() {
   const [otherExpenseTotal, setOtherExpenseTotal] = useState(0)
   const [netProfit, setnetProfit] = useState(0)
   const [incomeTotal, setIncomeTotal] = useState(0)
+  const[openRetained,setOpenRetained] = useState(0)
+  const[closeRetained,setCloseRetained] = useState(0)
+
 
   const handleRelatedShow = id => {
     if (isShow) {
@@ -79,6 +82,8 @@ export default function ProfitandLossStatement() {
           var inctotal = 0
           var tgp = 0
           var np = 0
+          var openRetain = 0
+          var closeRetain = 0
           res.data.data.map(element => {
             if (element.accName === 'Autoimmune Diagnosis-Income') {
               setAutoImmuneRevenue(Math.abs(element.netAmount))
@@ -162,17 +167,29 @@ export default function ProfitandLossStatement() {
               element.type.name === 'Expenses' &&
               element.header === 'Other Expense'
             ) {
+             
               othexp += Math.abs(element.netAmount)
+            }
+
+            
+            if (
+              element.accName === 'Retained Earning'
+            ) {
+              openRetain = Math.abs(element.netAmount)
             }
           })
           tgp = aigp + bcgp + hmgp + hsgp + imgp + mlgp + migp
           inctotal = tgp + othinc
           np = inctotal - othexp
+          closeRetain = openRetain + np
 
           setTotalGP(tgp)
           setIncomeTotal(inctotal)
           setOtherIncomeTotal(othinc)
           setOtherExpenseTotal(othexp)
+          setnetProfit(np)
+          setOpenRetained(openRetain)
+          setCloseRetained(closeRetain)
 
           setAccountLists(res.data.data)
           //setTransactionLists(res.data.transaction)
@@ -666,9 +683,25 @@ export default function ProfitandLossStatement() {
                             )
                           )}
 
+<tr>
+                            <td>
+                              
+                            </td>
+                            <td></td>
+                            <td>{otherIncomeTotal}</td>
+                          </tr>
+
+<tr>
+                            <td>
+                              <u>Total Income</u>
+                            </td>
+                            <td></td>
+                            <td>{incomeTotal}</td>
+                          </tr>
+
                           <tr>
                             <td>
-                              <u>Other Expenses</u>
+                              <u>Less Expenses</u>
                             </td>
                             <td></td>
                             <td></td>
@@ -686,6 +719,38 @@ export default function ProfitandLossStatement() {
                               ''
                             )
                           )}
+
+<tr>
+                            <td>
+                              
+                            </td>
+                            <td></td>
+                            <td>{otherExpenseTotal}</td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <u>Net Profit for the period</u>
+                            </td>
+                            <td></td>
+                            <td>{netProfit}</td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <u>Opening Retained Earning</u>
+                            </td>
+                            <td></td>
+                            <td>{openRetained}</td>
+                          </tr>
+
+                          <tr>
+                            <td>
+                              <u>Closed Retained Earning</u>
+                            </td>
+                            <td></td>
+                            <td>{closeRetained}</td>
+                          </tr>
 
                           {/* <tr>
                             <td></td>

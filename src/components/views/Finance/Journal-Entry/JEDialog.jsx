@@ -65,8 +65,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
-        // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+         //'http://localhost:9000/api/journal',
         data,
         config
       )
@@ -293,7 +293,7 @@ export default function BankInfoDialog(props) {
               <option value='Debit'>Debit</option>
             </select>
           </div>
-          <div className='form-group mt-3 px-3' id='bankkk'>
+          {/* <div className='form-group mt-3 px-3' id='bankkk'>
             <label className='text-gray'>Account Type</label>
 
             <select
@@ -308,8 +308,8 @@ export default function BankInfoDialog(props) {
                 <option value={option._id}>{option.name}</option>
               ))}
             </select>
-          </div>
-          {flag && (
+          </div> */}
+          {/* {flag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Heading</label>
 
@@ -326,8 +326,8 @@ export default function BankInfoDialog(props) {
                 ))}
               </select>
             </div>
-          )}
-          {accFlag && (
+          )} */}
+         
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Account</label>
 
@@ -344,7 +344,7 @@ export default function BankInfoDialog(props) {
                 ))}
               </select>
             </div>
-          )}
+          
         </div>
 
         <div>
@@ -364,7 +364,7 @@ export default function BankInfoDialog(props) {
               <option value='Debit'>Debit</option>
             </select>
           </div>
-          <div className='form-group mt-3 px-3' id='bankkk'>
+          {/* <div className='form-group mt-3 px-3' id='bankkk'>
             <label className='text-gray'>Account Type</label>
 
             <select
@@ -379,8 +379,8 @@ export default function BankInfoDialog(props) {
                 <option value={option._id}>{option.name}</option>
               ))}
             </select>
-          </div>
-          {debitFlag && (
+          </div> */}
+          {/* {debitFlag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Heading</label>
 
@@ -397,8 +397,8 @@ export default function BankInfoDialog(props) {
                 ))}
               </select>
             </div>
-          )}
-          {debitAccFlag && (
+          )} */}
+         
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Account</label>
 
@@ -415,7 +415,7 @@ export default function BankInfoDialog(props) {
                 ))}
               </select>
             </div>
-          )}
+          
         </div>
 
         <div className='form-group'>

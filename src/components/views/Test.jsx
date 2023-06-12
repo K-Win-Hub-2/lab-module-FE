@@ -219,6 +219,12 @@ function LabServiceRegister() {
                test.subTest.push(test.name.subTest[subTestLength + i])
                newData.push({...test.name.subTest[subTestLength + i],"tsid" : test._id})
               }
+            }else if(diff < 0){
+              let extra = Math.abs(diff)
+              for (let i=extra;i > 0;i--){
+                test.subTest.pop()
+                newData.pop()
+              }
             }
             // if (test.name.subTest.length > test.subTest.length) {
             //   //console.log('here123')
