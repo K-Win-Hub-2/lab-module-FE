@@ -12,6 +12,8 @@ import { useState, useEffect } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+
+import { useSelector } from 'react-redux'
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -54,6 +56,8 @@ const QRBox = styled.div`
 `
 
 export default function BankTran(props) {
+  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+
   const [bankName, setBankName] = useState('')
   const [accountNumber, setAccountNumber] = useState('')
   const [accountName, setAccountName] = useState('')
@@ -72,6 +76,8 @@ export default function BankTran(props) {
   const BankReg = () => {
     const data = {
       bankName: bankName,
+      // relatedType: type,
+      // relatedHeader: header,
       accountName: accountName,
       accountNumber: accountNumber,
       accountHolderName: accountHolderName,
@@ -79,56 +85,51 @@ export default function BankTran(props) {
       openingDate: openingDate,
       balance: balance,
       bankAddress: bankAddress
+      // subHeading: subHeading
     }
     // alert(JSON.stringify(data));
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
-      .post(
-        //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank",
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank',
-        data,
-        config
-      )
-      .then(function (response) {
-        Swal.fire({
-          title: 'Successful!',
-          text: 'You Created Income Data!',
-          icon: 'success',
-          // showCancelButton: true,
+    api.post('bank', data, config).then(function (response) {
+      Swal.fire({
+        title: 'Successful!',
+        text: 'You Created Bank Data!',
+        icon: 'success',
+        // showCancelButton: true,
 
-          cancelButtonText: 'Close'
-        })
-        props.setBankLists([...props.bankLists, response.data.data])
+        cancelButtonText: 'Close'
       })
+      props.setBankLists([...props.bankLists, response.data.data])
+    })
     props.close()
   }
 
   useEffect(() => {
     const getTypeLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
-        )
+        const res = await api.get('account-types')
 
-        const types = res.data.list.filter(el => el.name == 'Assets')
-        setTypeList(types)
+        setTypeList(res.data.data.filter(el => el.name == 'Assets'))
+        console.log(res.data.data, 'type')
       } catch (err) {}
     }
 
     const getHeaderLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/64269ba7122dbb7ab32f4e1c'
-        )
+        const res = await api.get('account-headers')
 
-        setHeaderList(res.data.data.filter(el => el.name == 'Cash At Bank'))
+        const header = res.data.list.filter(el => el.name === 'Cash At Bank')
+        setHeaderList(header)
+        console.log(
+          res.data.list.filter(el => el.name === 'Cash At Bank'),
+          'header name'
+        )
       } catch (err) {}
     }
 
-    //getTypeLists();
-    //getHeaderLists();
+    getTypeLists()
+    getHeaderLists()
   }, [])
 
   return (
@@ -136,7 +137,7 @@ export default function BankTran(props) {
       <Dialog open={props.bankRegOpen} onClose={props.close}>
         <DialogTitle>
           {' '}
-          <div className='modal-header bg-info'>
+          <div className='modal-header ok'>
             <h4 className='modal-title'>Bank Registeration Form</h4>
             <button
               type='button'
@@ -257,52 +258,54 @@ export default function BankTran(props) {
                 </div>
               </div>
             </div>
-            {/* <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="control-label">Types</label>
+            {/* <div className='row'>
+              <div className='col-md-6'>
+                <div className='form-group'>
+                  <label className='control-label'>Types</label>
 
                   <select
-                    name="currency"
-                    id=""
-                    className="form-control mt-1"
-                    onchange="convert(this.value)"
-                    onChange={(e) => setType(e.target.value)}>
-                    <option value="">Choose Types</option>
-                    {typeList.map((option) => (
+                    name='currency'
+                    id=''
+                    className='form-control mt-1'
+                    onchange='convert(this.value)'
+                    onChange={e => setType(e.target.value)}
+                  >
+                    <option value=''>Choose Types</option>
+                    {typeList.map(option => (
                       <option value={option._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="control-label">Heading</label>
+              <div className='col-md-6'>
+                <div className='form-group'>
+                  <label className='control-label'>Heading</label>
                   <select
-                    name="currency"
-                    id=""
-                    className="form-control mt-1"
-                    onchange="convert(this.value)"
-                    onChange={(e) => setHeader(e.target.value)}>
-                    <option value="">Choose Heading</option>
-                    {headerList.map((option) => (
+                    name='currency'
+                    id=''
+                    className='form-control mt-1'
+                    onchange='convert(this.value)'
+                    onChange={e => setHeader(e.target.value)}
+                  >
+                    <option value=''>Choose Heading</option>
+                    {headerList.map(option => (
                       <option value={option._id}>{option.name}</option>
                     ))}
                   </select>
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <label className="control-label">Sub Heading</label>
+            <div className='row'>
+              <div className='col-md-6'>
+                <div className='form-group'>
+                  <label className='control-label'>Sub Heading</label>
                   <input
-                    type="text"
-                    className="form-control"
-                    placeholder=""
-                    name="opening_date"
-                    id="mdate"
-                    onChange={(e) => setSubHeading(e.target.value)}
+                    type='text'
+                    className='form-control'
+                    placeholder=''
+                    name='opening_date'
+                    id='mdate'
+                    onChange={e => setSubHeading(e.target.value)}
                   />
                 </div>
               </div>

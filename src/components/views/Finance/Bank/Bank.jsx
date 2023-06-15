@@ -1,23 +1,31 @@
 /* eslint-disable */
 import React, { useState } from 'react'
-import BankTran from '../../../views/Finance/Bank/BankTran'
-import BankReg from '../../../views/Finance/Bank/BankReg'
+import BankTran from '../Bank/BankTran'
+import BankReg from '../Bank/BankReg'
 import axios from 'axios'
 import { useEffect } from 'react'
+import Swal from 'sweetalert2'
+
 import SideBar from '../../SideBar'
-import useCollapse from 'react-collapsed'
 import {
   FaCashRegister,
   FaFileMedical,
+  FaPenSquare,
+  FaPaperPlane,
   FaRegEdit,
   FaRegTrashAlt
 } from 'react-icons/fa'
-import Swal from "sweetalert2";
+
+import useCollapse from 'react-collapsed'
 
 import BankList from './Bank'
 import { Link } from 'react-router-dom'
+// import HeaderName from './HeaderName'
+import { useSelector } from 'react-redux'
 
 function Bank() {
+  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+
   const [id, setId] = useState('')
   const [name, setBankName] = useState('')
   const [open, setOpen] = useState(false)
@@ -28,15 +36,35 @@ function Bank() {
   const [bankLists, setBankLists] = useState([])
   const [transferlist, setTransferLists] = useState([])
 
+  const handleDelete = event => {
+    axios
+      .delete(url + 'bank/' + event)
+      .then(response => {
+        Swal.fire({
+          title: 'Success',
+          text: 'Successfully Deleted!',
+          icon: 'success',
+          confirmButtonText: 'OK'
+        })
+        const result = bankLists.filter(item => item._id !== event)
+        setBankLists(result)
+      })
+      .catch(error => {
+        Swal.fire({
+          title: 'Error',
+          text: error.response.data.message,
+          icon: 'error',
+          confirmButtonText: 'CANCEL'
+        })
+      })
+  }
+
   const showDialog = val => {
     setOpen(true)
     setId(val)
     const getRelated = async () => {
       console.log(val)
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank/' +
-          val
-      )
+      const res = await axios.get(url + 'bank/' + val)
 
       console.log(res.data.data)
       setBankName(res.data.data[0].accountName)
@@ -55,9 +83,7 @@ function Bank() {
     const getTransactionList = async () => {
       try {
         console.log(val)
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transfer'
-        )
+        const res = await axios.get(url + 'transactions/related/' + val)
 
         console.log(res)
         setTransferLists(res.data.data)
@@ -74,48 +100,19 @@ function Bank() {
     setIsShow(!isShow)
   }
 
-  const handleDelete =(e) => {
-    axios
-      .delete(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/bank/' +
-          e
-      )
-      .then(response => {
-        Swal.fire({
-          title: 'Success',
-          text: 'Successfully Deleted!',
-          icon: 'success',
-          confirmButtonText: 'OK'
-        })
-        const result = bankLists.filter(item => item._id !== e)
-        setBankLists(result)
-      })
-      .catch(error => {
-        Swal.fire({
-          title: 'Error',
-          text: error.response.data.message,
-          icon: 'error',
-          confirmButtonText: 'CANCEL'
-        })
-      })
-  }
-
   useEffect(() => {
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/banks?limit=50'
-        )
-
+        const res = await axios.get(url + 'banks?limit=50')
+        console.log(res.data.list)
         setBankLists(res.data.list)
-        console.log(res.data.list,'list')
       } catch (err) {}
     }
 
     // const getTransactionList = async () => {
     //   try {
     //     const res = await axios.get(
-    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/"+bankLists._id
+    //       "http://backendcherryk.kwintechnologykw11.com:4000/api/transactions/related/"+bankLists._id
     //     );
 
     //     setTransactionLists(res.data.list);
@@ -131,6 +128,11 @@ function Bank() {
       {/* @include('sweet::alert') */}
 
       <div className='wrapper'>
+        {/* <!-- Navbar --> */}
+        {/* <HeaderName /> */}
+
+        {/* <!-- /.navbar --> */}
+
         {/* <!-- Main Sidebar Container --> */}
         <SideBar />
 
@@ -159,7 +161,7 @@ function Bank() {
                 <div className='card-body p-b-0'>
                   {/* <label className="text-success">Bank List</label> */}
                   <button
-                    className='float-right btn btn-primary mb-3'
+                    className='float-right btn btn-dark mb-3'
                     data-toggle='modal'
                     data-target='#bank_register'
                     onClick={bankRegDialog}
@@ -169,7 +171,7 @@ function Bank() {
 
                   <div className='table-responsive'>
                     <table className='table table-hover'>
-                      <thead className='bg-info text-center'>
+                      <thead className='ok text-center'>
                         <tr>
                           <th>#</th>
                           <th>Date</th>
@@ -180,7 +182,7 @@ function Bank() {
                           <th>Holder Name</th>
 
                           <th>Balance</th>
-
+                          <th>Method</th>
                           <th className=''>Action</th>
                         </tr>
                       </thead>
@@ -198,30 +200,129 @@ function Bank() {
 
                             <td>
                               {
-                                bankList.relatedAccounting.amount
+                                bankList.balance
                                 // .toLocaleString(undefined, {
                                 // maximumFractionDigits: 2,
                                 // minimumFractionDigits: 2,
                                 // })
                               }
                             </td>
-                            <td className='text-center'>
+                            <td className=''>
                               <button
                                 type='button'
-                                className='btn btn-sm btn-warning ml-2'
+                                className='btn btn-sm btn-dark ml-2'
                                 onClick={() =>
                                   handleTransationChange(bankList._id)
                                 }
                               >
-                                <FaRegEdit />
+                                Transaction
                               </button>
                               <button
                                 type='button'
-                                className='btn btn-sm btn-danger ml-2'
-                                onClick={(e)=>handleDelete(bankList._id)}
+                                className='btn btn-sm btn-dark ml-2'
+                                onClick={() => showDialog(bankList._id)}
+                              >
+                                Transfer
+                              </button>
+                            </td>
+                            <td>
+                              <Link
+                                to={'/bank-update/' + bankList._id}
+                                className='btn btn-sm btn-warning'
+                              >
+                                <FaRegEdit />
+                              </Link>
+                              &nbsp;
+                              <button
+                                className='btn btn-sm btn-danger'
+                                onClick={e => handleDelete(bankList._id)}
                               >
                                 <FaRegTrashAlt />
                               </button>
+                              &nbsp;
+                            </td>
+                          </tr>
+
+                          <tr
+                            className='bg-light'
+                            id={'toggle' + bankList._id}
+                            hidden
+                          >
+                            <td colspan='12'>
+                              <div>
+                                <div class='row'>
+                                  <div class='col-md-2'>
+                                    <label
+                                      style={{ fontSize: '15px' }}
+                                      class='text-dark'
+                                    >
+                                      No
+                                    </label>
+                                  </div>
+                                  <div class='col-md-3'>
+                                    <label
+                                      style={{ fontSize: '15px' }}
+                                      class='text-dark'
+                                    >
+                                      Account
+                                    </label>
+                                  </div>
+                                  <div class='col-md-2'>
+                                    <label
+                                      style={{ fontSize: '15px' }}
+                                      class='text-dark'
+                                    >
+                                      Type
+                                    </label>
+                                  </div>
+                                  <div class='col-md-2'>
+                                    <label
+                                      style={{ fontSize: '15px' }}
+                                      class='text-dark'
+                                    >
+                                      Date
+                                    </label>
+                                  </div>
+                                  <div class='col-md-2'>
+                                    <label
+                                      style={{ fontSize: '15px' }}
+                                      class='text-dark'
+                                    >
+                                      Amount
+                                    </label>
+                                  </div>
+                                </div>
+
+                                {transferlist
+                                  ? transferlist.map((tranList, i) => (
+                                      <div class='row'>
+                                        <div class='col-md-2'>
+                                          <div style={{ fontSize: '15px' }}>
+                                            {++i}
+                                          </div>
+                                        </div>
+                                        <div class='col-md-3'>
+                                          <div style={{ fontSize: '15px' }}>
+                                            {tranList.toAcc}
+                                          </div>
+                                        </div>
+                                        <div class='col-md-2'>
+                                          {/* {tranList.type} */}
+                                        </div>
+                                        <div class='col-md-2'>
+                                          <div style={{ fontSize: '15px' }}>
+                                            {tranList.date.split('T')[0]}
+                                          </div>
+                                        </div>
+                                        <div class='col-md-2'>
+                                          <div style={{ fontSize: '15px' }}>
+                                            {tranList.amount}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))
+                                  : ''}
+                              </div>
                             </td>
                           </tr>
                         </tbody>

@@ -26,6 +26,7 @@ import AccountListUpdate from './components/views/Finance/AccountList/AccListUpd
 import Income from './components/views/Finance/Income/Income'
 import Expense from './components/views/Finance/Expense/Expense'
 import Bank from './components/views/Finance/Bank/Bank'
+import BankUpdate from './components/views/Finance/Bank/BankUpdate.jsx'
 import Repay from './components/views/RePay.jsx'
 import DoctorUpdate from './components/views/DoctorClinicUpdate.jsx'
 import FinanceTestVouList from './components/views/Finance/FinanceTVL.jsx'
@@ -97,6 +98,7 @@ function App () {
         <Route path='/income' element={<Income />}></Route>
         <Route path='/expense' element={<Expense />}></Route>
         <Route path='/bank' element={<Bank />}></Route>
+        <Route path='/bank-update/:bankid' element={<BankUpdate />}></Route>
         <Route path='/repay/:id' element={<Repay />}></Route>
         <Route path='/ftvl' element={<FinanceTestVouList />}></Route>
         <Route path='/doctorUpdate/:id' element={<DoctorUpdate />}></Route>
@@ -111,7 +113,11 @@ function App () {
         <Route path='/add-asset' element={<AddAsset />}></Route>;
         <Route path='/sellEnd/:id' element={<SellEndDialog />}></Route>
         <Route path='/balance_sheet' element={<BalanceSheet />}></Route>;
-        <Route path='/profit_loss_statement' element={<ProfitandLossStatement />}></Route>;
+        <Route
+          path='/profit_loss_statement'
+          element={<ProfitandLossStatement />}
+        ></Route>
+        ;
       </Routes>
     </Router>
   )

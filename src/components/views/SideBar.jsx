@@ -32,7 +32,7 @@ function Sidebar () {
             </a>
           </li>
         </ul>
-        <div className='title'>
+        <div className='title' style={{ marginLeft: '350px' }}>
           <h1>Lab Module </h1>
         </div>
 
@@ -280,7 +280,7 @@ function Sidebar () {
                         <p>Sub Heading</p>
                       </Link>
                     </li>
-                    
+
                     <li className='nav-item'>
                       <Link to='/fix-ass' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
@@ -323,7 +323,7 @@ function Sidebar () {
                         <p>Journal Entry</p>
                       </Link>
                     </li>
-                    
+
                     <li className='nav-item'>
                       <Link to='/balance_sheet' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;

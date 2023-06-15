@@ -33,7 +33,7 @@ export default function BankInfoDialog(props) {
   const [carryForWork, setCarryForWork] = useState(false)
   const [flag, setFlag] = useState(false)
   const [subFlag, setSubFlag] = useState(false)
-  const [accNature,setAccNature] = useState("")
+  const [accNature, setAccNature] = useState('')
 
   const AccountCreate = () => {
     const data = {
@@ -60,7 +60,7 @@ export default function BankInfoDialog(props) {
     axios
       .post(
         'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-      // 'http://localhost:9000/api/accounting-list',
+        // 'http://localhost:9000/api/accounting-list',
         data,
         config
       )
@@ -94,7 +94,7 @@ export default function BankInfoDialog(props) {
   const handleHeading = async event => {
     setHeading(event)
     console.log(heading, headingList)
-     const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
+    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
     //const url = `http://localhost:9000/api/account-subheaders/related/${event}`
     console.log(url)
     const res = await axios.get(url)
@@ -263,19 +263,16 @@ export default function BankInfoDialog(props) {
             </div>
 
             <div class='form-group'>
-                <label for='name'>Account Nature</label>
-                <select
-                  class='custom-select border-info'
-                  name='accNature'
-                  onChange={e => setAccNature(e.target.value)}
-                >
-                  
-                 
-                    <option value="Debit">Debit</option>
-                    <option value="Credit">Credit</option>
-                
-                </select>
-              </div>
+              <label for='name'>Account Nature</label>
+              <select
+                class='custom-select border-info'
+                name='accNature'
+                onChange={e => setAccNature(e.target.value)}
+              >
+                <option value='Debit'>Debit</option>
+                <option value='Credit'>Credit</option>
+              </select>
+            </div>
 
             {/* <div class='form-group'>
               <label for='name'>General Flag</label>

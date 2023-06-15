@@ -11,7 +11,6 @@ import styled from 'styled-components'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
 import Swal from 'sweetalert2'
 
-
 import { useState, useEffect } from 'react'
 import { useLocation, Navigate, useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -21,13 +20,10 @@ import { Link } from 'react-router-dom'
 import { valueOf } from '../../../../assets/plugins/moment/src/lib/moment/to-type'
 
 export default function JournalEntryEdit(props) {
-
   const [fromAccounts, setFromAccounts] = useState([])
   const [toAccounts, setToAccounts] = useState([])
-  const[firstTransId,setFirstTransId] = useState([])
-  const[secondTransId,setSecondTransId] = useState([])
-
-
+  const [firstTransId, setFirstTransId] = useState([])
+  const [secondTransId, setSecondTransId] = useState([])
 
   const [fromPreAcc, setFromPreAcc] = useState('')
   const [toPreAcc, setToPreAcc] = useState('')
@@ -43,17 +39,14 @@ export default function JournalEntryEdit(props) {
   const [fromCurAccNature, setFromCurAccNature] = useState('')
   const [toCurAccNature, setToCurAccNature] = useState('')
 
- 
-
   const [preAmount, setPreAmount] = useState('')
   const [curAmount, setCurAmount] = useState('')
   const [date, setDate] = useState('')
   const [remark, setRemark] = useState('')
   const [update, setUpDate] = useState('')
   const [upremark, setUpRemark] = useState('')
-  
+
   const Id = useLocation().pathname.split('/')[2]
-  
 
   const JournalUpdate = () => {
     const data = {
@@ -82,8 +75,8 @@ export default function JournalEntryEdit(props) {
     // alert(JSON.stringify(data))
     axios
       .put(
-       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
-      //'http://localhost:9000/api/journal',
+        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+        //'http://localhost:9000/api/journal',
         data,
         config
       )
@@ -118,10 +111,7 @@ export default function JournalEntryEdit(props) {
       })
   }
 
-  
-  
   useEffect(() => {
-
     const getAccount = async () => {
       try {
         const res = await axios.get(
@@ -132,13 +122,13 @@ export default function JournalEntryEdit(props) {
         setToAccounts(res.data.list)
       } catch (err) {}
     }
-    
+
     const getTransaction = async () => {
       try {
         console.log(Id, 'Id')
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transaction/' +
-          //'http://localhost:9000/api/accounting-list/' +
+            //'http://localhost:9000/api/accounting-list/' +
             Id
         )
         console.log(res.data.data)
@@ -147,42 +137,37 @@ export default function JournalEntryEdit(props) {
 
         setFromPreAcc(res.data.data[0].relatedAccounting._id)
         setFromPreAccType(res.data.data[0].type)
+
         setFromPreAccNature(res.data.data[0].relatedAccounting.accountNature)
         setToPreAcc(res.data.data[0].relatedTransaction.relatedAccounting)
         setToPreAccType(res.data.data[0].relatedTransaction.type)
-        toAccounts.map((account)=> {
-          if(account._id === res.data.data[0].relatedTransaction.relatedAccounting){
+        toAccounts.map(account => {
+          if (
+            account._id ===
+            res.data.data[0].relatedTransaction.relatedAccounting
+          ) {
             setToPreAccNature(account.accountNature)
             console.log(account.accountNature)
           }
-        }
-        )
-       // setToPreAccNature(res.data.data[0].relatedTransaction.relatedAccounting.accountNature)
+        })
+        // setToPreAccNature(res.data.data[0].relatedTransaction.relatedAccounting.accountNature)
         setPreAmount(res.data.data[0].amount)
         setRemark(res.data.data[0].remark)
         setDate(res.data.data[0].date.split('T')[0])
         setCurAmount(res.data.data[0].amount)
         setUpRemark(res.data.data[0].remark)
         setUpDate(res.data.data[0].date.split('T')[0])
-
-        
       } catch (err) {}
     }
-    
-    
 
-   
     getAccount()
     getTransaction()
-    
   }, [])
-
-  
 
   const handleFromInputAcc = event => {
     setFromCurAcc(event)
-    fromAccounts.map((account)=> {
-      if(account._id === event){
+    fromAccounts.map(account => {
+      if (account._id === event) {
         setFromCurAccNature(account.accountNature)
       }
     })
@@ -190,8 +175,8 @@ export default function JournalEntryEdit(props) {
 
   const handleToInputAcc = event => {
     setToCurAcc(event)
-    toAccounts.map((account)=> {
-      if(account._id === event){
+    toAccounts.map(account => {
+      if (account._id === event) {
         setToCurAccNature(account.accountNature)
       }
     })
@@ -236,24 +221,34 @@ export default function JournalEntryEdit(props) {
               <form action='' method='post'>
                 {/* @csrf */}
                 <div class='modal-body'>
-                <div>
-          <label className=''>From Account</label>
-          <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='text-gray'>Type</label>
+                  <div>
+                    <label className=''>From Account</label>
+                    <div className='form-group mt-3 px-3' id='bankkk'>
+                      <label className='text-gray'>Type</label>
 
-            <select
-              className='form-control'
-              name='bank_acc'
-              id='bank_acc'
-              onChange={e => setFromCurAccType(e.target.value)}
-            >
-              <option value=''>Select Type</option>
+                      <select
+                        className='form-control'
+                        name='bank_acc'
+                        id='bank_acc'
+                        onChange={e => setFromCurAccType(e.target.value)}
+                      >
+                        <option value=''>Select Type</option>
 
-              <option value='Credit' selected={fromPreAccType=== "Credit" ? true : false}>Credit</option>
-              <option value='Debit' selected={fromPreAccType=== "Debit" ? true : false}>Debit</option>
-            </select>
-          </div>
-          {/* <div className='form-group mt-3 px-3' id='bankkk'>
+                        <option
+                          value='Credit'
+                          selected={fromPreAccType === 'Credit' ? true : false}
+                        >
+                          Credit
+                        </option>
+                        <option
+                          value='Debit'
+                          selected={fromPreAccType === 'Debit' ? true : false}
+                        >
+                          Debit
+                        </option>
+                      </select>
+                    </div>
+                    {/* <div className='form-group mt-3 px-3' id='bankkk'>
             <label className='text-gray'>Account Type</label>
 
             <select
@@ -269,7 +264,7 @@ export default function JournalEntryEdit(props) {
               ))}
             </select>
           </div> */}
-          {/* {flag && (
+                    {/* {flag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Heading</label>
 
@@ -287,44 +282,58 @@ export default function JournalEntryEdit(props) {
               </select>
             </div>
           )} */}
-         
-            <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='text-gray'>Account</label>
 
-              <select
-                className='form-control'
-                name='bank_acc'
-                id='bank_acc'
-                onChange={e => handleFromInputAcc(e.target.value)}
-              >
-                <option value=''>Select Account</option>
+                    <div className='form-group mt-3 px-3' id='bankkk'>
+                      <label className='text-gray'>Account</label>
 
-                {fromAccounts.map(option => (
-                  <option value={option._id} selected={fromPreAcc === option._id ? true : false}>{option.name}</option>
-                ))}
-              </select>
-            </div>
-          
-        </div>
+                      <select
+                        className='form-control'
+                        name='bank_acc'
+                        id='bank_acc'
+                        onChange={e => handleFromInputAcc(e.target.value)}
+                      >
+                        <option value=''>Select Account</option>
 
-        <div>
-          <label className=''>To Account</label>
-          <div className='form-group mt-3 px-3' id='bankkk'>
-            <label className='text-gray'>Type</label>
+                        {fromAccounts.map(option => (
+                          <option
+                            value={option._id}
+                            selected={fromPreAcc === option._id ? true : false}
+                          >
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-            <select
-              className='form-control'
-              name='bank_acc'
-              id='bank_acc'
-              onChange={e => setToCurAccType(e.target.value)}
-            >
-              <option>Select Type</option>
+                  <div>
+                    <label className=''>To Account</label>
+                    <div className='form-group mt-3 px-3' id='bankkk'>
+                      <label className='text-gray'>Type</label>
 
-              <option value='Credit' selected={toPreAccType=== "Credit" ? true : false}>Credit</option>
-              <option value='Debit' selected={toPreAccType=== "Debit" ? true : false}>Debit</option>
-            </select>
-          </div>
-          {/* <div className='form-group mt-3 px-3' id='bankkk'>
+                      <select
+                        className='form-control'
+                        name='bank_acc'
+                        id='bank_acc'
+                        onChange={e => setToCurAccType(e.target.value)}
+                      >
+                        <option>Select Type</option>
+
+                        <option
+                          value='Credit'
+                          selected={toPreAccType === 'Credit' ? true : false}
+                        >
+                          Credit
+                        </option>
+                        <option
+                          value='Debit'
+                          selected={toPreAccType === 'Debit' ? true : false}
+                        >
+                          Debit
+                        </option>
+                      </select>
+                    </div>
+                    {/* <div className='form-group mt-3 px-3' id='bankkk'>
             <label className='text-gray'>Account Type</label>
 
             <select
@@ -340,7 +349,7 @@ export default function JournalEntryEdit(props) {
               ))}
             </select>
           </div> */}
-          {/* {debitFlag && (
+                    {/* {debitFlag && (
             <div className='form-group mt-3 px-3' id='bankkk'>
               <label className='text-gray'>Heading</label>
 
@@ -358,40 +367,44 @@ export default function JournalEntryEdit(props) {
               </select>
             </div>
           )} */}
-         
-            <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='text-gray'>Account</label>
 
-              <select
-                className='form-control'
-                name='bank_acc'
-                id='bank_acc'
-                onChange={e => handleToInputAcc(e.target.value)}
-              >
-                <option value=''>Select Account</option>
+                    <div className='form-group mt-3 px-3' id='bankkk'>
+                      <label className='text-gray'>Account</label>
 
-                {toAccounts.map(option => (
-                  <option value={option._id} selected={toPreAcc === option._id ? true : false}>{option.name}</option>
-                ))}
-              </select>
-            </div>
-          
-        </div>
+                      <select
+                        className='form-control'
+                        name='bank_acc'
+                        id='bank_acc'
+                        onChange={e => handleToInputAcc(e.target.value)}
+                      >
+                        <option value=''>Select Account</option>
 
-        <div className='form-group'>
-          <label className='control-label'>Amount</label>
+                        {toAccounts.map(option => (
+                          <option
+                            value={option._id}
+                            selected={toPreAcc === option._id ? true : false}
+                          >
+                            {option.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
 
-          <input
-            type='number'
-            className='form-control'
-            name='amount'
-            id='convert_amount'
-            defaultValue={preAmount}
-            onChange={event => setCurAmount(event.target.value)}
-          />
-        </div>
+                  <div className='form-group'>
+                    <label className='control-label'>Amount</label>
 
-        {/* <div className="row">
+                    <input
+                      type='number'
+                      className='form-control'
+                      name='amount'
+                      id='convert_amount'
+                      defaultValue={preAmount}
+                      onChange={event => setCurAmount(event.target.value)}
+                    />
+                  </div>
+
+                  {/* <div className="row">
           <div className="col-md-6">
             <div className="form-group">
               <label className="control-label">Final Amount</label>
@@ -424,34 +437,41 @@ export default function JournalEntryEdit(props) {
             </div>
           </div>
         </div> */}
-        <div className='form-group'>
-          <label className='control-label'>Date</label>
-          <input
-            type='date'
-            className='form-control'
-            name='date'
-          value={date}
-            onChange={e => setUpDate(e.target.value)}
-          />
-        </div>
-        {/* <div className="form-group">
+                  <div className='form-group'>
+                    <label className='control-label'>Date</label>
+                    <input
+                      type='date'
+                      className='form-control'
+                      name='date'
+                      value={date}
+                      onChange={e => setUpDate(e.target.value)}
+                    />
+                  </div>
+                  {/* <div className="form-group">
                                 <label className="control-label">Voucher Number</label>
                                 <input type="text" className="form-control" name="voucher_id"/>
                             </div> */}
-        <div className='form-group'>
-          <label className='control-label'>Remark</label>
-          <input
-            type='text'
-            className='form-control'
-            name='remark'
-            defaultValue={remark}
-            onChange={e => setUpRemark(e.target.value)}
-          />
-        </div>
+                  <div className='form-group'>
+                    <label className='control-label'>Remark</label>
+                    <input
+                      type='text'
+                      className='form-control'
+                      name='remark'
+                      defaultValue={remark}
+                      onChange={e => setUpRemark(e.target.value)}
+                    />
+                  </div>
                 </div>
                 <div class='modal-footer'>
-                  <Link to='/account_list' className='btn btn-secondary' type='button'> Close</Link>
-                  
+                  <Link
+                    to='/account_list'
+                    className='btn btn-secondary'
+                    type='button'
+                  >
+                    {' '}
+                    Close
+                  </Link>
+
                   <Button class='btn btn-primary' onClick={JournalUpdate}>
                     Update
                   </Button>
