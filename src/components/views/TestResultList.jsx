@@ -53,19 +53,29 @@ const Badge = styled.span`
   border: none;
   border-radius: 4px;
 `
+const handleHighlight = (event) => {
+   console.log("tab clicked")
+}
 
 const TestResultList = () => {
   const customStyles = {
     tabsPen: {
-      border: '1px solid red' // Change this value to the desired color
+      border: '1px solid red', 
+      
+      // Change this value to the desired color
     },
     tabsPro: {
-      border: '1px solid yellow'
+      border: '1px solid yellow',
+      
     },
     tabsFin: {
-      border: '1px solid green'
+      border: '1px solid green',
+     
     }
   }
+
+  
+
   const [vouchers, setVouchers] = useState([])
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
@@ -217,7 +227,7 @@ const TestResultList = () => {
                           <Tab style={customStyles.tabsFin}>Finished</Tab>
                         </TabList>
 
-                        <TabPanel>
+                        <TabPanel onClick={handleHighlight}>
                           <Table className='table table-hover mt-3'>
                             <Thead>
                               <Tr>

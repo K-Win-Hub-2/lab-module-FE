@@ -12,6 +12,7 @@ export default function TrialBalance() {
     const[transactionLists,setTransactionLists] = useState([]);
     const [trailAccs, setTrailAccs] = useState([]);
     const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
     const [isShow, setIsShow] = useState(false)
 
     const handleRelatedShow = (id) => {
@@ -26,6 +27,7 @@ export default function TrialBalance() {
 
     const fetchTrialAndBalance = async (event) => {
         console.log(event.target.value)
+        setEnd(event.target.value)
         try {
             Swal.fire({
                 title: 'Loading',

@@ -38,6 +38,7 @@ import AccountSubHead from './components/views/Finance/SubHeding.jsx'
 import AccountType from './components/views/Finance/AccountType.jsx'
 import Transaction from './components/views/Finance/AllTransaction.jsx'
 import JournalEntry from './components/views/Finance/Journal-Entry/JournalEntryList.jsx'
+import JEUpdate from './components/views/Finance/Journal-Entry/JEUpdate.jsx'
 import FixedAsset from './components/views/Finance/FixedAsset/FixAsset.jsx'
 import AddAsset from './components/views/Finance/FixedAsset/AddAsset.jsx'
 import SellEndDialog from './components/views/Finance/FixedAsset/SellEndDialog.jsx'
@@ -105,6 +106,7 @@ function App () {
         <Route path='/account_subhead' element={<AccountSubHead />}></Route>
         <Route path='/transaction' element={<Transaction />}></Route>
         <Route path='/journal' element={<JournalEntry />}></Route>
+        <Route path='/jeUpdate/:id' element={<JEUpdate />}></Route>
         <Route path='/fix-ass' element={<FixedAsset />}></Route>
         <Route path='/add-asset' element={<AddAsset />}></Route>;
         <Route path='/sellEnd/:id' element={<SellEndDialog />}></Route>

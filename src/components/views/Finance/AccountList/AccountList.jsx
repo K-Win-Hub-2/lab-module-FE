@@ -132,6 +132,19 @@ function AccountList() {
 
               <div class='row'>
                 <div class='col-12'>
+                  <div class='offset-9 col-3' style={{marginBottom:"5px"}}>
+                <input
+                      type="search"
+                      className="form-control rounded"
+                      id="search_code"
+                      placeholder="Search By Account Name"
+                      onChange={event =>
+                        handleInputChange(
+                          event
+                        )
+                      }
+                    />
+                    </div>
                   <div class='card'>
                     <div class='card-header'>
                       {/* <h3 class="card-title">Account List</h3> */}
@@ -142,17 +155,7 @@ function AccountList() {
                         <div>
                        
                           <span className='float-right'>
-                          <input
-                      type="search"
-                      className="form-control rounded"
-                      id="search_code"
-                      placeholder="Search By Test Name"
-                      onChange={event =>
-                        handleInputChange(
-                          event
-                        )
-                      }
-                    />
+                         
                             <button
                               type='button'
                               id=''
@@ -174,8 +177,7 @@ function AccountList() {
 
                             
 
-                              <FaFileExcel />
-                              &nbsp; Export
+                            
                               <FaFileExcel />
                               &nbsp; Export
                             </button>

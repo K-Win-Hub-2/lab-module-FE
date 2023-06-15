@@ -33,6 +33,7 @@ export default function BankInfoDialog(props) {
   const [carryForWork, setCarryForWork] = useState(false)
   const [flag, setFlag] = useState(false)
   const [subFlag, setSubFlag] = useState(false)
+  const [accNature,setAccNature] = useState("")
 
   const AccountCreate = () => {
     const data = {
@@ -46,7 +47,8 @@ export default function BankInfoDialog(props) {
       openingBalance: amount,
       generalFlag: generalFlag,
       relatedCurrency: relatedCurrency,
-      carryForWork: carryForWork
+      carryForWork: carryForWork,
+      accountNature: accNature
     }
 
     // alert(JSON.stringify(data))
@@ -259,6 +261,21 @@ export default function BankInfoDialog(props) {
                 onChange={e => setRelatedCurrency(e.target.value)}
               />
             </div>
+
+            <div class='form-group'>
+                <label for='name'>Account Nature</label>
+                <select
+                  class='custom-select border-info'
+                  name='accNature'
+                  onChange={e => setAccNature(e.target.value)}
+                >
+                  
+                 
+                    <option value="Debit">Debit</option>
+                    <option value="Credit">Credit</option>
+                
+                </select>
+              </div>
 
             {/* <div class='form-group'>
               <label for='name'>General Flag</label>

@@ -64,6 +64,7 @@ const Income = () => {
       const res = await axios
         .delete(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal/' +
+         //'http://localhost:9000/api/journal/' +
             val
         )
         .then(response => {
@@ -73,8 +74,8 @@ const Income = () => {
             icon: 'success',
             confirmButtonText: 'OK'
           })
-
-          setAccountLists(accountLists.filter(item => item._id !== val))
+          window.location.reload();
+          //setAccountLists(accountLists.filter(item => item._id !== val))
         })
 
         .catch(error => {
@@ -341,15 +342,12 @@ const Income = () => {
                                     <td>{journalEntry.remark}</td>
 
                                     <td className='text-center'>
-                                      <Link
-                                        to
-                                        className='btn btn-sm btn-warning'
-                                        onClick={e =>
-                                          handleUpdate(journalEntry._id)
-                                        }
-                                      >
-                                        <FaRegEdit />
-                                      </Link>
+                                    <Link
+                                      to={'/jeUpdate/' + journalEntry._id}
+                                      className='btn btn-warning btn-sm'
+                                    >
+                                      <FaRegEdit/>
+                                    </Link>
                                       &nbsp;
                                       <button
                                         className='btn btn-sm btn-danger'

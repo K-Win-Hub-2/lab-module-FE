@@ -13,6 +13,7 @@ export default function ProfitandLossStatement() {
   // const[transactionLists,setTransactionLists] = useState([]);
   const [trailAccs, setTrailAccs] = useState([])
   const [start, setStart] = useState('')
+  const [end, setEnd] = useState('')
   const [isShow, setIsShow] = useState(false)
   const [autoimmuneRevenue, setAutoImmuneRevenue] = useState(0)
   const [autoimmuneCOGS, setAutoImmuneCOGS] = useState(0)
@@ -46,6 +47,7 @@ export default function ProfitandLossStatement() {
   const [incomeTotal, setIncomeTotal] = useState(0)
   const[openRetained,setOpenRetained] = useState(0)
   const[closeRetained,setCloseRetained] = useState(0)
+  
 
 
   const handleRelatedShow = id => {
@@ -57,7 +59,8 @@ export default function ProfitandLossStatement() {
     setIsShow(!isShow)
   }
 
-  const fetchTrialAndBalance = async () => {
+  const fetchTrialAndBalance = async (event) => {
+    setEnd(event.target.value)
     try {
       Swal.fire({
         title: 'Loading',
@@ -65,8 +68,8 @@ export default function ProfitandLossStatement() {
         allowOutsideClick: false
       })
       await axios
-        .get(url + `transactions/trial-balance`, {
-          params: { start: '2023-01-01', end: '2023-12-31' }
+        .get(url + `/transactions/trial-balance`, {
+          params: { start: start, end: event.target.value }
         })
         .then(res => {
           console.log(res.data.data)
@@ -324,7 +327,7 @@ export default function ProfitandLossStatement() {
   }
 
   useEffect(() => {
-    fetchTrialAndBalance()
+   // fetchTrialAndBalance()
   }, [])
 
   return (
@@ -358,9 +361,29 @@ export default function ProfitandLossStatement() {
                   <div className='card'>
                     <div className='card-header'>
                       <h1 className='card-title font-weight-bold px-3 py-3'>
-                        Statement of Profit and Loss for the period ended at
-                        31st December 2023
+                        Statement of Profit and Loss for the period ended at 
+                        {end}
                       </h1>
+                      <div className='row'>
+                                                <div className='col-4'>
+                                                    <label htmlFor=''>From:</label>
+                                                    <input
+                                                        type='date'
+                                                        placeholder='Search...'
+                                                        className='form-control'
+                                                        onChange={e => setStart(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className='col-4'>
+                                                    <label htmlFor=''>To:</label>
+                                                    <input
+                                                        type='date'
+                                                        placeholder='Search...'
+                                                        className='form-control'
+                                                        onChange={e => fetchTrialAndBalance(e)}
+                                                    />
+                                                </div>
+                                            </div>
 
                       {/* {{-- <button id="" class="btn btn-primary float-right" data-toggle="modal" data-target="#new_account" onclick="hide_proj()"> <i class="fa fa-plus"></i> Create Accounting</button> --}} */}
                       {/* {{-- <div class="modal fade" id="new_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -34,6 +34,7 @@ export default function BankInfoDialog(props) {
   const [upSub, setUpSub] = useState('')
   const [upBal, setUpBal] = useState('')
   const [upCur, setUpCur] = useState('')
+  const [upAccNature, setUpAccNature] = useState('')
   const [reHead, setReHead] = useState('')
   const [reSubHead, setReSubHead] = useState('')
   const [reType, setReType] = useState('')
@@ -52,7 +53,8 @@ export default function BankInfoDialog(props) {
       openingBalance: upBal,
       generalFlag: upFlag,
       relatedCurrency: upCur,
-      carryForWork: upWork
+      carryForWork: upWork,
+      accountNature: upAccNature
     }
     const config = {
       headers: { 'Content-Type': 'application/json' }
@@ -60,8 +62,8 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(data))
     axios
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-      // 'http://localhost:9000/api/accounting-list',
+        //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+        'http://localhost:9000/api/accounting-list',
         data,
         config
       )
@@ -146,6 +148,7 @@ export default function BankInfoDialog(props) {
         setUpSub(res.data.data[0].name)
         setUpBal(res.data.data[0].amount)
         setUpCur(res.data.data[0].relatedCurrency)
+        setUpAccNature(res.data.data[0].accountNature ? res.data.data[0].accountNature : "Debit")
 
         setReHead(res.data.data[0].relatedHeader)
         setReType(res.data.data[0].relatedType)
@@ -302,6 +305,21 @@ export default function BankInfoDialog(props) {
                       onChange={e => setUpCur(e.target.value)}
                     />
                   </div>
+
+                  <div class='form-group'>
+                <label for='name'>Account Nature</label>
+                <select
+                  class='custom-select border-info'
+                  name='accNature'
+                  onChange={e => setUpAccNature(e.target.value)}
+                >
+                  
+                 
+                    <option value="Debit" selected={upAccNature === "Debit" ? true : false}>Debit</option>
+                    <option value="Credit" selected={upAccNature === "Credit" ? true : false}>Credit</option>
+                
+                </select>
+              </div>
                   {/* <div class='form-group'>
                     <label for='name'>General Flag</label>
                     <div class='row'>

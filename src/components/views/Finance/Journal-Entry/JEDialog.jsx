@@ -23,7 +23,9 @@ export default function BankInfoDialog(props) {
   const [relatedDebitAccount, setRelatedDebitAccount] = useState('')
   const [relatedDebitHeader, setRelatedDebitHeader] = useState([])
   const [fromType, setFromType] = useState('')
+  const[fromAccNature,setFromAccNature] = useState('')
   const [toType, setToType] = useState('')
+  const[toAccNature,setToAccNature] = useState('')
 
   const [medicineSale, setMedicineSale] = useState([])
   const [currencyList, setCurrencyList] = useState([])
@@ -56,6 +58,8 @@ export default function BankInfoDialog(props) {
     if (relatedDebitAccount) data.toAcc = relatedDebitAccount
     if (fromType) data.fromAccType = fromType
     if (toType) data.toAccType = toType
+    if (fromAccNature) data.fromAccNature = fromAccNature
+    if (toAccNature) data.toAccNature = toAccNature
 
     // alert(JSON.stringify(data))
     // console.log(jsonData);
@@ -65,12 +69,14 @@ export default function BankInfoDialog(props) {
     // alert(JSON.stringify(jsonData));
     axios
       .post(
-       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
-         //'http://localhost:9000/api/journal',
+      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+       //  'http://localhost:9000/api/journal',
         data,
         config
       )
       .then(function (response) {
+        console.log(response.data.firstTrans)
+        console.log(response.data.secondTrans)
         Swal.fire({
           title: 'Successful!',
           text: 'You Created Journal Entry Data!',
@@ -79,7 +85,7 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: 'Close'
         })
-        window.location.reload()
+       // window.location.reload()
         // props.setJournalEntryLists([...props.journalEntryLists, response.data.list[0]])
       })
 
@@ -116,7 +122,14 @@ export default function BankInfoDialog(props) {
   }
   const handleInputAcc = event => {
     setRelatedCreditAccount(event)
+    creditAccount.map((account)=> {
+      if(account._id === event){
+          setFromAccNature(account.accountNature)
+      }
+  })
+
     console.log(event, 'Credit Account ID')
+    console.log(fromAccNature,'from nature')
   }
 
   //End For Credit
@@ -150,6 +163,13 @@ export default function BankInfoDialog(props) {
   }
   const handleDebitInputAcc = event => {
     setRelatedDebitAccount(event)
+    debitAccount.map((account)=> {
+      if(account._id === event){
+          setToAccNature(account.accountNature)
+      }
+  })
+  console.log(toAccNature,'to nature')
+
   }
 
   //End For Debit
@@ -236,6 +256,7 @@ export default function BankInfoDialog(props) {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+          //'http://localhost:9000/api/accounting-lists'
         )
 
         setCreditAccount(res.data.list)
@@ -289,8 +310,8 @@ export default function BankInfoDialog(props) {
             >
               <option value=''>Select Type</option>
 
-              <option value='Credit'>Credit</option>
-              <option value='Debit'>Debit</option>
+              <option value="Credit">Credit</option>
+              <option value="Debit">Debit</option>
             </select>
           </div>
           {/* <div className='form-group mt-3 px-3' id='bankkk'>
@@ -360,8 +381,8 @@ export default function BankInfoDialog(props) {
             >
               <option>Select Type</option>
 
-              <option value='Credit'>Credit</option>
-              <option value='Debit'>Debit</option>
+              <option value="Credit">Credit</option>
+              <option value="Debit">Debit</option>
             </select>
           </div>
           {/* <div className='form-group mt-3 px-3' id='bankkk'>
