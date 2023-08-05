@@ -45,6 +45,7 @@ import AddAsset from './components/views/Finance/FixedAsset/AddAsset.jsx'
 import SellEndDialog from './components/views/Finance/FixedAsset/SellEndDialog.jsx'
 import BalanceSheet from './components/views/Finance/Reports/BalanceSheet.jsx'
 import ProfitandLossStatement from './components/views/Finance/Reports/ProfitandLoss.jsx'
+import StockCount from './components/views/Admin/StockCountAndPrice/StockCount'
 
 import './App.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -61,7 +62,7 @@ import './assets/plugins/bootstrap-material-datetimepicker/css/bootstrap-materia
 import TestVoucherList from './components/views/TestVoucherList'
 import TestResultList from './components/views/TestResultList'
 
-function App () {
+function App() {
   return (
     <Router>
       <Routes>
@@ -76,6 +77,7 @@ function App () {
         <Route path='/doctorClinic' element={<DoctorClinic />}></Route>
         <Route path='/doctorClinicReg' element={<DoctorClinicReg />}></Route>
         <Route path='/test/:testVoucher_id' element={<Test />}></Route>
+        <Route path='/stockCount' element={<StockCount />}></Route>
         <Route
           path='/testslip/:testVoucher_id'
           element={<TestVoucherSlip />}

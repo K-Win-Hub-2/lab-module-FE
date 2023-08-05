@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
 
-function Sidebar () {
+function Sidebar() {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -116,7 +116,15 @@ function Sidebar () {
                         <p>Doctor/Clinic</p>
                       </Link>
                     </li>
+
+                    <li className='nav-item'>
+                      <Link to='/stockCount' className='nav-link'>
+                        <i className='nav-icon fas fa-circle'></i>&nbsp;
+                        <p>Stock-Count&Price</p>
+                      </Link>
+                    </li>
                   </li>
+
                 </>
               )}
 
@@ -199,6 +207,7 @@ function Sidebar () {
                         <p>Cashier Report</p>
                       </Link>
                     </li>
+                    
                   </li>
                 </>
               )}

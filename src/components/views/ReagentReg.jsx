@@ -16,6 +16,7 @@ function LabServiceRegister() {
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
   const [tableData, setTableData] = useState([]);
+  const [qty, setQty] = useState(0)
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, stockQty: "", reorderQty: "", purchasePrice: "", unitName: "" }]);
@@ -63,9 +64,10 @@ function LabServiceRegister() {
       code: code,
       name: name,
       stockUnit: tableData,
-      supplier:supplier
+      supplier: supplier,
+      qty: qty
     }
-    // alert(JSON.stringify(data));
+    alert(JSON.stringify(data));
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
@@ -177,6 +179,17 @@ function LabServiceRegister() {
                       name='md_name'
                       id='supplier'
                       onChange={(e) => setSupplier(e.target.value)}
+                    />
+                  </div>
+                  <div className='form-group mt-3'>
+                    <label className='control-label'>Quantity</label>
+                    <input
+                      type='Number'
+                      className='form-control'
+                      placeholder=''
+                      name='md_name'
+                      id='qty'
+                      onChange={(e) => setQty(e.target.value)}
                     />
                   </div>
                   <div className='form-group mt-3 row gap-3'>
