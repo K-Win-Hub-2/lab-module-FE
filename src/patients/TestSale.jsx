@@ -83,6 +83,7 @@ const TestSale = () => {
   const [relatedBankAcc, setRelatedBankAcc] = useState("");
   const [relatedCashAcc, setRelatedCashAcc] = useState("");
   const [account, setAccount] = useState("");
+  const [seq, setSeq] = useState('');
   const [voucherObjectID, setVoucherObjectID] = useState('');
   const [showPrint, setShowPrint] = useState(false);
   const patient_id = useLocation().pathname.split("/")[2];
@@ -145,6 +146,7 @@ const TestSale = () => {
 
         console.log(res.data.data);
         setVoucherCode(res.data.data.voucherID);
+        setSeq(res.data.data.seq);
       } catch (err) { }
     };
 
@@ -240,7 +242,7 @@ const TestSale = () => {
       pay: pay,
       change: change,
       amount: 0,
-      seq: 2,
+      seq: seq,
     };
     if (relatedCashAcc) data.relatedCash = relatedCashAcc;
     if (relatedBankAcc) data.relatedBank = relatedBankAcc;

@@ -89,26 +89,26 @@ const TestVoucherPrint = () => {
   }
 
   const clickHandler = (event) => {
-		if(event.detail == 2){
+    if (event.detail == 2) {
       document.getElementById(event.target.value).tagName.name = "input";
-			console.log("Double Clicked")
-		}
-	}
+      console.log("Double Clicked")
+    }
+  }
 
   const handleBottomChange = event => {
     // setShowBottom(false);
     document.getElementById("printtop").style.marginTop = "100px";
-    
-   
-   document.getElementById("printtop").style.position = "running(footer)";
-   document.getElementById("printtop").classList.add("fixed-bottom");
-   //document.getElementById("printtop").style.bottom= "0";
-      let printContents = document.getElementById('print').innerHTML;
-      let originalContents = document.body.innerHTML;
-      document.body.innerHTML = printContents;
-      window.print();
-      document.body.innerHTML = originalContents;
-      window.location.reload(); 
+
+
+    document.getElementById("printtop").style.position = "running(footer)";
+    document.getElementById("printtop").classList.add("fixed-bottom");
+    //document.getElementById("printtop").style.bottom= "0";
+    let printContents = document.getElementById('print').innerHTML;
+    let originalContents = document.body.innerHTML;
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+    window.location.reload();
 
   }
 
@@ -159,8 +159,8 @@ const TestVoucherPrint = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            // 'http://localhost:9000/api/voucher/' +
-            TestVou_id
+          // 'http://localhost:9000/api/voucher/' +
+          TestVou_id
         )
 
         // console.log(vouDate);
@@ -182,7 +182,7 @@ const TestVoucherPrint = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            TestVou_id
+          TestVou_id
         )
 
         setPatientLists(res.data.data.relatedPatient)
@@ -223,10 +223,10 @@ const TestVoucherPrint = () => {
             // calssName='card content'
             // style={{ maxWidth: "700px", marginLeft: "170px" }}
             >
-              <div className='card' id='print' ref={el => (componentRef = el)} style={{pageBreakInside: "avoid"}}>
+              <div className='card' id='print' ref={el => (componentRef = el)} style={{ pageBreakInside: "avoid" }}>
                 <div
                   calssName='card-body shadow vh-200'
-                  // style={{ border: '1px solid black', padding: '14px 14px' }}
+                // style={{ border: '1px solid black', padding: '14px 14px' }}
                 >
                   <div
                     className='row'
@@ -236,10 +236,10 @@ const TestVoucherPrint = () => {
                     }}
                   >
                     <div className='col-3'>
-                      <img src={require('../logo.png')} alt='' />
+                      <img src={require('../kwin.jpg')} style={{ width: '200px', height: '65px' }} alt='' />
                     </div>
                     <div className='offset-1 col-md-5'>
-                      Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
+                      {/* Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
                       <br />
                       Yangon, Myanmar.
                       <br />
@@ -249,7 +249,7 @@ const TestVoucherPrint = () => {
                       <br />
                       Yangon, Myanamr.
                       <br />
-                      Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
+                      Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab) */}
                     </div>
                     <div className='col-md-3'>
                       <img
@@ -265,7 +265,7 @@ const TestVoucherPrint = () => {
                       <u>LABORATORY REPORT</u>
                     </b>
                   </p>
-                  <table className='table table-hover mt-4' style={{height: "20px", maxHeight: "20px"}} >
+                  <table className='table table-hover mt-4' style={{ height: "20px", maxHeight: "20px" }} >
                     <thead>
                       <tr>
                         <TH1>Patient Name:</TH1>
@@ -300,9 +300,9 @@ const TestVoucherPrint = () => {
                     <tbody></tbody>
                   </table>
 
-                  <table className='table table-hover mt-4' style={{height: "200px", maxHeight:"200px", pageBreakInside: "auto"}}>
-                    <thead style={{height: "10px"}}>
-                      <tr style={{pageBreakInside: "avoid", pageBreakAfter:"auto", marginBottom: "1px"}} >
+                  <table className='table table-hover mt-4' style={{ height: "200px", maxHeight: "200px", pageBreakInside: "auto" }}>
+                    <thead style={{ height: "10px" }}>
+                      <tr style={{ pageBreakInside: "avoid", pageBreakAfter: "auto", marginBottom: "1px" }} >
                         <TH1>Test</TH1>
                         <TH1>Result</TH1>
                         <TH1>Reference Range</TH1>
@@ -323,7 +323,7 @@ const TestVoucherPrint = () => {
                     {filteredVouchers.map(testSelect => (
                       <tbody>
                         {testSelect.name.subTestFlag ? (
-                          <tr style={{pageBreakInside: "auto", pageBreakAfter:"auto", marginBottom:"1px"}}>
+                          <tr style={{ pageBreakInside: "auto", pageBreakAfter: "auto", marginBottom: "1px" }}>
                             <TD1>
                               <div className='col-md-12 border-0'>
                                 <p>
@@ -360,7 +360,7 @@ const TestVoucherPrint = () => {
                                           </u>
                                         </p>
                                       ) : test.type === "multiline" ? (
-                                        <p style={{marginBottom: "45px"}}>{test.name}</p>
+                                        <p style={{ marginBottom: "45px" }}>{test.name}</p>
                                       ) : (<p>{test.name}</p>)
                                     ) : (
                                       <p>{test.name}</p>
@@ -382,18 +382,18 @@ const TestVoucherPrint = () => {
                                     {' '}
                                     {test !== null ? (
                                       test.type === 'underline' ||
-                                      test.type === 'highlight' ||
-                                      test.type === 'both' ? (
+                                        test.type === 'highlight' ||
+                                        test.type === 'both' ? (
                                         <p style={{ color: 'white' }}>""</p>
-                                      ) : test.type === "multiline" ? (<p style={{marginBottom: "45px"}} >
-                                         {' '}
-                                          {test.result !== '' ? (
-                                            test.result
-                                          ) : test.defaultResult !== '' ? (
-                                            test.defaultResult
-                                          ) : (
-                                            <P>-</P>
-                                          )}
+                                      ) : test.type === "multiline" ? (<p style={{ marginBottom: "45px" }} >
+                                        {' '}
+                                        {test.result !== '' ? (
+                                          test.result
+                                        ) : test.defaultResult !== '' ? (
+                                          test.defaultResult
+                                        ) : (
+                                          <P>-</P>
+                                        )}
                                       </p>) : (
                                         <p >
                                           {' '}
@@ -423,23 +423,23 @@ const TestVoucherPrint = () => {
                                     {' '}
                                     {test !== null ? (
                                       test.type === 'underline' ||
-                                      test.type === 'highlight' ||
-                                      test.type === 'both' ? 
+                                        test.type === 'highlight' ||
+                                        test.type === 'both' ?
                                         <p style={{ color: 'white' }}>""</p>
-                                       : ( (test.referenceRange !== "") ?
-                                        ((test.type === "multiline") ? <p contentEditable="true">{formatString(test.referenceRange)}</p> : 
-                                      //   <input
-                                      //   className='border-0'
-                                      //   type='text'
-                                      //   id='subRefRange'
-                                      //   defaultValue={test.referenceRange}
-                                      //   style={{ height: '24px' }}
-                                      // />
-                                      <p contentEditable="true">{test.referenceRange}</p>
-                                        ) :  <P>-</P>)
-                                        
-                                      
-                                    )  : (
+                                        : ((test.referenceRange !== "") ?
+                                          ((test.type === "multiline") ? <p contentEditable="true">{formatString(test.referenceRange)}</p> :
+                                            //   <input
+                                            //   className='border-0'
+                                            //   type='text'
+                                            //   id='subRefRange'
+                                            //   defaultValue={test.referenceRange}
+                                            //   style={{ height: '24px' }}
+                                            // />
+                                            <p contentEditable="true">{test.referenceRange}</p>
+                                          ) : <P>-</P>)
+
+
+                                    ) : (
                                       <p>-</p>
                                     )}
                                   </span>
@@ -456,16 +456,16 @@ const TestVoucherPrint = () => {
                                     {' '}
                                     {test !== null ? (
                                       test.type === 'underline' ||
-                                      test.type === 'highlight' ||
-                                      test.type === 'both' ? (
+                                        test.type === 'highlight' ||
+                                        test.type === 'both' ? (
                                         <p style={{ color: 'white' }}>""</p>
-                                      ) : test.type === "multiline" ? (<p style={{marginBottom: "45px"}}>
+                                      ) : test.type === "multiline" ? (<p style={{ marginBottom: "45px" }}>
                                         {test.unit === '' ? (
                                           <P>-</P>
                                         ) : (
                                           test.unit
                                         )}
-                                      </p>): (
+                                      </p>) : (
                                         <p>
                                           {test.unit === '' ? (
                                             <P>-</P>
@@ -493,10 +493,10 @@ const TestVoucherPrint = () => {
                                     {' '}
                                     {test !== null ? (
                                       test.type === 'underline' ||
-                                      test.type === 'highlight' ||
-                                      test.type === 'both' ? (
+                                        test.type === 'highlight' ||
+                                        test.type === 'both' ? (
                                         <p style={{ color: 'white' }}>""</p>
-                                      ) : test.type === "multiline" ? ( <p style={{marginBottom: "45px"}}>
+                                      ) : test.type === "multiline" ? (<p style={{ marginBottom: "45px" }}>
                                         {test.remark === '' ? (
                                           <P>-</P>
                                         ) : (
@@ -520,7 +520,7 @@ const TestVoucherPrint = () => {
                             </TD1>
                           </tr>
                         ) : (
-                          <tr key={testSelect._id} style={{pageBreakInside: "auto", pageBreakAfter:"auto"}}>
+                          <tr key={testSelect._id} style={{ pageBreakInside: "auto", pageBreakAfter: "auto" }}>
                             <TD1>
                               {testSelect.name.name.includes('NS')
                                 ? testSelect.name.name.replace('NS', '')
@@ -594,25 +594,25 @@ const TestVoucherPrint = () => {
                   </div>
 
                   {/* {showBottom ? ( */}
-                    <div className='row' id='printtop' >
-                      <div class='fixed-bottom' className='col-6'>
-                        <SPAN>Laboratory Technician</SPAN>
-                      </div>
-                      <div
-                        class='fixed-bottom'
-                        className='col-6'
-                        style={{ textAlign: 'right' }}
-                      >
-                        <SPAN>{selectedPatho.name}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.position}</SPAN>
-                        <br></br>
-                        <SPAN>{selectedPatho.education}</SPAN>
-                        <br></br>
-                        <SPAN>Central Lab, Ahlone, Yangon</SPAN>
-                      </div>
+                  <div className='row' id='printtop' >
+                    <div class='fixed-bottom' className='col-6'>
+                      <SPAN>Laboratory Technician</SPAN>
                     </div>
-                 
+                    <div
+                      class='fixed-bottom'
+                      className='col-6'
+                      style={{ textAlign: 'right' }}
+                    >
+                      <SPAN>{selectedPatho.name}</SPAN>
+                      <br></br>
+                      <SPAN>{selectedPatho.position}</SPAN>
+                      <br></br>
+                      <SPAN>{selectedPatho.education}</SPAN>
+                      <br></br>
+                      <SPAN>Central Lab, Ahlone, Yangon</SPAN>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -691,13 +691,13 @@ const TestVoucherPrint = () => {
           <div className='d-flex justify-content-center'>
             {/* <ReactToPrint
               trigger={() => ( */}
-                <button
-                  className='btn btn-success mt-3 mb-4'
-                  onClick={handleBottomChange}
-                >
-                  Print
-                </button>
-              {/* )}
+            <button
+              className='btn btn-success mt-3 mb-4'
+              onClick={handleBottomChange}
+            >
+              Print
+            </button>
+            {/* )}
               content={() => componentRef}
               // pageStyle={`@page { size: ${getContentSize().width}px ${getContentSize().height}px; }`}
             /> */}

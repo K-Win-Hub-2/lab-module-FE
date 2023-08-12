@@ -110,6 +110,7 @@ const TestVoucherSlip = () => {
         serCreditAmount(res.data.data.creditAmount)
         setDoctor(res.data.data.referDoctor.name)
       } catch (error) {
+        console.log(error)
         Swal.fire({
           title: 'Data not found for this day',
           text: 'Something Wrong',

@@ -91,7 +91,7 @@ const Login = () => {
       <div className='col-3 '>
         <div style={{ marginTop: '160px' }}>
           <div style={{ marginLeft: '40px', marginBottom: '20px' }}>
-            <img src={require('../../logo.png')} alt='' />
+            <img src={require('../../kwin.jpg')} style={{width:'200px', height:'65px'}} alt='' />
           </div>
 
           {/* <h4 style={{ marginLeft: '80px' }}>WELCOME</h4> */}
