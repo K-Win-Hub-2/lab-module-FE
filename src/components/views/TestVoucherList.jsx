@@ -275,7 +275,7 @@ const TestVoucherList = () => {
                         <Td>{vou.date ? vou.date.split('T')[0] : ''}</Td>
                         <Td>{vou.code}</Td>
                         <Td>{vou.referDoctor ? vou.referDoctor.name : ''}</Td>
-                        <Td>{vou.relatedPatient.name}</Td>
+                        <Td>{vou.relatedPatient?.name}</Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
                         <Td>

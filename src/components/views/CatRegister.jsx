@@ -4,7 +4,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import SideBar from './SideBar'
 import Swal from 'sweetalert2'
-
+import {
+  FaRegEdit,
+  FaFileExcel,
+  FaRegTrashAlt
+} from 'react-icons/fa'
 function Category() {
   const [category, setCategory] = useState([])
   const [code, setCode] = useState('')
@@ -275,27 +279,24 @@ function Category() {
                               <td>{cat.amount ? cat.amount : ''}</td>
                               <td>{cat.flag}</td>
                               <td>{cat.description}</td>
-                              <td>
-                                <div className='row d-flex justify-content-between'>
-                                  <div className='col-md-5'>
+                              <td className='text-center'>
+                               
                                     
                                     <button
                                       className='btn btn-sm btn-warning'
                                       onClick={e => handleUpdate(cat._id)}
                                     >
-                                      Update
+                                      <FaRegEdit />
                                     </button>
-                                  </div>
-                                  <div className='col-md-5'>
-                                    
+                               
+                                    &nbsp;
                                     <button
                                       className='btn btn-sm btn-danger'
                                       onClick={e => handleDelete(cat._id)}
                                     >
-                                      Delete
+                                      <FaRegTrashAlt />
                                     </button>
-                                  </div>
-                                </div>
+                              
                               </td>
                             </tr>
                           </tbody>

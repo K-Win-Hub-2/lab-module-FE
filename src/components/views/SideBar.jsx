@@ -33,7 +33,7 @@ function Sidebar() {
           </li>
         </ul>
         <div className='title' style={{ marginLeft: '350px' }}>
-          <h1>Lab Module </h1>
+          <h1>KWIN-Lab Module </h1>
         </div>
 
         {/* {{-- <h1 style="font-family:nunito" classNameName="text-center font-weight-bold font-italic text-info ml-auto">Inventory Management</h1> --}} */}
@@ -51,8 +51,8 @@ function Sidebar() {
       <img src="{{asset('image/logo.jpg')}}" alt="K-win Technology" classNameName="brand-image img-circle"
            style="opacity: .8;margin-top:10px;">
         </a> --}} */}
-        <h4 className='brand-text font-weight-light ml-4 mt-2'>
-          Central Clinic
+        <h4 className='brand-text font-weight-light ml-4 mt-4'>
+          KWIN Lab Module
         </h4>
 
         {/* 
@@ -120,7 +120,7 @@ function Sidebar() {
                     <li className='nav-item'>
                       <Link to='/stockCount' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
-                        <p>Stock-Count&Price</p>
+                        <p>Stock-Count&Price</p>  
                       </Link>
                     </li>
                   </li>
@@ -345,12 +345,12 @@ function Sidebar() {
                         <p>Income Statement</p>
                       </Link>
                     </li>
-                    <li className='nav-item'>
+                    {/* <li className='nav-item'>
                       <Link to='/profit_loss' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Profit & Loss</p>
                       </Link>
-                    </li>
+                    </li> */}
                     <li className='nav-item'>
                       <Link to='/ftvl' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;

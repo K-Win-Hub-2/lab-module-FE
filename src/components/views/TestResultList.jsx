@@ -253,7 +253,7 @@ const TestResultList = () => {
                                           : ''}
                                       </Td>
                                       <Td>{vou.code}</Td>
-                                      <Td>{vou.relatedPatient.name}</Td>
+                                      <Td>{vou.relatedPatient?.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
                                       <Td>
                                         {vou.testSelection.map((test, i) =>
@@ -313,7 +313,7 @@ const TestResultList = () => {
                                           : ''}
                                       </Td>
                                       <Td>{vou.code}</Td>
-                                      <Td>{vou.relatedPatient.name}</Td>
+                                      <Td>{vou.relatedPatient?.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
                                       <Td>
                                         {vou.testSelection.map((test, i) =>
@@ -365,7 +365,7 @@ const TestResultList = () => {
                                           : ''}
                                       </Td>
                                       <Td>{vou.code}</Td>
-                                      <Td>{vou.relatedPatient.name}</Td>
+                                      <Td>{vou.relatedPatient?.name}</Td>
                                       <Td>{vou.testSelection.length}</Td>
                                       <Td>
                                         {vou.testSelection.map((test, i) =>

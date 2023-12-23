@@ -46,7 +46,7 @@ import SellEndDialog from './components/views/Finance/FixedAsset/SellEndDialog.j
 import BalanceSheet from './components/views/Finance/Reports/BalanceSheet.jsx'
 import ProfitandLossStatement from './components/views/Finance/Reports/ProfitandLoss.jsx'
 import StockCount from './components/views/Admin/StockCountAndPrice/StockCount'
-
+import ProfitandLoss from './components/views/Finance/Reports/ProfitandLoss.jsx'
 import './App.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
@@ -120,6 +120,10 @@ function App() {
           element={<ProfitandLossStatement />}
         ></Route>
         ;
+        <Route
+          path='/profit_loss'
+          element={<ProfitandLoss />}
+        ></Route>
       </Routes>
     </Router>
   )

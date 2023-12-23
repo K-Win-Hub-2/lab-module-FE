@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
@@ -58,13 +59,13 @@ export default function StockCount() {
         getReagents()
     }, [])
     return (
-        <div className='App'>
+        <div classNameName='App'>
             {/* <!-- end preloader --> */}
             {/* @include('sweet::alert') */}
 
             <div className='wrapper'>
-
-                <Sidebar />
+            <Sidebar />
+               
                 {/* <!-- Content Wrapper. Contains page content --> */}
 
                 <div className='content-wrapper'>
@@ -229,7 +230,7 @@ export default function StockCount() {
                                                                             {item.qty ? item.qty : 'Not Set'}
                                                                         </td>
 
-                                                                        <td className='text-center d-flex justify-content-between'>
+                                                                        <td className='text-center'>
                                                                             &nbsp;
                                                                             <Link
                                                                                 to={'/doctorUpdate/' + item._id}

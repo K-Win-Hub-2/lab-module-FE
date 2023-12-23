@@ -5,9 +5,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+import { FaRegEdit,
 
-
+  FaRegTrashAlt, FaFileExcel } from 'react-icons/fa'
 function CatRegister() {
   const [reagent, setReagent] = useState([]);
 
@@ -78,11 +78,11 @@ function CatRegister() {
                 <div class="row">
                   <div class="col-md-12 py-3 card">
                     <div class="card-header">
-                      <div class="row justify-content-between">
-                        <label class="">
-                          <span class="float-right">
+                      <div class="float-right">
+                      
+                          <span class="">
                             <Link to="/reagent-reg" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Reagent Register
+                              <i class="fas fa-plus"></i> &nbsp;Register
                             </Link>
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
@@ -97,7 +97,7 @@ function CatRegister() {
                               />&nbsp;Export
                             </button>
                           </span>
-                        </label>
+                 
                       </div>
                       <div class="row" id="trial_balance"></div>
                     </div>
@@ -130,18 +130,20 @@ function CatRegister() {
                               <td>{reag.supplier}</td>
 
                               <td className="text-center">
+                              <Link to={'/reagent-update/'+reag._id} >
+                                  <a className="btn btn-sm btn-warning" role="button">
+                                  <FaRegEdit />
+                                  </a>
+                                </Link>
+                                &nbsp;
                                 <a
                                   className="btn btn-sm btn-danger text-white"
                                   role="button"
                                   onClick={() => handleDelete(reag._id)}>
-                                  Delete
+                                  <FaRegTrashAlt />
                                 </a>
-                                &nbsp;
-                                <Link to={'/reagent-update/'+reag._id} >
-                                  <a className="btn btn-sm btn-warning" role="button">
-                                    Update
-                                  </a>
-                                </Link>
+                               
+                               
                               </td>
                             </tr>
                           </tbody>

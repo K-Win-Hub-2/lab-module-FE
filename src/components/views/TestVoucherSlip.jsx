@@ -158,7 +158,7 @@ const TestVoucherSlip = () => {
                 >
                   <Div className='card-body' id='print'>
                     <h5 style={{ textAlign: 'center', fontSize: '50px' }}>
-                      Central Laboratory
+                      KWIN-Laboratory
                     </h5>
                     <h6
                       style={{
@@ -167,11 +167,11 @@ const TestVoucherSlip = () => {
                         marginTop: '15px'
                       }}
                     >
-                      NO.51 A,Min Ye Kyaw Swar Road ,Ahlone Township
+                      NO.104 SH-1,Wai Zanyandar Road ,Thingangyun Township
                     </h6>
                     <div className='text-center'>
                       <b style={{ fontSize: '40px', marginTop: '15px' }}>
-                        09400400650
+                        09912345671
                       </b>
                     </div>
                     <div className='text-center'>

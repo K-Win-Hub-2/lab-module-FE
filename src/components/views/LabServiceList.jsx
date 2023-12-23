@@ -194,18 +194,21 @@ const LabServiceList = () => {
                 <div className="col-12">
                   <div class="card">
                     <div class="card-header">
-                      <div class="row justify-content-between">
-                        <label class="">
-                          <span class="float-right">
+                      <div class="float-right">
+                    
+                          <span class="">
+    
+                           
                             <Link to="/lab-register" class="btn btn-primary">
-                              <i class="fas fa-plus"></i> &nbsp;Lab Test
+                              <i class="fas fa-plus"></i> &nbsp;
                               Register
                             </Link>
+                            &nbsp;
                             &nbsp;
                             {/* <a href="/expense_type" class="btn btn-primary">
                               Expense Type
                             </a> */}
-                            <button
+                                                <button
                               type="button"
                               className="btn btn-success"
                               onClick={excelExport}>
@@ -213,7 +216,7 @@ const LabServiceList = () => {
 />&nbsp;Export
                             </button>
                           </span>
-                        </label>
+                    
                       </div>
                       <div class="row" id="trial_balance"></div>
                     </div>
@@ -324,7 +327,7 @@ const LabServiceList = () => {
                                         Check
                                       </button>
                                     </td> */}
-                                    <td className='d-flex justify-content-between'>
+                                    <td className='align-center'>
                                       <Link to={"/lab-test/" + labService._id}>
                                         <a
                                           className="btn btn-sm btn-warning text-white"
