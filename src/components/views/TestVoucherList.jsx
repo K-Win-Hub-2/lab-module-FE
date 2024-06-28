@@ -129,8 +129,8 @@ const TestVoucherList = () => {
           confirmButtonText: "CANCEL",
         });
 
-       
-     
+
+
         // res.data.data.map((el, i) => {
         //   const obj = {
         //     'No': ++i,
@@ -142,7 +142,7 @@ const TestVoucherList = () => {
         //   }
         //   setArray((array) => [...array, obj]);
         // })
-     
+
 
       }
     }
@@ -287,28 +287,38 @@ const TestVoucherList = () => {
                           )}
                         </Td>
                         {/* <Td><Link to={'/test/'+vou._id} className='btn btn-sm btn-primary'>Detail<AiFillInfoCircle style={{ marginLeft: '7px' }} /></Link></Td> */}
-                        <Td>
-                          <Link
-                            to={"/testslip/" + vou._id}
-                            className="btn btn-sm btn-primary float-left">
-                            Detail
-                            <AiFillInfoCircle style={{ marginLeft: "7px" }} />
-                          </Link>
-                          &nbsp;
-                          {vou.creditAmount ? (
-                            <Link to={"/repay/" + vou._id}
+                        <Td className='col-3'>
+                          <div className='row'>
+                            <div className='col-5'>
+                              <Link
+                                to={"/testslip/" + vou._id}
+                                className="btn btn-sm btn-primary float-left">
+                                Detail
+                                <AiFillInfoCircle style={{ marginLeft: "7px" }} />
+                              </Link>
+                            </div>
+                            &nbsp;
+                            <div className='col-5'>
+                              {vou.creditAmount ? (
+                                <Link to={"/repay/" + vou._id}
 
-                              className="btn btn-sm btn-primary">
-                              RePay
-                            </Link>
-                          ) : (
-                            <button
-                              type="button"
-                              className="btn btn-sm btn-secondary">
-                              Paid &nbsp;
-                              <FaCheck />
-                            </button>
-                          )}
+                                  className="btn btn-sm btn-primary">
+                                  RePay
+
+                                </Link>
+                              ) : (
+                                <Link to=''
+
+                                  className="btn btn-sm btn-secondary">
+                                  Paid &nbsp;
+                                  <FaCheck />
+                                </Link>
+                              )}
+                            </div>
+                          </div>
+
+
+
                         </Td>
                       </Tr>
                     ))}

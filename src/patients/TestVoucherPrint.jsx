@@ -13,10 +13,10 @@ import ReactToPrint from 'react-to-print'
 
 const TestVoucherPrint = () => {
   const [referDoctorLists, setReferDoctorLists] = useState([])
-  const [selectedPatho,setSelectedPatho] = useState("");
+  const [selectedPatho, setSelectedPatho] = useState("");
   const [voucherLists, setVoucherLists] = useState([])
-  const [filteredVouchers,setFilteredVouchers] = useState([])
-  
+  const [filteredVouchers, setFilteredVouchers] = useState([])
+
   const [patientLists, setPatientLists] = useState([])
 
   const [labID_VouCode, setLabID_VouCode] = useState([])
@@ -56,19 +56,19 @@ const TestVoucherPrint = () => {
 
   const handleChange = event => {
     if (event.target.checked) {
-     voucherLists.map((vou)=>{
-      if(vou._id === event.target.value){
-        setFilteredVouchers([...filteredVouchers,vou])
-      }
-     })
+      voucherLists.map((vou) => {
+        if (vou._id === event.target.value) {
+          setFilteredVouchers([...filteredVouchers, vou])
+        }
+      })
     } else {
-      if(filteredVouchers.length > 0){
-      setFilteredVouchers(
-        filteredVouchers.filter( 
-          vou => vou._id !== event.target.value
+      if (filteredVouchers.length > 0) {
+        setFilteredVouchers(
+          filteredVouchers.filter(
+            vou => vou._id !== event.target.value
+          )
         )
-      )
-    }
+      }
     }
     //setIsSubscribed(current => !current);
   };
@@ -91,11 +91,11 @@ const TestVoucherPrint = () => {
   // const Regdate = labID_VouCode.date;
 
   const handlePathoChange = (value) => {
-      referDoctorLists.map((doctor,index)=> {
-        if(doctor._id === value){
-          setSelectedPatho(doctor);
-        }
-      })
+    referDoctorLists.map((doctor, index) => {
+      if (doctor._id === value) {
+        setSelectedPatho(doctor);
+      }
+    })
   }
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const TestVoucherPrint = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            TestVou_id
+          TestVou_id
         )
 
         // console.log(vouDate);
@@ -124,7 +124,7 @@ const TestVoucherPrint = () => {
       try {
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            TestVou_id
+          TestVou_id
         )
 
         setPatientLists(res.data.data.relatedPatient)
@@ -171,33 +171,33 @@ const TestVoucherPrint = () => {
                 // calssName='card-body'
                 style={{ border: '1px solid black', padding: '14px 14px' }}
               >
-                
-                  <div className='row' style={{visibility: headerOn ? 'visible' : 'hidden' }}>
-                    <div className='col-3'>
-                      <img src={require('../logo.png')} alt='' />
-                    </div>
-                    <div className='offset-1 col-md-5'>
-                      Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
-                      <br />
-                      Yangon, Myanmar.
-                      <br />
-                      Tel : 09 400 662 (Clinic), 09 400 400 650 (Lab)
-                      <br />
-                      Clinic 2 - 435, May Dawi Road, North Okkalapa Township,
-                      <br />
-                      Yangon, Myanamr.
-                      <br />
-                      Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
-                    </div>
-                    <div className='col-md-3'>
-                      <img
-                        src={require('../logo1.png')}
-                        alt=''
-                        style={{ marginLeft: '120px' }}
-                      />
-                    </div>
+
+                <div className='row' style={{ visibility: headerOn ? 'visible' : 'hidden' }}>
+                  <div className='col-3'>
+                    <img src={require('../logo.png')} alt='' />
                   </div>
-               
+                  <div className='col-4'>
+                    Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
+                    <br />
+                    Yangon, Myanmar.
+                    <br />
+                    Tel : 09 400 662 (Clinic), 09 400 400 650 (Lab)
+                    <br />
+                    Clinic 2 - 435, May Dawi Road, North Okkalapa Township,
+                    <br />
+                    Yangon, Myanamr.
+                    <br />
+                    Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
+                  </div>
+                  <div className='col-3'>
+                    <img
+                      src={require('../logo1.png')}
+                      alt=''
+                      style={{ marginLeft: '120px' }}
+                    />
+                  </div>
+                </div>
+
 
                 <p style={{ textAlign: 'center' }} className='mt-5'>
                   <b>
@@ -238,18 +238,18 @@ const TestVoucherPrint = () => {
                   </thead>
                   <tbody></tbody>
                 </table>
-               
-                  <table className='table table-hover mt-4'>
-                    <thead >
-                      <tr>
-                        <th>Test</th>
-                        <th>Result</th>
-                        <th>Reference Range</th>
-                        <th>Unit</th>
-                        <th>Remark</th>
-                      </tr>
-                    </thead>
-                    {/* <tbody>
+
+                <table className='table table-hover mt-4'>
+                  <thead >
+                    <tr>
+                      <th>Test</th>
+                      <th>Result</th>
+                      <th>Reference Range</th>
+                      <th>Unit</th>
+                      <th>Remark</th>
+                    </tr>
+                  </thead>
+                  {/* <tbody>
                     <tr>
                       <td>Vitamin D (25 – OH)</td>
                       <td></td>
@@ -258,61 +258,61 @@ const TestVoucherPrint = () => {
                     </tr>
                   
                   </tbody> */}
-<tbody >
+                  <tbody >
                     {filteredVouchers.map(testSelect => (
-                      
-                        <tr key={testSelect._id}>
-                          <td>{testSelect.name.name}</td>
-                          <td>{testSelect.result}</td>
 
-                          <td>
+                      <tr key={testSelect._id}>
+                        <td>{testSelect.name.name}</td>
+                        <td>{testSelect.result}</td>
+
+                        <td>
                           {testSelect.name.specialComment ? (
-                                "See Below"
-                              ) : (
-                                <div>
-                            {testSelect.name.referenceRange.map(refer => (
-                              <p key={refer._id}>
-                                {refer.from}-{refer.to} &nbsp;
-                              </p>
-                            ))}
+                            "See Below"
+                          ) : (
+                            <div>
+                              {testSelect.name.referenceRange.map(refer => (
+                                <p key={refer._id}>
+                                  {refer.from}-{refer.to} &nbsp;
+                                </p>
+                              ))}
                             </div>
-                              )}
-                          </td>
+                          )}
+                        </td>
 
-                          <td>
+                        <td>
                           {testSelect.name.specialComment ? (
-                                "See Below"
-                              ) : (
-                                <div>
-                            {testSelect.name.referenceRange.map(refer => (
-                              <p key={refer._id}>{refer.unit}</p>
-                            ))}
+                            "See Below"
+                          ) : (
+                            <div>
+                              {testSelect.name.referenceRange.map(refer => (
+                                <p key={refer._id}>{refer.unit}</p>
+                              ))}
                             </div>
-                              )}
-                          </td>
+                          )}
+                        </td>
 
-                          <td>{testSelect.remark}</td>
-                        </tr>
-                      
+                        <td>{testSelect.remark}</td>
+                      </tr>
+
                     ))}
-                    </tbody>
-                  </table>
-                
+                  </tbody>
+                </table>
 
-                
-                  <div className='px-3 py-2'>
-                    <div className='row'>
-                      {filteredVouchers.map(specDecode => (
-                        <div className='col-md-6' key={specDecode._id}>
-                          <h6 className='text-bold text-decoration-underline'>
-                            {specDecode.name.name} Reference Range
-                          </h6>
-                          <p>{formatString(specDecode.name.specialComment)}</p>
-                        </div>
-                      ))}
-                    </div>
+
+
+                <div className='px-3 py-2'>
+                  <div className='row'>
+                    {filteredVouchers.map(specDecode => (
+                      <div className='col-md-6' key={specDecode._id}>
+                        <h6 className='text-bold text-decoration-underline'>
+                          {specDecode.name.name} Reference Range
+                        </h6>
+                        <p>{formatString(specDecode.name.specialComment)}</p>
+                      </div>
+                    ))}
                   </div>
-                
+                </div>
+
                 <div className='row' style={{ marginTop: '50px' }}>
                   <div className='col-6'>
                     <span>Laboratory Technician</span>
@@ -326,12 +326,12 @@ const TestVoucherPrint = () => {
                     <br></br>
                     <span>
                       {selectedPatho.position
-                        }
+                      }
                     </span>
                     <br></br>
                     <span>
                       {selectedPatho.education
-                       }
+                      }
                     </span>
                     <br></br>
                     <span>Central Lab, Ahlone, Yangon</span>
@@ -358,21 +358,21 @@ const TestVoucherPrint = () => {
               name='reference'
               onChange={RefOffCheck}
             /> */}
-             <div className='col-6' >
-                          
-                          <select
+            <div className='col-6' >
+
+              <select
                 className="form-control"
                 name="pathologist"
                 id="pathologist"
-               onChange={(e) => handlePathoChange(e.target.value)}
-                >
+                onChange={(e) => handlePathoChange(e.target.value)}
+              >
                 <option value="">Select Pathologist</option>
                 {referDoctorLists.map(option => (
-                    <option value={option._id}>{option.name}</option>
-                  ))}
+                  <option value={option._id}>{option.name}</option>
+                ))}
               </select>
-                          
-                          </div>
+
+            </div>
           </div>
           <div className='col-md-3 mb-4' style={{ marginTop: '2em' }}>
             <label>Tests Result</label>&nbsp;
@@ -381,10 +381,10 @@ const TestVoucherPrint = () => {
             <label>Off</label>&nbsp;
             <input type='radio' id='off' name='result' onChange={ResOffCheck} /> */}
             <div className='col-6'>
-              {voucherLists.map((vou)=> (
+              {voucherLists.map((vou) => (
                 <div>
-                <input type="checkbox" id={vou._id} name={vou.name.name} value={vou._id} onChange={handleChange} />
-                <label htmlFor={vou.name.name}>{vou.name.name}</label>
+                  <input type="checkbox" id={vou._id} name={vou.name.name} value={vou._id} onChange={handleChange} />
+                  <label htmlFor={vou.name.name}>{vou.name.name}</label>
                 </div>
               ))}
             </div>
@@ -407,14 +407,16 @@ const TestVoucherPrint = () => {
               onChange={handleOffCheck}
             />
           </div>
-          <div className='offset-md-3'>
+          <div className=''>
             <ReactToPrint
               trigger={() => (
-                <button className='btn btn-success mt-3 mb-4'>Print</button>
+                <button className='btn btn-success mt-3 mb-4 form-control w-25' style={{ marginLeft: '350px' }}>Print</button>
               )}
               content={() => componentRef}
             />
           </div>
+
+
         </div>
       </div>
 
