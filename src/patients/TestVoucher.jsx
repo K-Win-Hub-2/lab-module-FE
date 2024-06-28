@@ -51,25 +51,24 @@ const TestVoucher = () => {
   const [vouchers, setVouchers] = useState([])
   const [filteredVouchers, setFilteredVouchers] = useState([])
   const patient_id = useLocation().pathname.split('/')[2]
-  
+  console.log(patient_id, 'pid')
+
 
   const getVouchers = async () => {
     try {
       let data = {
         relatedPatient: patient_id
       }
-      console.log(data, 'patient_id')
+
       const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers',
+        `http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers`,
         data
       )
-      console.log(res.data.data, 'data')
+      console.log(res.data.data.filter(el => el.relatedPatient).filter(e => e.relatedPatient._id === patient_id), 'data')
+      const finalData = res.data.data.filter(el => el.relatedPatient).filter(e => e.relatedPatient._id === patient_id)
       setVouchers(res.data.data)
       setFilteredVouchers(
-        res.data.data.filter(
-          el =>
-            el.relatedPatient._id == patient_id
-        )
+        finalData
       )
     } catch (err) {
       Swal.fire({
@@ -101,11 +100,11 @@ const TestVoucher = () => {
               </Left>
               <Right>
                 <Link to={'/test_sale/' + patient_id
-} className='btn btn-primary'>
-              
-                    <AiOutlinePlus style={{ marginRight: '7px' }} />
-                    Create Voucher
-                 
+                } className='btn btn-primary'>
+
+                  <AiOutlinePlus style={{ marginRight: '7px' }} />
+                  Create Voucher
+
                 </Link>
               </Right>
             </Top>
@@ -123,14 +122,14 @@ const TestVoucher = () => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                  {filteredVouchers.map((vou, i) => (
-                      
+                    {filteredVouchers.map((vou, i) => (
+
                       <Tr key={vou._id}>
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ''}</Td>
                         <Td>{vou.date ? vou.date.split('T')[0] : ''}</Td>
                         {/* <Td>{vou.netDiscount}</Td> */}
-                        <Td>{vou.discount ? vou.discount : ''}</Td>
+                        <Td>{vou.discount ? vou.discount : 0}</Td>
                         <Td>{vou.totalCharge ? vou.totalCharge : ''}</Td>
                         <Td>
                           {/* <Link
@@ -156,8 +155,8 @@ const TestVoucher = () => {
                           </Link>
                         </Td>
                       </Tr>
-                    
-                  ))}
+
+                    ))}
                   </Tbody>
                 </Table>
               </Div>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
 
-function Sidebar () {
+function Sidebar() {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -14,7 +14,8 @@ function Sidebar () {
       title: 'Success',
       text: 'successfully Logout!',
       icon: 'success',
-      confirmButtonText: 'OK'
+      showConfirmButton: false,
+      timer: 2000
     }).then(function () {
       dispatch(logoutSuccess())
       navigate('/')
@@ -103,7 +104,7 @@ function Sidebar () {
                         <p>Reagent</p>
                       </Link>
                     </li>
-{/*                     
+                    {/*                     
                     <li className='nav-item'>
                       <Link to='/supplier' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;

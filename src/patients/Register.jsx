@@ -70,14 +70,14 @@ const Register = () => {
   //  const handleImageUpload = (e) => {
   //    setImg(e.target.files[0]);
   //  };
-  
+
   const patientCreate = () => {
     const data = {
       name: name,
       // email: email,
       age: age,
       // phone: phone,
-      img:img,
+      img: img,
       address: address,
       occupation: occupation,
 
@@ -87,10 +87,10 @@ const Register = () => {
 
     // if (img) data.img = img;
 
- if (email !== null) data = { ...data, email: email };
- if (phone !== null) data = { ...data, phone: phone };
-//  if (address) data = { ...data, address: address };
-//  if (occupation) data = { ...data, occupation: occupation };
+    if (email !== null) data.email = email;
+    if (phone !== null) data.phone = phone;
+    //  if (address) data = { ...data, address: address };
+    //  if (occupation) data = { ...data, occupation: occupation };
     // alert(JSON.stringify(data));
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
@@ -106,13 +106,15 @@ const Register = () => {
           title: "Success",
           text: "successfully Patient Create!",
           icon: "success",
-          confirmButtonText: "OK",
+          showConfirmButton: false,
+          timer: 2000
         }).then(function () {
           // alert("success");
           navigate("/patient/list");
         });
       })
       .catch((error) => {
+        console.log(error)
         Swal.fire({
           title: "Warning",
           text: "Something Wrong!",
@@ -232,7 +234,7 @@ const Register = () => {
                       type="file"
                       className="form-control"
                       onChange={(e) => setImg(e.target.files[0])}
-                      // onChange={handleImageUpload}
+                    // onChange={handleImageUpload}
                     />
                   </Div>
                 </Div>
