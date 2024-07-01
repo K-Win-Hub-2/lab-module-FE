@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import SideBar from './SideBar'
 import styled from 'styled-components'
-import axios from 'axios';
+
 import Swal from "sweetalert2";
 import { useLocation } from 'react-router-dom';
 import ReactToPrint from 'react-to-print'
+import apiInstance from '../../utils/api';
 
 
 
@@ -68,9 +69,9 @@ const TestVoucherSlip = () => {
   useEffect(() => {
     const getVouchers = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            vouid
+        const res = await apiInstance.get(
+          'voucher/' +
+          vouid
         )
         console.log(res.data.data)
         setVouchers(res.data.data.testSelection)
@@ -85,7 +86,7 @@ const TestVoucherSlip = () => {
         setAge(res.data.data.relatedPatient.age)
         serCreditAmount(res.data.data.creditAmount)
 
-       
+
       } catch (error) {
         Swal.fire({
           title: 'Data not found for this day',
@@ -212,14 +213,14 @@ const TestVoucherSlip = () => {
                       </tfoot>
                     </Table>
                     {
-  creditAmount == 0 && (
+                      creditAmount == 0 && (
 
-      <h5 style={{ textAlign: 'center' }} className='mt-3'>
-        You paid your credit amount!
-      </h5>
+                        <h5 style={{ textAlign: 'center' }} className='mt-3'>
+                          You paid your credit amount!
+                        </h5>
 
-  )
-}
+                      )
+                    }
 
                   </Div>
                 </Div>

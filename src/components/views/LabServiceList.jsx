@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import SideBar from "./SideBar";
 import Swal from "sweetalert2";
 import LabServiceUpdate from "../views/LabServiceUpdate";
+import apiInstance from "../../utils/api";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
@@ -19,10 +20,10 @@ const LabServiceList = () => {
 
   const handleDelete = (event) => {
     console.log(event, "event");
-    axios
+    apiInstance
       .delete(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-          event
+        "service/" +
+        event
       )
       .then((response) => {
         Swal.fire({
@@ -53,14 +54,14 @@ const LabServiceList = () => {
     const getMultiTestList = async () => {
       try {
         console.log(val);
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-            val
+        const res = await apiInstance.get(
+          "service/" +
+          val
         );
 
         console.log(res.data.data);
         setMultiTestLists(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getMultiTestList();
@@ -86,8 +87,8 @@ const LabServiceList = () => {
   };
   useEffect(() => {
     const getLabServiceLists = async () => {
-      const res = await axios.get(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
+      const res = await apiInstance.get(
+        "services?limit=30"
       );
 
       setLabServiceLists(res.data.data);
@@ -360,28 +361,28 @@ const LabServiceList = () => {
 
                                         {multiTestLists
                                           ? multiTestLists.map((multi, i) => (
-                                              <div class="row">
-                                                <div class="col-md-2">
-                                                  <div
-                                                    style={{
-                                                      fontSize: "15px",
-                                                    }}>
-                                                    {++i}
-                                                  </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                  <div
-                                                    style={{
-                                                      fontSize: "15px",
-                                                    }}>
-                                                    {multi.name}
-                                                  </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                  {multi.unit}
+                                            <div class="row">
+                                              <div class="col-md-2">
+                                                <div
+                                                  style={{
+                                                    fontSize: "15px",
+                                                  }}>
+                                                  {++i}
                                                 </div>
                                               </div>
-                                            ))
+                                              <div class="col-md-3">
+                                                <div
+                                                  style={{
+                                                    fontSize: "15px",
+                                                  }}>
+                                                  {multi.name}
+                                                </div>
+                                              </div>
+                                              <div class="col-md-2">
+                                                {multi.unit}
+                                              </div>
+                                            </div>
+                                          ))
                                           : ""}
                                       </div>
                                     </td>

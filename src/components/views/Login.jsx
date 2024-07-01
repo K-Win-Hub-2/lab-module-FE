@@ -16,6 +16,7 @@ import { loginSuccess, addUser } from '../../redux/authRedux';
 import Doctors from '../../../src/doctors.svg'
 import Swal from "sweetalert2";
 import { MouseEvent } from 'react';
+import apiInstance from '../../utils/api';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
@@ -44,9 +45,9 @@ const Login = () => {
       password: password
     }
 
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/auth/login",
+        "auth/login",
         data
       )
       .then(function (response) {

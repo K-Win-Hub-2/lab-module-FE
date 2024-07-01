@@ -11,8 +11,9 @@ import { useLocation } from 'react-router'
 import { useNavigate } from 'react-router'
 import { calendar } from '../../assets/plugins/moment/src/lib/moment/calendar'
 import ReactHtmlParser from 'react-html-parser'
+import apiInstance from '../../utils/api'
 
-function LabServiceUpdate () {
+function LabServiceUpdate() {
   const [category, setCategory] = useState([])
   const [reagentArray, setReagentArray] = useState([])
   // const [referDoctor, setReferDoctor] = useState([]);
@@ -53,7 +54,7 @@ function LabServiceUpdate () {
   const labid = useLocation().pathname.split('/')[2]
   const navigate = useNavigate()
 
-  function decodeBase64 (data) {
+  function decodeBase64(data) {
     const decode = Base64.decode(data)
 
     return decode
@@ -110,29 +111,29 @@ function LabServiceUpdate () {
   }
 
   const handleRefRange = event => {
-    
-   if(event == 0){
-    
-    var newRef = {
-      from: mfrom,
-      to: mto,
-      gender: mgender,
-      unit: munit
-    }
-    
-    
-    
-  }else if(event == 1){
+
+    if (event == 0) {
+
+      var newRef = {
+        from: mfrom,
+        to: mto,
+        gender: mgender,
+        unit: munit
+      }
+
+
+
+    } else if (event == 1) {
       var newRef = {
         from: ffrom,
         to: fto,
         gender: fgender,
         unit: funit
       }
-      
-      
+
+
     }
-    
+
     setRefArray([...refArray, newRef])
   }
 
@@ -202,9 +203,9 @@ function LabServiceUpdate () {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
+        'service',
         data,
         config
       )
@@ -230,27 +231,27 @@ function LabServiceUpdate () {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30'
+      const res = await apiInstance.get(
+        'categories?limit=30'
       )
 
       setCategory(res.data.data)
-    } catch (err) {}
+    } catch (err) { }
   }
 
   const getReagent = async () => {
     try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30'
+      const res = await apiInstance.get(
+        'reagents?limit=30'
       )
       setReagentItems(res.data.data)
-    } catch (err) {}
+    } catch (err) { }
   }
 
   const getUpdate = async () => {
-    const res = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' +
-        labid
+    const res = await apiInstance.get(
+      'service/' +
+      labid
     )
     //console.log("success");
     console.log(res.data.data)
@@ -299,15 +300,15 @@ function LabServiceUpdate () {
         //     console.log(fgender)
         //     setfUnit(refArray[1].unit)
         //   }
-       
-       // }
-       if(res.data.data.referenceRange !== undefined){
-       setRefArray(res.data.data.referenceRange)
-      if(res.data.data.referenceRange.length > 1){
-        setShowNextRef(true);
-      }
-      }
-       
+
+        // }
+        if (res.data.data.referenceRange !== undefined) {
+          setRefArray(res.data.data.referenceRange)
+          if (res.data.data.referenceRange.length > 1) {
+            setShowNextRef(true);
+          }
+        }
+
       }
     }
   }
@@ -431,9 +432,9 @@ function LabServiceUpdate () {
                               {category.map(option => (
                                 <option
                                   value={option._id}
-                                  // selected={
-                                  //   option._id === updateCategory ? true : false
-                                  // }
+                                // selected={
+                                //   option._id === updateCategory ? true : false
+                                // }
                                 >
                                   {option.name}
                                 </option>
@@ -731,8 +732,8 @@ function LabServiceUpdate () {
                                       placeholder='From'
                                       className='form-control'
                                       step={0.01}
-                                     // defaultValue={(refArray > 0) ? mfrom : 0.0}
-                                     defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].from : 0}
+                                      // defaultValue={(refArray > 0) ? mfrom : 0.0}
+                                      defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].from : 0}
                                       onChange={e => setmFrom(e.target.value)}
                                     />
                                   </div>
@@ -768,7 +769,7 @@ function LabServiceUpdate () {
                                       <option
                                         value='Male'
                                         selected={
-                                          (refArray !== undefined && refArray.length > 0 &&  refArray[0].gender === 'Male') ? true : false
+                                          (refArray !== undefined && refArray.length > 0 && refArray[0].gender === 'Male') ? true : false
                                         }
                                       >
                                         Male
@@ -791,7 +792,7 @@ function LabServiceUpdate () {
                                       type='text'
                                       placeholder='Unit'
                                       className='form-control'
-                                      defaultValue={(refArray !== undefined && refArray.length > 0 ) ? refArray[0].unit : ""}
+                                      defaultValue={(refArray !== undefined && refArray.length > 0) ? refArray[0].unit : ""}
                                       onChange={e => setmUnit(e.target.value)}
                                     />
                                   </div>

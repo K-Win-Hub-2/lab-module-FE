@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import apiInstance from "../utils/api";
 
 const Top = styled.div`
   display: flex;
@@ -95,9 +96,9 @@ const Register = () => {
     const config = {
       headers: { "Content-Type": "multipart/form-data" },
     };
-    const res = axios
+    const res = apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient",
+        "patient",
         data,
         config
       )

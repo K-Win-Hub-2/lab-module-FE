@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./SideBar";
 import Swal from "sweetalert2";
-import axios from "axios";
+
+import apiInstance from "../../utils/api";
 // const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
-const url = 'http://localhost:9000/api'
+// const url = 'http://localhost:9000/api'
 
 export default function TrialBalance() {
     const [accountLists, setAccountLists] = useState([]);
 
     const calculation = async (data) => {
         data.map((element) => {
-            axios.get(url + '/transactions/trial-balance/' + element._id).then((response)=> {
-                console.log(response.data.data,'response')
-            }).catch( (error) => {
+            apiInstance.get('transactions/trial-balance/' + element._id).then((response) => {
+                console.log(response.data.data, 'response')
+            }).catch((error) => {
                 console.log(error)
             })
         })
@@ -22,7 +23,7 @@ export default function TrialBalance() {
 
         const fetchAccountLists = async () => {
             try {
-                const res = await axios.get(url+'/accounting-lists');
+                const res = await apiInstance.get('accounting-lists');
                 setAccountLists(res.data.list);
                 calculation(res.data.list);
             } catch (error) {

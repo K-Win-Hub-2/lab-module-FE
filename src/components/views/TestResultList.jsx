@@ -8,6 +8,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 import { Link } from 'react-router-dom'
+import apiInstance from '../../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -71,44 +72,44 @@ const TestResultList = () => {
   const [to, setTo] = useState('')
   const [name, setName] = useState('')
 
- useEffect(() => {
-  const getVouchers = async () => {
-    try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today'
-      )
-      console.log(res.data.data)
-      setVouchers(res.data.data)
+  useEffect(() => {
+    const getVouchers = async () => {
+      try {
+        const res = await apiInstance.get(
+          'vouchers/today'
+        )
+        console.log(res.data.data)
+        setVouchers(res.data.data)
 
-      // res.data.data.map((el, i) => {
-      //   const obj = {
-      //     No: ++i,
-      //     'Voucher Date': el.date.split('T')[0],
-      //     'Voucher Code': el.code,
-      //     'Patient Name': el.relatedPatient.name,
-      //     'Test Qty': el.testSelection.length,
-      //     Amount: el.totalCharge
-      //   }
-      //   setArray(array => [...array, obj])
-      // })
-    } catch (error) {
-      Swal.fire({
-        title: 'Data not found for this day',
-        text: 'Something Wrong',
-        icon: 'warning',
-        confirmButtonText: 'CANCEL'
-      })
+        // res.data.data.map((el, i) => {
+        //   const obj = {
+        //     No: ++i,
+        //     'Voucher Date': el.date.split('T')[0],
+        //     'Voucher Code': el.code,
+        //     'Patient Name': el.relatedPatient.name,
+        //     'Test Qty': el.testSelection.length,
+        //     Amount: el.totalCharge
+        //   }
+        //   setArray(array => [...array, obj])
+        // })
+      } catch (error) {
+        Swal.fire({
+          title: 'Data not found for this day',
+          text: 'Something Wrong',
+          icon: 'warning',
+          confirmButtonText: 'CANCEL'
+        })
 
-    
+
+      }
     }
-  }
-  getVouchers()
-}, [])
+    getVouchers()
+  }, [])
 
 
   const search = async () => {
-    const result = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers'
+    const result = await apiInstance.get(
+      'vouchers'
     )
     if (name == '') {
       setVouchers(

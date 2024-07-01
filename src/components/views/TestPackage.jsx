@@ -3,6 +3,7 @@ import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import apiInstance from "../../utils/api";
 
 function CatRegister() {
   const [testPackage, setTestPackage] = useState([]);
@@ -10,12 +11,12 @@ function CatRegister() {
   useEffect(() => {
     const getPackage = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/packages"
+        const res = await apiInstance.get(
+          "packages"
         );
         console.log(res.data.data);
         setTestPackage(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getPackage();
   }, []);

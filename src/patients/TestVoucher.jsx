@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 
 
 import { useLocation, Link } from 'react-router-dom'
+import apiInstance from '../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -60,8 +61,8 @@ const TestVoucher = () => {
         relatedPatient: patient_id
       }
 
-      const res = await axios.get(
-        `http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers`,
+      const res = await apiInstance.get(
+        `vouchers`,
         data
       )
       console.log(res.data.data.filter(el => el.relatedPatient).filter(e => e.relatedPatient._id === patient_id), 'data')

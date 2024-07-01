@@ -2,13 +2,14 @@
 
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
-import {  FaArrowLeft, FaSave } from "react-icons/fa";
+import { FaArrowLeft, FaSave } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function LabServiceRegister() {
   const [vouDate, setVouDate] = useState("");
@@ -59,9 +60,9 @@ function LabServiceRegister() {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .put(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/document",
+        "vouchers/document",
         data,
         config
       )
@@ -87,14 +88,14 @@ function LabServiceRegister() {
   useEffect(() => {
     const getVoucherList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
-            TestVou_id
+        const res = await apiInstance.get(
+          "voucher/" +
+          TestVou_id
         );
 
         // console.log(vouDate);
         setVoucherLists(res.data.data.testSelection);
-        
+
         console.log(res.data.data.testSelection);
         // console.log(res.data.data.testSelection[0].name.referenceRange.gender);
 
@@ -103,32 +104,32 @@ function LabServiceRegister() {
 
         setVouDate(res.data.data.date.split("T")[0]);
 
-        
-      } catch (err) {}
+
+      } catch (err) { }
     };
 
     const getPatientList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
-            TestVou_id
+        const res = await apiInstance.get(
+          "voucher/" +
+          TestVou_id
         );
 
         setPatientLists(res.data.data.relatedPatient);
-      setPatientID(res.data.data.relatedPatient);
-      console.log(res.data.data._id);
-      } catch (err) {}
+        setPatientID(res.data.data.relatedPatient);
+        console.log(res.data.data._id);
+      } catch (err) { }
     };
 
     const getReferDoctorList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
-            TestVou_id
+        const res = await apiInstance.get(
+          "voucher/" +
+          TestVou_id
         );
 
         setReferDoctorLists(res.data.data.referDoctor.name);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getReferDoctorList();

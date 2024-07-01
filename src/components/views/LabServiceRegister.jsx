@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Base64 } from "js-base64";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -36,18 +37,18 @@ function LabServiceRegister() {
   const [showMultiTest, setShowMultiTest] = useState(false);
   const [showSpecialRange, setShowSpecialRange] = useState(false);
   const [tableData, setTableData] = useState([]);
-const[referAmount,setReferAmount]=useState('');
+  const [referAmount, setReferAmount] = useState('');
 
-    
-     const handleAlert =()=>{
-       Swal.fire({
-         title: "Success",
-         text: "successfully Registered!",
-         icon: "success",
-         confirmButtonText: "OK",
-       });
-     }
-  
+
+  const handleAlert = () => {
+    Swal.fire({
+      title: "Success",
+      text: "successfully Registered!",
+      icon: "success",
+      confirmButtonText: "OK",
+    });
+  }
+
 
   const handleAddRow = () => {
     setTableData([...tableData, { id: tableData.length + 1, name: "", range: "", unit: "" }]);
@@ -132,7 +133,7 @@ const[referAmount,setReferAmount]=useState('');
     let data = {
       code: code,
       name: name,
-      referAmount:referAmount,
+      referAmount: referAmount,
       leadTime: leadTime,
       charges: charges,
       cost: cost,
@@ -149,9 +150,9 @@ const[referAmount,setReferAmount]=useState('');
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
+        "service",
         data,
         config
       )
@@ -178,8 +179,8 @@ const[referAmount,setReferAmount]=useState('');
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
+        const res = await apiInstance.get(
+          "categories?limit=30"
         );
 
         setCategory(res.data.data);
@@ -199,8 +200,8 @@ const[referAmount,setReferAmount]=useState('');
 
     const getReagent = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
+        const res = await apiInstance.get(
+          "reagents?limit=30"
         );
         setReagentItems(res.data.data);
       } catch (err) { }

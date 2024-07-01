@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom'
 import { Base64 } from 'js-base64'
 import ReactHtmlParser from 'react-html-parser'
 import ReactToPrint from 'react-to-print'
+import apiInstance from '../utils/api'
 // import Printer from "@eyelly/react-printer";
 
 const TestVoucherPrint = () => {
@@ -101,8 +102,8 @@ const TestVoucherPrint = () => {
   useEffect(() => {
     const getVoucherList = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
+        const res = await apiInstance.get(
+          'voucher/' +
           TestVou_id
         )
 
@@ -122,8 +123,8 @@ const TestVoucherPrint = () => {
 
     const getPatientList = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
+        const res = await apiInstance.get(
+          'voucher/' +
           TestVou_id
         )
 
@@ -135,8 +136,8 @@ const TestVoucherPrint = () => {
 
     const getReferDoctorList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/pathologists"
+        const res = await apiInstance.get(
+          "pathologists"
         )
 
         setReferDoctorLists(res.data.data)

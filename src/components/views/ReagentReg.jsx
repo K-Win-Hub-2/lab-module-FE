@@ -8,6 +8,7 @@ import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function LabServiceRegister() {
   const [stockUnitTemp, setStockUnitTemp] = useState('')
@@ -15,7 +16,7 @@ function LabServiceRegister() {
   const [supplier, setSupplier] = useState('')
   const [code, setCode] = useState('')
   const [name, setName] = useState('')
- 
+
 
   const handleBox = event => {
     let newStock = {
@@ -50,9 +51,9 @@ function LabServiceRegister() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent',
+        'reagent',
         data,
         config
       )
@@ -82,12 +83,12 @@ function LabServiceRegister() {
   useEffect(() => {
     const getSupplier = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/suppliers?limit=30'
+        const res = await apiInstance.get(
+          'suppliers?limit=30'
         )
 
         setSupplierLists(res.data.data)
-      } catch (err) {}
+      } catch (err) { }
     }
     getSupplier()
   }, [])
@@ -149,13 +150,13 @@ function LabServiceRegister() {
 
                   <div className='form-group mt-3'>
                     <label className='control-label'>Supplier</label>
-                    
+
                     <input
                       type='text'
                       className='form-control'
                       placeholder=''
                       name='md_name'
-                      onChange={(e)=>setSupplier(e.target.value)}
+                      onChange={(e) => setSupplier(e.target.value)}
                     />
                   </div>
 

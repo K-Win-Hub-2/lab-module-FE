@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { MdDiscount } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation } from "react-router-dom";
+import apiInstance from "../utils/api";
 
 const Top = styled.div`
   display: flex;
@@ -88,8 +89,8 @@ const TestSale = () => {
   useEffect(() => {
     const getCashLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
 
         const cash = res.data.list.filter(
@@ -98,13 +99,13 @@ const TestSale = () => {
             el.relatedType.name === "Assets"
         );
         setCashList(cash);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
 
         const bank = res.data.list.filter(
@@ -113,60 +114,60 @@ const TestSale = () => {
             el.relatedType.name === "Assets"
         );
         setBankList(bank);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getAccountingLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
         const acc = res.data.list.filter(
           (e) => e.relatedType.name == "Revenues"
         );
 
         setAccountingList(acc);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getVoucherCode = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
-            patient_id
+        const res = await apiInstance.get(
+          "vouchers/code/" +
+          patient_id
         );
 
         console.log(res.data.data);
         setVoucherCode(res.data.data.voucherID);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getPatient = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
-            patient_id
+        const res = await apiInstance.get(
+          "patient/" +
+          patient_id
         );
         setPname(res.data.data.name);
         setPcode(res.data.data.patientID);
-      } catch (err) {}
+      } catch (err) { }
     };
     const getServs = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
+        const res = await apiInstance.get(
+          "services"
         );
         // console.log("good");
         setServs(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     const getDoctors = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
+        const res = await apiInstance.get(
+          "doctors"
         );
         setDoctors(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getPatient();
     getServs();
@@ -178,9 +179,9 @@ const TestSale = () => {
   }, []);
 
   const addService = async () => {
-    const res = await axios.get(
-      "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-        serId
+    const res = await apiInstance.get(
+      "service/" +
+      serId
     );
     console.log(res.data.data, "res.data.data");
     setArr((arr) => [...arr, res.data.data]);
@@ -228,8 +229,8 @@ const TestSale = () => {
       data.creditAmount = change;
     }
 
-    const res = axios
-      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
+    const res = apiInstance
+      .post("voucher", data)
       .then(function () {
         Swal.fire({
           title: "Success",

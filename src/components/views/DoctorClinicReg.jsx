@@ -7,6 +7,7 @@ import Sidebar from "./SideBar";
 import axios from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function LabServiceRegister() {
   const [name, setName] = useState("");
@@ -26,7 +27,7 @@ function LabServiceRegister() {
       selection: selection,
       education: education,
       position: position,
-  
+
       phone: phone,
       email: email,
     };
@@ -34,9 +35,9 @@ function LabServiceRegister() {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor",
+        "doctor",
         data,
         config
       )
@@ -49,11 +50,11 @@ function LabServiceRegister() {
           confirmButtonText: "OK",
         });
 
-        document.getElementById('name').value='';
-         document.getElementById('phone').value='';
-          document.getElementById("edu").value = "";
-           document.getElementById("pos").value = "";
-            document.getElementById("email").value = "";
+        document.getElementById('name').value = '';
+        document.getElementById('phone').value = '';
+        document.getElementById("edu").value = "";
+        document.getElementById("pos").value = "";
+        document.getElementById("email").value = "";
 
       })
       .catch(function (err) {
@@ -216,30 +217,30 @@ function LabServiceRegister() {
                         onChange={(e) => setValue(e.target.value)}
                       />
                     </div> */}
-                  
-                    <div>
-                      <div className="form-group">
-                        <label className="control-label">Education</label>
 
-                        <input
-                          type="text"
-                          className="form-control"
-                          id='edu'
-                          onChange={(e) => setEducation(e.target.value)}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <label className="control-label">Position</label>
+                  <div>
+                    <div className="form-group">
+                      <label className="control-label">Education</label>
 
-                        <input
-                          type="text"
-                          className="form-control"
-                          id='pos'
-                          onChange={(e) => setPosition(e.target.value)}
-                        />
-                      </div>
+                      <input
+                        type="text"
+                        className="form-control"
+                        id='edu'
+                        onChange={(e) => setEducation(e.target.value)}
+                      />
                     </div>
-                  
+                    <div className="form-group">
+                      <label className="control-label">Position</label>
+
+                      <input
+                        type="text"
+                        className="form-control"
+                        id='pos'
+                        onChange={(e) => setPosition(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
                   <br />
 
                   <div className="row">

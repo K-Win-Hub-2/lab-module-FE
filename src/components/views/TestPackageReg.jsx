@@ -2,12 +2,13 @@
 import React from "react";
 
 import { Link } from "react-router-dom";
-import {  FaArrowLeft, FaMinus } from "react-icons/fa";
+import { FaArrowLeft, FaMinus } from "react-icons/fa";
 import Sidebar from "./SideBar";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -33,20 +34,19 @@ function LabServiceRegister() {
     // console.log(packageArray, "packageArray", newPackage);
   };
 
-  const handleCalculation = (event) =>
-  {
+  const handleCalculation = (event) => {
     // console.log(event);
-      if (packageArray) {
-        let sum = packageArray.reduce((a, b) => {
-    return a + b["amount"];
-  }, 0);
-       
-        // console.log(sum);
-        setCharges(sum.toFixed(2));
-      }
+    if (packageArray) {
+      let sum = packageArray.reduce((a, b) => {
+        return a + b["amount"];
+      }, 0);
 
-      setTempPackage(event);
-    };
+      // console.log(sum);
+      setCharges(sum.toFixed(2));
+    }
+
+    setTempPackage(event);
+  };
 
 
   const TestPackageCreate = (event) => {
@@ -65,9 +65,9 @@ function LabServiceRegister() {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/package",
+        "package",
         data,
         config
       )
@@ -99,34 +99,34 @@ function LabServiceRegister() {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
+        const res = await apiInstance.get(
+          "categories?limit=30"
         );
 
         setCategory(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getServiceLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
+        const res = await apiInstance.get(
+          "services?limit=30"
         );
 
         setServiceLists(res.data.data);
 
         // console.log(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getPackage = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
+        const res = await apiInstance.get(
+          "services?limit=30"
         );
         // console.log(res.data.list);
         setPackageLists(res.data.list);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getPackage();
@@ -220,9 +220,9 @@ function LabServiceRegister() {
                           {packageArray ? (
                             <div>
                               {packageArray.map((regArr) => (
-                               
+
                                 <div className="row mt-3">
-                                   
+
                                   <div className="col-md-5">
                                     <label>Name</label>
                                     <input
@@ -260,7 +260,7 @@ function LabServiceRegister() {
                           type="number"
                           id="charge"
                           className="form-control"
-                          
+
                         />
                       </div>
 

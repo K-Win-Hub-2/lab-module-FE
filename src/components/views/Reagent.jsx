@@ -5,13 +5,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function CatRegister() {
   const [reagent, setReagent] = useState([]);
 
   const handleDelete = (event) => {
     console.log(event, "event")
-    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent/' + event).then(response => {
+    apiInstance.delete('reagent/' + event).then(response => {
       Swal.fire({
         title: "Success",
         text: "Successfully Deleted!",
@@ -33,8 +34,8 @@ function CatRegister() {
   useEffect(() => {
     const getReagent = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
+        const res = await apiInstance.get(
+          "reagents?limit=30"
         );
 
         setReagent(res.data.data);
@@ -89,7 +90,7 @@ function CatRegister() {
                             <button
                               type="button"
                               className="btn btn-primary"
-                              // onClick={excelExport}
+                            // onClick={excelExport}
                             >
                               Export Excel
                             </button>
