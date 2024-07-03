@@ -24,6 +24,7 @@ import {
   FaRegEdit,
   FaRegTrashAlt
 } from 'react-icons/fa'
+import apiInstance from '../../../../utils/api'
 
 const Income = () => {
   const [isExpanded, setExpanded] = useState(false)
@@ -61,11 +62,11 @@ const Income = () => {
     const getDELETE = async () => {
       console.log('ehre==')
 
-      const res = await axios
+      const res = await apiInstance
         .delete(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal/' +
-         //'http://localhost:9000/api/journal/' +
-            val
+          'journal/' +
+          //'http://localhost:9000/api/journal/' +
+          val
         )
         .then(response => {
           Swal.fire({
@@ -96,12 +97,12 @@ const Income = () => {
         console.log(val)
         const res = await axios.get(
           'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal/related/' +
-            val
+          val
         )
 
         console.log(res.data.data)
         setRelatedLists(res.data.data)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getRelated()
@@ -117,8 +118,8 @@ const Income = () => {
   useEffect(() => {
     const getIncomeLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journals?limit=50'
+        const res = await apiInstance.get(
+          'journals?limit=50'
         )
 
         // const result = res.data.list.filter((e) => e.relatedCashAccount.name == 'Cash in Hand-MMK');
@@ -342,12 +343,12 @@ const Income = () => {
                                     <td>{journalEntry.remark}</td>
 
                                     <td className='text-center'>
-                                    <Link
-                                      to={'/jeUpdate/' + journalEntry._id}
-                                      className='btn btn-warning btn-sm'
-                                    >
-                                      <FaRegEdit/>
-                                    </Link>
+                                      <Link
+                                        to={'/jeUpdate/' + journalEntry._id}
+                                        className='btn btn-warning btn-sm'
+                                      >
+                                        <FaRegEdit />
+                                      </Link>
                                       &nbsp;
                                       <button
                                         className='btn btn-sm btn-danger'
@@ -412,51 +413,51 @@ const Income = () => {
 
                                         {relatedLists
                                           ? relatedLists.map((reList, i) => (
-                                              <div class='row'>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {++i}
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-3'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {
-                                                      reList.relatedAccounting
-                                                        .name
-                                                    }
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  {reList.type}
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {reList.date.split('T')[0]}
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {reList.amount}
-                                                  </div>
+                                            <div class='row'>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {++i}
                                                 </div>
                                               </div>
-                                            ))
+                                              <div class='col-md-3'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {
+                                                    reList.relatedAccounting
+                                                      .name
+                                                  }
+                                                </div>
+                                              </div>
+                                              <div class='col-md-2'>
+                                                {reList.type}
+                                              </div>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {reList.date.split('T')[0]}
+                                                </div>
+                                              </div>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {reList.amount}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          ))
                                           : ''}
                                       </div>
                                     </td>

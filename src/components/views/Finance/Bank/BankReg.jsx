@@ -14,6 +14,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 import { useSelector } from 'react-redux'
+import apiInstance from '../../../../utils/api'
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -56,7 +57,7 @@ const QRBox = styled.div`
 `
 
 export default function BankTran(props) {
-  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+
 
   const [bankName, setBankName] = useState('')
   const [accountNumber, setAccountNumber] = useState('')
@@ -91,7 +92,7 @@ export default function BankTran(props) {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    api.post('bank', data, config).then(function (response) {
+    apiInstance.post('bank', data, config).then(function (response) {
       Swal.fire({
         title: 'Successful!',
         text: 'You Created Bank Data!',
@@ -108,16 +109,16 @@ export default function BankTran(props) {
   useEffect(() => {
     const getTypeLists = async () => {
       try {
-        const res = await api.get('account-types')
+        const res = await apiInstance.get('account-types')
 
         setTypeList(res.data.data.filter(el => el.name == 'Assets'))
         console.log(res.data.data, 'type')
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getHeaderLists = async () => {
       try {
-        const res = await api.get('account-headers')
+        const res = await apiInstance.get('account-headers')
 
         const header = res.data.list.filter(el => el.name === 'Cash At Bank')
         setHeaderList(header)
@@ -125,7 +126,7 @@ export default function BankTran(props) {
           res.data.list.filter(el => el.name === 'Cash At Bank'),
           'header name'
         )
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getTypeLists()

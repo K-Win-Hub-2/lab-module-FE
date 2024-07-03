@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+import apiInstance from "../../utils/api";
 
 
 function CatRegister() {
@@ -13,7 +14,7 @@ function CatRegister() {
 
   const handleDelete = (event) => {
     console.log(event, "event")
-    axios.delete('http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent/' + event).then(response => {
+    apiInstance.delete('reagent/' + event).then(response => {
       Swal.fire({
         title: "Success",
         text: "Successfully Deleted!",
@@ -35,8 +36,8 @@ function CatRegister() {
   useEffect(() => {
     const getReagent = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
+        const res = await apiInstance.get(
+          "reagents?limit=30"
         );
 
         setReagent(res.data.data);
@@ -137,7 +138,7 @@ function CatRegister() {
                                   Delete
                                 </a>
                                 &nbsp;
-                                <Link to={'/reagent-update/'+reag._id} >
+                                <Link to={'/reagent-update/' + reag._id} >
                                   <a className="btn btn-sm btn-warning" role="button">
                                     Update
                                   </a>

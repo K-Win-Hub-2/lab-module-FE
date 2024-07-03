@@ -2,12 +2,13 @@
 
 import React from 'react'
 
-import { Link,useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { FaArrowLeft, FaMinus } from 'react-icons/fa'
 import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function ReagentUpdate() {
   const [stockUnitTemp, setStockUnitTemp] = useState('')
@@ -67,8 +68,8 @@ function ReagentUpdate() {
       code: updateCode,
       name: updateName,
       stockUnit: tableData,
-      supplier:updateSupplier,
-      id:reagID
+      supplier: updateSupplier,
+      id: reagID
     }
     if (supplier) data.supplier = supplier
     if (name) data.name = name
@@ -77,9 +78,9 @@ function ReagentUpdate() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent',
+        'reagent',
         data,
         config
       )
@@ -111,21 +112,21 @@ function ReagentUpdate() {
   useEffect(() => {
     const getReagentUpdate = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent/'+reagID
+        const res = await apiInstance.get(
+          'reagent/' + reagID
         )
         setUpdateCode(res.data.data.code)
         setUpdateName(res.data.data.name)
         setUpdateSupplier(res.data.data.supplier)
-        let newArr=[];
+        let newArr = [];
         if (res.data.data.stockUnit) {
-            res.data.data.stockUnit.map(function(e,i){
-                e={...e,id:i+1}
-                newArr.push(e)
-            })
-            setTableData(newArr)
+          res.data.data.stockUnit.map(function (e, i) {
+            e = { ...e, id: i + 1 }
+            newArr.push(e)
+          })
+          setTableData(newArr)
         }
-        console.log(res.data.data,'here')
+        console.log(res.data.data, 'here')
       } catch (err) { }
     }
     getReagentUpdate()
@@ -201,7 +202,7 @@ function ReagentUpdate() {
                       onChange={(e) => setUpdateSupplier(e.target.value)}
                     />
                   </div>
-                  <div className='form-group mt-3 row gap-3'>
+                  {/* <div className='form-group mt-3 row gap-3'>
                     <span>
                       <label className='control-label'>StockUnit</label>
                       <span> </span>
@@ -291,7 +292,7 @@ function ReagentUpdate() {
                         </div>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
 
                   {/* <div className="form-group">

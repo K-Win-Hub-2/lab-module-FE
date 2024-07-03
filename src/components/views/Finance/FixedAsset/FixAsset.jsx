@@ -5,6 +5,7 @@ import { FaCashRegister, FaFileMedical } from "react-icons/fa";
 import axios from "axios";
 import SideBar from "../../SideBar";
 import SellEndDialog from "../FixedAsset/SellEndDialog";
+import apiInstance from "../../../../utils/api";
 
 function FixedAsset() {
   const [open, setOpen] = useState(false);
@@ -12,16 +13,16 @@ function FixedAsset() {
   const [id, setId] = useState("");
   const [isShow, setIsShow] = useState(false);
   const [relatedLists, setRelatedLists] = useState([]);
-  
+
   useEffect(() => {
     const getFixedAsset = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-assets"
+        const res = await apiInstance.get(
+          "fixed-assets"
         );
 
         setFixedAssetLists(res.data.list);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getFixedAsset();
@@ -32,14 +33,14 @@ function FixedAsset() {
     const getRelated = async () => {
       try {
         console.log(val);
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related/" +
-            val
+        const res = await apiInstance.get(
+          "transactions/related/" +
+          val
         );
 
         console.log(res);
         setRelatedLists(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getRelated();
@@ -134,7 +135,7 @@ function FixedAsset() {
                               to={"/sellEnd/" + fixedAsset._id}
                               className="btn btn-sm btn-outline-primary"
 
-                              // onClick={() => showDialog(fixedAsset._id)}
+                            // onClick={() => showDialog(fixedAsset._id)}
                             >
                               Sell/End
                             </Link>
@@ -198,42 +199,42 @@ function FixedAsset() {
 
                               {relatedLists
                                 ? relatedLists.map((reList, i) => (
-                                    <div class="row">
-                                      <div class="col-md-2">
-                                        <div
-                                          style={{
-                                            fontSize: "15px",
-                                          }}>
-                                          {++i}
-                                        </div>
-                                      </div>
-                                      <div class="col-md-3">
-                                        <div
-                                          style={{
-                                            fontSize: "15px",
-                                          }}>
-                                          {reList.relatedAccounting.name}
-                                        </div>
-                                      </div>
-                                      <div class="col-md-2">{reList.type}</div>
-                                      <div class="col-md-2">
-                                        <div
-                                          style={{
-                                            fontSize: "15px",
-                                          }}>
-                                          {reList.date.split("T")[0]}
-                                        </div>
-                                      </div>
-                                      <div class="col-md-2">
-                                        <div
-                                          style={{
-                                            fontSize: "15px",
-                                          }}>
-                                          {reList.amount}
-                                        </div>
+                                  <div class="row">
+                                    <div class="col-md-2">
+                                      <div
+                                        style={{
+                                          fontSize: "15px",
+                                        }}>
+                                        {++i}
                                       </div>
                                     </div>
-                                  ))
+                                    <div class="col-md-3">
+                                      <div
+                                        style={{
+                                          fontSize: "15px",
+                                        }}>
+                                        {reList.relatedAccounting.name}
+                                      </div>
+                                    </div>
+                                    <div class="col-md-2">{reList.type}</div>
+                                    <div class="col-md-2">
+                                      <div
+                                        style={{
+                                          fontSize: "15px",
+                                        }}>
+                                        {reList.date.split("T")[0]}
+                                      </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                      <div
+                                        style={{
+                                          fontSize: "15px",
+                                        }}>
+                                        {reList.amount}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))
                                 : ""}
                             </div>
                           </td>

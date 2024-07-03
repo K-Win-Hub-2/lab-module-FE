@@ -8,6 +8,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Base64 } from "js-base64";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function LabServiceRegister() {
   const [category, setCategory] = useState([]);
@@ -45,7 +46,8 @@ function LabServiceRegister() {
       title: "Success",
       text: "successfully Registered!",
       icon: "success",
-      confirmButtonText: "OK",
+      showConfirmButton: false,
+      timer: 2000
     });
   }
   const handleAddRefRow = () => {
@@ -58,10 +60,10 @@ function LabServiceRegister() {
   };
 
   const handleRefInputChange = (event, id, field) => {
-    
+
     const newData = refData.map((data) => {
       if (data.id === id) {
-        return { ...data, [field]: event.target.value};
+        return { ...data, [field]: event.target.value };
       }
       return data;
     });
@@ -73,7 +75,7 @@ function LabServiceRegister() {
   // end of refData
 
   const handleAddRow = () => {
-    setTableData([...tableData, { id: tableData.length + 1, name: "", result: "", defaultResult: "", referenceRange: "", unit: "",type: "",remark:""}]);
+    setTableData([...tableData, { id: tableData.length + 1, name: "", result: "", defaultResult: "", referenceRange: "", unit: "", type: "", remark: "" }]);
   };
 
   const handleDeleteRow = (id) => {
@@ -90,10 +92,10 @@ function LabServiceRegister() {
     // }
     const newData = tableData.map((data) => {
       if (data.id === id) {
-        if(field === "referenceRange" && data.type === "multiline"){
+        if (field === "referenceRange" && data.type === "multiline") {
           return { ...data, [field]: Base64.encode(event.target.value) }
-        }else{
-        return { ...data, [field]: event.target.value }
+        } else {
+          return { ...data, [field]: event.target.value }
         }
       }
       return data;
@@ -162,7 +164,7 @@ function LabServiceRegister() {
 
     const myString = specialCommentEncode;
     const encodedString = Base64.encode(myString);
-    console.log(refData,'refData')
+    console.log(refData, 'refData')
     let data = {
       code: code,
       name: name,
@@ -184,10 +186,10 @@ function LabServiceRegister() {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service",
-      // "http://localhost:9000/api/service",
+        "service",
+        // "http://localhost:9000/api/service",
         data,
         config
       )
@@ -196,7 +198,8 @@ function LabServiceRegister() {
           title: "Success",
           text: "successfully Registered!",
           icon: "success",
-          confirmButtonText: "OK",
+          showConfirmButton: false,
+          timer: 2000
         })
         clearForm()
         // props.setReagent([...props.category, response.data.data]);
@@ -214,8 +217,8 @@ function LabServiceRegister() {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30"
+        const res = await apiInstance.get(
+          "categories?limit=30"
         );
 
         setCategory(res.data.data);
@@ -224,8 +227,8 @@ function LabServiceRegister() {
 
     // const getReferDoctor = async () => {
     //   try {
-    //     const res = await axios.get(
-    //       "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30"
+    //     const res = await apiInstance.get(
+    //       "doctors?limit=30"
     //     );
 
     //     setReferDoctor(res.data.data.filter((e) => e.selection == "Doctor"));
@@ -235,8 +238,8 @@ function LabServiceRegister() {
 
     const getReagent = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30"
+        const res = await apiInstance.get(
+          "reagents?limit=30"
         );
         setReagentItems(res.data.data);
       } catch (err) { }
@@ -550,20 +553,20 @@ function LabServiceRegister() {
                                     </div>
 
                                     <div className="col-md-2">
-                                    <textarea
-                                      rows="2"
-                                      cols="10"
-                                      className="form-control"
-                                      id="subTestRR"
-                                      name="subTestRR"
-                                      value={data.referenceRange}
-                                      onChange={(event) =>
-                                        handleInputChange(
-                                          event,
-                                          data.id,
-                                          "referenceRange"
-                                        )
-                                      }></textarea>
+                                      <textarea
+                                        rows="2"
+                                        cols="10"
+                                        className="form-control"
+                                        id="subTestRR"
+                                        name="subTestRR"
+                                        value={data.referenceRange}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "referenceRange"
+                                          )
+                                        }></textarea>
                                       {/* <input
                                         type="text"
                                         className="form-control"
@@ -598,31 +601,31 @@ function LabServiceRegister() {
                                       />
                                     </div>
                                     <div className="col-md-2">
-                                    <select
-                              name="type"
-                              id="type"
-                              className="form-control"
-                            //  onchange="convert(this.value)"
-                              onChange={(event) =>
-                               handleInputChange(event,data.id,"type")
+                                      <select
+                                        name="type"
+                                        id="type"
+                                        className="form-control"
+                                        //  onchange="convert(this.value)"
+                                        onChange={(event) =>
+                                          handleInputChange(event, data.id, "type")
 
-                              }>
-                              <option value="none">Choose Type</option>
-                              
-                                <option value="underline">
-                                  Underline
-                                </option>
-                                <option value="highlight">
-                                  Highlight
-                                </option>
-                                <option value="both">
-                                  Underline and Highlight
-                                </option>
-                                <option value="multiline">
-                                  Multi-Line 
-                                </option>
-                              
-                            </select>
+                                        }>
+                                        <option value="none">Choose Type</option>
+
+                                        <option value="underline">
+                                          Underline
+                                        </option>
+                                        <option value="highlight">
+                                          Highlight
+                                        </option>
+                                        <option value="both">
+                                          Underline and Highlight
+                                        </option>
+                                        <option value="multiline">
+                                          Multi-Line
+                                        </option>
+
+                                      </select>
                                     </div>
                                     <div className="col-md-1">
                                       <button
@@ -635,7 +638,7 @@ function LabServiceRegister() {
                                         <FaMinus />
                                       </button>
                                     </div>
-                                    
+
                                   </div>
                                 ))}
                               </div>
@@ -777,15 +780,15 @@ function LabServiceRegister() {
                                       </div>
                                       {/* Action button for add data to refArr */}
                                       <div className="col-md-2">
-                                      <button
-                                        type="button"
-                                        className="btn btn-sm btn-danger rounded-circle"
-                                        id="removeRowFromMultiTests"
-                                        onClick={() =>
-                                          handleDeleteRefRow(data.id)
-                                        }>
-                                        <FaMinus />
-                                      </button>
+                                        <button
+                                          type="button"
+                                          className="btn btn-sm btn-danger rounded-circle"
+                                          id="removeRowFromMultiTests"
+                                          onClick={() =>
+                                            handleDeleteRefRow(data.id)
+                                          }>
+                                          <FaMinus />
+                                        </button>
                                       </div>
                                       {/* End */}
                                     </div>

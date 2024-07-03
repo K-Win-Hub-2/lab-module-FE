@@ -8,6 +8,7 @@ import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function LabServiceRegister() {
   const [stockUnitTemp, setStockUnitTemp] = useState('')
@@ -63,15 +64,15 @@ function LabServiceRegister() {
       code: code,
       name: name,
       stockUnit: tableData,
-      supplier:supplier
+      supplier: supplier
     }
     // alert(JSON.stringify(data));
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagent',
+        'reagent',
         data,
         config
       )
@@ -102,8 +103,8 @@ function LabServiceRegister() {
   useEffect(() => {
     const getSupplier = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/suppliers?limit=30'
+        const res = await apiInstance.get(
+          'suppliers?limit=30'
         )
 
         setSupplierLists(res.data.data)
@@ -179,7 +180,7 @@ function LabServiceRegister() {
                       onChange={(e) => setSupplier(e.target.value)}
                     />
                   </div>
-                  <div className='form-group mt-3 row gap-3'>
+                  {/* <div className='form-group mt-3 row gap-3'>
                     <span>
                       <label className='control-label'>StockUnit</label>
                       <span> </span>
@@ -269,7 +270,7 @@ function LabServiceRegister() {
                         </div>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
 
 
                   {/* <div className="form-group">

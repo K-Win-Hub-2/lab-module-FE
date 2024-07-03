@@ -14,10 +14,11 @@ import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { ExcelExportColumn } from '@progress/kendo-react-excel-export'
 import { Link } from 'react-router-dom'
 import { calendar } from '../../../../assets/plugins/moment/src/lib/moment/calendar'
+import apiInstance from '../../../../utils/api'
 
 function AccountList() {
   const [accountLists, setAccountLists] = useState([])
-  const[filteredLists,setFilteredLists] = useState([])
+  const [filteredLists, setFilteredLists] = useState([])
   const [open, setOpen] = useState(false)
 
   const showDialog = () => setOpen(true)
@@ -28,17 +29,18 @@ function AccountList() {
     const getDELETE = async () => {
       console.log('ehre==')
 
-      const res = await axios
+      const res = await apiInstance
         .delete(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
-            val
+          'accounting-list/' +
+          val
         )
         .then(response => {
           Swal.fire({
             title: 'Success',
             text: 'Successfully Deleted!',
             icon: 'success',
-            confirmButtonText: 'OK'
+            showConfirmButton: false,
+            timer: 2000
           })
 
           setAccountLists(accountLists.filter(item => item._id !== val))
@@ -49,7 +51,8 @@ function AccountList() {
             title: 'Error',
             text: error.response.data.message,
             icon: 'error',
-            confirmButtonText: 'CANCEL'
+            showConfirmButton: false,
+            timer: 2000
           })
         })
     }
@@ -78,22 +81,22 @@ function AccountList() {
   //   };
 
   const handleInputChange = (event) => {
-    setFilteredLists(accountLists.filter(account=> account.name.includes(event.target.value) || account.relatedSubHeader.name.includes(event.target.value) ))
+    setFilteredLists(accountLists.filter(account => account.name.includes(event.target.value) || account.relatedSubHeader.name.includes(event.target.value)))
   }
 
   useEffect(() => {
     const getAccountLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-       // 'http://localhost:9000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
+
         )
 
         setAccountLists(res.data.list)
         setFilteredLists(res.data.list)
         // dispatch(setList("success"));
         //  console.log(accountList);
-      } catch (err) {}
+      } catch (err) { }
     }
     getAccountLists()
   }, [])
@@ -132,8 +135,8 @@ function AccountList() {
 
               <div class='row'>
                 <div class='col-12'>
-                  <div class='offset-9 col-3' style={{marginBottom:"5px"}}>
-                <input
+                  <div class='offset-9 col-3' style={{ marginBottom: "5px" }}>
+                    <input
                       type="search"
                       className="form-control rounded"
                       id="search_code"
@@ -144,18 +147,18 @@ function AccountList() {
                         )
                       }
                     />
-                    </div>
+                  </div>
                   <div class='card'>
                     <div class='card-header'>
                       {/* <h3 class="card-title">Account List</h3> */}
                       <div className='row justify-content-between py-4'>
 
-                      
+
 
                         <div>
-                       
+
                           <span className='float-right'>
-                         
+
                             <button
                               type='button'
                               id=''
@@ -175,9 +178,9 @@ function AccountList() {
                               onClick={excelExport}
                             >
 
-                            
 
-                            
+
+
                               <FaFileExcel />
                               &nbsp; Export
                             </button>

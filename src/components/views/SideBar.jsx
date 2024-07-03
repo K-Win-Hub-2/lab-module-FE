@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
 
-function Sidebar () {
+function Sidebar() {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -14,7 +14,8 @@ function Sidebar () {
       title: 'Success',
       text: 'successfully Logout!',
       icon: 'success',
-      confirmButtonText: 'OK'
+      showConfirmButton: false,
+      timer: 2000
     }).then(function () {
       dispatch(logoutSuccess())
       navigate('/')
@@ -51,8 +52,8 @@ function Sidebar () {
       <img src="{{asset('image/logo.jpg')}}" alt="K-win Technology" classNameName="brand-image img-circle"
            style="opacity: .8;margin-top:10px;">
         </a> --}} */}
-        <h4 className='brand-text font-weight-light ml-4 mt-2'>
-          Central Clinic
+        <h4 className='brand-text font-weight-bolder ml-4 mt-2'>
+          Win-Clinic
         </h4>
 
         {/* 
@@ -65,7 +66,7 @@ function Sidebar () {
               role='menu'
               data-accordion='false'
             >
-              {user.user.role == 'Admin' && (
+              {user.user.role === 'Admin' && (
                 <>
                   <li className='nav-item has-treeview'>
                     <a href='#' className='nav-link' id='admin_data'>
@@ -121,7 +122,7 @@ function Sidebar () {
               )}
 
               {/* Patient */}
-              {user.user.role == 'Sales' && (
+              {user.user.role === 'Sales' && (
                 <>
                   <li className='nav-item has-treeview'>
                     <a href='#' className='nav-link' id='admin_data'>
@@ -203,7 +204,7 @@ function Sidebar () {
                 </>
               )}
 
-              {user.user.role == 'Laboratory' && (
+              {user.user.role === 'Laboratory' && (
                 <>
                   <li className='nav-item'>
                     <Link to='/account_list' className='nav-link'>
@@ -231,7 +232,7 @@ function Sidebar () {
                 </>
               )}
 
-              {user.user.role == 'Finance' && (
+              {user.user.role === 'Finance' && (
                 <>
                   <li className='nav-item has-treeview'>
                     <a href='#' className='nav-link' id='master_data'>
@@ -337,7 +338,7 @@ function Sidebar () {
                       </Link>
                     </li>
                     <li className='nav-item'>
-                      <Link to='/profit_loss' className='nav-link'>
+                      <Link to='/profit_loss_statement' className='nav-link'>
                         <i className='nav-icon fas fa-circle'></i>&nbsp;
                         <p>Profit & Loss</p>
                       </Link>

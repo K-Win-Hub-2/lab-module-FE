@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import SideBar from '../SideBar'
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 import Swal from 'sweetalert2'
+import apiInstance from '../../../utils/api'
 
 function SubHeading() {
   const [subHeading, setSubHeading] = useState([])
@@ -25,11 +26,11 @@ function SubHeading() {
   const [showUpdate, setShowUpdate] = useState(false)
   const [flag, setFlag] = useState(false)
   const handleDelete = event => {
-    axios
+    apiInstance
       .delete(
-        //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-          event
+
+        'account-subheader/' +
+        event
       )
       .then(response => {
         Swal.fire({
@@ -55,10 +56,10 @@ function SubHeading() {
     console.log(event, 'event')
     const getSubHeadingUpdate = async () => {
       try {
-        const res = await axios.get(
-          // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader/' +
-            event
+        const res = await apiInstance.get(
+          // 'account-subheader/' +
+          'account-subheader/' +
+          event
         )
         console.log(res.data)
 
@@ -66,7 +67,7 @@ function SubHeading() {
         setUpDesc(res.data.data[0].description)
         setUpAccType(res.data.data[0].relatedAccountType._id)
         setUpAccHead(res.data.data[0].relatedAccountHeader._id)
-      } catch (err) {}
+      } catch (err) { }
     }
     getSubHeadingUpdate()
     setShowUpdate(true)
@@ -85,10 +86,10 @@ function SubHeading() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        // 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
+        // 'account-subheader',
+        'account-subheader',
         data,
         config
       )
@@ -141,10 +142,10 @@ function SubHeading() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheader',
+        //'account-subheader',
+        'account-subheader',
         data,
         config
       )
@@ -172,21 +173,21 @@ function SubHeading() {
   useEffect(() => {
     const getSubHeadings = async () => {
       try {
-        const res = await axios.get(
-          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders?limit=50'
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders?limit=50'
+        const res = await apiInstance.get(
+          //'account-subheaders?limit=50'
+          'account-subheaders?limit=50'
         )
 
         setSubHeading(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
     const getAccountingTypes = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        const res = await apiInstance.get(
+          'account-types'
         )
         setAccTypeList(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getSubHeadings()
@@ -196,9 +197,9 @@ function SubHeading() {
   const handleAccountHeader = async event => {
     setAccType(event)
 
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
+    const url = `account-headers/related/${event}`
 
-    const res = await axios.get(url)
+    const res = await apiInstance.get(url)
 
     setAccHeaderList(res.data.data)
     setFlag(true)
@@ -207,9 +208,9 @@ function SubHeading() {
   const handleUpAccountHeader = async event => {
     setUpAccType(event)
     //console.log(accountingTypes)
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
+    const url = `account-headers/related/${event}`
     console.log(url)
-    const res = await axios.get(url)
+    const res = await apiInstance.get(url)
     console.log(res.data.data, 'res.data.data')
     setAccHeaderList(res.data.data)
     setFlag(true)

@@ -8,6 +8,7 @@ import Swal from 'sweetalert2'
 
 
 import { useLocation, Link } from 'react-router-dom'
+import apiInstance from '../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -51,7 +52,7 @@ const TestVoucher = () => {
   const [vouchers, setVouchers] = useState([])
   const [filteredVouchers, setFilteredVouchers] = useState([])
   const patient_id = useLocation().pathname.split('/')[2]
-  
+
 
   const getVouchers = async () => {
     try {
@@ -59,9 +60,9 @@ const TestVoucher = () => {
         relatedPatient: patient_id
       }
       console.log(data, 'patient_id')
-      const res = await axios.post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/related-vouchers',
-      //'http://localhost:9000/api/vouchers/related-vouchers',
+      const res = await apiInstance.post(
+        'vouchers/related-vouchers',
+        //'http://localhost:9000/api/vouchers/related-vouchers',
         data
       )
       console.log(res.data.data, 'data')
@@ -102,11 +103,11 @@ const TestVoucher = () => {
               </Left>
               <Right>
                 <Link to={'/test_sale/' + patient_id
-} className='btn btn-primary'>
-              
-                    <AiOutlinePlus style={{ marginRight: '7px' }} />
-                    Create Voucher
-                 
+                } className='btn btn-primary'>
+
+                  <AiOutlinePlus style={{ marginRight: '7px' }} />
+                  Create Voucher
+
                 </Link>
               </Right>
             </Top>
@@ -125,8 +126,8 @@ const TestVoucher = () => {
                     </Tr>
                   </Thead>
                   <Tbody>
-                  {filteredVouchers.map((vou, i) => (
-                      
+                    {filteredVouchers.map((vou, i) => (
+
                       <Tr key={vou._id}>
                         <Td>{++i}</Td>
                         <Td>{vou.code ? vou.code : ''}</Td>
@@ -134,7 +135,7 @@ const TestVoucher = () => {
                         {/* <Td>{vou.netDiscount}</Td> */}
                         <Td>{vou.branch ? vou.branch : '-'}</Td>
                         <Td>{vou.discount ? vou.discount : '-'}</Td>
-                        
+
                         <Td>{vou.totalCharge ? vou.totalCharge : '-'}</Td>
                         <Td>
                           {/* <Link
@@ -160,8 +161,8 @@ const TestVoucher = () => {
                           </Link>
                         </Td>
                       </Tr>
-                    
-                  ))}
+
+                    ))}
                   </Tbody>
                 </Table>
               </Div>

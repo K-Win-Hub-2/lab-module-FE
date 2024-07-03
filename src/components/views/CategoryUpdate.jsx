@@ -9,7 +9,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import axios from "axios";
-  
+import apiInstance from "../../utils/api";
+
 export default function AccTypeUpdate(props) {
   const [accountType, setAccountType] = useState([]);
   const [code, setCode] = useState("");
@@ -30,9 +31,9 @@ export default function AccTypeUpdate(props) {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .put(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type",
+        "account-type",
         data,
         config
       )
@@ -50,14 +51,14 @@ export default function AccTypeUpdate(props) {
   useEffect(() => {
     const getAccountType = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type/" +
-            props.id
+        const res = await apiInstance.get(
+          "account-type/" +
+          props.id
         );
 
         setUpName(res.data.data.name);
         setUpDesc(res.data.data.description);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getAccountType();

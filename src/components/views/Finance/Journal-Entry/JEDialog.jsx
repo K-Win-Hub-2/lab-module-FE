@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Button from '@mui/material/Button'
 import Swal from 'sweetalert2'
+import apiInstance from '../../../../utils/api'
 
 export default function BankInfoDialog(props) {
   const [creditType, setCreditType] = useState([])
@@ -23,9 +24,9 @@ export default function BankInfoDialog(props) {
   const [relatedDebitAccount, setRelatedDebitAccount] = useState('')
   const [relatedDebitHeader, setRelatedDebitHeader] = useState([])
   const [fromType, setFromType] = useState('')
-  const[fromAccNature,setFromAccNature] = useState('')
+  const [fromAccNature, setFromAccNature] = useState('')
   const [toType, setToType] = useState('')
-  const[toAccNature,setToAccNature] = useState('')
+  const [toAccNature, setToAccNature] = useState('')
 
   const [medicineSale, setMedicineSale] = useState([])
   const [currencyList, setCurrencyList] = useState([])
@@ -67,10 +68,10 @@ export default function BankInfoDialog(props) {
       headers: { 'Content-Type': 'application/json' }
     }
     // alert(JSON.stringify(jsonData));
-    axios
+    apiInstance
       .post(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
-       //  'http://localhost:9000/api/journal',
+        'journal',
+        //  'http://localhost:9000/api/journal',
         data,
         config
       )
@@ -85,7 +86,7 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: 'Close'
         })
-       // window.location.reload()
+        // window.location.reload()
         // props.setJournalEntryLists([...props.journalEntryLists, response.data.list[0]])
       })
 
@@ -96,9 +97,8 @@ export default function BankInfoDialog(props) {
   const handleAccountHeader = async event => {
     setRelatedCreditType(event)
     console.log(relatedCreditType, 'type')
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+
+    const res = await apiInstance.get(`account-headers/related/${event}`)
     console.log(res.data.data, 'res.data.data')
     setCreditHeading(res.data.data)
 
@@ -111,9 +111,8 @@ export default function BankInfoDialog(props) {
 
     setRelatedCreditHeader(event)
     console.log(event, 'acc iD')
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+
+    const res = await apiInstance.get(`accounting-lists/related/${event}`)
     console.log(res.data.data, 'res.data.data')
     setCreditAccount(res.data.data)
 
@@ -122,14 +121,14 @@ export default function BankInfoDialog(props) {
   }
   const handleInputAcc = event => {
     setRelatedCreditAccount(event)
-    creditAccount.map((account)=> {
-      if(account._id === event){
-          setFromAccNature(account.accountNature)
+    creditAccount.map((account) => {
+      if (account._id === event) {
+        setFromAccNature(account.accountNature)
       }
-  })
+    })
 
     console.log(event, 'Credit Account ID')
-    console.log(fromAccNature,'from nature')
+    console.log(fromAccNature, 'from nature')
   }
 
   //End For Credit
@@ -163,12 +162,12 @@ export default function BankInfoDialog(props) {
   }
   const handleDebitInputAcc = event => {
     setRelatedDebitAccount(event)
-    debitAccount.map((account)=> {
-      if(account._id === event){
-          setToAccNature(account.accountNature)
+    debitAccount.map((account) => {
+      if (account._id === event) {
+        setToAccNature(account.accountNature)
       }
-  })
-  console.log(toAccNature,'to nature')
+    })
+    console.log(toAccNature, 'to nature')
 
   }
 
@@ -201,8 +200,8 @@ export default function BankInfoDialog(props) {
   useEffect(() => {
     const getCashLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
         )
 
         const cash = res.data.list.filter(
@@ -211,13 +210,13 @@ export default function BankInfoDialog(props) {
             el.relatedType.name === 'Assets'
         )
         setCashList(cash)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
         )
 
         const bank = res.data.list.filter(
@@ -226,13 +225,13 @@ export default function BankInfoDialog(props) {
             el.relatedType.name === 'Assets'
         )
         setBankList(bank)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getType = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        const res = await apiInstance.get(
+          'account-types'
         )
 
         // setInitialAmount(medicineSale[0].amount);
@@ -240,7 +239,7 @@ export default function BankInfoDialog(props) {
         setDebitType(res.data.list)
 
         // setAccountingList(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
     // const getHeading = async () => {
     //   try {
@@ -254,14 +253,14 @@ export default function BankInfoDialog(props) {
     // }
     const getAccount = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
           //'http://localhost:9000/api/accounting-lists'
         )
 
         setCreditAccount(res.data.list)
         setDebitAccount(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getBankLists()
@@ -348,24 +347,24 @@ export default function BankInfoDialog(props) {
               </select>
             </div>
           )} */}
-         
-            <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='text-gray'>Account</label>
 
-              <select
-                className='form-control'
-                name='bank_acc'
-                id='bank_acc'
-                onChange={e => handleInputAcc(e.target.value)}
-              >
-                <option value=''>Select Account</option>
+          <div className='form-group mt-3 px-3' id='bankkk'>
+            <label className='text-gray'>Account</label>
 
-                {creditAccount.map(option => (
-                  <option value={option._id}>{option.name}</option>
-                ))}
-              </select>
-            </div>
-          
+            <select
+              className='form-control'
+              name='bank_acc'
+              id='bank_acc'
+              onChange={e => handleInputAcc(e.target.value)}
+            >
+              <option value=''>Select Account</option>
+
+              {creditAccount.map(option => (
+                <option value={option._id}>{option.name}</option>
+              ))}
+            </select>
+          </div>
+
         </div>
 
         <div>
@@ -419,24 +418,24 @@ export default function BankInfoDialog(props) {
               </select>
             </div>
           )} */}
-         
-            <div className='form-group mt-3 px-3' id='bankkk'>
-              <label className='text-gray'>Account</label>
 
-              <select
-                className='form-control'
-                name='bank_acc'
-                id='bank_acc'
-                onChange={e => handleDebitInputAcc(e.target.value)}
-              >
-                <option value=''>Select Account</option>
+          <div className='form-group mt-3 px-3' id='bankkk'>
+            <label className='text-gray'>Account</label>
 
-                {debitAccount.map(option => (
-                  <option value={option._id}>{option.name}</option>
-                ))}
-              </select>
-            </div>
-          
+            <select
+              className='form-control'
+              name='bank_acc'
+              id='bank_acc'
+              onChange={e => handleDebitInputAcc(e.target.value)}
+            >
+              <option value=''>Select Account</option>
+
+              {debitAccount.map(option => (
+                <option value={option._id}>{option.name}</option>
+              ))}
+            </select>
+          </div>
+
         </div>
 
         <div className='form-group'>

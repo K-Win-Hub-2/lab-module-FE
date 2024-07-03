@@ -5,11 +5,12 @@ import { useEffect, useState } from 'react'
 import SideBar from '../SideBar'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import apiInstance from '../../../utils/api'
 
 // import { translateRect } from '../../plugins/fullcalendar/main.d';
 
 function MedicineSale() {
-  const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+  // const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
   //const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/';
   const [tranList, setTranList] = useState([])
   const [startDate, setStartDate] = useState('')
@@ -76,7 +77,7 @@ function MedicineSale() {
   const filter = id => {
     console.log(id, 'id')
     const getRelatedTran = async () => {
-      axios.get(uri + 'transactions/related/' + id).then(response => {
+      apiInstance.get('transactions/related/' + id).then(response => {
         setRelatedTranList(response.data.data)
       })
     }
@@ -89,9 +90,9 @@ function MedicineSale() {
   }
 
   const search = async () => {
-    const result = await axios.get(uri + 'transactions')
-    console.log(startDate, 'start Date')
-    console.log(endDate, 'end Date')
+    const result = await apiInstance.get('transactions')
+    // console.log(startDate, 'start Date')
+    // console.log(endDate, 'end Date')
 
     if (startDate && endDate) {
       setDateFilterList(
@@ -101,7 +102,7 @@ function MedicineSale() {
             (el.date ? el.date.split('T')[0] : '') <= endDate
         )
       )
-      console.log(tranList, 'date filter')
+      // console.log(tranList, 'date filter')
       setOrigin(false)
       setShow(false)
       setType(false)
@@ -149,13 +150,13 @@ function MedicineSale() {
 
   useEffect(() => {
     const getTransaction = async () => {
-      axios.get(uri + 'transactions').then(response => {
+      apiInstance.get('transactions').then(response => {
         setTranList(response.data.list)
       })
     }
 
     const getAccList = async () => {
-      axios.get(uri + 'accounting-lists').then(response => {
+      apiInstance.get('accounting-lists').then(response => {
         setAccList(response.data.list)
       })
     }
@@ -328,10 +329,10 @@ function MedicineSale() {
                               {tSale.relatedBank
                                 ? tSale.relatedBank.name
                                 : '' || tSale.relatedAccounting
-                                ? tSale.relatedAccounting.name
-                                : '' || tSale.relatedCash
-                                ? tSale.relatedCash.name
-                                : ''}
+                                  ? tSale.relatedAccounting.name
+                                  : '' || tSale.relatedCash
+                                    ? tSale.relatedCash.name
+                                    : ''}
                             </td>
                             <td>{tSale.type}</td>
                             <td>{tSale.amount}</td>
@@ -351,10 +352,10 @@ function MedicineSale() {
                               {tSale.relatedBank
                                 ? tSale.relatedBank.name
                                 : '' || tSale.relatedAccounting
-                                ? tSale.relatedAccounting.name
-                                : '' || tSale.relatedCash
-                                ? tSale.relatedCash.name
-                                : ''}
+                                  ? tSale.relatedAccounting.name
+                                  : '' || tSale.relatedCash
+                                    ? tSale.relatedCash.name
+                                    : ''}
                             </td>
                             <td>{tSale.type}</td>
                             <td>{tSale.amount}</td>
@@ -366,51 +367,51 @@ function MedicineSale() {
                     {showType &&
                       (type == 'Credit'
                         ? credit.map((tSale, i) => (
-                            <tbody key={tSale._id}>
-                              <tr>
-                                <td>{++i}</td>
-                                <td>
-                                  {tSale.date ? tSale.date.split('T')[0] : ''}
-                                </td>
+                          <tbody key={tSale._id}>
+                            <tr>
+                              <td>{++i}</td>
+                              <td>
+                                {tSale.date ? tSale.date.split('T')[0] : ''}
+                              </td>
 
-                                <td>
-                                  {tSale.relatedBank
-                                    ? tSale.relatedBank.name
-                                    : '' || tSale.relatedAccounting
+                              <td>
+                                {tSale.relatedBank
+                                  ? tSale.relatedBank.name
+                                  : '' || tSale.relatedAccounting
                                     ? tSale.relatedAccounting.name
                                     : '' || tSale.relatedCash
-                                    ? tSale.relatedCash.name
-                                    : ''}
-                                </td>
-                                <td>{tSale.type}</td>
-                                <td>{tSale.amount}</td>
-                                <td>{tSale.remark}</td>
-                              </tr>
-                            </tbody>
-                          ))
+                                      ? tSale.relatedCash.name
+                                      : ''}
+                              </td>
+                              <td>{tSale.type}</td>
+                              <td>{tSale.amount}</td>
+                              <td>{tSale.remark}</td>
+                            </tr>
+                          </tbody>
+                        ))
                         : debit.map((tSale, i) => (
-                            <tbody key={tSale._id}>
-                              <tr>
-                                <td>{++i}</td>
-                                <td>
-                                  {tSale.date ? tSale.date.split('T')[0] : ''}
-                                </td>
+                          <tbody key={tSale._id}>
+                            <tr>
+                              <td>{++i}</td>
+                              <td>
+                                {tSale.date ? tSale.date.split('T')[0] : ''}
+                              </td>
 
-                                <td>
-                                  {tSale.relatedBank
-                                    ? tSale.relatedBank.name
-                                    : '' || tSale.relatedAccounting
+                              <td>
+                                {tSale.relatedBank
+                                  ? tSale.relatedBank.name
+                                  : '' || tSale.relatedAccounting
                                     ? tSale.relatedAccounting.name
                                     : '' || tSale.relatedCash
-                                    ? tSale.relatedCash.name
-                                    : ''}
-                                </td>
-                                <td>{tSale.type}</td>
-                                <td>{tSale.amount}</td>
-                                <td>{tSale.remark}</td>
-                              </tr>
-                            </tbody>
-                          )))}
+                                      ? tSale.relatedCash.name
+                                      : ''}
+                              </td>
+                              <td>{tSale.type}</td>
+                              <td>{tSale.amount}</td>
+                              <td>{tSale.remark}</td>
+                            </tr>
+                          </tbody>
+                        )))}
 
                     {show &&
                       relatedTranList.map((tSale, i) => (
@@ -425,10 +426,10 @@ function MedicineSale() {
                               {tSale.relatedBank
                                 ? tSale.relatedBank.name
                                 : '' || tSale.relatedAccounting
-                                ? tSale.relatedAccounting.name
-                                : '' || tSale.relatedCash
-                                ? tSale.relatedCash.name
-                                : ''}
+                                  ? tSale.relatedAccounting.name
+                                  : '' || tSale.relatedCash
+                                    ? tSale.relatedCash.name
+                                    : ''}
                             </td>
                             <td>{tSale.type}</td>
                             <td>{tSale.amount}</td>

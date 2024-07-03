@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Base64 } from "js-base64";
 import ReactHtmlParser from "react-html-parser";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 
 function LabServiceRegister() {
@@ -34,7 +35,7 @@ function LabServiceRegister() {
   const TestVou_id = useLocation().pathname.split('/')[2]
 
 
-  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+  // const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
 
 
   const show = (id) => {
@@ -51,10 +52,10 @@ function LabServiceRegister() {
     });
   }
 
-  const handleInputChange = (event, testSelectId,testId, field) => {
+  const handleInputChange = (event, testSelectId, testId, field) => {
 
     const newData = subTest.map(data => {
-      if (data.tsid === testSelectId && data._id === testId ) {
+      if (data.tsid === testSelectId && data._id === testId) {
         return { ...data, [field]: event.target.value }
       }
       return data
@@ -75,7 +76,7 @@ function LabServiceRegister() {
       id: TestVou_id,
       comment: textArea
     }
-    axios.put(url + '/voucher', data).then((response) => {
+    apiInstance.put('voucher', data).then((response) => {
       console.log(response.data.data)
       handleAlert();
     })
@@ -104,13 +105,15 @@ function LabServiceRegister() {
       const data = {
         testSelectionID: id,
         voucherID: TestVou_id,
-        subTest: newData
+        subTest: newData,
+        status: voucherLists.map((i) => (i.name.subTestFlag === true)) ? "Finished" : "In Progress"
       };
-      axios
+      alert(JSON.stringify(data))
+      apiInstance
         .put(
-          // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,  
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/subtests",
-          // "http://localhost:9000/api/vouchers/subtests",
+
+          "vouchers/subtests",
+
           data
         )
         .then(function (response) {
@@ -141,10 +144,10 @@ function LabServiceRegister() {
       const config = {
         headers: { "Content-Type": "application/json" },
       };
-      axios
+      apiInstance
         .put(
-          // "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/" + updateUrl,
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/document",
+
+          "vouchers/document",
           data,
           config
         )
@@ -172,15 +175,15 @@ function LabServiceRegister() {
 
   };
 
-  
+
 
   useEffect(() => {
     const getVoucherList = async () => {
       try {
         const newList = []
         var newData = [];
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+        const res = await apiInstance.get(
+          "voucher/" +
           // "http://localhost:9000/api/voucher/" +
           TestVou_id
         );
@@ -200,28 +203,28 @@ function LabServiceRegister() {
 
         res.data.data.testSelection.map((test) => {
           if (test.name.subTestFlag) {
-           
+
             test.name.subTest.map(refdata => {
               test.subTest.map((realdata, i) => {
                 if (realdata._id === refdata._id) {
-                   test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type}
+                  test.subTest[i] = { ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type }
                   //test.subTest[i] = prep
-                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type,"tsid":test._id})
+                  newData.push({ ...realdata, "name": refdata.name, "defaultResult": refdata.defaultResult, "referenceRange": refdata.referenceRange, "unit": refdata.unit, "type": refdata.type, "tsid": test._id })
                 }
               })
             })
             let diff = test.name.subTest.length - test.subTest.length
             let subTestLength = test.subTest.length;
             if (diff > 0) {
-              console.log(diff,'diff')
+              console.log(diff, 'diff')
               for (let i = 0; i < diff; i++) {
-               // console.log('new sub test',test.name.subTest[test.subTest.length+i])
-               test.subTest.push(test.name.subTest[subTestLength + i])
-               newData.push({...test.name.subTest[subTestLength + i],"tsid" : test._id})
+                // console.log('new sub test',test.name.subTest[test.subTest.length+i])
+                test.subTest.push(test.name.subTest[subTestLength + i])
+                newData.push({ ...test.name.subTest[subTestLength + i], "tsid": test._id })
               }
-            }else if(diff < 0){
+            } else if (diff < 0) {
               let extra = Math.abs(diff)
-              for (let i=extra;i > 0;i--){
+              for (let i = extra; i > 0; i--) {
                 test.subTest.pop()
                 newData.pop()
               }
@@ -239,10 +242,10 @@ function LabServiceRegister() {
           }
         }
         )
-       // setSubTest(newList)
-       // console.log(subTest, 'subTest')
-      //  console.log(newData);
-      //  setSubTest(newData);
+        // setSubTest(newList)
+        // console.log(subTest, 'subTest')
+        //  console.log(newData);
+        //  setSubTest(newData);
         setVoucherLists(res.data.data.testSelection);
       } catch (err) { }
 
@@ -250,8 +253,8 @@ function LabServiceRegister() {
 
     const getPatientList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+        const res = await apiInstance.get(
+          "voucher/" +
           TestVou_id
         );
 
@@ -262,8 +265,8 @@ function LabServiceRegister() {
 
     const getReferDoctorList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
+        const res = await apiInstance.get(
+          "voucher/" +
           TestVou_id
         );
 
@@ -362,113 +365,114 @@ function LabServiceRegister() {
 
                         <tbody>
                           {console.log('testSelect', testSelect)}
-                          {(testSelect.name.subTestFlag) ? (<tr>
-                            <td>
-                              <div className="col-md-12 border-0">
-                                <p><u><b>{testSelect.name.name}</b></u></p>
-                                {
-                                  testSelect.subTest.map((test) => (
-                                    <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{ color: 'red' }}><b>{test.name}</b></p>) : (test.type === "both") ? (<p style={{ color: 'red' }}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
-                                    // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
+                          {(testSelect.name.subTestFlag) ? (
+                            <tr>
+                              <td>
+                                <div className="col-md-12 border-0">
+                                  <p><u><b>{testSelect.name.name}</b></u></p>
+                                  {
+                                    testSelect.subTest.map((test) => (
+                                      <span>{(test !== null) ? ((test.type === "underline") ? (<p><u><b>{test.name}</b></u></p>) : (test.type === "highlight") ? (<p style={{ color: 'red' }}><b>{test.name}</b></p>) : (test.type === "both") ? (<p style={{ color: 'red' }}><u><b>{test.name}</b></u></p>) : (<p>{test.name}</p>)) : (<p>{test.name}</p>)} </span>
+                                      // <p>{(test.type === "underline") ? <u> : ""}{test.name}{(test.type === "underline") ? </u> : ""}</p>
 
-                                  ))
-                                }
-                              </div>
-                            </td>
-                            <td>
-                              <div className="col-md-12 border-0">
+                                    ))
+                                  }
+                                </div>
+                              </td>
+                              <td>
+                                <div className="col-md-12 border-0">
+                                  <div style={{ height: '40px' }}></div>
+                                  {
+                                    testSelect.subTest.map((test) => (
+
+                                      <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (<input
+                                        type="text"
+                                        id="result"
+                                        onChange={event =>
+                                          handleInputChange(
+                                            event,
+                                            testSelect._id,
+                                            test._id,
+                                            'result'
+                                          )}
+                                        defaultValue={(test !== null && test.result !== "") ? test.result : (test !== null && test.defaultResult !== "") ? test.defaultResult : ""}
+                                        class="form-control"
+                                        placeholder={test.name}
+                                        style={{ marginBottom: '2px' }}
+                                      />)) : ("")}
+                                      </span>
+                                    ))
+                                  }
+
+                                </div>
+                              </td>
+                              <td>
+                                <div className="col-md-12 border-0">
+                                  <div style={{ height: '40px' }}></div>
+                                  {
+                                    testSelect.subTest.map((test) => (
+                                      <span >{(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                        <p style={{ height: "20px", marginBottom: "20px" }}>{(test.type === "multiline") ? formatString(test.referenceRange) : (test.referenceRange === "") ? "-" : test.referenceRange} </p>)) : (
+                                        <p style={{ height: "10px" }}>{test.referenceRange}</p>)}
+                                      </span>
+                                    ))
+                                  }
+                                </div>
+                              </td>
+                              <td>
+                                <div className="col-md-12 border-0">
+                                  <div style={{ height: '40px' }}></div>
+                                  {
+                                    testSelect.subTest.map((test) => (
+
+                                      <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                        <p>{test.unit === "" ? "-" : test.unit}</p>)) : (
+                                        <p>{test.unit}</p>)}
+                                      </span>
+
+                                    ))
+                                  }
+                                </div>
+                              </td>
+
+                              <td>
                                 <div style={{ height: '40px' }}></div>
                                 {
                                   testSelect.subTest.map((test) => (
-
-                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (<input
-                                      type="text"
-                                      id="result"
-                                      onChange={event =>
-                                        handleInputChange(
-                                          event,
-                                          testSelect._id,
-                                          test._id,
-                                          'result'
-                                        )}
-                                      defaultValue={(test !== null && test.result !== "") ? test.result : (test !== null && test.defaultResult !== "") ? test.defaultResult : ""}
-                                      class="form-control"
-                                      placeholder={test.name}
-                                      style={{ marginBottom: '2px' }}
-                                    />)) : ("")}
+                                    <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
+                                      <input
+                                        type="text"
+                                        id="remark"
+                                        onChange={event =>
+                                          handleInputChange(
+                                            event,
+                                            testSelect._id,
+                                            test._id,
+                                            'remark'
+                                          )}
+                                        defaultValue={(test.remark !== null) ? test.remark : ""}
+                                        class="form-control"
+                                        placeholder="Enter Remark"
+                                        style={{ marginBottom: '2px' }}
+                                      />
+                                    )) : (
+                                      ""
+                                    )}
                                     </span>
                                   ))
                                 }
+                              </td>
+                              <td>
+                                <p style={{ color: 'white' }}>""</p>
 
-                              </div>
-                            </td>
-                            <td>
-                              <div className="col-md-12 border-0">
-                                <div style={{ height: '40px' }}></div>
-                                {
-                                  testSelect.subTest.map((test) => (
-                                    <span >{(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                      <p style={{height: "20px", marginBottom: "20px"}}>{(test.type === "multiline") ? formatString(test.referenceRange) : (test.referenceRange === "") ? "-" : test.referenceRange} </p>)) : (
-                                      <p style={{height: "10px"}}>{test.referenceRange}</p>)}
-                                    </span>
-                                  ))
-                                }
-                              </div>
-                            </td>
-                            <td>
-                              <div className="col-md-12 border-0">
-                                <div style={{ height: '40px' }}></div>
-                                {
-                                  testSelect.subTest.map((test) => (
-
-                                    <span>  {(test !== null ) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                      <p>{test.unit === "" ? "-" : test.unit}</p>)) : (
-                                      <p>{test.unit}</p>)}
-                                    </span>
-
-                                  ))
-                                }
-                              </div>
-                            </td>
-
-                            <td>
-                              <div style={{ height: '40px' }}></div>
-                              {
-                                testSelect.subTest.map((test) => (
-                                  <span>  {(test !== null) ? ((test.type === "underline" || test.type === "highlight" || test.type === "both") ? (<p style={{ color: 'white' }}>""</p>) : (
-                                    <input
-                                      type="text"
-                                      id="remark"
-                                      onChange={event =>
-                                        handleInputChange(
-                                          event,
-                                          testSelect._id,
-                                          test._id,
-                                          'remark'
-                                        )}
-                                      defaultValue={(test.remark !== null) ? test.remark : ""}
-                                      class="form-control"
-                                      placeholder="Enter Remark"
-                                      style={{ marginBottom: '2px' }}
-                                    />
-                                  )) : (
-                                    ""
-                                  )}
-                                  </span>
-                                ))
-                              }
-                            </td>
-                            <td>
-                              <p style={{ color: 'white' }}>""</p>
-
-                              <button
-                                type="button"
-                                onClick={(e) => handleTestSelection(testSelect, testSelect._id)}
-                                className="btn btn-sm btn-info ml-2">
-                                <FaSave />
-                              </button>
-                            </td>
-                          </tr>) : (
+                                <button
+                                  type="button"
+                                  onClick={(e) => handleTestSelection(testSelect, testSelect._id)}
+                                  className="btn btn-sm btn-info ml-2">
+                                  <FaSave />
+                                </button>
+                              </td>
+                            </tr>) : (
                             <tr>
                               <td>{testSelect.name.name}</td>
                               <td>
@@ -566,7 +570,7 @@ function LabServiceRegister() {
                   </div>
                   <div className="row">
                     <label>Comment</label>
-                    <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => {settextArea(e.target.value); }}>
+                    <textarea rows="4" cols="50" placeholder="Enter..." defaultValue={stextArea} onChange={(e) => { settextArea(e.target.value); }}>
                     </textarea>
                     {console.log(textArea)}
                   </div>

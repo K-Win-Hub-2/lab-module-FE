@@ -9,8 +9,9 @@ import { Base64 } from 'js-base64'
 import Swal from 'sweetalert2'
 import { useLocation } from 'react-router'
 import { useNavigate } from 'react-router'
+import apiInstance from '../../utils/api'
 
-function LabServiceUpdate () {
+function LabServiceUpdate() {
   const [category, setCategory] = useState([])
   const [reagentArray, setReagentArray] = useState([])
   // const [referDoctor, setReferDoctor] = useState([]);
@@ -52,7 +53,7 @@ function LabServiceUpdate () {
   const labid = useLocation().pathname.split('/')[2]
   const navigate = useNavigate()
 
-  function decodeBase64 (data) {
+  function decodeBase64(data) {
     const decode = Base64.decode(data)
 
     return decode
@@ -77,7 +78,7 @@ function LabServiceUpdate () {
   };
 
   const handleRefInputChange = (event, id, field) => {
-    
+
     const newData = refData.map((data) => {
       if (data.id === id) {
         return { ...data, [field]: event.target.value };
@@ -91,7 +92,7 @@ function LabServiceUpdate () {
   const handleAddRow = () => {
     setTableData([
       ...tableData,
-      { id: tableData.length + 1, name: '', result: '',defaultResult: "", referenceRange: '', unit: '', type: "", remark: '' }
+      { id: tableData.length + 1, name: '', result: '', defaultResult: "", referenceRange: '', unit: '', type: "", remark: '' }
     ])
   }
 
@@ -111,10 +112,10 @@ function LabServiceUpdate () {
 
     const newData = tableData.map(data => {
       if (data.id === id) {
-        if(field === "referenceRange" && data.type === "multiline"){
+        if (field === "referenceRange" && data.type === "multiline") {
           return { ...data, [field]: Base64.encode(event.target.value) }
-        }else{
-        return { ...data, [field]: event.target.value }
+        } else {
+          return { ...data, [field]: event.target.value }
         }
       }
       return data
@@ -143,29 +144,29 @@ function LabServiceUpdate () {
   }
 
   const handleRefRange = event => {
-    
-   if(event == 0){
-    
-    var newRef = {
-      from: mfrom,
-      to: mto,
-      gender: mgender,
-      unit: munit
-    }
-    
-    
-    
-  }else if(event == 1){
+
+    if (event == 0) {
+
+      var newRef = {
+        from: mfrom,
+        to: mto,
+        gender: mgender,
+        unit: munit
+      }
+
+
+
+    } else if (event == 1) {
       var newRef = {
         from: ffrom,
         to: fto,
         gender: fgender,
         unit: funit
       }
-      
-      
+
+
     }
-    
+
     setRefArray([...refArray, newRef])
   }
 
@@ -235,10 +236,10 @@ function LabServiceUpdate () {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-       'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service',
-      // 'http://localhost:9000/api/service',
+        'service',
+        // 'http://localhost:9000/api/service',
         data,
         config
       )
@@ -247,7 +248,8 @@ function LabServiceUpdate () {
           title: 'Success',
           text: 'successfully Updated!',
           icon: 'success',
-          confirmButtonText: 'OK'
+          showConfirmButton: false,
+          timer: 2000
         })
         clearForm()
         // props.setReagent([...props.category, response.data.data]);
@@ -264,28 +266,28 @@ function LabServiceUpdate () {
 
   const getCategory = async () => {
     try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30'
+      const res = await apiInstance.get(
+        'categories?limit=30'
       )
 
       setCategory(res.data.data)
-    } catch (err) {}
+    } catch (err) { }
   }
 
   const getReagent = async () => {
     try {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/reagents?limit=30'
+      const res = await apiInstance.get(
+        'reagents?limit=30'
       )
       setReagentItems(res.data.data)
-    } catch (err) {}
+    } catch (err) { }
   }
 
   const getUpdate = async () => {
-    const res = await axios.get(
-     'http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/' +
-     // 'http://localhost:9000/api/service/' +
-        labid
+    const res = await apiInstance.get(
+      'service/' +
+      // 'http://localhost:9000/api/service/' +
+      labid
     )
     //console.log("success");
     console.log(res.data.data)
@@ -306,9 +308,9 @@ function LabServiceUpdate () {
     if (res.data.data.subTestFlag) {
       setShowMultiTest(true)
       let newArr = []
-      res.data.data.subTest.map(function (e,i){
-       // e = {...e, id:i+1, referenceRange: (e.type === "multiline") ? decodeBase64(e.referenceRange) : e.referenceRange}
-       e = {...e, id:i+1}
+      res.data.data.subTest.map(function (e, i) {
+        // e = {...e, id:i+1, referenceRange: (e.type === "multiline") ? decodeBase64(e.referenceRange) : e.referenceRange}
+        e = { ...e, id: i + 1 }
         newArr.push(e)
       })
       setTableData(newArr)
@@ -341,21 +343,21 @@ function LabServiceUpdate () {
         //     console.log(fgender)
         //     setfUnit(refArray[1].unit)
         //   }
-       
-       // }
-       if(res.data.data.referenceRange !== undefined){
 
-        let newArray = []
-        res.data.data.referenceRange.map(function(e,i){
-          e = {...e, id:i+1}
-          newArray.push(e)
-        })
-       setRefData(newArray)
-      if(res.data.data.referenceRange.length > 1){
-        setShowNextRef(true);
-      }
-      }
-       
+        // }
+        if (res.data.data.referenceRange !== undefined) {
+
+          let newArray = []
+          res.data.data.referenceRange.map(function (e, i) {
+            e = { ...e, id: i + 1 }
+            newArray.push(e)
+          })
+          setRefData(newArray)
+          if (res.data.data.referenceRange.length > 1) {
+            setShowNextRef(true);
+          }
+        }
+
       }
     }
   }
@@ -688,21 +690,21 @@ function LabServiceUpdate () {
                                     </div>
 
                                     <div className='col-md-2'>
-                                    <textarea
-                                      rows="2"
-                                      cols="20"
-                                      className="form-control"
-                                      id="subTestRR"
-                                      name="subTestRR"
-                                      defaultValue={(data.type === "multiline") ? decodeBase64(data.referenceRange) : data.referenceRange}
-                                      //defaultValue={data.referenceRange}
-                                      onChange={(event) =>
-                                        handleInputChange(
-                                          event,
-                                          data.id,
-                                          "referenceRange"
-                                        )
-                                      }></textarea>
+                                      <textarea
+                                        rows="2"
+                                        cols="20"
+                                        className="form-control"
+                                        id="subTestRR"
+                                        name="subTestRR"
+                                        defaultValue={(data.type === "multiline") ? decodeBase64(data.referenceRange) : data.referenceRange}
+                                        //defaultValue={data.referenceRange}
+                                        onChange={(event) =>
+                                          handleInputChange(
+                                            event,
+                                            data.id,
+                                            "referenceRange"
+                                          )
+                                        }></textarea>
                                       {/* <input
                                         type='text'
                                         className='form-control'
@@ -738,31 +740,31 @@ function LabServiceUpdate () {
                                     </div>
 
                                     <div className="col-md-2">
-                                    <select
-                              name="type"
-                              id="type"
-                              className="form-control"
-                            //  onchange="convert(this.value)"
-                              onChange={(event) =>
-                               handleInputChange(event,data.id,"type")
+                                      <select
+                                        name="type"
+                                        id="type"
+                                        className="form-control"
+                                        //  onchange="convert(this.value)"
+                                        onChange={(event) =>
+                                          handleInputChange(event, data.id, "type")
 
-                              }>
-                              <option value="none">Choose Type</option>
-                              
-                                <option value="underline" selected={data.type === "underline" ? true : false}>
-                                  Underline
-                                </option>
-                                <option value="highlight" selected={data.type === "highlight" ? true : false}>
-                                  Highlight
-                                </option>
-                                <option value="both" selected={data.type === "both" ? true : false}>
-                                  Underline and Highlight
-                                </option>
-                                <option value="multiline" selected={data.type === "multiline" ? true : false}>
-                                  Multiple Line
-                                </option>
-                              
-                            </select>
+                                        }>
+                                        <option value="none">Choose Type</option>
+
+                                        <option value="underline" selected={data.type === "underline" ? true : false}>
+                                          Underline
+                                        </option>
+                                        <option value="highlight" selected={data.type === "highlight" ? true : false}>
+                                          Highlight
+                                        </option>
+                                        <option value="both" selected={data.type === "both" ? true : false}>
+                                          Underline and Highlight
+                                        </option>
+                                        <option value="multiline" selected={data.type === "multiline" ? true : false}>
+                                          Multiple Line
+                                        </option>
+
+                                      </select>
                                     </div>
 
                                     <div className='col-md-1'>
@@ -836,38 +838,38 @@ function LabServiceUpdate () {
 
                               {showRefForm && (
                                 <div className="row mt-3">
-                                <div className="row">
-                                  <div className="col-1">
-                                    <label>Reference Range</label>
-                                  </div>
-                                  <div className="col-1">
-                                    <button
-                                      className="btn btn-primary ml-3"
-                                      type="button"
-                                      onClick={handleAddRefRow}>
-                                      Add
-                                    </button>
-                                  </div>
-                                </div>
-                                {refData.map((data) => (
-                                  <div className='row'>
-                                    <div className="col-md-6">
-                                      <input
-                                        type="text"
-                                        placeholder="From"
-                                        className="form-control"
-                                        step={0.01}
-                                        value={data.refRange}
-                                        onChange={(event) =>
-                                          handleRefInputChange(
-                                            event,
-                                            data.id,
-                                            "refRange"
-                                          )
-                                        }
-                                      />
+                                  <div className="row">
+                                    <div className="col-1">
+                                      <label>Reference Range</label>
                                     </div>
-                                    {/* <div className="col-md-2">
+                                    <div className="col-1">
+                                      <button
+                                        className="btn btn-primary ml-3"
+                                        type="button"
+                                        onClick={handleAddRefRow}>
+                                        Add
+                                      </button>
+                                    </div>
+                                  </div>
+                                  {refData.map((data) => (
+                                    <div className='row'>
+                                      <div className="col-md-6">
+                                        <input
+                                          type="text"
+                                          placeholder="From"
+                                          className="form-control"
+                                          step={0.01}
+                                          value={data.refRange}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "refRange"
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                      {/* <div className="col-md-2">
                                       <input
                                         type="number"
                                         placeholder="To"
@@ -900,37 +902,37 @@ function LabServiceUpdate () {
                                       />
                                     </div> */}
 
-                                    <div className="col-md-2">
-                                      <input
-                                        type="text"
-                                        placeholder="Unit"
-                                        className="form-control"
-                                        value={data.unit}
-                                        onChange={(event) =>
-                                          handleRefInputChange(
-                                            event,
-                                            data.id,
-                                            "unit"
-                                          )
-                                        }
-                                      />
+                                      <div className="col-md-2">
+                                        <input
+                                          type="text"
+                                          placeholder="Unit"
+                                          className="form-control"
+                                          value={data.unit}
+                                          onChange={(event) =>
+                                            handleRefInputChange(
+                                              event,
+                                              data.id,
+                                              "unit"
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                      {/* Action button for add data to refArr */}
+                                      <div className="col-md-2">
+                                        <button
+                                          type="button"
+                                          className="btn btn-sm btn-danger rounded-circle"
+                                          id="removeRowFromMultiTests"
+                                          onClick={() =>
+                                            handleDeleteRefRow(data.id)
+                                          }>
+                                          <FaMinus />
+                                        </button>
+                                      </div>
+                                      {/* End */}
                                     </div>
-                                    {/* Action button for add data to refArr */}
-                                    <div className="col-md-2">
-                                    <button
-                                      type="button"
-                                      className="btn btn-sm btn-danger rounded-circle"
-                                      id="removeRowFromMultiTests"
-                                      onClick={() =>
-                                        handleDeleteRefRow(data.id)
-                                      }>
-                                      <FaMinus />
-                                    </button>
-                                    </div>
-                                    {/* End */}
-                                  </div>
-                                ))}
-                              </div>
+                                  ))}
+                                </div>
                               )}
                             </div>
                           ) : (

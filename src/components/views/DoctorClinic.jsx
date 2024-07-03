@@ -14,6 +14,7 @@ import {
   FaFileExcel,
   FaRegTrashAlt
 } from 'react-icons/fa'
+import apiInstance from '../../utils/api'
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false)
@@ -22,10 +23,10 @@ const LabServiceList = () => {
 
   const handleDelete = event => {
     console.log(event, 'event')
-    axios
+    apiInstance
       .delete(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/' +
-          event
+        'doctor/' +
+        event
       )
       .then(response => {
         Swal.fire({
@@ -60,8 +61,8 @@ const LabServiceList = () => {
   }
   useEffect(() => {
     const getDoctorLists = async () => {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors?limit=30'
+      const res = await apiInstance.get(
+        'doctors?limit=30'
       )
 
       setDoctorLists(res.data.data)

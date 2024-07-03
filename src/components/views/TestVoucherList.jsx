@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react'
 import SideBar from './SideBar'
 import styled from 'styled-components'
 import { AiFillInfoCircle } from 'react-icons/ai'
-import axios from 'axios'
+
 import { FaCheck } from 'react-icons/fa'
 import ExportVoucher from './ExportVoucher'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import apiInstance from '../../utils/api'
 // import RePayDialog from '../../components/views/RePayDialog';
 
 const Top = styled.div`
@@ -98,8 +99,8 @@ const TestVoucherList = () => {
   useEffect(() => {
     const getVouchers = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today'
+        const res = await apiInstance.get(
+          'vouchers/today'
         )
         console.log(res.data.data)
         setVouchers(res.data.data)
@@ -140,8 +141,8 @@ const TestVoucherList = () => {
   }, [])
 
   const search = async () => {
-    const result = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers'
+    const result = await apiInstance.get(
+      'vouchers'
     )
     if (name == '') {
       setVouchers(

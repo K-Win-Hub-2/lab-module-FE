@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import SideBar from './SideBar'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function Category() {
   const [category, setCategory] = useState([])
@@ -26,10 +27,10 @@ function Category() {
   const [Id, setId] = useState('')
 
   const handleDelete = event => {
-    axios
+    apiInstance
       .delete(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category/' +
-          event
+        'category/' +
+        event
       )
       .then(response => {
         Swal.fire({
@@ -55,9 +56,9 @@ function Category() {
     console.log(event, 'event')
     const getCatUpdate = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category/' +
-            event
+        const res = await apiInstance.get(
+          'category/' +
+          event
         )
         console.log(res.data.data)
         setUpCode(res.data.data.code)
@@ -66,7 +67,7 @@ function Category() {
         setUpFlag(res.data.data.flag)
 
         setUpDesc(res.data.data.description)
-      } catch (err) {}
+      } catch (err) { }
     }
     getCatUpdate()
     setShowUpdate(true)
@@ -82,15 +83,15 @@ function Category() {
       amount: upAmount,
       description: upDesc
     }
-    
+
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
-       // 'http://localhost:9000/api/category',
+        'category',
+        // 'http://localhost:9000/api/category',
         data,
         config
       )
@@ -141,19 +142,19 @@ function Category() {
       description: description
     }
     //alert(JSON.stringify(data));
-    if(code){
-      data.code=code;
-    }else{
-      data.code=uniqueId
+    if (code) {
+      data.code = code;
+    } else {
+      data.code = uniqueId
     }
 
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/category',
-       //'http://localhost:9000/api/category',
+        'category',
+        //'http://localhost:9000/api/category',
         data,
         config
       )
@@ -186,12 +187,12 @@ function Category() {
   useEffect(() => {
     const getCategory = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/categories?limit=30'
+        const res = await apiInstance.get(
+          'categories?limit=30'
         )
 
         setCategory(res.data.data)
-      } catch (err) {}
+      } catch (err) { }
     }
     getCategory()
   }, [])
@@ -278,7 +279,7 @@ function Category() {
                               <td>
                                 <div className='row d-flex justify-content-between'>
                                   <div className='col-md-5'>
-                                    
+
                                     <button
                                       className='btn btn-sm btn-warning'
                                       onClick={e => handleUpdate(cat._id)}
@@ -287,7 +288,7 @@ function Category() {
                                     </button>
                                   </div>
                                   <div className='col-md-5'>
-                                    
+
                                     <button
                                       className='btn btn-sm btn-danger'
                                       onClick={e => handleDelete(cat._id)}
@@ -366,7 +367,7 @@ function Category() {
                               id='uno'
                               onclick='hide_project()'
                               onChange={e => setUpCheck(false)}
-                              //checked = {upCheck ? true : false}
+                            //checked = {upCheck ? true : false}
                             />
                             <label class='form-check-label text-info' for='no'>
                               No

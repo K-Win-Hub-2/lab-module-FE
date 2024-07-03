@@ -18,6 +18,7 @@ import SideBar from '../../SideBar'
 import AccountList from '../AccountList/AccountList.jsx'
 import { Link } from 'react-router-dom'
 import { valueOf } from '../../../../assets/plugins/moment/src/lib/moment/to-type'
+import apiInstance from '../../../../utils/api.js'
 
 export default function JournalEntryEdit(props) {
   const [fromAccounts, setFromAccounts] = useState([])
@@ -73,16 +74,16 @@ export default function JournalEntryEdit(props) {
       headers: { 'Content-Type': 'application/json' }
     }
     // alert(JSON.stringify(data))
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/journal',
+        'journal',
         //'http://localhost:9000/api/journal',
         data,
         config
       )
       .then(function (response) {
-        console.log(response.data.firstTrans)
-        console.log(response.data.secondTrans)
+        // console.log(response.data.firstTrans)
+        // console.log(response.data.secondTrans)
         Swal.fire({
           title: 'Success',
           text: 'Successfully Updated!',
@@ -114,22 +115,22 @@ export default function JournalEntryEdit(props) {
   useEffect(() => {
     const getAccount = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
         )
 
         setFromAccounts(res.data.list)
         setToAccounts(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getTransaction = async () => {
       try {
         console.log(Id, 'Id')
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transaction/' +
-            //'http://localhost:9000/api/accounting-list/' +
-            Id
+        const res = await apiInstance.get(
+          '/transaction/' +
+          //'http://localhost:9000/api/accounting-list/' +
+          Id
         )
         console.log(res.data.data)
         setFirstTransId(Id)
@@ -157,7 +158,7 @@ export default function JournalEntryEdit(props) {
         setCurAmount(res.data.data[0].amount)
         setUpRemark(res.data.data[0].remark)
         setUpDate(res.data.data[0].date.split('T')[0])
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getAccount()

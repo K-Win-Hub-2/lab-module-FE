@@ -8,6 +8,7 @@ import { ExcelExport } from '@progress/kendo-react-excel-export'
 import { ExcelExportColumn } from '@progress/kendo-react-excel-export'
 import { Link } from 'react-router-dom'
 import { FaCashRegister, FaFileMedical, FaFileExcel } from 'react-icons/fa'
+import apiInstance from '../../../../utils/api'
 
 const Expense = () => {
   const [open, setOpen] = useState(false)
@@ -29,30 +30,17 @@ const Expense = () => {
   }
   const handleRelatedShow = id => {
     const getRelated = async () => {
-      //try {
-      // console.log(val2);
-      //  const jsonData = {
-      //   account : val1,
-      //   bankorcash: val2
-      //  }
-      //  const config = {
-      //   headers: { "Content-Type": "application/json" },
-      // };
-      // await axios.post(
-      //"http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/related",
-      //  "http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedtransactions",
-      //    jsonData,
-      //    config
-      await axios
+
+      await apiInstance
         .get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/transactions/relatedExpense/' +
-            id
+          'transactions/relatedExpense/' +
+          id
         )
         .then(function (response) {
           console.log(response.data.data)
           setRelatedLists(response.data.data)
         })
-        .catch(function (err) {})
+        .catch(function (err) { })
 
       //console.log(res.data.data);
 
@@ -71,8 +59,8 @@ const Expense = () => {
 
   useEffect(() => {
     const getExpenseLists = async () => {
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/expenses'
+      const res = await apiInstance.get(
+        'expenses'
       )
       // alert("success");
       // console.log(res.data.list);
@@ -198,7 +186,7 @@ const Expense = () => {
                               <FaFileExcel />&nbsp;
                               Export
 
-                             
+
 
                             </button>
                           </span>
@@ -375,51 +363,51 @@ const Expense = () => {
 
                                         {relatedLists
                                           ? relatedLists.map((reList, i) => (
-                                              <div class='row'>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {++i}
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-3'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {
-                                                      reList.relatedAccounting
-                                                        .name
-                                                    }
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  {reList.type}
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {reList.date.split('T')[0]}
-                                                  </div>
-                                                </div>
-                                                <div class='col-md-2'>
-                                                  <div
-                                                    style={{
-                                                      fontSize: '15px'
-                                                    }}
-                                                  >
-                                                    {reList.amount}
-                                                  </div>
+                                            <div class='row'>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {++i}
                                                 </div>
                                               </div>
-                                            ))
+                                              <div class='col-md-3'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {
+                                                    reList.relatedAccounting
+                                                      .name
+                                                  }
+                                                </div>
+                                              </div>
+                                              <div class='col-md-2'>
+                                                {reList.type}
+                                              </div>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {reList.date.split('T')[0]}
+                                                </div>
+                                              </div>
+                                              <div class='col-md-2'>
+                                                <div
+                                                  style={{
+                                                    fontSize: '15px'
+                                                  }}
+                                                >
+                                                  {reList.amount}
+                                                </div>
+                                              </div>
+                                            </div>
+                                          ))
                                           : ''}
                                       </div>
                                     </td>

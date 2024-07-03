@@ -4,8 +4,9 @@ import Sidebar from '../../SideBar'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { set } from '../../../../assets/plugins/moment/src/lib/moment/get-set'
+import apiInstance from '../../../../utils/api'
 
-const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+// const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
 //const url = 'http://localhost:9000/api'
 
 export default function ProfitandLossStatement() {
@@ -45,9 +46,9 @@ export default function ProfitandLossStatement() {
   const [otherExpenseTotal, setOtherExpenseTotal] = useState(0)
   const [netProfit, setnetProfit] = useState(0)
   const [incomeTotal, setIncomeTotal] = useState(0)
-  const[openRetained,setOpenRetained] = useState(0)
-  const[closeRetained,setCloseRetained] = useState(0)
-  
+  const [openRetained, setOpenRetained] = useState(0)
+  const [closeRetained, setCloseRetained] = useState(0)
+
 
 
   const handleRelatedShow = id => {
@@ -67,8 +68,8 @@ export default function ProfitandLossStatement() {
         text: 'Please wait...',
         allowOutsideClick: false
       })
-      await axios
-        .get(url + `/transactions/trial-balance`, {
+      await apiInstance
+        .get(`transactions/trial-balance`, {
           params: { start: start, end: event.target.value }
         })
         .then(res => {
@@ -170,11 +171,11 @@ export default function ProfitandLossStatement() {
               element.type.name === 'Expenses' &&
               element.header === 'Other Expense'
             ) {
-             
+
               othexp += Math.abs(element.netAmount)
             }
 
-            
+
             if (
               element.accName === 'Retained Earning'
             ) {
@@ -203,118 +204,7 @@ export default function ProfitandLossStatement() {
           console.log('error', error)
         })
 
-      // try {
-      //   const res = await axios.get(
-      //   //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-      //   'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-      //   )
 
-      //   setAccountLists(res.data.list)
-      //   let fixedassettotal = 0;
-      //   let bankAccTotal = 0;
-      //   let cashAccTotal = 0;
-      //   let invAccTotal = 0;
-      //   let reagentTotal = 0;
-      //   let testkitTotal = 0;
-      //   let recevTotal = 0;
-      //   let prepTotal = 0;
-      //   let culaTotal = 0;
-      //   let ltlaTotal = 0;
-      //   let capTotal = 0;
-      //   let resrvTotal =0;
-
-      //   res.data.list.map(account =>
-      //     {
-      //       if(account.name === "Furniture and Fitting"){
-      //         setffamount(account.amount)
-      //         fixedassettotal += account.amount
-      //       }
-      //       if(account.name === "Furniture and Fitting Accumulated Depreciation"){
-      //         setffdamount(account.amount)
-      //         fixedassettotal -= account.amount;
-      //       }
-
-      //       if(account.name === "Machinery"){
-      //         setmamount(account.amount)
-      //         fixedassettotal += account.amount
-      //       }
-      //       if(account.name === "Machinery Accumulated Depreciation"){
-      //         setmdamount(account.amount)
-      //         fixedassettotal -= account.amount;
-      //       }
-
-      //       if(account.name === "Office Equipment"){
-      //         setoeamount(account.amount)
-      //         fixedassettotal += account.amount
-      //       }
-      //       if(account.name === "Office Equipment Accumulated Depreciation"){
-      //         setoedamount(account.amount)
-      //         fixedassettotal -= account.amount;
-      //       }
-
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Bank"){
-      //         bankAccTotal += account.amount
-      //       }
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Cash"){
-      //         cashAccTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Inventory"){
-      //         invAccTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Reagent"){
-      //         reagentTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Test Kit"){
-      //         testkitTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Receivable"){
-      //         recevTotal += account.amount
-      //       }
-      //       if(account.relatedType.name === "Assets" && account.relatedHeader.name === "Current Asset" && account.relatedSubHeader.name === "Prepaid"){
-      //         prepTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Liabilities" && account.relatedHeader.name === "Current Liabilities" && account.relatedSubHeader.name === "Current Liabilities"){
-      //         culaTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Liabilities" && account.relatedHeader.name === "Long Term Liabilities" && account.relatedSubHeader.name === "Long Term Liabilities"){
-      //         ltlaTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Equity" && account.relatedHeader.name === "Capital" && account.relatedSubHeader.name === "Capital"){
-      //         capTotal += account.amount
-      //       }
-
-      //       if(account.relatedType.name === "Equity" && account.relatedHeader.name === "Reserve" && account.relatedSubHeader.name === "Reserve"){
-      //         resrvTotal += account.amount
-      //       }
-      //     })
-      //     setBankTotal(bankAccTotal)
-      //     setCashTotal(cashAccTotal)
-      //     setInventoryTotal(invAccTotal)
-      //     setReagentTotal(reagentTotal)
-      //     setTestkitTotal(testkitTotal)
-      //     setReceivableTotal(recevTotal)
-      //     setPrepaidTotal(prepTotal)
-      //     setcatotal(bankAccTotal + cashAccTotal + invAccTotal + reagentTotal + testkitTotal + recevTotal + prepTotal)
-      //     setfatotal(fixedassettotal)
-      //     setAssetTotal(bankAccTotal + cashAccTotal + invAccTotal + reagentTotal + testkitTotal + recevTotal + prepTotal + fixedassettotal)
-
-      //     setcltotal(culaTotal)
-      //     setlltotal(ltlaTotal)
-      //     setLiabilitiesTotal(culaTotal+ltlaTotal)
-
-      //     setCapitaltotal(capTotal)
-      //     setReservetotal(resrvTotal)
-      //     setEquitytotal(capTotal + resrvTotal)
-      //   // dispatch(setList("success"));
-      //    console.log(res.data.list);
-      // } catch (err) {}
 
       Swal.close()
 
@@ -327,7 +217,7 @@ export default function ProfitandLossStatement() {
   }
 
   useEffect(() => {
-   // fetchTrialAndBalance()
+    // fetchTrialAndBalance()
   }, [])
 
   return (
@@ -361,29 +251,29 @@ export default function ProfitandLossStatement() {
                   <div className='card'>
                     <div className='card-header'>
                       <h1 className='card-title font-weight-bold px-3 py-3'>
-                        Statement of Profit and Loss for the period ended at 
+                        Statement of Profit and Loss for the period ended at
                         {end}
                       </h1>
                       <div className='row'>
-                                                <div className='col-4'>
-                                                    <label htmlFor=''>From:</label>
-                                                    <input
-                                                        type='date'
-                                                        placeholder='Search...'
-                                                        className='form-control'
-                                                        onChange={e => setStart(e.target.value)}
-                                                    />
-                                                </div>
-                                                <div className='col-4'>
-                                                    <label htmlFor=''>To:</label>
-                                                    <input
-                                                        type='date'
-                                                        placeholder='Search...'
-                                                        className='form-control'
-                                                        onChange={e => fetchTrialAndBalance(e)}
-                                                    />
-                                                </div>
-                                            </div>
+                        <div className='col-4'>
+                          <label htmlFor=''>From:</label>
+                          <input
+                            type='date'
+                            placeholder='Search...'
+                            className='form-control'
+                            onChange={e => setStart(e.target.value)}
+                          />
+                        </div>
+                        <div className='col-4'>
+                          <label htmlFor=''>To:</label>
+                          <input
+                            type='date'
+                            placeholder='Search...'
+                            className='form-control'
+                            onChange={e => fetchTrialAndBalance(e)}
+                          />
+                        </div>
+                      </div>
 
                       {/* {{-- <button id="" class="btn btn-primary float-right" data-toggle="modal" data-target="#new_account" onclick="hide_proj()"> <i class="fa fa-plus"></i> Create Accounting</button> --}} */}
                       {/* {{-- <div class="modal fade" id="new_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -695,7 +585,7 @@ export default function ProfitandLossStatement() {
 
                           {accountLists.map(account =>
                             account.type.name === 'Income' &&
-                            account.header === 'Other Income' ? (
+                              account.header === 'Other Income' ? (
                               <tr>
                                 <td>{account.accName}</td>
                                 <td>{Math.abs(account.netAmount)}</td>
@@ -706,15 +596,15 @@ export default function ProfitandLossStatement() {
                             )
                           )}
 
-<tr>
+                          <tr>
                             <td>
-                              
+
                             </td>
                             <td></td>
                             <td>{otherIncomeTotal}</td>
                           </tr>
 
-<tr>
+                          <tr>
                             <td>
                               <u>Total Income</u>
                             </td>
@@ -732,7 +622,7 @@ export default function ProfitandLossStatement() {
 
                           {accountLists.map(account =>
                             account.type.name === 'Expenses' &&
-                            account.header === 'Other Expense' ? (
+                              account.header === 'Other Expense' ? (
                               <tr>
                                 <td>{account.accName}</td>
                                 <td>{Math.abs(account.netAmount)}</td>
@@ -743,9 +633,9 @@ export default function ProfitandLossStatement() {
                             )
                           )}
 
-<tr>
+                          <tr>
                             <td>
-                              
+
                             </td>
                             <td></td>
                             <td>{otherExpenseTotal}</td>

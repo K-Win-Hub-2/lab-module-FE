@@ -14,28 +14,29 @@ import { FaArrowLeft, FaMinus } from "react-icons/fa";
 import { useLocation } from "react-router";
 import SideBar from "../../SideBar";
 import { Link } from "react-router-dom";
+import apiInstance from "../../../../utils/api";
 // import Bank from './Bank';
 
 export default function BankInfoDialog(props) {
-  const [main,setMain]=useState(true);
+  const [main, setMain] = useState(true);
   const [showSell, setShowSell] = useState(false);
   const [showEnd, setShowEnd] = useState(false);
-   const [bankList, setBankList] = useState([]);
-      const [cashList, setCashList] = useState([]);
-      const [showCash,setShowCash]=useState(false);
-      const [showBank, setShowBank] = useState(false);
+  const [bankList, setBankList] = useState([]);
+  const [cashList, setCashList] = useState([]);
+  const [showCash, setShowCash] = useState(false);
+  const [showBank, setShowBank] = useState(false);
 
 
   const FixedId = useLocation().pathname.split("/")[2];
-   const handleBankRadioChange = () => {
-     setShowBank(true);
-     setShowCash(false);
-   };
+  const handleBankRadioChange = () => {
+    setShowBank(true);
+    setShowCash(false);
+  };
 
-   const handleCashRadioChange = () => {
-     setShowBank(false);
-     setShowCash(true);
-   };
+  const handleCashRadioChange = () => {
+    setShowBank(false);
+    setShowCash(true);
+  };
 
   //setting up for data
   const [initialAmount, setInitialAmount] = useState("");
@@ -50,7 +51,7 @@ export default function BankInfoDialog(props) {
   const [endDate, setEndDate] = useState("");
   const [flag, setFlag] = useState("");
   const [name, setName] = useState("");
-  const [relatedBankAcc,setRelatedBankAcc]=useState('');
+  const [relatedBankAcc, setRelatedBankAcc] = useState('');
   const [relatedCashAcc, setRelatedCashAcc] = useState("");
   const [profitLoss, setProfitLoss] = useState("");
 
@@ -62,7 +63,7 @@ export default function BankInfoDialog(props) {
     };
 
     if (flag == "Sell" && relatedCashAcc) {
-      
+
       jsonData.flag = flag;
       jsonData.sellDate = sellDate;
       jsonData.currentValue = currentPrice;
@@ -70,16 +71,16 @@ export default function BankInfoDialog(props) {
       jsonData.profitAndLoss = profitLoss;
       jsonData.relatedAccounting = relatedCashAcc;
     }
-  
 
-     if (flag == "Sell" && relatedBankAcc) {
-       jsonData.flag = flag;
-       jsonData.sellDate = sellDate;
-       jsonData.currentValue = currentPrice;
-       jsonData.sellPrice = sellPrice;
-       jsonData.profitAndLoss = profitLoss;
-       jsonData.relatedAccounting = relatedBankAcc;
-     }
+
+    if (flag == "Sell" && relatedBankAcc) {
+      jsonData.flag = flag;
+      jsonData.sellDate = sellDate;
+      jsonData.currentValue = currentPrice;
+      jsonData.sellPrice = sellPrice;
+      jsonData.profitAndLoss = profitLoss;
+      jsonData.relatedAccounting = relatedBankAcc;
+    }
 
 
     if (flag == "End" && relatedCashAcc) {
@@ -88,30 +89,30 @@ export default function BankInfoDialog(props) {
       jsonData.usedYears = usedYear;
       jsonData.remaniningYears = remainYear;
       jsonData.remark = remark;
-       jsonData.profitAndLoss =0;
+      jsonData.profitAndLoss = 0;
       jsonData.relatedAccounting = relatedCashAcc;
     }
 
     if (flag == "End" && relatedBankAcc) {
-         jsonData.flag = flag;
-         jsonData.endDate = endDate;
-         jsonData.usedYears = usedYear;
-         jsonData.remaniningYears = remainYear;
-         jsonData.remark = remark;
-          jsonData.profitAndLoss = 0;
-         jsonData.relatedAccounting = relatedBankAcc;
-       }
+      jsonData.flag = flag;
+      jsonData.endDate = endDate;
+      jsonData.usedYears = usedYear;
+      jsonData.remaniningYears = remainYear;
+      jsonData.remark = remark;
+      jsonData.profitAndLoss = 0;
+      jsonData.relatedAccounting = relatedBankAcc;
+    }
     // console.log(jsonData);
 
-    alert(JSON.stringify(jsonData));
+    // alert(JSON.stringify(jsonData));
     // console.log(jsonData);
     const config = {
       headers: { "Content-Type": "application/json" },
     };
     // alert(JSON.stringify(jsonData));
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/sellend",
+        "sellend",
         jsonData,
         config
       )
@@ -126,7 +127,7 @@ export default function BankInfoDialog(props) {
 
           cancelButtonText: "Close",
         });
-       
+
       })
       .catch(function (err) {
         Swal.fire({
@@ -147,7 +148,7 @@ export default function BankInfoDialog(props) {
   };
 
   const handleEndRadioChange = () => {
-     setMain(false);
+    setMain(false);
     setShowSell(false);
     setShowEnd(true);
   };
@@ -164,9 +165,9 @@ export default function BankInfoDialog(props) {
     const getFixedLists = async () => {
       try {
         console.log(FixedId);
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset/" +
-            FixedId
+        const res = await apiInstance.get(
+          "fixed-asset/" +
+          FixedId
         );
 
         setUsedYear(res.data.data[0].usedYear);
@@ -176,29 +177,29 @@ export default function BankInfoDialog(props) {
         setUseLife(res.data.data[0].usedLife);
         let remainYear = useLife - usedYear;
         setRemainYear(remainYear);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const getAccountingLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
-       const bank = res.data.list.filter(
-         (el) =>
-           el.relatedHeader.name == "Cash At Bank" &&
-         
-           el.relatedType.name === "Assets"
-       );
-       const cash = res.data.list.filter(
-         (el) =>
-           el.relatedHeader.name == "Cash In Hand" &&
-           el.relatedType.name === "Asset"
-       
-       );
-       setBankList(bank);
-       setCashList(cash);
-      } catch (err) {}
+        const bank = res.data.list.filter(
+          (el) =>
+            el.relatedHeader.name == "Cash At Bank" &&
+
+            el.relatedType.name === "Assets"
+        );
+        const cash = res.data.list.filter(
+          (el) =>
+            el.relatedHeader.name == "Cash In Hand" &&
+            el.relatedType.name === "Asset"
+
+        );
+        setBankList(bank);
+        setCashList(cash);
+      } catch (err) { }
     };
 
     getAccountingLists();
@@ -209,7 +210,7 @@ export default function BankInfoDialog(props) {
     <div classNameName="App">
       <div className="wrapper">
         {/* <!-- Navbar --> */}
-   
+
 
         <SideBar />
 

@@ -7,6 +7,7 @@ import Sidebar from './SideBar'
 import axios from 'axios'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function LabServiceRegister() {
   const [name, setName] = useState('')
@@ -38,9 +39,9 @@ function LabServiceRegister() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor',
+        'doctor',
         data,
         config
       )

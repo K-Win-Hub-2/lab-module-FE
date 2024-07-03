@@ -7,6 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import axios from "axios";
+import apiInstance from "../utils/api";
 
 const ResultDialog = (props) => {
   const [amount, setAmount] = useState("");
@@ -18,12 +19,12 @@ const ResultDialog = (props) => {
   useEffect(() => {
     const getVoucher = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/" +
-            props.voucher
+        const res = await apiInstance.get(
+          "voucher/" +
+          props.voucher
         );
         setVouchers(res.data.data.testResultList);
-      } catch (err) {}
+      } catch (err) { }
     };
     getVoucher();
   }, []);
@@ -37,9 +38,9 @@ const ResultDialog = (props) => {
       repaymentDate: date,
       repaymentAmount: amount,
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/repayment",
+        "repayment",
         data
       )
       .then(function (response) {

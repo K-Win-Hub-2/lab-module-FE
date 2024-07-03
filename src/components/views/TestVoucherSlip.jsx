@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import { useLocation } from 'react-router-dom'
 import ReactToPrint from 'react-to-print'
 import { bounce } from 'react-animation'
+import apiInstance from '../../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -89,9 +90,9 @@ const TestVoucherSlip = () => {
   useEffect(() => {
     const getVouchers = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            vouid
+        const res = await apiInstance.get(
+          'voucher/' +
+          vouid
         )
         console.log(res.data.data)
         setGender(res.data.data.relatedPatient.gender)
@@ -187,7 +188,7 @@ const TestVoucherSlip = () => {
                           Name :{' '}
                           <span className='float-right'>
                             {/* {name ? name : ''} / {age ? age : ''}yrs */}
-                            {name ? name + "(" + gender + ")" + "/" + 32  : ''}
+                            {name ? name + "(" + gender + ")" + "/" + 32 : ''}
                           </span>
                         </H6>
                         <H6>
@@ -202,7 +203,7 @@ const TestVoucherSlip = () => {
                             {date ? date.split('T')[0] : ''}
                           </span>
                         </H6>
-                        
+
                         <H6>
                           Doctor :{' '}
                           <span className='float-right'>
@@ -223,7 +224,7 @@ const TestVoucherSlip = () => {
                             {code ? code : ''}
                           </span>
                         </H6>
-                        
+
                       </div>
                       {/* <div className='col-6'>
                       <H6>
@@ -247,7 +248,7 @@ const TestVoucherSlip = () => {
                        
                       </div> */}
                     </div>
-                      {/* <div className="row">
+                    {/* <div className="row">
                       <div className='col-8'>
                       <H6>
                           Inv. No :{' '}
@@ -455,14 +456,14 @@ const TestVoucherSlip = () => {
                 </Div>
                 {/* <ReactToPrint
                   trigger={() => ( */}
-                    <button
-                      className='btn btn-m btn-primary'
-                      style={{ marginLeft: '240px' }}
-                      onClick={print}
-                    >
-                      Print
-                    </button>
-                  {/* )}
+                <button
+                  className='btn btn-m btn-primary'
+                  style={{ marginLeft: '240px' }}
+                  onClick={print}
+                >
+                  Print
+                </button>
+                {/* )}
                   content={() => componentRef}
                 /> */}
               </div>

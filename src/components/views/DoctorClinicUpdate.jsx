@@ -7,6 +7,7 @@ import Sidebar from './SideBar'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import Swal from 'sweetalert2'
+import apiInstance from '../../utils/api'
 
 function LabServiceRegister() {
   const [name, setName] = useState('')
@@ -27,8 +28,8 @@ function LabServiceRegister() {
   useEffect(() => {
     const getDoctor = async () => {
       console.log(DoctorID)
-      const res = await axios.get(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/'+DoctorID
+      const res = await apiInstance.get(
+        'doctor/' + DoctorID
 
       )
       console.log(res.data.data)
@@ -55,10 +56,10 @@ function LabServiceRegister() {
       phone: phone,
       email: email
     }
-    if(selectionName){
-      data.selection=selectionName
-    }else{
-      data.selection=selection
+    if (selectionName) {
+      data.selection = selectionName
+    } else {
+      data.selection = selection
     }
     // alert(JSON.stringify(data));
     const config = {
@@ -139,8 +140,10 @@ function LabServiceRegister() {
                         <label>Select</label>&nbsp;
                         <select
                           className='form-control'
-                          onChange={e => {setSelection(e.target.value);
-                          setSelectionName(e.target.value)}}
+                          onChange={e => {
+                            setSelection(e.target.value);
+                            setSelectionName(e.target.value)
+                          }}
                         >
                           <option value={selectionName}>{selectionName}</option>
                           <option value='ReferDoctor'>Refer Doctor</option>

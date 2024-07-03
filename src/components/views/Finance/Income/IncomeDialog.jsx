@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Button from '@mui/material/Button'
 import Swal from 'sweetalert2'
+import apiInstance from '../../../../utils/api'
 
 export default function BankInfoDialog(props) {
   const [bankList, setBankList] = useState([])
@@ -49,10 +50,10 @@ export default function BankInfoDialog(props) {
       headers: { 'Content-Type': 'application/json' }
     }
     // alert(JSON.stringify(jsonData));
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/income",
-       // "http://localhost:9000/api/income",
+        "income",
+        // "http://localhost:9000/api/income",
         jsonData,
         config
       )
@@ -118,8 +119,8 @@ export default function BankInfoDialog(props) {
   useEffect(() => {
     const getCashLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
           //"http://localhost:9000/api/accounting-lists"
         );
 
@@ -130,14 +131,14 @@ export default function BankInfoDialog(props) {
             el.relatedType.name === 'Assets'
         )
         setCashList(cash)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-        // "http://localhost:9000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
+          // "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
@@ -147,13 +148,13 @@ export default function BankInfoDialog(props) {
             el.relatedType.name === 'Assets'
         )
         setBankList(bank)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getAccountingLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
           //"http://localhost:9000/api/accounting-lists"
         );
         const incomeAccounts = res.data.list.filter(
@@ -166,7 +167,7 @@ export default function BankInfoDialog(props) {
         // setInitialAmount(medicineSale[0].amount);
         setIncomeAccountList(incomeAccounts)
         // setAccountingList(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
     // const getCurrencyLists = async () => {
     //   try {

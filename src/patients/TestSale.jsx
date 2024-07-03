@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { MdDiscount } from "react-icons/md";
 import Swal from "sweetalert2";
 import { useNavigate, useLocation, Link } from "react-router-dom";
+import apiInstance from "../utils/api";
 
 const Top = styled.div`
   display: flex;
@@ -91,14 +92,14 @@ const TestSale = () => {
   useEffect(() => {
     const getCashLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-        // "http://localhost:9000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
+          // "http://localhost:9000/api/accounting-lists"
         );
 
         const cash = res.data.list.filter(
           (el) =>
-          el.relatedSubHeader.name == "Cash" &&
+            el.relatedSubHeader.name == "Cash" &&
             el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
@@ -108,14 +109,14 @@ const TestSale = () => {
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-         // "http://localhost:9000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
+          // "http://localhost:9000/api/accounting-lists"
         );
 
         const bank = res.data.list.filter(
           (el) =>
-          el.relatedSubHeader.name == "Bank" &&
+            el.relatedSubHeader.name == "Bank" &&
             el.relatedHeader.name == "Current Asset" &&
             el.relatedType.name === "Assets"
         );
@@ -125,8 +126,8 @@ const TestSale = () => {
 
     const getAccountingLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
         const acc = res.data.list.filter(
           (e) => e.relatedType.name == "Revenues"
@@ -138,8 +139,8 @@ const TestSale = () => {
 
     const getVoucherCode = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/code/" +
+        const res = await apiInstance.get(
+          "vouchers/code/" +
           patient_id
         );
 
@@ -150,8 +151,8 @@ const TestSale = () => {
 
     const getPatient = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/patient/" +
+        const res = await apiInstance.get(
+          "patient/" +
           patient_id
         );
         setPname(res.data.data.name);
@@ -160,8 +161,8 @@ const TestSale = () => {
     };
     const getServs = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services"
+        const res = await apiInstance.get(
+          "services"
         );
         // console.log("good");
         setServs(res.data.data);
@@ -169,8 +170,8 @@ const TestSale = () => {
     };
     const getDoctors = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctors"
+        const res = await apiInstance.get(
+          "doctors"
         );
         setDoctors(res.data.data);
       } catch (err) { }
@@ -185,9 +186,9 @@ const TestSale = () => {
   }, []);
 
   const addService = async () => {
-    const res = await axios.get(
-      "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-       //"http://localhost:9000/api/service/" +
+    const res = await apiInstance.get(
+      "service/" +
+      //"http://localhost:9000/api/service/" +
       serId
     );
     console.log(res.data.data, "res.data.data");
@@ -238,7 +239,7 @@ const TestSale = () => {
       discount: discount,
       netDiscount: net,
       pay: pay,
-      change: change,
+      change: pay < total ? change : 0,
       amount: 0,
       seq: 2,
     };
@@ -250,9 +251,9 @@ const TestSale = () => {
       data.creditAmount = change;
     }
 
-    const res = axios
-      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher", data)
-   //  .post("http://localhost:9000/api/voucher", data)
+    const res = apiInstance
+      .post("voucher", data)
+      //  .post("http://localhost:9000/api/voucher", data)
       .then(function (response) {
         console.log(response.data.data._id, 'here')
         setVoucherObjectID(response.data.data._id)
@@ -453,30 +454,30 @@ const TestSale = () => {
 
                   <div className="row">
                     <div className="col-md-6 mt-4">
-                    
-                                    <select
-                              name="branch"
-                              id="branch"
-                              className="form-control"
-                            //  onchange="convert(this.value)"
-                              onChange={(event) =>
-                               setBranch(event.target.value)
 
-                              }>
-                              <option value="none">Choose Branch</option>
-                              
-                                <option value="AL">
-                                  Alone
-                                </option>
-                                <option value="NOK">
-                                  North Okkalapa
-                                </option>
-                                
-                              
-                            </select>
+                      <select
+                        name="branch"
+                        id="branch"
+                        className="form-control"
+                        //  onchange="convert(this.value)"
+                        onChange={(event) =>
+                          setBranch(event.target.value)
+
+                        }>
+                        <option value="none">Choose Branch</option>
+
+                        <option value="AL">
+                          Alone
+                        </option>
+                        <option value="NOK">
+                          North Okkalapa
+                        </option>
+
+
+                      </select>
                     </div>
 
-                    
+
                   </div>
                   {/* <div className="row">
                     <div className="col-md-6"></div>
@@ -565,11 +566,18 @@ const TestSale = () => {
                         />
                       </Td>
                     </Tr>
+
+                    <Tr>
+                      <Td colSpan="5" className="text-right">
+                        Credit
+                      </Td>
+                      <Td>{pay < total ? change : 0}</Td>
+                    </Tr>
                     <Tr>
                       <Td colSpan="5" className="text-right">
                         Change
                       </Td>
-                      <Td>{change}</Td>
+                      <Td>{pay > total ? pay - total : 0}</Td>
                     </Tr>
                   </tfoot>
                 </Table>

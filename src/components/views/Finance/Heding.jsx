@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import SideBar from '../SideBar'
-import { FaRegEdit,FaRegTrashAlt } from 'react-icons/fa'
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 import Swal from 'sweetalert2'
+import apiInstance from '../../../utils/api'
 
-function Heading () {
+function Heading() {
   const [heading, setHeading] = useState([])
   const [accType, setAccType] = useState('')
   const [accTypeList, setAccTypeList] = useState([])
@@ -20,10 +21,10 @@ function Heading () {
   const [id, setId] = useState("");
   const [showUpdate, setShowUpdate] = useState(false)
   const handleDelete = event => {
-    axios
+    apiInstance
       .delete(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-header/' +
-          event
+        'account-header/' +
+        event
       )
       .then(response => {
         Swal.fire({
@@ -49,19 +50,19 @@ function Heading () {
     console.log(event, 'event')
     const getHeadingUpdate = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-header/' +
-            event
+        const res = await apiInstance.get(
+          'account-header/' +
+          event
         )
         console.log(res.data)
-       
-         setUpName(res.data.data[0].name)
-         setUpDesc(res.data.data[0].description)
-         setUpAccType(res.data.data[0].relatedAccountType._id)
-      } catch (err) {}
+
+        setUpName(res.data.data[0].name)
+        setUpDesc(res.data.data[0].description)
+        setUpAccType(res.data.data[0].relatedAccountType._id)
+      } catch (err) { }
     }
     getHeadingUpdate()
-   setShowUpdate(true)
+    setShowUpdate(true)
     setId(event)
   }
 
@@ -76,9 +77,9 @@ function Heading () {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-header',
+        'account-header',
         data,
         config
       )
@@ -112,7 +113,7 @@ function Heading () {
           cancelButtonText: 'Close'
         })
       })
-      document.getElementById('upacc_type').value = ''
+    document.getElementById('upacc_type').value = ''
     document.getElementById('updesc').value = ''
     document.getElementById('upname').value = ''
     setShowUpdate(false)
@@ -129,9 +130,9 @@ function Heading () {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-header',
+        'account-header',
         data,
         config
       )
@@ -145,7 +146,7 @@ function Heading () {
           cancelButtonText: 'Close'
         })
 
-      window.location.reload()
+        window.location.reload()
 
       })
       .catch(function (err) {
@@ -159,20 +160,20 @@ function Heading () {
   useEffect(() => {
     const getHeading = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers?limit=50'
+        const res = await apiInstance.get(
+          'account-headers?limit=50'
         )
 
         setHeading(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
     const getAccountingType = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        const res = await apiInstance.get(
+          'account-types'
         )
         setAccTypeList(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getHeading()
@@ -185,7 +186,7 @@ function Heading () {
 
       <div className='wrapper'>
         {/* <!-- Navbar --> */}
-       
+
 
         {/* <!-- Main Sidebar Container --> */}
         <SideBar />
@@ -236,11 +237,11 @@ function Heading () {
                             <tr>
                               <td>{++i}</td>
                               <td>{head.relatedAccountType ? head.relatedAccountType.name
- : ''}</td>
+                                : ''}</td>
                               <td>{head.name}</td>
                               <td>{head.description}</td>
                               <td className='text-center'>
-                              <button
+                                <button
                                   className='btn btn-sm btn-warning'
                                   onClick={e => handleUpdate(head._id)}
                                 >
@@ -315,7 +316,7 @@ function Heading () {
                       Update
                     </button>
                   </div>
-                </div>): (<div className='col-md-3'>
+                </div>) : (<div className='col-md-3'>
                   <div className='card px-3 py-3'>
                     <h5 className='card-header mb-4 fw-5 text-secondary'>
                       Create Heading

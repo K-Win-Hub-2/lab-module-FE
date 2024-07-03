@@ -11,15 +11,15 @@ import {
   FaRegEdit,
   FaRegTrashAlt
 } from "react-icons/fa";
+import apiInstance from "../../../utils/api";
 
-function Dashboard()
-{
-  
+function Dashboard() {
+
   const [isExpanded, setExpanded] = useState(false);
   const [isAccData, setAccData] = useState(false);
 
-   const [updateDialog, setUpdateDialog] = useState(false);
-   const [id, setId] = useState("");
+  const [updateDialog, setUpdateDialog] = useState(false);
+  const [id, setId] = useState("");
   //  const showUpdate = (val) => {
   //    setId(val);
   //    setUpdateDialog(true);
@@ -46,18 +46,18 @@ function Dashboard()
     console.log(event, 'event')
     const getAccTypeUpdate = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type/' +
-            event
+        const res = await apiInstance.get(
+          'account-type/' +
+          event
         )
         console.log(res.data)
         // setUpCode(res.data.data[0].code)
-         setUpName(res.data.data[0].name)
-         setUpDesc(res.data.data[0].description)
-      } catch (err) {}
+        setUpName(res.data.data[0].name)
+        setUpDesc(res.data.data[0].description)
+      } catch (err) { }
     }
     getAccTypeUpdate()
-   setShowUpdate(true)
+    setShowUpdate(true)
     setId(event)
   }
 
@@ -71,9 +71,9 @@ function Dashboard()
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type',
+        'account-type',
         data,
         config
       )
@@ -123,9 +123,9 @@ function Dashboard()
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type",
+        "account-type",
         data,
         config
       )
@@ -155,43 +155,43 @@ function Dashboard()
     //      props.setOpen(false);
   };
 
-const handleDelete = (event) => {
-  axios
-    .delete(
-      "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type/" +
+  const handleDelete = (event) => {
+    apiInstance
+      .delete(
+        "account-type/" +
         event
-    )
-    .then((response) => {
-      Swal.fire({
-        title: "Success",
-        text: "Successfully Deleted!",
-        icon: "success",
-        confirmButtonText: "OK",
+      )
+      .then((response) => {
+        Swal.fire({
+          title: "Success",
+          text: "Successfully Deleted!",
+          icon: "success",
+          confirmButtonText: "OK",
+        });
+        const result = accountType.filter((item) => item._id !== event);
+        setAccountType(result);
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          text: error.response.data.message,
+          icon: "error",
+          confirmButtonText: "CANCEL",
+        });
       });
-      const result = accountType.filter((item) => item._id !== event);
-      setAccountType(result);
-    })
-    .catch((error) => {
-      Swal.fire({
-        title: "Error",
-        text: error.response.data.message,
-        icon: "error",
-        confirmButtonText: "CANCEL",
-      });
-    });
-};
+  };
 
 
 
   useEffect(() => {
     const getAccountType = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types?limit=30"
+        const res = await apiInstance.get(
+          "account-types?limit=30"
         );
 
         setAccountType(res.data.list);
-      } catch (err) {}
+      } catch (err) { }
     };
     getAccountType();
   }, []);
@@ -274,8 +274,8 @@ const handleDelete = (event) => {
                                 &nbsp;
                                 <button
                                   className="btn btn-sm btn-danger"
-                                  onClick={(e)=>handleDelete(accType._id)}>
-                                 <FaRegTrashAlt />
+                                  onClick={(e) => handleDelete(accType._id)}>
+                                  <FaRegTrashAlt />
                                 </button>
                               </td>
                             </tr>
@@ -286,10 +286,10 @@ const handleDelete = (event) => {
                   </div>
                 </div>
 
-                {showUpdate ?( <div className="col-md-3" style={{ Position: 'sticky' }}>
+                {showUpdate ? (<div className="col-md-3" style={{ Position: 'sticky' }}>
                   <div className="card px-3 py-3">
                     <h5 className="card-header mb-4 fw-5 text-secondary">
-                     Update Account Types
+                      Update Account Types
                     </h5>
                     <div class="form-group">
                       <label for="name" className="text-secondary">
@@ -324,44 +324,44 @@ const handleDelete = (event) => {
                       Update
                     </button>
                   </div>
-                </div>) :(
-                <div className="col-md-3">
-                  <div className="card px-3 py-3">
-                    <h5 className="card-header mb-4 fw-5 text-secondary">
-                      Create Acc Types
-                    </h5>
-                    <div class="form-group">
-                      <label for="name" className="text-secondary">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        class="form-control border-info"
-                        name="balance"
-                        id="name"
-                        //   ref={(el) => (this.name = el)}
-                        onChange={(e) => setName(e.target.value)}
-                      />
+                </div>) : (
+                  <div className="col-md-3">
+                    <div className="card px-3 py-3">
+                      <h5 className="card-header mb-4 fw-5 text-secondary">
+                        Create Acc Types
+                      </h5>
+                      <div class="form-group">
+                        <label for="name" className="text-secondary">
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          class="form-control border-info"
+                          name="balance"
+                          id="name"
+                          //   ref={(el) => (this.name = el)}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="name" className="text-secondary">
+                          Description
+                        </label>
+                        <textarea
+                          className="form-control"
+                          id="description"
+                          //   ref={(el) => (this.description = el)}
+                          onChange={(e) =>
+                            setDescription(e.target.value)
+                          }></textarea>
+                      </div>
+                      <button
+                        className="btn btn-primary form-control text-center fw-5"
+                        onClick={AccountTypeCreate}>
+                        Save
+                      </button>
                     </div>
-                    <div class="form-group">
-                      <label for="name" className="text-secondary">
-                        Description
-                      </label>
-                      <textarea
-                        className="form-control"
-                        id="description"
-                        //   ref={(el) => (this.description = el)}
-                        onChange={(e) =>
-                          setDescription(e.target.value)
-                        }></textarea>
-                    </div>
-                    <button
-                      className="btn btn-primary form-control text-center fw-5"
-                      onClick={AccountTypeCreate}>
-                      Save
-                    </button>
                   </div>
-                </div>
                 )}
               </div>
               {/* <AccTypeUpdate

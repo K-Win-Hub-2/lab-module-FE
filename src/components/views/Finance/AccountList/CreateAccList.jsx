@@ -13,6 +13,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useSelector } from 'react-redux'
+import apiInstance from '../../../../utils/api'
 
 export default function BankInfoDialog(props) {
   const [code, setCode] = useState('')
@@ -57,9 +58,9 @@ export default function BankInfoDialog(props) {
       headers: { 'Content-Type': 'application/json' }
     }
 
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
+        'accounting-list',
         // 'http://localhost:9000/api/accounting-list',
         data,
         config
@@ -94,10 +95,8 @@ export default function BankInfoDialog(props) {
   const handleHeading = async event => {
     setHeading(event)
     console.log(heading, headingList)
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
-    //const url = `http://localhost:9000/api/account-subheaders/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+
+    const res = await apiInstance.get(`account-subheaders/related/${event}`)
     console.log(res.data.data, 'res.data.data')
     setSubHeadingList(res.data.data)
     setSubFlag(true)
@@ -111,9 +110,9 @@ export default function BankInfoDialog(props) {
   const handleAccountHeader = async event => {
     setAccountingTypes(event)
     console.log(accountingTypes)
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+
+
+    const res = await apiInstance.get(`account-headers/related/${event}`)
     console.log(res.data.data, 'res.data.data')
     setHeadingList(res.data.data)
     setFlag(true)
@@ -123,11 +122,11 @@ export default function BankInfoDialog(props) {
   useEffect(() => {
     const getAccountingType = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        const res = await apiInstance.get(
+          'account-types'
         )
         setAccType(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     // const getAccountingHeadingType = async () => {

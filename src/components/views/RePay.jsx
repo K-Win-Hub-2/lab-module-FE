@@ -15,6 +15,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 import { Link, useLocation, Navigate, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import SideBar from './SideBar'
+import apiInstance from '../../utils/api'
 
 export default function BankInfoDialog(props) {
   const [remark, setRemark] = useState('')
@@ -37,9 +38,9 @@ export default function BankInfoDialog(props) {
       headers: { 'Content-Type': 'application/json' }
     }
 
-    axios
+    apiInstance
       .put(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/repayment',
+        'vouchers/repayment',
         data,
         config
       )
@@ -68,14 +69,14 @@ export default function BankInfoDialog(props) {
     const getAccountingType = async () => {
       try {
         console.log(VoucherID, 'id')
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
-            VoucherID
+        const res = await apiInstance.get(
+          'voucher/' +
+          VoucherID
         )
 
         setCrdAmount(res.data.data.creditAmount)
         console.log(res.data.data.creditAmount, 'credit')
-      } catch (err) {}
+      } catch (err) { }
     }
     getAccountingType()
   }, [])

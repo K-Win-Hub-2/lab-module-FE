@@ -20,6 +20,7 @@ import axios from 'axios'
 import ExportVoucher from '../ExportVoucher'
 import Swal from 'sweetalert2'
 import { Link } from 'react-router-dom'
+import apiInstance from '../../../utils/api'
 // import RePayDialog from '../../components/views/RePayDialog';
 
 
@@ -78,8 +79,8 @@ const TestVoucherList = () => {
   const handleRelated = val => {
     const getRelated = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/voucher/' +
+        const res = await apiInstance.get(
+          'voucher/' +
           val
         )
 
@@ -101,14 +102,19 @@ const TestVoucherList = () => {
     }
     setIsShow(!isShow)
   }
-
+  const totalAmout = filteredVouchers.reduce((acc, val) => (acc + (val.totalCharge)), 0)
+  const paid = filteredVouchers.reduce((acc, val) => (acc + (val.pay)), 0)
+  const credit = filteredVouchers.reduce((acc, val) => (acc + (val.creditAmount * -1)), 0)
   useEffect(() => {
+    setTotalVoucher(totalAmout)
+    setTotalCashDown(paid)
+    setTotalCredit(credit)
     const getVouchers = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today'
+        const res = await apiInstance.get(
+          'vouchers/today'
         )
-        console.log(res.data.data)
+
         setVouchers(res.data.data)
         setFilteredVouchers(res.data.data)
 
@@ -124,34 +130,28 @@ const TestVoucherList = () => {
     getVouchers()
   }, [])
 
-  useEffect(() => {
-    setTotalVoucher(0)
-    setTotalCashDown(0)
-    setTotalCredit(0)
-    filteredVouchers.map((vou, index) => {
-      console.log(vou.totalCharge)
-      setTotalVoucher(totalVoucher + vou.totalCharge);
-      setTotalCredit(totalCredit + (vou.creditAmount * (-1)))
-      setTotalCashDown(totalVoucher - totalCredit)
-    })
-  }, filteredVouchers);
+  // console.log(vou, 'vou')
+
 
   const search = async () => {
-    const result = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers'
+    const result = await apiInstance.get(
+      `vouchers`
     )
-    console.log(result.data.data)
+
     if (name == '') {
       setVouchers(
         result.data.data.filter(
-          el => el.date >= from && el.date.split('T')[0] <= to
+          el => el.date?.split('T')[0] >= from && el.date?.split('T')[0] <= to
         )
       )
       setFilteredVouchers(
         result.data.data.filter(
-          el => el.date >= from && el.date.split('T')[0] <= to
+          el => el.date?.split('T')[0] >= from && el.date?.split('T')[0] <= to
         )
       )
+      console.log(result.data.data.filter(
+        el => el.date?.split('T')[0] >= from && el.date?.split('T')[0] <= to
+      ))
 
     }
     else {
@@ -176,7 +176,7 @@ const TestVoucherList = () => {
     vouchers.map((el, i) => {
       const obj = {
         No: ++i,
-        'Voucher Date': el.date.split('T')[0],
+        'Voucher Date': el.date?.split('T')[0],
         'Voucher Code': el.code,
         'Patient Name': el.relatedPatient.name,
         'Test Qty': el.testSelection.length,
@@ -317,7 +317,11 @@ const TestVoucherList = () => {
                       <Th>Refer Doctor</Th>
                       <Th>Patient Name</Th>
                       <Th>Test Qty</Th>
-                      <Th>Amount</Th>
+
+                      <Th>Total Amount</Th>
+                      <Th>Paid Amount</Th>
+                      <Th>Credit Amount</Th>
+                      <Th>Changed Amount</Th>
                       <Th>Status</Th>
                       <Th className=''>Action</Th>
                     </Tr>
@@ -335,6 +339,10 @@ const TestVoucherList = () => {
                         </Td>
                         <Td>{vou.testSelection.length}</Td>
                         <Td>{vou.totalCharge}</Td>
+
+                        <Td>{vou.pay}</Td>
+                        <Td>{-1 * vou.creditAmount}</Td>
+                        <Td>{vou.pay > vou.totalCharge ? vou.pay - vou.totalCharge : 0}</Td>
                         <Td>
                           {vou.creditAmount ? (
                             <div className='badge badge-warning px-3 py-2'>
@@ -471,25 +479,13 @@ const TestVoucherList = () => {
                       <div className='col-md-6'>
                         <div className='row'>
                           <div className='col-4'>
-                            <label htmlFor=''>Total Voucher:</label>
-                            {/* <input
-                              type='number'
-                              placeholder='Search...'
-                              disabled
-                              className='form-control'
-                              value={totalVoucher}
-                            /> */}
+                            <label htmlFor=''>Total Amount:</label>
+
                             <lable htmlFor='' style={{ fontSize: '17px', marginLeft: '3px' }}>{totalVoucher}</lable>
                           </div>
                           <div className='col-4'>
                             <label htmlFor=''>Total Cash Down:</label>
-                            {/* <label 
-                              type='number'
-                              placeholder='Search...'
-                              disabled
-                              className='form-control'
-                              value={totalCashDown}
-                            /> */}
+
                             <lable htmlFor='' style={{ fontSize: '17px', marginLeft: '3px' }}>{totalCashDown}</lable>
                           </div>
 

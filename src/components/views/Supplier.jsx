@@ -16,6 +16,7 @@ import {
   FaClipboardCheck,
   FaPowerOff
 } from 'react-icons/fa'
+import apiInstance from '../../utils/api'
 
 function Dashboard() {
   const [isExpanded, setExpanded] = useState(false)
@@ -38,8 +39,8 @@ function Dashboard() {
   const [supplierList, setSupplierList] = useState([])
 
   const [name, setName] = useState('');
-  const [phone,setPhone]=useState('');
-  const [address,setAddress]=useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
 
 
   const AccountTypeCreate = () => {
@@ -53,9 +54,9 @@ function Dashboard() {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-type',
+        'account-type',
         data,
         config
       )
@@ -72,10 +73,10 @@ function Dashboard() {
   }
 
   const handleDelete = event => {
-    axios
+    apiInstance
       .delete(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000api/account-type/' +
-          event
+        'account-type/' +
+        event
       )
       .then(response => {
         Swal.fire({
@@ -100,13 +101,13 @@ function Dashboard() {
     const getSupplier = async () => {
       try {
         console.log(VoucherID, "id");
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/suppliers"
+        const res = await apiInstance.get(
+          "suppliers"
         );
 
         setSupplierList(res.data.data);
         console.log(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     getSupplier();
   }, []);

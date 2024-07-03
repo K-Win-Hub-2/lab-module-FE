@@ -16,6 +16,7 @@ import axios from 'axios'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import { Link } from 'react-router-dom'
+import apiInstance from '../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -109,8 +110,8 @@ const Patient = () => {
   useEffect(() => {
     const getPatients = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/patients'
+        const res = await apiInstance.get(
+          'patients'
         )
 
         setPatients(res.data.data.filter(el => el.patientStatus == 'Old'))
@@ -118,7 +119,7 @@ const Patient = () => {
         setAllPatients(res.data.data.filter(el => el.patientStatus == 'Old'))
         setPatientsNew(res.data.data.filter(el => el.patientStatus == 'New'))
         setAllPatientsNew(res.data.data.filter(el => el.patientStatus == 'New'))
-      } catch (err) {}
+      } catch (err) { }
     }
     getPatients()
   }, [])
@@ -199,7 +200,7 @@ const Patient = () => {
                     </Btn>
                   </Right>
                 </Top>
-                <Table  className='table table-hover mt-4'>
+                <Table className='table table-hover mt-4'>
                   <Thead>
                     <Tr>
                       <Th>#</Th>

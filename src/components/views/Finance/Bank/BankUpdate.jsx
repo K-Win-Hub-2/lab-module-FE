@@ -17,6 +17,7 @@ import Swal from 'sweetalert2'
 import SideBar from '../../SideBar'
 
 import { useSelector } from 'react-redux'
+import apiInstance from '../../../../utils/api'
 const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -59,7 +60,7 @@ const QRBox = styled.div`
 `
 
 export default function BankTran(props) {
-  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+
 
   const BankID = useLocation().pathname.split('/')[2]
   const [bankName, setBankName] = useState('')
@@ -100,7 +101,7 @@ export default function BankTran(props) {
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
-    axios.put(url + 'bank', data, config).then(function (response) {
+    apiInstance.put('bank', data, config).then(function (response) {
       Swal.fire({
         title: 'Successful!',
         text: 'You Created Bank Data!',
@@ -116,16 +117,16 @@ export default function BankTran(props) {
   useEffect(() => {
     const getTypeLists = async () => {
       try {
-        const res = await axios.get(url + 'account-types')
+        const res = await apiInstance.get('account-types')
 
         const types = res.data.list.filter(el => el.name == 'Assets')
         setTypeList(types)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getHeaderLists = async () => {
       try {
-        const res = await axios.get(url + 'account-headers')
+        const res = await apiInstance.get('account-headers')
 
         const header = res.data.list.filter(el => el.name === 'Cash At Bank')
         setHeaderList(header)
@@ -133,12 +134,12 @@ export default function BankTran(props) {
           res.data.list.filter(el => el.name === 'Cash At Bank'),
           'header name'
         )
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(url + 'bank/' + BankID)
+        const res = await apiInstance.get('bank/' + BankID)
 
         setBankIDList(res.data.data)
         console.log(res.data.data, 'bank')
@@ -165,7 +166,7 @@ export default function BankTran(props) {
             ? res.data.data[0].relatedAccounting.subHeader
             : ''
         )
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getBankLists()

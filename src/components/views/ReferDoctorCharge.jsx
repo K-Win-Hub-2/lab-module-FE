@@ -3,8 +3,9 @@
 import SideBar from "./SideBar";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link,useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+import apiInstance from "../../utils/api";
 
 function CatRegister() {
   const [referDoctor, setReferDoctor] = useState([]);
@@ -12,13 +13,13 @@ function CatRegister() {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState([]);
 
-  const handleCollect = () => {};
+  const handleCollect = () => { };
 
   const handleSearch = (event) => {
-    axios
+    apiInstance
       .get(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/" +
-          DoctorID
+        "doctor/" +
+        DoctorID
       )
       .then(function (response) {
         setSearch(response.data.data);
@@ -40,29 +41,29 @@ function CatRegister() {
   useEffect(() => {
     const getPackage = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/doctor/" +
-            DoctorID
+        const res = await apiInstance.get(
+          "doctor/" +
+          DoctorID
         );
 
         console.log(res.data.data.value);
         setReferDoctor(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     const search = async () => {
       try {
-        const response = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/refer-commissions/doctor/64423be1b42471d6f4aa20a1?id=64423be1b42471d6f4aa20a1&date=Jan"
+        const response = await apiInstance.get(
+          "refer-commissions/doctor/64423be1b42471d6f4aa20a1?id=64423be1b42471d6f4aa20a1&date=Jan"
         );
         console.log("night");
         console.log(response.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
     search();
     getPackage();
   }, []);
-  
+
   return (
     <div classNameName="App">
       {/* <!-- end preloader --> */}

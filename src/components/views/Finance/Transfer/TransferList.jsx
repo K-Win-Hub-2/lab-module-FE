@@ -5,7 +5,8 @@ import TransferModal from '../Transfer/TransferModal'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import SideBar from '../../SideBar'
-const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+import apiInstance from '../../../../utils/api'
+// const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
 //const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/';
 export default function TransferList() {
   const [transferList, setTransferList] = useState([])
@@ -24,8 +25,8 @@ export default function TransferList() {
       start: startDate,
       end: endDate
     }
-    axios
-      .get(uri + 'logs/filter', { params: data })
+    apiInstance
+      .get('logs/filter', { params: data })
       .then(response => {
         // setTodayList([])
         setTransferList(response.data.data)
@@ -42,8 +43,8 @@ export default function TransferList() {
 
   useEffect(() => {
     const getBankList = async () => {
-      axios
-        .get(uri + 'accounting-lists')
+      apiInstance
+        .get('accounting-lists')
         .then(response => {
           console.log('response', response.data.list)
           const filteredArray = response.data.list.filter(
@@ -62,8 +63,8 @@ export default function TransferList() {
     }
 
     const getCashList = async () => {
-      axios
-        .get(uri + 'accounting-lists')
+      apiInstance
+        .get('accounting-lists')
         .then(response => {
           const filteredArray = response.data.list.filter(
             obj => obj.relatedHeader.name === 'Cash In Hand'
@@ -82,8 +83,8 @@ export default function TransferList() {
     }
 
     const getTransferList = async () => {
-      axios
-        .get(uri + 'transfers?limit=50')
+      apiInstance
+        .get('transfers?limit=50')
         .then(response => {
           console.log(response.data.data, 'transfer list')
           setTransferList(response.data.data)

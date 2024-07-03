@@ -8,6 +8,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 
 import { Link } from 'react-router-dom'
+import apiInstance from '../../utils/api'
 
 const Top = styled.div`
   display: flex;
@@ -54,27 +55,27 @@ const Badge = styled.span`
   border-radius: 4px;
 `
 const handleHighlight = (event) => {
-   console.log("tab clicked")
+  console.log("tab clicked")
 }
 
 const TestResultList = () => {
   const customStyles = {
     tabsPen: {
-      border: '1px solid red', 
-      
+      border: '1px solid red',
+
       // Change this value to the desired color
     },
     tabsPro: {
       border: '1px solid yellow',
-      
+
     },
     tabsFin: {
       border: '1px solid green',
-     
+
     }
   }
 
-  
+
 
   const [vouchers, setVouchers] = useState([])
   const [from, setFrom] = useState('')
@@ -84,8 +85,8 @@ const TestResultList = () => {
   useEffect(() => {
     const getVouchers = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers/today'
+        const res = await apiInstance.get(
+          'vouchers/today'
         )
         console.log(res.data.data)
         setVouchers(res.data.data)
@@ -114,8 +115,8 @@ const TestResultList = () => {
   }, [])
 
   const search = async () => {
-    const result = await axios.get(
-      'http://centralclinicbackend.kwintechnologykw11.com:3000/api/vouchers'
+    const result = await apiInstance.get(
+      'vouchers'
     )
     if (name == '') {
       setVouchers(

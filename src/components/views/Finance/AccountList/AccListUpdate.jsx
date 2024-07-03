@@ -19,10 +19,11 @@ import SideBar from '../../SideBar'
 import AccountList from './AccountList'
 import { Link } from 'react-router-dom'
 import { valueOf } from '../../../../assets/plugins/moment/src/lib/moment/to-type'
+import apiInstance from '../../../../utils/api'
 
 export default function BankInfoDialog(props) {
   const [code, setCode] = useState('')
-  
+
   const [headingList, setHeadingList] = useState([])
   const [accType, setAccType] = useState([])
   const [subHeadingList, setSubHeadingList] = useState([])
@@ -60,10 +61,10 @@ export default function BankInfoDialog(props) {
       headers: { 'Content-Type': 'application/json' }
     }
     // alert(JSON.stringify(data))
-    axios
+    apiInstance
       .put(
-        //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list',
-        'http://localhost:9000/api/accounting-list',
+
+        'accounting-list',
         data,
         config
       )
@@ -72,7 +73,8 @@ export default function BankInfoDialog(props) {
           title: 'Success',
           text: 'Successfully Updated!',
           icon: 'success',
-          confirmButtonText: 'OK'
+          showConfirmButton: false,
+          timer: 2000
         })
 
         // props.setAccountLists([...props.accountLists, response.data.data]);
@@ -91,33 +93,34 @@ export default function BankInfoDialog(props) {
           title: 'Error',
           text: error.response.data.message,
           icon: 'error',
-          confirmButtonText: 'CANCEL'
+          showConfirmButton: false,
+          timer: 2000
         })
       })
   }
 
   const handleHeading = async event => {
-   // setHeading(event)
-   setReHead(event)
+    // setHeading(event)
+    setReHead(event)
     // console.log(heading, headingList)
     //const url = `http://localhost:9000/api/account-subheaders/related/${event}`
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-subheaders/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+    // const url = `${apiInstance}account-subheaders/related/${event}`
+    // console.log(url)
+    const res = await apiInstance.get(`account-subheaders/related/${event}`)
     console.log(res.data.data, 'res.data.data')
     setSubHeadingList(res.data.data)
 
   }
 
-  
+
 
   const handleAccountHeader = async event => {
     //setAccountingTypes(event)
     setReType(event)
     // console.log(accountingTypes)
-    const url = `http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-headers/related/${event}`
-    console.log(url)
-    const res = await axios.get(url)
+    // const url = `${apiInstance}account-headers/related/${event}`
+    // console.log(url)
+    const res = await apiInstance.get(`account-headers/related/${event}`)
     // console.log(res.data.data, 'res.data.data')
     setHeadingList(res.data.data)
     setFlag(true)
@@ -126,20 +129,20 @@ export default function BankInfoDialog(props) {
   useEffect(() => {
     const getAccountingType = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/account-types'
+        const res = await apiInstance.get(
+          'account-types'
         )
         setAccType(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getAccount = async () => {
       try {
         console.log(Id, 'Id')
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-list/' +
-          //'http://localhost:9000/api/accounting-list/' +
-            Id
+        const res = await apiInstance.get(
+          'accounting-list/' +
+
+          Id
         )
         console.log(res.data.data)
         setUpCode(res.data.data[0].code)
@@ -154,8 +157,8 @@ export default function BankInfoDialog(props) {
         setReType(res.data.data[0].relatedType)
         setReSubHead(res.data.data[0].relatedSubHeader)
         console.log(reSubHead)
-        
-      } catch (err) {}
+
+      } catch (err) { }
     }
     getAccountingType()
     getAccount()
@@ -307,19 +310,19 @@ export default function BankInfoDialog(props) {
                   </div>
 
                   <div class='form-group'>
-                <label for='name'>Account Nature</label>
-                <select
-                  class='custom-select border-info'
-                  name='accNature'
-                  onChange={e => setUpAccNature(e.target.value)}
-                >
-                  
-                 
-                    <option value="Debit" selected={upAccNature === "Debit" ? true : false}>Debit</option>
-                    <option value="Credit" selected={upAccNature === "Credit" ? true : false}>Credit</option>
-                
-                </select>
-              </div>
+                    <label for='name'>Account Nature</label>
+                    <select
+                      class='custom-select border-info'
+                      name='accNature'
+                      onChange={e => setUpAccNature(e.target.value)}
+                    >
+
+
+                      <option value="Debit" selected={upAccNature === "Debit" ? true : false}>Debit</option>
+                      <option value="Credit" selected={upAccNature === "Credit" ? true : false}>Credit</option>
+
+                    </select>
+                  </div>
                   {/* <div class='form-group'>
                     <label for='name'>General Flag</label>
                     <div class='row'>
@@ -392,7 +395,7 @@ export default function BankInfoDialog(props) {
                 </div>
                 <div class='modal-footer'>
                   <Link to='/account_list' className='btn btn-secondary' type='button'> Close</Link>
-                  
+
                   <Button class='btn btn-primary' onClick={AccountUpdate}>
                     Update
                   </Button>

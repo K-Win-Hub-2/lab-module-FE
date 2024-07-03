@@ -22,9 +22,10 @@ import BankList from './Bank'
 import { Link } from 'react-router-dom'
 // import HeaderName from './HeaderName'
 import { useSelector } from 'react-redux'
+import apiInstance from '../../../../utils/api'
 
 function Bank() {
-  const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+
 
   const [id, setId] = useState('')
   const [name, setBankName] = useState('')
@@ -37,8 +38,8 @@ function Bank() {
   const [transferlist, setTransferLists] = useState([])
 
   const handleDelete = event => {
-    axios
-      .delete(url + 'bank/' + event)
+    apiInstance
+      .delete('bank/' + event)
       .then(response => {
         Swal.fire({
           title: 'Success',
@@ -83,11 +84,11 @@ function Bank() {
     const getTransactionList = async () => {
       try {
         console.log(val)
-        const res = await axios.get(url + 'transactions/related/' + val)
+        const res = await apiInstance.get('transactions/related/' + val)
 
         console.log(res)
         setTransferLists(res.data.data)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getTransactionList()
@@ -103,10 +104,10 @@ function Bank() {
   useEffect(() => {
     const getBankLists = async () => {
       try {
-        const res = await axios.get(url + 'banks?limit=50')
+        const res = await apiInstance.get('banks?limit=50')
         console.log(res.data.list)
         setBankLists(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     // const getTransactionList = async () => {
@@ -295,32 +296,32 @@ function Bank() {
 
                                 {transferlist
                                   ? transferlist.map((tranList, i) => (
-                                      <div class='row'>
-                                        <div class='col-md-2'>
-                                          <div style={{ fontSize: '15px' }}>
-                                            {++i}
-                                          </div>
-                                        </div>
-                                        <div class='col-md-3'>
-                                          <div style={{ fontSize: '15px' }}>
-                                            {tranList.toAcc}
-                                          </div>
-                                        </div>
-                                        <div class='col-md-2'>
-                                          {/* {tranList.type} */}
-                                        </div>
-                                        <div class='col-md-2'>
-                                          <div style={{ fontSize: '15px' }}>
-                                            {tranList.date.split('T')[0]}
-                                          </div>
-                                        </div>
-                                        <div class='col-md-2'>
-                                          <div style={{ fontSize: '15px' }}>
-                                            {tranList.amount}
-                                          </div>
+                                    <div class='row'>
+                                      <div class='col-md-2'>
+                                        <div style={{ fontSize: '15px' }}>
+                                          {++i}
                                         </div>
                                       </div>
-                                    ))
+                                      <div class='col-md-3'>
+                                        <div style={{ fontSize: '15px' }}>
+                                          {tranList.toAcc}
+                                        </div>
+                                      </div>
+                                      <div class='col-md-2'>
+                                        {/* {tranList.type} */}
+                                      </div>
+                                      <div class='col-md-2'>
+                                        <div style={{ fontSize: '15px' }}>
+                                          {tranList.date.split('T')[0]}
+                                        </div>
+                                      </div>
+                                      <div class='col-md-2'>
+                                        <div style={{ fontSize: '15px' }}>
+                                          {tranList.amount}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  ))
                                   : ''}
                               </div>
                             </td>

@@ -16,6 +16,7 @@ import { loginSuccess, addUser } from '../../redux/authRedux'
 import Doctors from '../../../src/doctors.svg'
 import Swal from 'sweetalert2'
 import { MouseEvent } from 'react'
+import apiInstance from '../../utils/api'
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showEmail, setShowEmail] = useState(false)
@@ -45,9 +46,9 @@ const Login = () => {
       password: password
     }
 
-    axios
+    apiInstance
       .post(
-        'http://centralclinicbackend.kwintechnologykw11.com:3000/api/auth/login',
+        'auth/login',
         data
       )
       .then(function (response) {
@@ -55,11 +56,14 @@ const Login = () => {
           title: 'Success',
           text: 'successfully Login!',
           icon: 'success',
-          confirmButtonText: 'OK'
+          showConfirmButton: false,
+          timer: 2000
         }).then(function () {
-          console.log(response.data.user.role)
+          console.log(response.data.user.role, 'login res rol')
+
           dispatch(loginSuccess())
           dispatch(addUser(response.data))
+
           if (response.data.user.role == 'Sales') {
             navigate('/lab-test')
           }
@@ -79,7 +83,8 @@ const Login = () => {
           title: 'Error',
           text: 'Something Wrong Email or Password!',
           icon: 'error',
-          confirmButtonText: 'CANCEL'
+          showConfirmButton: false,
+          timer: 2000
         })
       })
   }
@@ -91,7 +96,8 @@ const Login = () => {
       <div className='col-3 '>
         <div style={{ marginTop: '160px' }}>
           <div style={{ marginLeft: '40px', marginBottom: '20px' }}>
-            <img src={require('../../logo.png')} alt='' />
+            {/* <img src={require('../../logo.png')} alt='' /> */}
+            <h2>Win-Clinic</h2>
           </div>
 
           {/* <h4 style={{ marginLeft: '80px' }}>WELCOME</h4> */}
@@ -158,7 +164,7 @@ const Login = () => {
                 marginLeft: '37px',
                 marginTop: '20px'
               }}
-              
+
             >
               Login
             </Button>

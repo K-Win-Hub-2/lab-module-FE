@@ -10,28 +10,29 @@ import { FaCashRegister, FaFileMedical, FaFileExcel, FaRegEdit, FaRegTrashAlt } 
 
 import Swal from "sweetalert2";
 import LabServiceUpdate from "../views/LabServiceUpdate";
+import apiInstance from "../../utils/api";
 
 const LabServiceList = () => {
   const [open, setOpen] = useState(false);
   const [labServiceLists, setLabServiceLists] = useState([]);
-  const[filteredList, setFilteredList] = useState([]);
+  const [filteredList, setFilteredList] = useState([]);
   const [updateDialog, setUpdateDialog] = useState(false);
   const [isShow, setIsShow] = useState(false);
   const [multiTestLists, setMultiTestLists] = useState([]);
   const [id, setId] = useState('');
-  const[testName,setTestName] = useState('');
+  const [testName, setTestName] = useState('');
 
 
   const handleInputChange = (event) => {
-    setFilteredList(labServiceLists.filter(test=> test.name.includes(event.target.value)))
+    setFilteredList(labServiceLists.filter(test => test.name.includes(event.target.value)))
   }
 
   const handleDelete = (event) => {
     console.log(event, "event");
-    axios
+    apiInstance
       .delete(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-          event
+        "service/" +
+        event
       )
       .then((response) => {
         Swal.fire({
@@ -62,14 +63,14 @@ const LabServiceList = () => {
     const getMultiTestList = async () => {
       try {
         console.log(val);
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/service/" +
-            val
+        const res = await apiInstance.get(
+          "service/" +
+          val
         );
 
         console.log(res.data.data);
         setMultiTestLists(res.data.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getMultiTestList();
@@ -95,8 +96,8 @@ const LabServiceList = () => {
   };
   useEffect(() => {
     const getLabServiceLists = async () => {
-      const res = await axios.get(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/services?limit=30"
+      const res = await apiInstance.get(
+        "services?limit=30"
       );
 
       setLabServiceLists(res.data.data);
@@ -166,7 +167,7 @@ const LabServiceList = () => {
                   </div> */}
                 </div>
                 <div className="offset-md-2 col-md-4">
-                  <div className="input-group" style={{ marginTop: "35px",marginBottom: "10px" }}>
+                  <div className="input-group" style={{ marginTop: "35px", marginBottom: "10px" }}>
                     <input
                       type="search"
                       className="form-control rounded"
@@ -210,7 +211,7 @@ const LabServiceList = () => {
                               className="btn btn-success"
                               onClick={excelExport}>
                               <FaFileExcel
-/>&nbsp;Export
+                              />&nbsp;Export
                             </button>
                           </span>
                         </label>
@@ -329,17 +330,17 @@ const LabServiceList = () => {
                                         <a
                                           className="btn btn-sm btn-warning text-white"
                                           role="button">
-                                         <FaRegEdit/>
+                                          <FaRegEdit />
                                         </a>
                                       </Link>
                                       &nbsp;
                                       <button
                                         className="btn btn-sm btn-danger text-white"
-                               
+
                                         onClick={(e) =>
                                           handleDelete(labService._id)
                                         }>
-                                        <FaRegTrashAlt/>
+                                        <FaRegTrashAlt />
                                       </button>
                                     </td>
                                   </tr>
@@ -376,28 +377,28 @@ const LabServiceList = () => {
 
                                         {multiTestLists
                                           ? multiTestLists.map((multi, i) => (
-                                              <div class="row">
-                                                <div class="col-md-2">
-                                                  <div
-                                                    style={{
-                                                      fontSize: "15px",
-                                                    }}>
-                                                    {++i}
-                                                  </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                  <div
-                                                    style={{
-                                                      fontSize: "15px",
-                                                    }}>
-                                                    {multi.name}
-                                                  </div>
-                                                </div>
-                                                <div class="col-md-2">
-                                                  {multi.unit}
+                                            <div class="row">
+                                              <div class="col-md-2">
+                                                <div
+                                                  style={{
+                                                    fontSize: "15px",
+                                                  }}>
+                                                  {++i}
                                                 </div>
                                               </div>
-                                            ))
+                                              <div class="col-md-3">
+                                                <div
+                                                  style={{
+                                                    fontSize: "15px",
+                                                  }}>
+                                                  {multi.name}
+                                                </div>
+                                              </div>
+                                              <div class="col-md-2">
+                                                {multi.unit}
+                                              </div>
+                                            </div>
+                                          ))
                                           : ""}
                                       </div>
                                     </td>

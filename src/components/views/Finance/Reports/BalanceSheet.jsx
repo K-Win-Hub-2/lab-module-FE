@@ -4,8 +4,9 @@ import Sidebar from '../../SideBar'
 import Swal from 'sweetalert2'
 import axios from 'axios'
 import { set } from '../../../../assets/plugins/moment/src/lib/moment/get-set'
+import apiInstance from '../../../../utils/api'
 
-const url = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api'
+
 //const url = 'http://localhost:9000/api'
 
 export default function BalanceSheet() {
@@ -38,17 +39,17 @@ export default function BalanceSheet() {
   const [reservetotal, setReservetotal] = useState(0)
   const [equitytotal, setEquitytotal] = useState(0)
 
-    const handleRelatedShow = (id) => {
-    
-        if (isShow) {
-          document.getElementById('toggle' + id).removeAttribute('hidden')
-        } else {
-          document.getElementById('toggle' + id).setAttribute('hidden', 'hidden')
-        }
-        setIsShow(!isShow)
-      }
+  const handleRelatedShow = (id) => {
 
-    
+    if (isShow) {
+      document.getElementById('toggle' + id).removeAttribute('hidden')
+    } else {
+      document.getElementById('toggle' + id).setAttribute('hidden', 'hidden')
+    }
+    setIsShow(!isShow)
+  }
+
+
 
   const fetchTrialAndBalance = async () => {
     try {
@@ -57,28 +58,12 @@ export default function BalanceSheet() {
         text: 'Please wait...',
         allowOutsideClick: false
       })
-      // await axios.get(url + `/transactions/trial-balance`, {params:{start:"2023-01-01", end:"2023-12-31"}}).then((res) => {
-      //   console.log(res.data.data);
-      //   res.data.data.map(element=> {
-      //     if(element.type.name === "Assets" && element.accName === "Furniture and Fitting"){
-      //       setffamount(element.netAmount)
-      //     }
-      //     if(element.type.name === "Assets" && element.accName === "Furniture and Fitting Accumulated Depreciation"){
-      //       setffdamount(element.netAmount)
-      //     }
-      //   })
-      //   setAccountLists(res.data.data)
-      //     setTransactionLists(res.data.transaction)
-      //     console.log(res.data.data)
-      //    console.log(res.data.transaction)
-      // }).catch((error)=> {
-      //     console.log('error',error)
-      // })
+
 
       try {
-        const res = await axios.get(
-          //  'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+
+          'accounting-lists'
         )
 
         setAccountLists(res.data.list)
@@ -220,23 +205,23 @@ export default function BalanceSheet() {
         setPrepaidTotal(prepTotal)
         setcatotal(
           bankAccTotal +
-            cashAccTotal +
-            invAccTotal +
-            reagentTotal +
-            testkitTotal +
-            recevTotal +
-            prepTotal
+          cashAccTotal +
+          invAccTotal +
+          reagentTotal +
+          testkitTotal +
+          recevTotal +
+          prepTotal
         )
         setfatotal(fixedassettotal)
         setAssetTotal(
           bankAccTotal +
-            cashAccTotal +
-            invAccTotal +
-            reagentTotal +
-            testkitTotal +
-            recevTotal +
-            prepTotal +
-            fixedassettotal
+          cashAccTotal +
+          invAccTotal +
+          reagentTotal +
+          testkitTotal +
+          recevTotal +
+          prepTotal +
+          fixedassettotal
         )
 
         setcltotal(culaTotal)
@@ -248,7 +233,7 @@ export default function BalanceSheet() {
         setEquitytotal(capTotal + resrvTotal)
         // dispatch(setList("success"));
         console.log(res.data.list)
-      } catch (err) {}
+      } catch (err) { }
 
       Swal.close()
 
@@ -488,8 +473,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Bank' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Bank' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -518,8 +503,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Cash' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Cash' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -548,8 +533,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Inventory' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Inventory' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -579,8 +564,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Reagent' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Reagent' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -610,8 +595,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Test Kit' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Test Kit' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -641,8 +626,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Receivable' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Receivable' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -672,8 +657,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Assets' &&
-                            account.relatedHeader.name === 'Current Asset' &&
-                            account.relatedSubHeader.name === 'Prepaid' ? (
+                              account.relatedHeader.name === 'Current Asset' &&
+                              account.relatedSubHeader.name === 'Prepaid' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -719,9 +704,9 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Liabilities' &&
-                            account.relatedHeader.name ===
+                              account.relatedHeader.name ===
                               'Current Liabilities' &&
-                            account.relatedSubHeader.name ===
+                              account.relatedSubHeader.name ===
                               'Current Liabilities' ? (
                               <tr>
                                 <td></td>
@@ -752,9 +737,9 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Liabilities' &&
-                            account.relatedHeader.name ===
+                              account.relatedHeader.name ===
                               'Long Term Liabilities' &&
-                            account.relatedSubHeader.name ===
+                              account.relatedSubHeader.name ===
                               'Long Term Liabilities' ? (
                               <tr>
                                 <td></td>
@@ -801,8 +786,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Equity' &&
-                            account.relatedHeader.name === 'Capital' &&
-                            account.relatedSubHeader.name === 'Capital' ? (
+                              account.relatedHeader.name === 'Capital' &&
+                              account.relatedSubHeader.name === 'Capital' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>
@@ -832,8 +817,8 @@ export default function BalanceSheet() {
 
                           {accountLists.map(account =>
                             account.relatedType.name === 'Equity' &&
-                            account.relatedHeader.name === 'Reserve' &&
-                            account.relatedSubHeader.name === 'Reserve' ? (
+                              account.relatedHeader.name === 'Reserve' &&
+                              account.relatedSubHeader.name === 'Reserve' ? (
                               <tr>
                                 <td></td>
                                 <td>{account.name}</td>

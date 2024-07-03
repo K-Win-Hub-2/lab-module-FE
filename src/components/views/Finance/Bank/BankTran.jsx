@@ -12,6 +12,7 @@ import { useState, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
+import apiInstance from "../../../../utils/api";
 
 const Form = styled.form`
   display: flex;
@@ -79,8 +80,8 @@ export default function BankInfoDialog(props) {
     const config = {
       headers: { "Content-Type": "application/json" },
     };
-    const res = axios
-      .post("http://centralclinicbackend.kwintechnologykw11.com:3000/api/transfer", data, config)
+    const res = apiInstance
+      .post("transfer", data, config)
       .then(function (response) {
         Swal.fire({
           title: "Successful!",
@@ -107,8 +108,8 @@ export default function BankInfoDialog(props) {
   useEffect(() => {
     const getAccountingLists = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
         );
         const toBank = res.data.list.filter(
           (el) =>
@@ -116,7 +117,7 @@ export default function BankInfoDialog(props) {
             el.relatedType.name === "Assets"
         );
         setToAccLists(toBank);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getAccountingLists();

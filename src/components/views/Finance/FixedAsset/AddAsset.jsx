@@ -5,6 +5,7 @@ import axios from 'axios'
 import SideBar from '../../SideBar'
 import { Link } from 'react-router-dom'
 import { FaCashRegister, FaFileMedical, FaArrowLeft } from 'react-icons/fa'
+import apiInstance from '../../../../utils/api'
 
 function AddAsset() {
   const [fixedAccountLists, setFixedAccountLists] = useState([])
@@ -102,16 +103,16 @@ function AddAsset() {
     //    data.startDate = startDate;
     //  }
 
-    alert(JSON.stringify(data))
-    console.log(data)
+    // alert(JSON.stringify(data))
+    // console.log(data)
     const config = {
       headers: { 'Content-Type': 'application/json' }
     }
     // alert(JSON.stringify(data));
-    axios
+    apiInstance
       .post(
-        "http://centralclinicbackend.kwintechnologykw11.com:3000/api/fixed-asset",
-       //"http://localhost:9000/api/fixed-asset",
+        "fixed-asset",
+        //"http://localhost:9000/api/fixed-asset",
         data,
         config
       )
@@ -131,9 +132,9 @@ function AddAsset() {
   useEffect(() => {
     const getAccountingList = async () => {
       try {
-        const res = await axios.get(
-          "http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists"
-       //  "http://localhost:9000/api/accounting-lists"
+        const res = await apiInstance.get(
+          "accounting-lists"
+          //  "http://localhost:9000/api/accounting-lists"
         );
         const fixedAccounts = res.data.list.filter(
           el =>
@@ -149,7 +150,7 @@ function AddAsset() {
             el.relatedType.name === 'Assets'
         )
         setDepreAccountLists(depreAccounts)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     getAccountingList()

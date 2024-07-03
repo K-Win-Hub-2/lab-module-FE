@@ -6,7 +6,8 @@ import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
+import apiInstance from '../../../../utils/api'
+// const uri = 'http://centralclinicbackend.kwintechnologykw11.com:3000/api/'
 
 export default function TransferModal(props) {
   const [fromList, setFromList] = useState([])
@@ -60,7 +61,7 @@ export default function TransferModal(props) {
     } else {
       data.toAcc = toCash
     }
-    axios.post(uri + 'transfer', data).then(response => {
+    apiInstance.post('transfer', data).then(response => {
       console.log(response.data)
       Swal.fire({
         title: 'Success',
@@ -105,9 +106,9 @@ export default function TransferModal(props) {
   useEffect(() => {
     const getCashLists = async () => {
       try {
-        const res = await axios.get(
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
-         // 'http://localhost:9000/api/accounting-lists'
+        const res = await apiInstance.get(
+          'accounting-lists'
+          // 'http://localhost:9000/api/accounting-lists'
         )
 
         const cash = res.data.list.filter(
@@ -119,19 +120,19 @@ export default function TransferModal(props) {
         console.log('cash', cash)
         setFromCashList(cash)
         setToCashList(cash)
-      } catch (err) {}
+      } catch (err) { }
     }
 
     const getBankLists = async () => {
       try {
-        const res = await axios.get(
-          //'http://centralclinicbackend.kwintechnologykw11.com:3000/api/banks'
-          'http://centralclinicbackend.kwintechnologykw11.com:3000/api/accounting-lists'
+        const res = await apiInstance.get(
+
+          'accounting-lists'
         )
 
         const bank = res.data.list.filter(
           el =>
-          el.relatedSubHeader.name == 'Bank' &&
+            el.relatedSubHeader.name == 'Bank' &&
             el.relatedHeader.name == 'Current Asset' &&
             el.relatedType.name === 'Assets'
         )
