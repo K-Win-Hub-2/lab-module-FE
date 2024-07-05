@@ -179,7 +179,6 @@ function App() {
                 path='/refDoctor/:id'
                 element={<ReferDoctorCharge />}
               ></Route>
-              <Route path='/' element={<Login />}></Route>
               <Route path='/account_list' element={<AccountList />}></Route>
               <Route
                 path='/accUpdate/:id'
@@ -213,6 +212,7 @@ function App() {
               ></Route>
             </>
           )}
+          <Route path='/' element={<Login />}></Route>
         </Routes>
       </Router>
     </>

@@ -102,33 +102,6 @@ const TestVoucherList = () => {
     }
     setIsShow(!isShow)
   }
-  const totalAmout = filteredVouchers.reduce((acc, val) => (acc + (val.totalCharge)), 0)
-  const paid = filteredVouchers.reduce((acc, val) => (acc + (val.pay)), 0)
-  const credit = filteredVouchers.reduce((acc, val) => (acc + (val.creditAmount * -1)), 0)
-  useEffect(() => {
-    setTotalVoucher(totalAmout)
-    setTotalCashDown(paid)
-    setTotalCredit(credit)
-    const getVouchers = async () => {
-      try {
-        const res = await apiInstance.get(
-          'vouchers/today'
-        )
-
-        setVouchers(res.data.data)
-        setFilteredVouchers(res.data.data)
-
-      } catch (error) {
-        Swal.fire({
-          title: 'Data not found for this day',
-          text: error,
-          icon: 'warning',
-          confirmButtonText: 'CANCEL'
-        })
-      }
-    }
-    getVouchers()
-  }, [])
 
   // console.log(vou, 'vou')
 
@@ -206,6 +179,35 @@ const TestVoucherList = () => {
       setFilteredVouchers(vouchers);
     }
   }
+
+  const totalAmout = filteredVouchers.reduce((acc, val) => (acc + (val.totalCharge)), 0)
+  const paid = filteredVouchers.reduce((acc, val) => (acc + (val.pay)), 0)
+  const credit = filteredVouchers.reduce((acc, val) => (acc + (val.creditAmount * -1)), 0)
+  useEffect(() => {
+    setTotalVoucher(totalAmout)
+    setTotalCashDown(paid)
+    setTotalCredit(credit)
+    const getVouchers = async () => {
+      try {
+        const res = await apiInstance.get(
+          'vouchers/today'
+        )
+
+        setVouchers(res.data.data)
+        setFilteredVouchers(res.data.data)
+
+      } catch (error) {
+        Swal.fire({
+          title: 'Data not found for this day',
+          text: 'Choose Date!',
+          icon: 'warning',
+          confirmButtonText: 'CANCEL'
+        })
+      }
+    }
+    getVouchers()
+  }, [totalAmout, paid, credit])
+
   return (
     <div className='wrapper'>
       <SideBar />
@@ -246,14 +248,14 @@ const TestVoucherList = () => {
                             />
                           </div>
 
-                          <div className='col-4' style={{ marginTop: "7vh" }}>
+                          <div className='col-4' style={{ marginTop: "6vh" }}>
 
                             <select
                               className="form-control"
                               name="vou_type"
                               id="vou_type"
                               onChange={(e) => handleTypeSearch(e.target.value)}>
-                              <option value="">Select Type</option>
+                              <option hidden>Select Type</option>
                               <option value="all">All</option>
                               <option value="cashdown">Cash Down</option>
                               <option value="credit">Credit</option>

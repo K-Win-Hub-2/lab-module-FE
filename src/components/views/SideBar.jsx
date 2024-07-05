@@ -22,19 +22,19 @@ function Sidebar() {
     })
   }
   return (
-    <div>
+    <div className=''>
       {/* <!-- Navbar --> */}
-      <nav className='main-header navbar navbar-expand navbar-white navbar-light'>
+      <nav className='main-header navbar navbar-expand navbar-white navbar-light re'>
         {/* <!-- Left navbar links --> */}
         <ul className='navbar-nav'>
           <li className='nav-item'>
-            <a className='nav-link' data-widget='pushmenu' href='#'>
+            {/* <a className='nav-link' data-widget='pushmenu' href='#'>
               <i className='fas fa-bars'></i>
-            </a>
+            </a> */}
           </li>
         </ul>
-        <div className='title' style={{ marginLeft: '350px' }}>
-          <h1>Lab Module </h1>
+        <div className='title text-center'>
+          <h1 >Lab Module </h1>
         </div>
 
         {/* {{-- <h1 style="font-family:nunito" classNameName="text-center font-weight-bold font-italic text-info ml-auto">Inventory Management</h1> --}} */}
