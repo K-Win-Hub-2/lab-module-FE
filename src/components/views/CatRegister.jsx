@@ -255,7 +255,7 @@ function Category() {
                     </div>
                     <div className='card-body'>
                       <table id='example1' className='table'>
-                        <thead className='text-center bg-info'>
+                        <thead className='text-center '>
                           <tr>
                             <th>No</th>
                             <th>Code</th>

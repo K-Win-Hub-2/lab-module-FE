@@ -67,7 +67,7 @@ function CatRegister() {
                     </div>
                     <div class="table-responsive text-black" id="slimtest2">
                       <table class="table table-hover px-3" id="filter_date">
-                        <thead class="bg-info text-white">
+                        <thead class=" text-white">
                           <tr>
                             <th>No.</th>
                             <th>Package Name</th>

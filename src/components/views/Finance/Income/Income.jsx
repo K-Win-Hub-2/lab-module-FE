@@ -191,7 +191,7 @@ const Income = () => {
                           <span className='float-right'>
                             <button
                               type='button'
-                              className='btn btn-sm btn-primary'
+                              className='actionBtn '
                               onClick={showDialog}
                             >
                               <i className='fas fa-plus'></i> Add Income
@@ -202,7 +202,7 @@ const Income = () => {
                           </a> */}
                             <button
                               type='button'
-                              className='btn btn-sm btn-success'
+                              className='actionBtn'
                               onClick={excelExport}
                             >
 
@@ -276,7 +276,7 @@ const Income = () => {
                               className='table table-hover'
                               id='filter_date'
                             >
-                              <thead className='bg-info text-white'>
+                              <thead className=''>
                                 <tr>
                                   <th>#</th>
                                   <th className='text-center'>Date</th>
@@ -331,7 +331,7 @@ const Income = () => {
                                     <td className='text-center'>
                                       <button
                                         type='button'
-                                        className='btn btn-sm btn-primary ml-2'
+                                        className='actionBtn  ml-2'
                                         onClick={() =>
                                           handleRelatedShow(
                                             incomeList._id,

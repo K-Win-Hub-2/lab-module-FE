@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+import { PaginationControl } from "react-bootstrap-pagination-control";
 import React, { useState } from "react";
 // import ExpenseDialog from "../views/ExpenseDialog";
 import { useEffect } from "react";
@@ -21,10 +21,33 @@ const LabServiceList = () => {
   const [multiTestLists, setMultiTestLists] = useState([]);
   const [id, setId] = useState('');
   const [testName, setTestName] = useState('');
-
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = React.useState("");
+  const [dataCount, setDataCount] = useState("");
+  const [rowsPerPage, setRowsPerPage] = React.useState(50);
+  const paginationItems = React.useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+    return filteredList.slice(start, end);
+  }, [page, filteredList]);
 
   const handleInputChange = (event) => {
-    setFilteredList(labServiceLists.filter(test => test.name.includes(event.target.value)))
+    const searchData = labServiceLists.filter(test => test.name.includes(event.target.value))
+    setFilteredList(searchData)
+    setDataCount(
+      searchData.length
+    );
+    setPages(
+      searchData.length %
+        rowsPerPage ===
+        0
+        ? searchData.length /
+        rowsPerPage
+        : Math.floor(
+          searchData.length /
+          rowsPerPage
+        ) + 1
+    );
   }
 
   const handleDelete = (event) => {
@@ -59,29 +82,7 @@ const LabServiceList = () => {
   //   setUpdateDialog(true);
   // };
 
-  const handleCheckChange = (val) => {
-    const getMultiTestList = async () => {
-      try {
-        console.log(val);
-        const res = await apiInstance.get(
-          "service/" +
-          val
-        );
 
-        console.log(res.data.data);
-        setMultiTestLists(res.data.data);
-      } catch (err) { }
-    };
-
-    getMultiTestList();
-
-    if (isShow) {
-      document.getElementById("toggle" + val).removeAttribute("hidden");
-    } else {
-      document.getElementById("toggle" + val).setAttribute("hidden", "hidden");
-    }
-    setIsShow(!isShow);
-  };
 
   const showDialog = () => setOpen(true);
   const _export = React.useRef(null);
@@ -102,6 +103,20 @@ const LabServiceList = () => {
 
       setLabServiceLists(res.data.data);
       setFilteredList(res.data.data);
+      setDataCount(
+        res.data.data.length
+      );
+      setPages(
+        res.data.data.length %
+          rowsPerPage ===
+          0
+          ? res.data.data.length /
+          rowsPerPage
+          : Math.floor(
+            res.data.data.length /
+            rowsPerPage
+          ) + 1
+      );
     };
     getLabServiceLists();
   }, []);
@@ -196,9 +211,11 @@ const LabServiceList = () => {
                   <div class="card">
                     <div class="card-header">
                       <div class="row justify-content-between">
+
                         <label class="">
+                          <span className='mt-5'>Total {filteredList?.length} List</span>
                           <span class="float-right">
-                            <Link to="/lab-register" class="btn btn-primary">
+                            <Link to="/lab-register" className='regbtn'>
                               <i class="fas fa-plus"></i> &nbsp;Lab Test
                               Register
                             </Link>
@@ -206,9 +223,10 @@ const LabServiceList = () => {
                             {/* <a href="/expense_type" class="btn btn-primary">
                               Expense Type
                             </a> */}
+
                             <button
                               type="button"
-                              className="btn btn-success"
+                              className="btn btn-success mb-2"
                               onClick={excelExport}>
                               <FaFileExcel
                               />&nbsp;Export
@@ -273,7 +291,7 @@ const LabServiceList = () => {
                             class="table-responsive text-black"
                             id="slimtest2">
                             <table class="table table-hover" id="filter_date">
-                              <thead class="bg-info text-white">
+                              <thead className="headtable text-white">
                                 <tr>
                                   <th>#</th>
                                   <th>Code</th>
@@ -289,7 +307,7 @@ const LabServiceList = () => {
                                 </tr>
                               </thead>
 
-                              {filteredList.map((labService, i) => (
+                              {paginationItems.map((labService, i) => (
                                 <tbody className="">
                                   <tr>
                                     <td>{++i}</td>
@@ -406,6 +424,18 @@ const LabServiceList = () => {
                                 </tbody>
                               ))}
                             </table>
+                          </div>
+                          <div className='mt-4'>
+                            <PaginationControl
+                              page={page}
+                              between={4}
+                              total={dataCount}
+                              limit={50}
+                              changePage={(page) => {
+                                setPage(page);
+                              }}
+                              ellipsis={1}
+                            />
                           </div>
                         </div>
                       </div>

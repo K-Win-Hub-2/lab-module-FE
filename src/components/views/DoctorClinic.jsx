@@ -160,14 +160,13 @@ const LabServiceList = () => {
                       <div class='row justify-content-between py-3'>
                         <label class=''>
                           <span class='float-right'>
-                            <Link to='/doctorClinicReg' class='btn btn-primary'>
-                              <i class='fas fa-plus'></i> &nbsp;Doctor/Clinic
+                            <Link to='/doctorClinicReg' className='regbtn'>
+
+                              <i class='fas fa-plus'></i> &nbsp;
                               Register
                             </Link>
                             &nbsp;
-                            {/* <a href="/expense_type" class="btn btn-primary">
-                              Expense Type
-                            </a> */}
+
                             <button
                               type='button'
                               className='btn btn-success'
@@ -237,7 +236,7 @@ const LabServiceList = () => {
                             id='slimtest2'
                           >
                             <table class='table table-hover' id='filter_date'>
-                              <thead class='bg-info text-white'>
+                              <thead class=' text-white'>
                                 <tr>
                                   <th>#</th>
 
@@ -270,10 +269,10 @@ const LabServiceList = () => {
                                     </td>
 
                                     <td className='text-center d-flex justify-content-between'>
-                                      <button className='btn btn-sm btn-info'>
+                                      <button className='btn btn-sm'>
                                         <Link
                                           to={'/refDoctor/' + doctor._id}
-                                          className='btn btn-sm btn-info'
+                                          className='btn btn-sm '
                                         >
                                           Commission
                                         </Link>

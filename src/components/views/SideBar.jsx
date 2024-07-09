@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { logoutSuccess } from '../../redux/authRedux'
 import Swal from 'sweetalert2'
-
+import Win from '../../assets/img/win.png'
 function Sidebar() {
   const user = useSelector(state => state.auth.user)
   const dispatch = useDispatch()
@@ -47,14 +47,8 @@ function Sidebar() {
 
       {/* <!-- Main Sidebar Container --> */}
       <aside className='main-sidebar  elevation-4'>
-        {/* <!-- Brand Logo --> */}
-        {/* {{-- <a href="index3.html" classNameName="brand-link">
-      <img src="{{asset('image/logo.jpg')}}" alt="K-win Technology" classNameName="brand-image img-circle"
-           style="opacity: .8;margin-top:10px;">
-        </a> --}} */}
-        <h4 className='brand-text font-weight-bolder ml-4 mt-2'>
-          Win-Clinic
-        </h4>
+
+        <img src={Win} alt='' width='200px' />
 
         {/* 
     <!-- Sidebar --> */}

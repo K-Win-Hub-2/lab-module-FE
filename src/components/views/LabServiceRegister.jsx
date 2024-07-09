@@ -39,7 +39,7 @@ function LabServiceRegister() {
   const [tableData, setTableData] = useState([]);
   const [refData, setRefData] = useState([]);
   const [referAmount, setReferAmount] = useState('');
-
+  const [regAmount, setRegAmount] = useState('')
 
   const handleAlert = () => {
     Swal.fire({
@@ -116,6 +116,7 @@ function LabServiceRegister() {
 
 
   const handleBox = (event) => {
+
     let newReagent = {
       id: tempReagent.split(".")[0],
       name: tempReagent.split(".")[1],
@@ -172,7 +173,13 @@ function LabServiceRegister() {
       leadTime: leadTime,
       charges: charges,
       cost: cost,
-      reagentItems: reagentArray,
+      reagentItems: reagentArray.map((i) => {
+        return {
+          _id: i.id,
+          name: i.name,
+          amount: regAmount ? parseInt(regAmount) : i.amount
+        }
+      }),
       referenceRange: refData,
       description: description,
       specialComment: encodedString,
@@ -419,7 +426,7 @@ function LabServiceRegister() {
                                 onChange={(e) => {
                                   setTempReagent(e.target.value);
                                 }}>
-                                <option value="">Choose Reagent</option>
+                                <option hidden>Choose Reagent</option>
                                 {reagentItems.map((option) => (
                                   <option
                                     value={option._id + "." + option.name}>
@@ -432,7 +439,7 @@ function LabServiceRegister() {
                               <button
                                 type="button"
                                 className="btn btn-primary"
-                                onClick={(e) => handleBox(e.target.value)}>
+                                onClick={handleBox}>
                                 <i class="fa fa-plus"></i>
                               </button>
                             </div>
@@ -445,6 +452,7 @@ function LabServiceRegister() {
                                     <input
                                       type="text"
                                       value={regArr.name}
+
                                       className="form-control"
                                     />
                                   </div>
@@ -452,6 +460,7 @@ function LabServiceRegister() {
                                     <input
                                       type="text"
                                       defaultValue={0}
+                                      onChange={(e) => setRegAmount(e.target.value)}
                                       className="form-control"
                                     />
                                   </div>

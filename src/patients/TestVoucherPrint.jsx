@@ -230,16 +230,17 @@ const TestVoucherPrint = () => {
                 // style={{ border: '1px solid black', padding: '14px 14px' }}
                 >
                   <div
-                    className='row'
+                    className='row py-3 mx-3 align-content-center text-center'
                     style={{
-                      height: '190px',
+                      height: '250px',
+                      width: '100%',
                       visibility: headerOn ? 'visible' : 'hidden'
                     }}
                   >
                     <div className='col-3'>
                       <img src={require('../logo.png')} alt='' />
                     </div>
-                    <div className='offset-1 col-md-5'>
+                    <div className='col-4'>
                       Clinic 1 - 51/A Min Ye Kyaw Swar Road, Ahlone Township,
                       <br />
                       Yangon, Myanmar.
@@ -252,7 +253,7 @@ const TestVoucherPrint = () => {
                       <br />
                       Tel : 09 400 400 870 (Clinic), 09 400 200 651 (Lab)
                     </div>
-                    <div className='col-md-3'>
+                    <div className='col-2'>
                       <img
                         src={require('../logo1.png')}
                         alt=''
@@ -595,7 +596,7 @@ const TestVoucherPrint = () => {
                   </div>
 
                   {/* {showBottom ? ( */}
-                  <div className='row' id='printtop' >
+                  <div className='row mx-3 py-3' id='printtop' >
                     <div class='fixed-bottom' className='col-6'>
                       <SPAN>Laboratory Technician</SPAN>
                     </div>

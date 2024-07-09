@@ -28,6 +28,10 @@ const Expense = () => {
       })
     }
   }
+  const handleInputChange = (event) => {
+    const searchData = expenseLists.filter(test => test.relatedBankAccount.name.includes(event.target.value))
+    setExpenseLists(searchData)
+  }
   const handleRelatedShow = id => {
     const getRelated = async () => {
 
@@ -63,7 +67,7 @@ const Expense = () => {
         'expenses'
       )
       // alert("success");
-      // console.log(res.data.list);
+      console.log(res.data.list);
       setExpenseLists(res.data.list)
     }
     getExpenseLists()
@@ -141,15 +145,9 @@ const Expense = () => {
                       className='form-control rounded'
                       id='search_code'
                       placeholder='Enter Account Code'
+                      onChange={(e) => handleInputChange(e)}
                     />
-                    <button
-                      type='button'
-                      className='btn btn-outline-primary ml-3'
-                      style={{ height: '0.97cm' }}
-                      onclick='acc_code_search()'
-                    >
-                      search
-                    </button>
+
                   </div>
                 </div>
               </div>
@@ -167,7 +165,7 @@ const Expense = () => {
                               type='button'
                               data-toggle='modal'
                               data-target='#add_incomes'
-                              class='btn btn-sm btn-primary'
+                              class='actionBtn'
                               onclick='hide_bank_acc()'
                               onClick={showDialog}
                             >
@@ -179,7 +177,7 @@ const Expense = () => {
                             </a> */}
                             <button
                               type='button'
-                              className='btn btn-sm btn-success'
+                              className='actionBtn'
                               onClick={excelExport}
                             >
 
@@ -250,7 +248,7 @@ const Expense = () => {
                             id='slimtest2'
                           >
                             <table class='table table-hover' id='filter_date'>
-                              <thead class='bg-info text-white'>
+                              <thead class=' text-white'>
                                 <tr>
                                   <th>#</th>
                                   <th class='text-center'>Date</th>
@@ -297,7 +295,7 @@ const Expense = () => {
                                     <td className='text-center'>
                                       <button
                                         type='button'
-                                        className='btn btn-sm btn-primary ml-2'
+                                        className='actionBtn ml-2'
                                         onClick={() =>
                                           handleRelatedShow(
                                             expenseList._id

@@ -578,7 +578,7 @@ function LabServiceUpdate() {
                                   <div className='col-md-5'>
                                     <input
                                       type='text'
-                                      value={regArr.name}
+                                      defaultValue={regArr.name}
                                       className='form-control'
                                     />
                                   </div>

@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.title{
+.title {
   text-align: center;
 }
 
@@ -46,10 +46,9 @@
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: groove;
-  background-color:dark;
+  background-color: dark;
 }
 
 .no-outline:focus {
   outline: none;
 }
-
